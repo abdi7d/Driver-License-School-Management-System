@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users - DLSM Ethiopia</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/dark-mode.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/auth-guard.js"></script>
+</head>
+<body class="dashboard-body">
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <img src="../assets/images/logo-DLSM.jpg" alt="DLSM Logo" class="logo-icon" style="height: 32px; width: auto; border-radius: 6px;">
+                <span class="logo-text">DLSM</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item"><span class="nav-icon">📊</span><span class="nav-text">Dashboard</span></a>
+            <a href="profile.html" class="nav-item"><span class="nav-icon">👤</span><span class="nav-text">My Profile</span></a>
+            <a href="users.html" class="nav-item active"><span class="nav-icon">👥</span><span class="nav-text">Users</span></a>
+            <a href="programs.html" class="nav-item"><span class="nav-icon">📚</span><span class="nav-text">Programs</span></a>
+            <a href="enrollments.html" class="nav-item"><span class="nav-icon">📋</span><span class="nav-text">Enrollments</span></a>
+            <a href="approvals.html" class="nav-item"><span class="nav-icon">✅</span><span class="nav-text">Approvals</span></a>
+            <a href="exams.html" class="nav-item"><span class="nav-icon">📝</span><span class="nav-text">Exams</span></a>
+            <a href="certificates.html" class="nav-item"><span class="nav-icon">🎓</span><span class="nav-text">Certificates</span></a>
+            <a href="reports.html" class="nav-item"><span class="nav-icon">📈</span><span class="nav-text">Reports</span></a>
+            <a href="notifications.html" class="nav-item"><span class="nav-icon">🔔</span><span class="nav-text">Notifications</span></a>
+        </nav>
+        <div class="sidebar-footer">
+            <button class="btn-logout" id="logoutBtn"><span class="nav-icon">🚪</span><span class="nav-text">Logout</span></button>
+        </div>
+    </aside>
+
+    
+    <main class="main-content">
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+                <div>
+                    <h1 class="page-title">Users</h1>
+                    <p class="page-subtitle">Manage user accounts and permissions</p>
+                </div>
+            </div>
+            <div class="topbar-right">
+                <button class="btn-primary topbar-action-btn" id="addUserBtn">+ Add User</button>
+                <div class="user-profile">
+                    <div class="user-avatar">👤</div>
+                    <div class="user-info">
+                        <span class="user-name" id="userName">Manager</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="dashboard-container">
+
+            
+            <div class="stats-grid">
+                <div class="stat-card blue">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Total Users</p>
+                        <h3 class="stat-value">24</h3>
+                    </div>
+                </div>
+                <div class="stat-card green">
+                    <div class="stat-icon">🎓</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Students</p>
+                        <h3 class="stat-value">16</h3>
+                    </div>
+                </div>
+                <div class="stat-card orange">
+                    <div class="stat-icon">🧑‍🏫</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Instructors</p>
+                        <h3 class="stat-value">5</h3>
+                    </div>
+                </div>
+                <div class="stat-card purple">
+                    <div class="stat-icon">🛡️</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Supervisors</p>
+                        <h3 class="stat-value">3</h3>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="tabs tabs-mt">
+                <button class="tab-btn active" data-tab="all">All Users</button>
+                <button class="tab-btn" data-tab="students">Students</button>
+                <button class="tab-btn" data-tab="instructors">Instructors</button>
+                <button class="tab-btn" data-tab="supervisors">Supervisors</button>
+            </div>
+
+            
+            <div class="tab-panel active" id="tab-all">
+                <div class="approvals-table-wrap">
+                    <div class="table-header">
+                        <h3>All Users</h3>
+                        <input type="text" class="search-input" placeholder="🔍 Search users..." id="searchAll">
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Joined</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="allUsersBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            
+            <div class="tab-panel" id="tab-students">
+                <div class="approvals-table-wrap">
+                    <div class="table-header">
+                        <h3>Students</h3>
+                        <input type="text" class="search-input" placeholder="🔍 Search students..." id="searchStudents">
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Joined</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentsBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            
+            <div class="tab-panel" id="tab-instructors">
+                <div class="approvals-table-wrap">
+                    <div class="table-header">
+                        <h3>Instructors</h3>
+                        <input type="text" class="search-input" placeholder="🔍 Search instructors..." id="searchInstructors">
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Joined</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="instructorsBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            
+            <div class="tab-panel" id="tab-supervisors">
+                <div class="approvals-table-wrap">
+                    <div class="table-header">
+                        <h3>Supervisors</h3>
+                        <input type="text" class="search-input" placeholder="🔍 Search supervisors..." id="searchSupervisors">
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Joined</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="supervisorsBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    
+    <div class="modal-overlay hidden" id="addUserModal">
+        <div class="modal">
+            <h3>Add New User</h3>
+            <form id="addUserForm">
+                <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" class="form-input" id="newName" placeholder="Enter full name" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" id="newEmail" placeholder="Enter email address" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Role</label>
+                    <select class="form-input" id="newRole" required>
+                        <option value="">Select role...</option>
+                        <option value="student">Student</option>
+                        <option value="instructor">Instructor</option>
+                        <option value="supervisor">Supervisor</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-input" id="newPassword" placeholder="Set password" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-close-modal" id="closeAddUserModal">Cancel</button>
+                    <button type="submit" class="btn-approve">Add User</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    
+    <div class="modal-overlay hidden" id="editUserModal">
+        <div class="modal">
+            <h3>Edit User</h3>
+            <div id="editUserContent"></div>
+            <div class="modal-actions">
+                <button class="btn-close-modal" id="closeEditUserModal">Cancel</button>
+                <button class="btn-approve" id="saveEditUserBtn">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/dashboard.js"></script>
+    <script src="../assets/js/modal.js"></script>
+    <script>
+        let users = []; // Will be loaded from API
+        let editingUserId = null;
+
+        function roleBadgeClass(role) {
+            const r = role.toLowerCase();
+            if (r === 'student')    return 'badge-role-student';
+            if (r === 'instructor') return 'badge-role-instructor';
+            if (r === 'supervisor') return 'badge-role-supervisor';
+            return '';
+        }
+
+        function statusBadgeClass(status) {
+            const s = status.toLowerCase();
+            if (s === 'active')    return 'badge-approved';
+            if (s === 'inactive' || s === 'pending')  return 'badge-pending';
+            if (s === 'suspended') return 'badge-rejected';
+            return '';
+        }
+
+        function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+        function renderRows(data) {
+            return data.map(u => `
+                <tr>
+                    <td><strong>${u.name}</strong></td>
+                    <td class="td-sub">${u.email || 'N/A'}</td>
+                    <td><span class="badge ${roleBadgeClass(u.role || '')}">${capitalize(u.role || 'user')}</span></td>
+                    <td><span class="badge ${statusBadgeClass(u.status || '')}">${capitalize(u.status || 'pending')}</span></td>
+                    <td>${u.joined ? new Date(u.joined).toLocaleDateString() : 'N/A'}</td>
+                    <td>
+                        <div class="action-btns">
+                            <button class="btn-view" onclick="openEditUser('${u.id}')">Edit</button>
+                            <button class="btn-reject" onclick="toggleUserStatus('${u.id}')">${(u.status || '').toLowerCase() === 'active' ? 'Deactivate' : 'Activate'}</button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function renderAll() {
+            document.getElementById('allUsersBody').innerHTML     = renderRows(users);
+            document.getElementById('studentsBody').innerHTML     = renderRows(users.filter(u => u.role === 'student'));
+            document.getElementById('instructorsBody').innerHTML  = renderRows(users.filter(u => u.role === 'instructor'));
+            document.getElementById('supervisorsBody').innerHTML  = renderRows(users.filter(u => u.role === 'supervisor'));
+            
+            // Update stats
+            document.querySelector('.stat-card.blue .stat-value').textContent = users.length;
+            document.querySelector('.stat-card.green .stat-value').textContent = users.filter(u => u.role === 'student').length;
+            document.querySelector('.stat-card.orange .stat-value').textContent = users.filter(u => u.role === 'instructor').length;
+            document.querySelector('.stat-card.purple .stat-value').textContent = users.filter(u => u.role === 'supervisor').length;
+        }
+
+        async function loadUsersFromAPI() {
+            try {
+                const response = await api.request('/manager/users/getAll.php');
+                if (response.success && response.data) {
+                    users = response.data;
+                    renderAll();
+                }
+            } catch (error) {
+                console.error('Error loading users:', error);
+            }
+        }
+
+        function filterBody(tbodyId, query) {
+            document.getElementById(tbodyId).querySelectorAll('tr').forEach(row => {
+                row.style.display = row.textContent.toLowerCase().includes(query.toLowerCase()) ? '' : 'none';
+            });
+        }
+
+        function openEditUser(id) {
+            const userId = Number(id);
+            const u = users.find(x => Number(x.id) === userId);
+            if (!u) return;
+            editingUserId = userId;
+            document.getElementById('editUserContent').innerHTML = `
+                <div class="form-group">
+                    <label class="form-label">Name</label>
+                    <input class="form-input" value="${u.name}" disabled>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Role</label>
+                    <select class="form-input" id="editRole">
+                        <option value="student"    ${u.role==='student'?'selected':''}>Student</option>
+                        <option value="instructor" ${u.role==='instructor'?'selected':''}>Instructor</option>
+                        <option value="supervisor" ${u.role==='supervisor'?'selected':''}>Supervisor</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Status</label>
+                    <select class="form-input" id="editStatus">
+                        <option value="active"    ${u.status==='active'?'selected':''}>Active</option>
+                        <option value="inactive"  ${u.status==='inactive'?'selected':''}>Inactive</option>
+                        <option value="suspended" ${u.status==='suspended'?'selected':''}>Suspended</option>
+                    </select>
+                </div>
+            `;
+            Modal.open('editUserModal');
+        }
+
+        async function toggleUserStatus(id) {
+            console.log('toggleUserStatus called with ID:', id, 'type:', typeof id);
+            const userId = Number(id);
+            const u = users.find(x => Number(x.id) === userId);
+            console.log('Found user:', u);
+            if (!u) {
+                console.error('User not found in local array for ID:', userId);
+                return;
+            }
+            const currentStatus = u.status.toLowerCase();
+            const newStatus = currentStatus === 'active' ? 'inactive' : 'active';
+            
+            Modal.confirm({
+                title: `${newStatus === 'active' ? 'Activate' : 'Deactivate'} User`,
+                message: `Are you sure you want to change status for ${u.name} to ${newStatus}?`,
+                onConfirm: async () => {
+                    try {
+                        const response = await api.request('/manager/users/updateStatus.php', {
+                            method: 'POST',
+                            body: JSON.stringify({ user_id: userId, status: newStatus })
+                        });
+                        if (response.success) {
+                            utils.showNotification(response.message, 'success');
+                            await loadUsersFromAPI();
+                        } else {
+                            utils.showNotification(response.message, 'error');
+                        }
+                    } catch (error) {
+                        utils.showNotification('Error updating status', 'error');
+                    }
+                }
+            });
+        }
+
+        async function saveUserEdits() {
+            const newRole = document.getElementById('editRole').value;
+            const newStatus = document.getElementById('editStatus').value;
+            
+            try {
+                // Update status first
+                await api.request('/manager/users/updateStatus.php', {
+                    method: 'POST',
+                    body: JSON.stringify({ user_id: editingUserId, status: newStatus })
+                });
+                
+                // Update role
+                const response = await api.request('/manager/users/updateRole.php', {
+                    method: 'POST',
+                    body: JSON.stringify({ user_id: editingUserId, role: newRole })
+                });
+                
+                if (response.success) {
+                    utils.showNotification('User updated successfully', 'success');
+                    Modal.close('editUserModal');
+                    await loadUsersFromAPI();
+                }
+            } catch (error) {
+                utils.showNotification('Error updating user', 'error');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', async function () {
+            const user = dashboard.init({ requiredRole: ['manager', 'admin'] });
+            if (!user) return;
+            document.getElementById('userName').textContent = user.name || 'Manager';
+
+            await loadUsersFromAPI();
+
+            document.getElementById('logoutBtn').addEventListener('click', () => auth.logout());
+
+            // Tabs
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+                    this.classList.add('active');
+                    document.getElementById('tab-' + this.dataset.tab).classList.add('active');
+                });
+            });
+
+            // Search
+            document.getElementById('searchAll').addEventListener('input', e => filterBody('allUsersBody', e.target.value));
+            
+            // Modal close
+            document.getElementById('closeEditUserModal').addEventListener('click', () => {
+                Modal.close('editUserModal');
+            });
+            
+            document.getElementById('saveEditUserBtn').addEventListener('click', saveUserEdits);
+
+            // Add User Modal
+            document.getElementById('addUserBtn').addEventListener('click', () => Modal.open('addUserModal'));
+            document.getElementById('closeAddUserModal').addEventListener('click', () => Modal.close('addUserModal'));
+
+            document.getElementById('addUserForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const data = {
+                    first_name: document.getElementById('newName').value.split(' ')[0],
+                    last_name: document.getElementById('newName').value.split(' ').slice(1).join(' ') || '',
+                    email: document.getElementById('newEmail').value,
+                    role: document.getElementById('newRole').value,
+                    password: document.getElementById('newPassword').value,
+                    status: 'active'
+                };
+
+                try {
+                    const response = await api.request('/auth/register.php', {
+                        method: 'POST',
+                        body: JSON.stringify(data)
+                    });
+                    if (response.success) {
+                        utils.showNotification('User added successfully', 'success');
+                        Modal.close('addUserModal');
+                        document.getElementById('addUserForm').reset();
+                        await loadUsersFromAPI();
+                    } else {
+                        utils.showNotification(response.message, 'error');
+                    }
+                } catch (error) {
+                    utils.showNotification('Error adding user', 'error');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

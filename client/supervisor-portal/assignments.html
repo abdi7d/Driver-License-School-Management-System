@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignments Management - DLSM Ethiopia</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/dark-mode.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/auth-guard.js"></script>
+    
+    <style>
+        /* CRITICAL MODAL CSS - GUARANTEED VISIBILITY */
+        #assignmentModal {
+            position: fixed !important;
+            top: 0 !important; left: 0 !important;
+            width: 100vw !important; height: 100vh !important;
+            background: rgba(0, 0, 0, 0.8) !important;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 999999 !important;
+            backdrop-filter: blur(4px);
+        }
+        #assignmentModal.active { display: flex !important; }
+        .modal-content-box {
+            background: var(--bg-card, #ffffff) !important;
+            color: var(--text-primary, #1e293b) !important;
+            width: 90% !important;
+            max-width: 500px !important;
+            padding: 32px !important;
+            border-radius: 16px !important;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5) !important;
+            position: relative !important;
+            border: 1px solid var(--border-color, #e2e8f0) !important;
+        }
+        .modal-content-box h2 { color: var(--text-primary, #1e293b) !important; margin-top: 0; }
+        .modal-content-box label { color: var(--text-secondary, #64748b) !important; font-size: 14px; font-weight: 600; }
+        .modal-content-box select { 
+            width: 100%; padding: 12px; border-radius: 8px; 
+            border: 1px solid var(--border-color, #e2e8f0);
+            background: var(--bg-body, #f8fafc);
+            color: var(--text-primary, #1e293b);
+            margin-top: 8px; margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body class="dashboard-body">
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <img src="../assets/images/logo-DLSM.jpg" alt="DLSM Logo" class="logo-icon" style="height: 32px; width: auto; border-radius: 6px;">
+                <span class="logo-text">DLSM</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item"><span class="nav-icon">📊</span><span class="nav-text">Dashboard</span></a>
+            <a href="profile.html" class="nav-item"><span class="nav-icon">👤</span><span class="nav-text">My Profile</span></a>
+            <a href="assignments.html" class="nav-item active"><span class="nav-icon">👥</span><span class="nav-text">Assignments</span></a>
+            <a href="monitor.html" class="nav-item"><span class="nav-icon">👁️</span><span class="nav-text">Monitor</span></a>
+            <a href="exam-approvals.html" class="nav-item"><span class="nav-icon">✅</span><span class="nav-text">Exam Approvals</span></a>
+            <a href="complaints.html" class="nav-item"><span class="nav-icon">📢</span><span class="nav-text">Complaints</span></a>
+            <a href="reports.html" class="nav-item"><span class="nav-icon">📈</span><span class="nav-text">Reports</span></a>
+        </nav>
+        <div class="sidebar-footer">
+            <button class="btn-logout" id="logoutBtn"><span class="nav-icon">🚪</span><span class="nav-text">Logout</span></button>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+                <div>
+                    <h1 class="page-title">Assignments</h1>
+                    <p class="page-subtitle">Assign students to instructors and track training progress</p>
+                </div>
+            </div>
+            <div class="topbar-right">
+                <button class="btn-primary" onclick="openManualAssignModal()">+ New Assignment</button>
+            </div>
+        </header>
+
+        <div class="dashboard-container">
+            <div class="stats-grid">
+                <div class="stat-card blue">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Currently Assigned</p>
+                        <h3 class="stat-value" id="statAssigned">0</h3>
+                    </div>
+                </div>
+                <div class="stat-card orange">
+                    <div class="stat-icon">⏳</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Unassigned Students</p>
+                        <h3 class="stat-value" id="statUnassigned">0</h3>
+                    </div>
+                </div>
+                <div class="stat-card green">
+                    <div class="stat-icon">👨‍🏫</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Available Instructors</p>
+                        <h3 class="stat-value" id="statInstructors">0</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tabs" style="margin-top: 32px;">
+                <button class="tab-btn active" data-tab="current">Current Assignments</button>
+                <button class="tab-btn" data-tab="unassigned">Unassigned Students</button>
+                <button class="tab-btn" data-tab="instructors">Instructor Workload</button>
+            </div>
+
+            <!-- Tab Panels -->
+            <div class="tab-panel active" id="current-tab">
+                <div class="card">
+                    <div class="card-title"><span>👥 Current Instructor Assignments</span></div>
+                    <div style="overflow-x: auto;">
+                        <table>
+                            <thead><tr><th>Student</th><th>Program</th><th>Instructor</th><th>Actions</th></tr></thead>
+                            <tbody id="assignmentsTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-panel" id="unassigned-tab">
+                <div class="card">
+                    <div class="card-title"><span>⏳ Awaiting Assignment</span></div>
+                    <div style="overflow-x: auto;">
+                        <table>
+                            <thead><tr><th>Student</th><th>Program</th><th>Date</th><th>Actions</th></tr></thead>
+                            <tbody id="unassignedTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-panel" id="instructors-tab">
+                <div class="card">
+                    <div class="card-title"><span>📊 Instructor Workload</span></div>
+                    <div style="overflow-x: auto;">
+                        <table>
+                            <thead><tr><th>Instructor</th><th>Lessons</th><th>Status</th></tr></thead>
+                            <tbody id="instructorsTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Assignment Modal -->
+    <div id="assignmentModal">
+        <div class="modal-content-box">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                <h2 style="margin: 0;">Assign Instructor</h2>
+                <button onclick="closeModal()" style="border:none; background:none; font-size:28px; cursor:pointer; color: var(--text-secondary);">×</button>
+            </div>
+            
+            <div id="studentSelectGroup" style="display: none;">
+                <label>Select Student</label>
+                <select id="studentSelect" class="form-input"></select>
+            </div>
+
+            <div id="studentInfoBox" style="background: var(--bg-body, #f8fafc); padding: 16px; border-radius: 12px; margin-bottom: 20px;">
+                <label style="display:block; margin-bottom: 4px;">Student Name</label>
+                <p id="modalStudentName" style="font-weight:700; font-size: 18px; margin: 0;"></p>
+            </div>
+
+            <div>
+                <label>Choose Instructor</label>
+                <select id="instructorSelect" class="form-input"></select>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 10px;">
+                <button class="btn-secondary" onclick="closeModal()" style="padding: 12px 24px;">Cancel</button>
+                <button class="btn-primary" onclick="submitAssignment()" style="padding: 12px 24px;">Confirm Assignment</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentEnrollmentId = null;
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const user = auth.getCurrentUser();
+            if (!user) { window.location.href = '../login.html'; return; }
+            
+            // Mobile menu toggle
+            const mobileBtn = document.getElementById('mobileMenuBtn');
+            const sidebar = document.getElementById('sidebar');
+            const backdrop = document.getElementById('sidebarBackdrop');
+            if (mobileBtn) {
+                mobileBtn.onclick = () => { sidebar.classList.toggle('mobile-open'); backdrop.classList.toggle('active'); };
+                backdrop.onclick = () => { sidebar.classList.remove('mobile-open'); backdrop.classList.remove('active'); };
+            }
+
+            await loadData();
+
+            // Tab Switching
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.onclick = function() {
+                    const tab = this.dataset.tab;
+                    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    document.getElementById(tab + '-tab').classList.add('active');
+                    this.classList.add('active');
+                };
+            });
+            
+            // Logout
+            document.getElementById('logoutBtn')?.addEventListener('click', () => { auth.logout(); });
+        });
+
+        async function loadData() {
+            try {
+                const res = await api.get('/supervisor/assignments.php');
+                if (res.success) renderAssignments(res.data);
+
+                const instRes = await api.get('/supervisor/instructors.php');
+                if (instRes.success) renderInstructors(instRes.data);
+            } catch (e) { console.error(e); }
+        }
+
+        function renderAssignments(data) {
+            const current = data.filter(a => a.instructor_id);
+            const unassigned = data.filter(a => !a.instructor_id);
+
+            document.getElementById('statAssigned').innerText = current.length;
+            document.getElementById('statUnassigned').innerText = unassigned.length;
+
+            document.getElementById('assignmentsTable').innerHTML = current.map(row => `
+                <tr>
+                    <td>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div class="user-avatar" style="width: 32px; height: 32px; font-size: 14px;">${(row.student_name || 'S').substring(0, 1)}</div>
+                            <div style="font-weight: 600;">${row.student_name}</div>
+                        </div>
+                    </td>
+                    <td>${row.program_name}</td>
+                    <td>👨‍🏫 ${row.instructor_name}</td>
+                    <td><button class="btn-sm" onclick="openAssignModal(${row.enrollment_id}, '${row.student_name}')">Reassign</button></td>
+                </tr>
+            `).join('');
+
+            document.getElementById('unassignedTable').innerHTML = unassigned.map(row => `
+                <tr>
+                    <td>${row.student_name}</td>
+                    <td>${row.program_name}</td>
+                    <td>${new Date(row.enrolled_at).toLocaleDateString()}</td>
+                    <td><button class="btn-sm btn-primary" onclick="openAssignModal(${row.enrollment_id}, '${row.student_name}')">Assign Now</button></td>
+                </tr>
+            `).join('');
+
+            document.getElementById('studentSelect').innerHTML = '<option value="">Choose Student</option>' + 
+                unassigned.map(s => `<option value="${s.enrollment_id}">${s.student_name}</option>`).join('');
+        }
+
+        function renderInstructors(data) {
+            document.getElementById('statInstructors').innerText = data.length;
+            document.getElementById('instructorsTable').innerHTML = data.map(i => `
+                <tr><td>👨‍🏫 ${i.full_name}</td><td>${i.total_lessons || 0}</td><td><span class="badge badge-success">Available</span></td></tr>
+            `).join('');
+
+            document.getElementById('instructorSelect').innerHTML = '<option value="">Choose Instructor</option>' + 
+                data.map(i => `<option value="${i.id}">${i.full_name}</option>`).join('');
+        }
+
+        function openAssignModal(enrollmentId, studentName) {
+            currentEnrollmentId = enrollmentId;
+            document.getElementById('studentSelectGroup').style.display = 'none';
+            document.getElementById('studentInfoBox').style.display = 'block';
+            document.getElementById('modalStudentName').innerText = studentName;
+            document.getElementById('assignmentModal').classList.add('active');
+        }
+
+        function openManualAssignModal() {
+            currentEnrollmentId = null;
+            document.getElementById('studentSelectGroup').style.display = 'block';
+            document.getElementById('studentInfoBox').style.display = 'none';
+            document.getElementById('assignmentModal').classList.add('active');
+        }
+
+        function closeModal() { document.getElementById('assignmentModal').classList.remove('active'); }
+
+        async function submitAssignment() {
+            const eid = currentEnrollmentId || document.getElementById('studentSelect').value;
+            const iid = document.getElementById('instructorSelect').value;
+            if (!eid || !iid) return;
+            const res = await api.post('/supervisor/assignments.php', { enrollment_id: eid, instructor_id: iid });
+            if (res.success) { 
+                if (typeof utils !== 'undefined') utils.showNotification('Successfully assigned!', 'success');
+                closeModal(); await loadData(); 
+            }
+        }
+    </script>
+</body>
+</html>

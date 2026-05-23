@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instructor Dashboard - DLSM Ethiopia</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/dark-mode.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/i18n.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/i18n.js"></script>
+    <script src="../assets/js/auth-guard.js"></script>
+</head>
+<body class="dashboard-body">
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <img src="../assets/images/logo-DLSM.jpg" alt="DLSM Logo" class="logo-icon" style="height: 32px; width: auto; border-radius: 6px;">
+                <span class="logo-text">DLSM</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item active" data-i18n="instructor.dashboard">
+                <span class="nav-icon">📊</span>
+                <span class="nav-text">Dashboard</span>
+            </a>
+            <a href="profile.html" class="nav-item" data-i18n="instructor.profile">
+                <span class="nav-icon">👤</span>
+                <span class="nav-text">Profile</span>
+            </a>
+            <a href="my-students.html" class="nav-item" data-i18n="instructor.myStudents">
+                <span class="nav-icon">👥</span>
+                <span class="nav-text">My Students</span>
+            </a>
+            <a href="sessions.html" class="nav-item" data-i18n="instructor.sessions">
+                <span class="nav-icon">🚗</span>
+                <span class="nav-text">Sessions</span>
+            </a>
+            <a href="schedule.html" class="nav-item" data-i18n="instructor.schedule">
+                <span class="nav-icon">📅</span>
+                <span class="nav-text">Schedule</span>
+            </a>
+            <a href="attendance.html" class="nav-item" data-i18n="instructor.attendance">
+                <span class="nav-icon">✅</span>
+                <span class="nav-text">Attendance</span>
+            </a>
+            <a href="evaluations.html" class="nav-item" data-i18n="instructor.evaluations">
+                <span class="nav-icon">📝</span>
+                <span class="nav-text">Evaluations</span>
+            </a>
+            <a href="feedback.html" class="nav-item" data-i18n="instructor.feedback">
+                <span class="nav-icon">💬</span>
+                <span class="nav-text">Feedback</span>
+            </a>
+            <a href="progress.html" class="nav-item" data-i18n="instructor.progress">
+                <span class="nav-icon">📈</span>
+                <span class="nav-text">Progress</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <button class="btn-logout" id="logoutBtn" data-i18n="common.logout">
+                <span class="nav-icon">🚪</span>
+                <span class="nav-text">Logout</span>
+            </button>
+        </div>
+    </aside>
+
+    
+    <main class="main-content">
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+                <div>
+                    <h1 class="page-title" data-i18n="instructor.dashboard">Instructor Dashboard</h1>
+                    <p class="page-subtitle" id="welcomeMsg" data-i18n="instructor.welcomeMessage">Welcome back! You have 4 lessons scheduled for today.</p>
+                </div>
+            </div>
+            <div class="topbar-right">
+              
+                <div class="user-profile">
+                    <div class="user-avatar" id="topbarAvatar">👤</div>
+                    <div class="user-info">
+                        <span class="user-name" id="userName">Instructor</span>
+                        <span class="user-role">Instructor</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="dashboard-container">
+
+            
+            <div class="stats-grid">
+                <div class="stat-card blue">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-info">
+                        <p class="stat-label">My Students</p>
+                        <h3 class="stat-value">24</h3>
+                        <span class="stat-change positive">+3 this month</span>
+                    </div>
+                </div>
+                <div class="stat-card green">
+                    <div class="stat-icon">🚗</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Sessions Today</p>
+                        <h3 class="stat-value">4</h3>
+                        <span class="stat-change">2 completed</span>
+                    </div>
+                </div>
+                <div class="stat-card orange">
+                    <div class="stat-icon">⏱️</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Hours Taught</p>
+                        <h3 class="stat-value">128</h3>
+                        <span class="stat-change positive">+12 this week</span>
+                    </div>
+                </div>
+                <div class="stat-card purple">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Pass Rate</p>
+                        <h3 class="stat-value">94%</h3>
+                        <span class="stat-change positive">Above average</span>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="card" style="margin-bottom: 32px; background: linear-gradient(135deg, #0B4F8C 0%, #1E5FA0 100%); color: white; border: none;">
+                <div style="display: flex; align-items: center; gap: 20px;">
+                    <div style="font-size: 48px;">🚗</div>
+                    <div style="flex: 1;">
+                        <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 8px; color: white;">Current Session In Progress</h3>
+                        <p style="font-size: 15px; margin-bottom: 12px; opacity: 0.95;">Advanced City Maneuvers • 09:00 AM - 10:30 AM</p>
+                        <div style="display: flex; align-items: center; gap: 16px;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <div style="width: 32px; height: 32px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center;">👤</div>
+                                <span style="font-weight: 600;">Elena Rodriguez</span>
+                            </div>
+                            <div style="padding: 4px 12px; background: rgba(16, 185, 129, 0.2); border-radius: 6px; font-size: 13px; font-weight: 600;">Lesson 8 of 12</div>
+                            <div style="padding: 4px 12px; background: rgba(255,255,255,0.2); border-radius: 6px; font-size: 13px; font-weight: 600;">Driver ID: #ST-4429</div>
+                        </div>
+                    </div>
+                    <button class="btn-success" style="padding: 12px 24px; font-size: 15px;">View Details</button>
+                </div>
+            </div>
+
+            
+            <div class="card" style="margin-bottom: 32px;">
+                <div class="card-title">
+                    <span>⚡ Quick Actions</span>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+                    <a href="sessions.html" class="quick-action-btn">
+                        <div class="qa-icon" style="background: #dcfce7;">🚗</div>
+                        <div class="qa-text">Start New Session</div>
+                    </a>
+                    <a href="attendance.html" class="quick-action-btn">
+                        <div class="qa-icon" style="background: #dbeafe;">✅</div>
+                        <div class="qa-text">Mark Attendance</div>
+                    </a>
+                    <a href="evaluations.html" class="quick-action-btn">
+                        <div class="qa-icon" style="background: #fef3c7;">📝</div>
+                        <div class="qa-text">Submit Evaluation</div>
+                    </a>
+                    <a href="feedback.html" class="quick-action-btn">
+                        <div class="qa-icon" style="background: #e9d5ff;">💬</div>
+                        <div class="qa-text">Give Feedback</div>
+                    </a>
+                </div>
+            </div>
+
+            
+            <div class="card" style="margin-bottom: 32px;">
+                <div class="card-title">
+                    <span>📝 Pending Evaluations</span>
+                    <a href="evaluations.html">View All →</a>
+                </div>
+                <div>
+                    <div class="approval-item">
+                        <div class="approval-avatar">👤</div>
+                        <div class="approval-info">
+                            <h4>James Wilson</h4>
+                            <p>Session: Parallel Parking • Completed 2 hours ago</p>
+                            <span style="font-size: 12px; color: #f59e0b;">⏳ Awaiting Evaluation</span>
+                        </div>
+                        <div class="approval-actions">
+                            <button class="btn-sm-approve">Evaluate Now</button>
+                        </div>
+                    </div>
+                    <div class="approval-item">
+                        <div class="approval-avatar">👤</div>
+                        <div class="approval-info">
+                            <h4>Sarah Chen</h4>
+                            <p>Session: Highway Entry • Completed yesterday</p>
+                            <span style="font-size: 12px; color: #f59e0b;">⏳ Awaiting Evaluation</span>
+                        </div>
+                        <div class="approval-actions">
+                            <button class="btn-sm-approve">Evaluate Now</button>
+                        </div>
+                    </div>
+                    <div class="approval-item">
+                        <div class="approval-avatar">👤</div>
+                        <div class="approval-info">
+                            <h4>Liam O'Connell</h4>
+                            <p>Session: Night Driving • Completed 2 days ago</p>
+                            <span style="font-size: 12px; color: #dc2626;">⚠ Overdue</span>
+                        </div>
+                        <div class="approval-actions">
+                            <button class="btn-sm-approve">Evaluate Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="dashboard-grid-3">
+                
+                <div class="card">
+                    <div class="card-title"><span>📅 Today's Schedule</span></div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">09:00 AM</div>
+                        <div class="timeline-content">
+                            <h4>Advanced City Maneuvers</h4>
+                            <p>Elena Rodriguez • Car #14</p>
+                            <span class="badge-success">In Progress</span>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">11:00 AM</div>
+                        <div class="timeline-content">
+                            <h4>Practical: Urban Traffic</h4>
+                            <p>David Miller • Car #22</p>
+                            <span class="badge-info">Upcoming</span>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">02:00 PM</div>
+                        <div class="timeline-content">
+                            <h4>Practical: Reversing</h4>
+                            <p>Emma Wright • Car #14</p>
+                            <span class="badge-info">Upcoming</span>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">04:00 PM</div>
+                        <div class="timeline-content">
+                            <h4>Final Pre-test Drive</h4>
+                            <p>Ben Jackson • Car #22</p>
+                            <span class="badge-warning">Important</span>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="card">
+                    <div class="card-title"><span>📊 Student Progress</span></div>
+                    <div class="program-item">
+                        <div class="program-label">
+                            <span>👤 Michael Brown</span>
+                            <span>65%</span>
+                        </div>
+                        <div class="prog-bar"><div class="prog-fill fill-blue" style="width: 65%"></div></div>
+                        <p style="font-size: 12px; color: #64748b; margin-top: 4px;">Intersection Safety • On Track</p>
+                    </div>
+                    <div class="program-item">
+                        <div class="program-label">
+                            <span>👤 Lucas Thorne</span>
+                            <span>42%</span>
+                        </div>
+                        <div class="prog-bar"><div class="prog-fill fill-orange" style="width: 42%"></div></div>
+                        <p style="font-size: 12px; color: #64748b; margin-top: 4px;">Emergency Braking • Needs Practice</p>
+                    </div>
+                    <div class="program-item">
+                        <div class="program-label">
+                            <span>👤 Isabella Gray</span>
+                            <span>88%</span>
+                        </div>
+                        <div class="prog-bar"><div class="prog-fill fill-green" style="width: 88%"></div></div>
+                        <p style="font-size: 12px; color: #64748b; margin-top: 4px;">Night Vision Drills • Advanced</p>
+                    </div>
+                    <div class="program-item">
+                        <div class="program-label">
+                            <span>👤 Oliver Smith</span>
+                            <span>95%</span>
+                        </div>
+                        <div class="prog-bar"><div class="prog-fill fill-green" style="width: 95%"></div></div>
+                        <p style="font-size: 12px; color: #64748b; margin-top: 4px;">Ready for Exam • Excellent</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/dashboard.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async function () {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const sidebar = document.getElementById('sidebar');
+            const backdrop = document.getElementById('sidebarBackdrop');
+            const user = auth.getCurrentUser();
+            
+            if (!user) { 
+                window.location.href = '../login.html'; 
+                return; 
+            }
+            
+            // Update user name
+            document.getElementById('userName').textContent = user.name || 'Instructor';
+            
+            // Load instructor dashboard data from API
+            await loadInstructorDashboard();
+            
+            // Update welcome message
+            const welcomeMsg = document.getElementById('welcomeMsg');
+            if (welcomeMsg) {
+                welcomeMsg.textContent = 'Welcome back, ' + (user.name || 'Instructor') + '! You have 4 lessons scheduled for today.';
+            }
+            
+
+            
+            // Mobile menu is auto-initialized by dashboard.js
+            
+            if (mobileMenuBtn && sidebar && backdrop) {
+                mobileMenuBtn.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    sidebar.classList.toggle('mobile-open');
+                    backdrop.classList.toggle('active');
+                });
+            }
+            
+            if (backdrop && sidebar) {
+                backdrop.addEventListener('click', function () {
+                    sidebar.classList.remove('mobile-open');
+                    backdrop.classList.remove('active');
+                });
+            }
+        });
+        
+        // Load instructor dashboard data from API
+        async function loadInstructorDashboard() {
+            try {
+                const response = await api.get('/instructors/dashboard.php');
+                if (response.success && response.data) {
+                    const { stats, recent_lessons } = response.data;
+                    
+                    const statValues = document.querySelectorAll('.stat-card .stat-value');
+                    if (statValues.length >= 4) {
+                        statValues[0].textContent = stats.total_students || '0';
+                        statValues[1].textContent = stats.lessons_today || '0';
+                        statValues[2].textContent = stats.pending_evaluations || '0';
+                        statValues[3].textContent = (stats.average_rating || 0) + '/100';
+                    }
+                    
+                    const welcomeMsg = document.getElementById('welcomeMsg');
+                    if (welcomeMsg) {
+                        welcomeMsg.textContent = `Welcome back! You have ${stats.lessons_today || 0} lessons scheduled for today.`;
+                    }
+
+                    updateTodaySchedule(recent_lessons);
+                }
+            } catch (error) {
+                console.error('Error loading instructor dashboard:', error);
+            }
+        }
+        
+        function updateTodaySchedule(lessons) {
+            const timelineContainer = document.querySelector('.timeline-item').parentNode;
+            if (!timelineContainer) return;
+            
+            const existingItems = timelineContainer.querySelectorAll('.timeline-item');
+            existingItems.forEach(item => item.remove());
+            
+            if (lessons.length === 0) {
+                timelineContainer.innerHTML += '<div class="timeline-item"><div class="timeline-content"><p>No recent lessons</p></div></div>';
+                return;
+            }
+
+            lessons.forEach(lesson => {
+                const sessionDate = new Date(lesson.session_date);
+                const timeStr = sessionDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                
+                const timelineItem = document.createElement('div');
+                timelineItem.className = 'timeline-item';
+                timelineItem.innerHTML = `
+                    <div class="timeline-time">${timeStr}</div>
+                    <div class="timeline-content">
+                        <h4>${lesson.lesson_type.toUpperCase()}: ${lesson.program_name}</h4>
+                        <p>${lesson.first_name} ${lesson.last_name}</p>
+                        <span class="badge-${lesson.attendance == 1 ? 'success' : 'info'}">
+                            ${lesson.attendance == 1 ? 'Completed' : 'Scheduled'}
+                        </span>
+                    </div>
+                `;
+                timelineContainer.appendChild(timelineItem);
+            });
+        }
+    </script>
+</body>
+</html>

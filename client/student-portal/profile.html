@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - DLSM Ethiopia</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/dark-mode.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/auth-guard.js"></script>
+</head>
+<body class="dashboard-body">
+    
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+    
+    
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <img src="../assets/images/logo-DLSM.jpg" alt="DLSM Logo" class="logo-icon" style="height: 32px; width: auto; border-radius: 6px;">
+                <span class="logo-text">DLSM</span>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">
+                <span class="nav-icon">📊</span>
+                <span class="nav-text">Dashboard</span>
+            </a>
+            <a href="profile.html" class="nav-item active">
+                <span class="nav-icon">👤</span>
+                <span class="nav-text">My Profile</span>
+            </a>
+            <a href="schedule.html" class="nav-item">
+                <span class="nav-icon">📅</span>
+                <span class="nav-text">Schedule</span>
+            </a>
+            <a href="progress.html" class="nav-item">
+                <span class="nav-icon">📈</span>
+                <span class="nav-text">My Progress</span>
+            </a>
+            <a href="exams.html" class="nav-item">
+                <span class="nav-icon">📝</span>
+                <span class="nav-text">Exams</span>
+            </a>
+            <a href="certificate.html" class="nav-item">
+                <span class="nav-icon">🎓</span>
+                <span class="nav-text">Certificate</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <button class="btn-logout" id="logoutBtn">
+                <span class="nav-icon">🚪</span>
+                <span class="nav-text">Logout</span>
+            </button>
+        </div>
+    </aside>
+
+    
+    <main class="main-content">
+        
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+                <div>
+                    <h1 class="page-title">My Profile</h1>
+                    <p class="page-subtitle">Manage your personal information</p>
+                </div>
+            </div>
+            <div class="topbar-right">
+                <div class="user-profile">
+                    <div class="user-avatar">👤</div>
+                    <div class="user-info">
+                        <span class="user-name" id="userName">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        
+        <div class="dashboard-container">
+            <div class="profile-layout">
+                
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <div class="profile-avatar-large">
+                            <span class="avatar-icon">👤</span>
+                        </div>
+                        <input type="file" id="photoInput" accept="image/*" style="display: none;">
+                        <button class="btn-secondary btn-small" id="changePhotoBtn">Change Photo</button>
+                    </div>
+                    <div class="profile-info-center">
+                        <h2 id="profileName">Loading...</h2>
+                        <p class="profile-email" id="profileEmail">email@example.com</p>
+                        <span class="status-badge active" id="accountStatus">Active</span>
+                    </div>
+                    <div class="profile-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">25</span>
+                            <span class="stat-label">Hours Completed</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">15</span>
+                            <span class="stat-label">Hours Remaining</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">62%</span>
+                            <span class="stat-label">Progress</span>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3 class="card-title">Personal Information</h3>
+                        <button class="btn-primary btn-small" id="editBtn">Edit Profile</button>
+                    </div>
+                    
+                    <form id="profileForm" class="profile-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Full Name</label>
+                                <input type="text" id="fullName" class="form-input" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Email Address</label>
+                                <input type="email" id="email" class="form-input" disabled>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Phone Number</label>
+                                <input type="tel" id="phone" class="form-input" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">National ID</label>
+                                <input type="text" id="nationalId" class="form-input" disabled>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Date of Birth</label>
+                                <input type="date" id="dateOfBirth" class="form-input" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Region</label>
+                                <input type="text" id="region" class="form-input" disabled>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">City</label>
+                                <input type="text" id="city" class="form-input" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">License Type</label>
+                                <input type="text" id="licenseType" class="form-input" disabled>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Experience Level</label>
+                                <input type="text" id="experience" class="form-input" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Member Since</label>
+                                <input type="text" id="memberSince" class="form-input" disabled>
+                            </div>
+                        </div>
+
+                        <div class="form-actions" id="formActions" style="display: none;">
+                            <button type="button" class="btn-secondary" id="cancelBtn">Cancel</button>
+                            <button type="submit" class="btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+
+                
+                <div class="dashboard-card">
+                    <h3 class="card-title">Upload Documents</h3>
+                    <p class="card-subtitle">Upload your required documents for verification</p>
+                    
+                    <div class="documents-grid">
+                        
+                        <div class="document-upload-card">
+                            <div class="document-icon">🆔</div>
+                            <h4 class="document-title">National ID</h4>
+                            <p class="document-status pending" id="nationalIdStatus">Not Uploaded</p>
+                            <input type="file" id="nationalIdFile" accept="image/*,.pdf">
+                            <p class="upload-hint">Choose image or PDF file</p>
+                        </div>
+
+                        
+                        <div class="document-upload-card">
+                            <div class="document-icon">📷</div>
+                            <h4 class="document-title">Passport Photo</h4>
+                            <p class="document-status pending" id="photoStatus">Not Uploaded</p>
+                            <input type="file" id="photoFile" accept="image/*">
+                            <p class="upload-hint">Choose photo from device</p>
+                        </div>
+
+                        
+                        <div class="document-upload-card">
+                            <div class="document-icon">🏥</div>
+                            <h4 class="document-title">Medical Certificate</h4>
+                            <p class="document-status pending" id="medicalStatus">Not Uploaded</p>
+                            <input type="file" id="medicalFile" accept="image/*,.pdf">
+                            <p class="upload-hint">Choose image or PDF file</p>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="dashboard-card">
+                    <h3 class="card-title">Change Password</h3>
+                    <form id="passwordForm" class="profile-form">
+                        <div class="form-group">
+                            <label class="form-label">Current Password</label>
+                            <input type="password" id="currentPassword" class="form-input" placeholder="Enter current password">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">New Password</label>
+                            <input type="password" id="newPassword" class="form-input" placeholder="Enter new password">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Confirm New Password</label>
+                            <input type="password" id="confirmPassword" class="form-input" placeholder="Confirm new password">
+                        </div>
+                        <button type="submit" class="btn-primary">Update Password</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    
+    <div id="toast" class="toast"></div>
+
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/dashboard.js"></script>
+    <script>
+        // Check authentication
+        document.addEventListener('DOMContentLoaded', async function() {
+            const user = dashboard.init({ requiredRole: 'student' });
+            if (!user) return;
+            
+            // Display user info in topbar
+            document.getElementById('userName').textContent = user.name || 'Student';
+            
+            // Load saved profile photo if exists
+            loadSavedProfilePhoto(user.id);
+            
+            // Load profile data from API
+            await loadProfileData(user);
+            
+            // Change photo button handler
+            document.getElementById('changePhotoBtn').addEventListener('click', function() {
+                document.getElementById('photoInput').click();
+            });
+            
+            // Photo input change handler
+            document.getElementById('photoInput').addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    if (file.size > 5 * 1024 * 1024) { // 5MB limit
+                        utils.showNotification('Photo size must be less than 5MB', 'error');
+                        return;
+                    }
+                    
+                    if (!file.type.startsWith('image/')) {
+                        utils.showNotification('Please select a valid image file', 'error');
+                        return;
+                    }
+                    
+                    // Read and display the image
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        const imageData = event.target.result;
+                        
+                        // Update profile avatar
+                        const avatarIcon = document.querySelector('.profile-avatar-large .avatar-icon');
+                        setAvatarImage(avatarIcon, imageData, 'Profile Photo');
+                        
+                        // Update topbar avatar
+                        const topbarAvatar = document.querySelector('.user-avatar');
+                        setAvatarImage(topbarAvatar, imageData, 'Profile');
+                        
+                        // Save to localStorage
+                        const user = auth.getCurrentUser();
+                        localStorage.setItem(`profilePhoto_${user.id}`, imageData);
+                        
+                        console.log('Photo uploaded:', file.name);
+                        utils.showNotification('Photo uploaded successfully!', 'success');
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            // Document upload handlers
+            setupDocumentUpload('nationalIdFile', 'National ID', 'nationalIdStatus');
+            setupDocumentUpload('photoFile', 'Passport Photo', 'photoStatus');
+            setupDocumentUpload('medicalFile', 'Medical Certificate', 'medicalStatus');
+            
+            // Edit button handler
+            document.getElementById('editBtn').addEventListener('click', enableEdit);
+            
+            // Cancel button handler
+            document.getElementById('cancelBtn').addEventListener('click', cancelEdit);
+            
+            // Profile form submit
+            document.getElementById('profileForm').addEventListener('submit', saveProfile);
+            
+            // Password form submit
+            document.getElementById('passwordForm').addEventListener('submit', changePassword);
+            
+            // Mobile menu is auto-initialized by dashboard.js
+
+
+        });
+
+        function setAvatarImage(container, src, altText) {
+            if (!container || !src) return;
+            const img = document.createElement('img');
+            img.src = src;
+            img.alt = altText || 'Profile';
+            img.style.width = '100%';
+            img.style.height = '100%';
+            img.style.objectFit = 'cover';
+            img.style.borderRadius = '50%';
+            container.replaceChildren(img);
+        }
+
+        async function loadProfileData(user) {
+            try {
+                console.log('Loading profile data from API...');
+                const response = await api.request('/profile.php');
+                
+                if (response.success && response.data) {
+                    const profile = response.data.user;
+                    const details = response.data.details || {};
+                    
+                    // Update profile display
+                    const fullName = `${profile.first_name} ${profile.last_name}`;
+                    document.getElementById('profileName').textContent = fullName;
+                    document.getElementById('profileEmail').textContent = profile.email || 'email@example.com';
+                    document.getElementById('fullName').value = fullName;
+                    document.getElementById('email').value = profile.email || '';
+                    document.getElementById('phone').value = profile.phone || '';
+                    
+                    document.getElementById('nationalId').value = details.national_id || '';
+                    document.getElementById('dateOfBirth').value = details.date_of_birth || '';
+                    document.getElementById('region').value = details.region || '';
+                    document.getElementById('city').value = details.city || '';
+                    
+                    // License type mapping
+                    const licenseTypes = {
+                        'A': 'Motorcycle (Level 1)',
+                        'B': 'Private Car (Level 2)',
+                        'C': 'Heavy Truck (Level 3)',
+                        'D': 'People Transportation (Level 4)',
+                        'E': 'Bus Driver (Level 5)'
+                    };
+                    document.getElementById('licenseType').value = licenseTypes[details.license_class] || 'Not Set';
+                    document.getElementById('experience').value = details.experience || 'Beginner';
+                    
+                    // Format enrollment date
+                    if (profile.created_at) {
+                        const enrollDate = new Date(profile.created_at);
+                        document.getElementById('memberSince').value = enrollDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+                    }
+                    
+                    // Set account status
+                    const statusBadge = document.getElementById('accountStatus');
+                    if (profile.status === 'active') {
+                        statusBadge.textContent = 'Active';
+                        statusBadge.className = 'status-badge active';
+                    } else if (profile.status === 'pending') {
+                        statusBadge.textContent = 'Pending Approval';
+                        statusBadge.className = 'status-badge pending';
+                    } else {
+                        statusBadge.textContent = 'Inactive';
+                        statusBadge.className = 'status-badge inactive';
+                    }
+                    // Load documents from API
+                    if (response.data.documents) {
+                        const docs = response.data.documents;
+                        if (docs.nationalId) {
+                            const statusEl = document.getElementById('nationalIdStatus');
+                            statusEl.textContent = 'Uploaded ✓';
+                            statusEl.className = 'document-status uploaded';
+                        }
+                        if (docs.photo) {
+                            const statusEl = document.getElementById('photoStatus');
+                            statusEl.textContent = 'Uploaded ✓';
+                            statusEl.className = 'document-status uploaded';
+                        }
+                        if (docs.medical) {
+                            const statusEl = document.getElementById('medicalStatus');
+                            statusEl.textContent = 'Uploaded ✓';
+                            statusEl.className = 'document-status uploaded';
+                        }
+                    }
+                } else {
+                    utils.showNotification(response.message || 'Failed to load profile data', 'error');
+                }
+            } catch (error) {
+                console.error('Error loading profile:', error);
+                utils.showNotification('Error loading profile data', 'error');
+            }
+        }
+
+        function loadSavedProfilePhoto(userId) {
+            const savedPhoto = localStorage.getItem(`profilePhoto_${userId}`);
+            if (savedPhoto) {
+                const avatarIcon = document.querySelector('.profile-avatar-large .avatar-icon');
+                if (avatarIcon) setAvatarImage(avatarIcon, savedPhoto, 'Profile Photo');
+                const topbarAvatar = document.querySelector('.user-avatar');
+                if (topbarAvatar) setAvatarImage(topbarAvatar, savedPhoto, 'Profile');
+            }
+        }
+
+        function saveDocumentStatus(userId, docType, fileName, fileSize) {
+            const storageKey = `documents_${userId}`;
+            let docs = {};
+            
+            // Get existing documents
+            const savedDocs = localStorage.getItem(storageKey);
+            if (savedDocs) {
+                docs = JSON.parse(savedDocs);
+            }
+            
+            // Add/update document
+            docs[docType] = {
+                name: fileName,
+                size: fileSize,
+                uploadedAt: new Date().toISOString()
+            };
+            
+            // Save to localStorage
+            localStorage.setItem(storageKey, JSON.stringify(docs));
+        }
+
+        function enableEdit() {
+            // Enable form fields
+            const fields = ['fullName', 'phone', 'city'];
+            fields.forEach(field => {
+                document.getElementById(field).disabled = false;
+            });
+            
+            // Show action buttons
+            document.getElementById('formActions').style.display = 'flex';
+            document.getElementById('editBtn').style.display = 'none';
+        }
+
+        function cancelEdit() {
+            // Disable form fields
+            const fields = ['fullName', 'phone', 'city'];
+            fields.forEach(field => {
+                document.getElementById(field).disabled = true;
+            });
+            
+            // Hide action buttons
+            document.getElementById('formActions').style.display = 'none';
+            document.getElementById('editBtn').style.display = 'block';
+            
+            // Reload original data
+            const user = auth.getCurrentUser();
+            loadProfileData(user);
+        }
+
+        async function saveProfile(e) {
+            e.preventDefault();
+            
+            const fullName = document.getElementById('fullName').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const city = document.getElementById('city').value.trim();
+            
+            // Split name safely
+            const nameParts = fullName.split(' ');
+            const firstName = nameParts[0] || '';
+            const lastName = nameParts.slice(1).join(' ') || '';
+            
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Saving...';
+            
+            try {
+                const response = await api.request('/profile.php', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        first_name: firstName,
+                        last_name: lastName,
+                        phone: phone,
+                        details: {
+                            city: city,
+                            national_id: document.getElementById('nationalId').value,
+                            date_of_birth: document.getElementById('dateOfBirth').value,
+                            region: document.getElementById('region').value,
+                            experience_level: document.getElementById('experience').value
+                        }
+                    })
+                });
+                
+                if (response.success) {
+                    utils.showNotification('Profile updated successfully!', 'success');
+                    const user = auth.getCurrentUser();
+                    user.name = fullName;
+                    localStorage.setItem('user', JSON.stringify(user));
+                    document.getElementById('userName').textContent = fullName;
+                    cancelEdit();
+                } else {
+                    utils.showNotification(response.message || 'Update failed', 'error');
+                }
+            } catch (error) {
+                console.error('Error updating profile:', error);
+                utils.showNotification('Failed to update profile', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+            }
+        }
+
+        async function changePassword(e) {
+            e.preventDefault();
+            utils.showNotification('Password change requires additional API configuration.', 'info');
+        }
+
+        function setupDocumentUpload(inputId, documentName, statusId) {
+            document.getElementById(inputId).addEventListener('change', async function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+                
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append('type', inputId.replace('File', ''));
+                
+                try {
+                    utils.showNotification(`Uploading ${documentName}...`, 'info');
+                    const response = await api.request('/students/upload.php', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    if (response.message) {
+                        utils.showNotification(`${documentName} uploaded successfully!`, 'success');
+                        const statusEl = document.getElementById(statusId);
+                        if (statusEl) {
+                            statusEl.textContent = `Uploaded ✓ (${file.name})`;
+                            statusEl.className = 'document-status uploaded';
+                        }
+                    } else {
+                        utils.showNotification(response.error || 'Upload failed', 'error');
+                    }
+                } catch (error) {
+                    console.error('Upload error:', error);
+                    utils.showNotification('Upload failed', 'error');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificates - DLSM Ethiopia</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/dark-mode.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/auth-guard.js"></script>
+</head>
+<body class="dashboard-body">
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <img src="../assets/images/logo-DLSM.jpg" alt="DLSM Logo" class="logo-icon" style="height: 32px; width: auto; border-radius: 6px;">
+                <span class="logo-text">DLSM</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">
+                <span class="nav-icon">📊</span>
+                <span class="nav-text">Dashboard</span>
+            </a>
+            <a href="users.html" class="nav-item">
+                <span class="nav-icon">👥</span>
+                <span class="nav-text">Users</span>
+            </a>
+            <a href="programs.html" class="nav-item">
+                <span class="nav-icon">📚</span>
+                <span class="nav-text">Programs</span>
+            </a>
+            <a href="enrollments.html" class="nav-item">
+                <span class="nav-icon">📋</span>
+                <span class="nav-text">Enrollments</span>
+            </a>
+            <a href="approvals.html" class="nav-item">
+                <span class="nav-icon">✅</span>
+                <span class="nav-text">Approvals</span>
+            </a>
+            <a href="exams.html" class="nav-item">
+                <span class="nav-icon">📝</span>
+                <span class="nav-text">Exams</span>
+            </a>
+            <a href="certificates.html" class="nav-item active">
+                <span class="nav-icon">🎓</span>
+                <span class="nav-text">Certificates</span>
+            </a>
+            <a href="reports.html" class="nav-item">
+                <span class="nav-icon">📈</span>
+                <span class="nav-text">Reports</span>
+            </a>
+            <a href="audit-logs.html" class="nav-item">
+                <span class="nav-icon">📜</span>
+                <span class="nav-text">Audit Logs</span>
+            </a>
+            <a href="notifications.html" class="nav-item">
+                <span class="nav-icon">🔔</span>
+                <span class="nav-text">Notifications</span>
+            </a>
+            <a href="profile.html" class="nav-item">
+                <span class="nav-icon">👤</span>
+                <span class="nav-text">My Profile</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <button class="btn-logout" id="logoutBtn">
+                <span class="nav-icon">🚪</span>
+                <span class="nav-text">Logout</span>
+            </button>
+        </div>
+    </aside>
+
+    
+    <main class="main-content">
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+                <div>
+                    <h1 class="page-title">Certificates</h1>
+                    <p class="page-subtitle">Approve graduation and issue certificates</p>
+                </div>
+            </div>
+            <div class="topbar-right">
+                <div class="user-profile">
+                    <div class="user-avatar">👤</div>
+                    <div class="user-info">
+                        <span class="user-name" id="userName">Manager</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="dashboard-container">
+
+            
+            <div class="stats-grid">
+                <div class="stat-card orange">
+                    <div class="stat-icon">⏳</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Pending Approval</p>
+                        <h3 class="stat-value" id="statPending">3</h3>
+                    </div>
+                </div>
+                <div class="stat-card green">
+                    <div class="stat-icon">🎓</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Issued This Month</p>
+                        <h3 class="stat-value">8</h3>
+                    </div>
+                </div>
+                <div class="stat-card blue">
+                    <div class="stat-icon">📜</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Total Issued</p>
+                        <h3 class="stat-value">42</h3>
+                    </div>
+                </div>
+                <div class="stat-card purple">
+                    <div class="stat-icon">❌</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Rejected</p>
+                        <h3 class="stat-value">2</h3>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="tabs tabs-mt">
+                <button class="tab-btn active" data-tab="pending">Pending Approval</button>
+                <button class="tab-btn" data-tab="issued">Issued</button>
+                <button class="tab-btn" data-tab="rejected">Rejected</button>
+            </div>
+
+            
+            <div class="tab-panel active" id="tab-pending">
+                <div class="approvals-table-wrap">
+                    <div class="table-header">
+                        <h3>Students Awaiting Graduation Approval</h3>
+                        <input type="text" class="search-input" placeholder="🔍 Search..." id="searchPending">
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Student</th>
+                                <th>Program</th>
+                                <th>Completion Date</th>
+                                <th>Theory Score</th>
+                                <th>Practical Score</th>
+                                <th>Final Score</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pendingBody">
+                            <tr data-id="1">
+                                <td><strong>Hana Bekele</strong><br><span class="td-sub">hana@email.com</span></td>
+                                <td>Private Car (B)</td>
+                                <td>Apr 15, 2026</td>
+                                <td><strong class="score-pass">90%</strong></td>
+                                <td><strong class="score-pass">94%</strong></td>
+                                <td><strong class="score-pass">92%</strong></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="btn-view" onclick="previewCert(this, 'Hana Bekele', 'Private Car (B)', '92%')">Preview</button>
+                                        <button class="btn-approve" onclick="issueCert(this)">Issue Certificate</button>
+                                        <button class="btn-reject" onclick="rejectCert(this)">Reject</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr data-id="2">
+                                <td><strong>Meron Alemu</strong><br><span class="td-sub">meron@email.com</span></td>
+                                <td>Transport (E)</td>
+                                <td>Apr 16, 2026</td>
+                                <td><strong class="score-pass">85%</strong></td>
+                                <td><strong class="score-pass">88%</strong></td>
+                                <td><strong class="score-pass">87%</strong></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="btn-view" onclick="previewCert(this, 'Meron Alemu', 'Transport (E)', '87%')">Preview</button>
+                                        <button class="btn-approve" onclick="issueCert(this)">Issue Certificate</button>
+                                        <button class="btn-reject" onclick="rejectCert(this)">Reject</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr data-id="3">
+                                <td><strong>Samuel Girma</strong><br><span class="td-sub">samuel@email.com</span></td>
+                                <td>Motorcycle (A)</td>
+                                <td>Apr 18, 2026</td>
+                                <td><strong class="score-pass">78%</strong></td>
+                                <td><strong class="score-pass">82%</strong></td>
+                                <td><strong class="score-pass">80%</strong></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="btn-view" onclick="previewCert(this, 'Samuel Girma', 'Motorcycle (A)', '80%')">Preview</button>
+                                        <button class="btn-approve" onclick="issueCert(this)">Issue Certificate</button>
+                                        <button class="btn-reject" onclick="rejectCert(this)">Reject</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            
+            <div class="tab-panel" id="tab-issued">
+                <div class="approvals-table-wrap">
+                    <div class="table-header">
+                        <h3>Issued Certificates</h3>
+                        <input type="text" class="search-input" placeholder="🔍 Search..." id="searchIssued">
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Certificate No.</th>
+                                <th>Student</th>
+                                <th>Program</th>
+                                <th>Final Score</th>
+                                <th>Issue Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="issuedBody">
+                            <tr>
+                                <td><strong>CERT-2026-001</strong></td>
+                                <td>Liya Tadesse</td>
+                                <td>Bus (D)</td>
+                                <td><strong class="score-pass">91%</strong></td>
+                                <td>Apr 10, 2026</td>
+                                <td><span class="badge badge-approved">Issued</span></td>
+                                <td><button class="btn-view" onclick="previewCert(this,'Liya Tadesse','Bus (D)','91%')">Preview</button></td>
+                            </tr>
+                            <tr>
+                                <td><strong>CERT-2026-002</strong></td>
+                                <td>Dawit Tesfaye</td>
+                                <td>Heavy Truck (C)</td>
+                                <td><strong class="score-pass">85%</strong></td>
+                                <td>Apr 12, 2026</td>
+                                <td><span class="badge badge-approved">Issued</span></td>
+                                <td><button class="btn-view" onclick="previewCert(this,'Dawit Tesfaye','Heavy Truck (C)','85%')">Preview</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            
+            <div class="tab-panel" id="tab-rejected">
+                <div class="approvals-table-wrap">
+                    <div class="table-header">
+                        <h3>Rejected Certificates</h3>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Student</th>
+                                <th>Program</th>
+                                <th>Final Score</th>
+                                <th>Rejected Date</th>
+                                <th>Reason</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rejectedBody">
+                            <tr>
+                                <td>Tigist Haile</td>
+                                <td>Motorcycle (A)</td>
+                                <td><strong class="score-fail">58%</strong></td>
+                                <td>Apr 08, 2026</td>
+                                <td>Below passing score</td>
+                                <td><span class="badge badge-rejected">Rejected</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    
+    <div class="modal-overlay" id="certModal">
+        <div class="modal cert-modal">
+            <h3>Certificate Preview</h3>
+            <div id="certPreview" class="cert-preview">
+                <div class="cert-preview-icon">🎓</div>
+                <div class="cert-preview-org">DLSM Ethiopia</div>
+                <div class="cert-preview-label">This is to certify that</div>
+                <div id="certName" class="cert-preview-name"></div>
+                <div class="cert-preview-label">has successfully completed the</div>
+                <div id="certProgram" class="cert-preview-program"></div>
+                <div class="cert-preview-score-label">training program with a final score of</div>
+                <div id="certScore" class="cert-preview-score"></div>
+                <div class="cert-preview-footer">Issued by DLSM Ethiopia · Federal Transport Authority Approved</div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-close-modal" onclick="closeCertModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/modal.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async function () {
+            const user = auth.getCurrentUser();
+            if (!user) { window.location.href = '../login.html'; return; }
+            document.getElementById('userName').textContent = user.name || 'Manager';
+
+            await loadCertificatesData();
+
+            document.getElementById('logoutBtn').addEventListener('click', () => auth.logout());
+
+            // Tabs
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+                    this.classList.add('active');
+                    document.getElementById('tab-' + this.dataset.tab).classList.add('active');
+                });
+            });
+
+            // Search
+            document.getElementById('searchPending').addEventListener('input', function () { filterTable('pendingBody', this.value); });
+            document.getElementById('searchIssued').addEventListener('input', function () { filterTable('issuedBody', this.value); });
+        });
+
+        async function loadCertificatesData() {
+            try {
+                // Load eligible (pending)
+                const pendingRes = await api.request('/manager/certificates/getEligibleStudents.php');
+                if (pendingRes.success) {
+                    renderPendingTable(pendingRes.data);
+                    document.getElementById('statPending').textContent = pendingRes.data.length;
+                }
+
+                // Load issued
+                const issuedRes = await api.request('/manager/certificates/getAll.php');
+                if (issuedRes.success) {
+                    renderIssuedTable(issuedRes.data);
+                    
+                    const issued = issuedRes.data;
+                    const now = new Date();
+                    const thisMonth = now.getMonth();
+                    const thisYear = now.getFullYear();
+                    
+                    const issuedThisMonth = issued.filter(c => {
+                        const d = new Date(c.issue_date);
+                        return d.getMonth() === thisMonth && d.getFullYear() === thisYear;
+                    }).length;
+                    
+                    const statValues = document.querySelectorAll('.stat-card .stat-value');
+                    statValues[1].textContent = issuedThisMonth;
+                    statValues[2].textContent = issued.length;
+                    // For rejected, we could add an API but let's keep it 0 for now if not available
+                    statValues[3].textContent = 0; 
+                }
+            } catch (error) {
+                console.error('Error loading certificates data:', error);
+            }
+        }
+
+        function renderPendingTable(data) {
+            const tbody = document.getElementById('pendingBody');
+            if (!data || data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:40px;">No students awaiting graduation approval.</td></tr>';
+                return;
+            }
+            tbody.innerHTML = data.map(s => `
+                <tr>
+                    <td><strong>${s.student_name}</strong><br><span class="td-sub">${s.student_email}</span></td>
+                    <td>${s.program_name}</td>
+                    <td>${new Date(s.completion_date).toLocaleDateString()}</td>
+                    <td><strong class="score-pass">${Math.round(s.theory_score)}%</strong></td>
+                    <td><strong class="score-pass">${Math.round(s.practical_score)}%</strong></td>
+                    <td><strong class="score-pass">${Math.round(s.final_score)}%</strong></td>
+                    <td>
+                        <div class="action-btns">
+                            <button class="btn-view" onclick="previewCert(this, '${s.student_name}', '${s.program_name}', '${Math.round(s.final_score)}%')">Preview</button>
+                            <button class="btn-approve" onclick="issueCert(${s.student_id}, ${s.program_id})">Issue Certificate</button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function renderIssuedTable(data) {
+            const tbody = document.getElementById('issuedBody');
+            if (!data || data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:40px;">No certificates issued yet.</td></tr>';
+                return;
+            }
+            tbody.innerHTML = data.map(c => `
+                <tr>
+                    <td><strong>${c.certificate_number}</strong></td>
+                    <td>${c.student_name}</td>
+                    <td>${c.program_name}</td>
+                    <td><strong class="score-pass">N/A</strong></td>
+                    <td>${new Date(c.issue_date).toLocaleDateString()}</td>
+                    <td><span class="badge badge-approved">Issued</span></td>
+                    <td><button class="btn-view" onclick="previewCert(this,'${c.student_name}','${c.program_name}','')">Preview</button></td>
+                </tr>
+            `).join('');
+        }
+
+        async function issueCert(studentId, programId) {
+            if (!confirm('Issue certificate for this student?')) return;
+            try {
+                const response = await api.request('/manager/certificates/issue.php', {
+                    method: 'POST',
+                    body: JSON.stringify({ student_id: studentId, program_id: programId })
+                });
+                if (response.success) {
+                    utils.showNotification('Certificate issued: ' + response.certificate_number, 'success');
+                    await loadCertificatesData();
+                } else {
+                    utils.showNotification(response.message, 'error');
+                }
+            } catch (error) {
+                utils.showNotification('Error issuing certificate', 'error');
+            }
+        }
+
+        function filterTable(tbodyId, query) {
+            document.getElementById(tbodyId).querySelectorAll('tr').forEach(row => {
+                row.style.display = row.textContent.toLowerCase().includes(query.toLowerCase()) ? '' : 'none';
+            });
+        }
+
+        function previewCert(btn, name, program, score) {
+            document.getElementById('certName').textContent = name;
+            document.getElementById('certProgram').textContent = program + ' Training Program';
+            document.getElementById('certScore').textContent = score || '';
+            document.getElementById('certModal').classList.add('open');
+        }
+
+        function closeCertModal() { document.getElementById('certModal').classList.remove('open'); }
+        document.getElementById('certModal').addEventListener('click', function (e) { if (e.target === this) closeCertModal(); });
+    </script>
+</body>
+</html>

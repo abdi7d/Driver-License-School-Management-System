@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exams - DLSM Ethiopia</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/dark-mode.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/auth-guard.js"></script>
+</head>
+<body class="dashboard-body">
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <img src="../assets/images/logo-DLSM.jpg" alt="DLSM Logo" class="logo-icon" style="height: 32px; width: auto; border-radius: 6px;">
+                <span class="logo-text">DLSM</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item"><span class="nav-icon">📊</span><span class="nav-text">Dashboard</span></a>
+            <a href="users.html" class="nav-item"><span class="nav-icon">👥</span><span class="nav-text">Users</span></a>
+            <a href="programs.html" class="nav-item"><span class="nav-icon">📚</span><span class="nav-text">Programs</span></a>
+            <a href="enrollments.html" class="nav-item"><span class="nav-icon">📋</span><span class="nav-text">Enrollments</span></a>
+            <a href="approvals.html" class="nav-item"><span class="nav-icon">✅</span><span class="nav-text">Approvals</span></a>
+            <a href="exams.html" class="nav-item active"><span class="nav-icon">📝</span><span class="nav-text">Exams</span></a>
+            <a href="certificates.html" class="nav-item"><span class="nav-icon">🎓</span><span class="nav-text">Certificates</span></a>
+            <a href="reports.html" class="nav-item"><span class="nav-icon">📈</span><span class="nav-text">Reports</span></a>
+            <a href="notifications.html" class="nav-item"><span class="nav-icon">🔔</span><span class="nav-text">Notifications</span></a>
+            <a href="profile.html" class="nav-item"><span class="nav-icon">👤</span><span class="nav-text">My Profile</span></a>
+        </nav>
+        </nav>
+        <div class="sidebar-footer">
+            <button class="btn-logout" id="logoutBtn"><span class="nav-icon">🚪</span><span class="nav-text">Logout</span></button>
+        </div>
+    </aside>
+
+    
+    <main class="main-content">
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+                <div>
+                    <h1 class="page-title">Exams</h1>
+                    <p class="page-subtitle">Schedule exams and approve results</p>
+                </div>
+            </div>
+            <div class="topbar-right">
+                <button class="btn-primary topbar-action-btn" id="scheduleExamBtn">+ Schedule Exam</button>
+                <div class="user-profile">
+                    <div class="user-avatar">👤</div>
+                    <div class="user-info">
+                        <span class="user-name" id="userName">Manager</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="dashboard-container">
+
+            
+            <div class="stats-grid">
+                <div class="stat-card blue">
+                    <div class="stat-icon">📅</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Scheduled Exams</p>
+                        <h3 class="stat-value">6</h3>
+                    </div>
+                </div>
+                <div class="stat-card orange">
+                    <div class="stat-icon">⏳</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Pending Results</p>
+                        <h3 class="stat-value">4</h3>
+                    </div>
+                </div>
+                <div class="stat-card green">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Passed</p>
+                        <h3 class="stat-value">28</h3>
+                    </div>
+                </div>
+                <div class="stat-card purple">
+                    <div class="stat-icon">❌</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Failed</p>
+                        <h3 class="stat-value">7</h3>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="tabs tabs-mt">
+                <button class="tab-btn active" data-tab="schedule">Schedule Exam</button>
+                <button class="tab-btn" data-tab="pending">Pending Results</button>
+                <button class="tab-btn" data-tab="history">Exam History</button>
+            </div>
+
+            
+            <div class="tab-panel active" id="tab-schedule">
+                <div class="approvals-table-wrap">
+                    <div class="table-header">
+                        <h3>Upcoming Exams</h3>
+                        <input type="text" class="search-input" placeholder="🔍 Search exams..." id="searchSchedule">
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Exam Type</th>
+                                <th>Program</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Location</th>
+                                <th>Instructor</th>
+                                <th>Students</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="scheduleBody">
+                            <tr>
+                                <td><span class="badge badge-exam-theory">Theory</span></td>
+                                <td>Private Car (B)</td>
+                                <td>May 05, 2026</td>
+                                <td>09:00 AM</td>
+                                <td>Room 101</td>
+                                <td>Instructor Yonas</td>
+                                <td>12</td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="btn-view" onclick="openEditExam(this)">Edit</button>
+                                        <button class="btn-reject" onclick="cancelExam(this)">Cancel</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge badge-exam-practical">Practical</span></td>
+                                <td>Motorcycle (A)</td>
+                                <td>May 06, 2026</td>
+                                <td>10:00 AM</td>
+                                <td>Training Ground A</td>
+                                <td>Instructor Liya</td>
+                                <td>8</td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="btn-view" onclick="openEditExam(this)">Edit</button>
+                                        <button class="btn-reject" onclick="cancelExam(this)">Cancel</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge badge-exam-theory">Theory</span></td>
+                                <td>Heavy Truck (C)</td>
+                                <td>May 08, 2026</td>
+                                <td>08:30 AM</td>
+                                <td>Room 102</td>
+                                <td>Instructor Bekele</td>
+                                <td>10</td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="btn-view" onclick="openEditExam(this)">Edit</button>
+                                        <button class="btn-reject" onclick="cancelExam(this)">Cancel</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge badge-exam-practical">Practical</span></td>
+                                <td>Bus (D)</td>
+                                <td>May 10, 2026</td>
+                                <td>02:00 PM</td>
+                                <td>Training Ground B</td>
+                                <td>Instructor Marta</td>
+                                <td>7</td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="btn-view" onclick="openEditExam(this)">Edit</button>
+                                        <button class="btn-reject" onclick="cancelExam(this)">Cancel</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge badge-exam-theory">Theory</span></td>
+                                <td>Transport (E)</td>
+                                <td>May 12, 2026</td>
+                                <td>11:00 AM</td>
+                                <td>Room 103</td>
+                                <td>Instructor Tesfaye</td>
+                                <td>5</td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="btn-view" onclick="openEditExam(this)">Edit</button>
+                                        <button class="btn-reject" onclick="cancelExam(this)">Cancel</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge badge-exam-practical">Practical</span></td>
+                                <td>Private Car (B)</td>
+                                <td>May 14, 2026</td>
+                                <td>09:30 AM</td>
+                                <td>Training Ground A</td>
+                                <td>Instructor Yonas</td>
+                                <td>11</td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="btn-view" onclick="openEditExam(this)">Edit</button>
+                                        <button class="btn-reject" onclick="cancelExam(this)">Cancel</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            
+            <div class="tab-panel" id="tab-pending">
+                <div class="approvals-table-wrap">
+                    <div class="table-header">
+                        <h3>Pending Exam Results</h3>
+                        <input type="text" class="search-input" placeholder="🔍 Search..." id="searchPending">
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Student</th>
+                                <th>Exam Type</th>
+                                <th>Program</th>
+                                <th>Score</th>
+                                <th>Date</th>
+                                <th>Instructor</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pendingBody">
+                            <tr>
+                                <td><strong>Hana Bekele</strong><br><span class="td-sub">hana@email.com</span></td>
+                                <td><span class="badge badge-exam-theory">Theory</span></td>
+                                <td>Private Car (B)</td>
+                                <td><strong class="score-pass">90%</strong></td>
+                                <td>Apr 28, 2026</td>
+                                <td>Instructor Yonas</td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="btn-approve" onclick="approveResult(this)">Approve</button>
+                                        <button class="btn-reject" onclick="rejectResult(this)">Reject</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Samuel Girma</strong><br><span class="td-sub">samuel@email.com</span></td>
+                                <td><span class="badge badge-exam-practical">Practical</span></td>
+                                <td>Motorcycle (A)</td>
+                                <td><strong class="score-pass">78%</strong></td>
+                                <td>Apr 29, 2026</td>
+                                <td>Instructor Liya</td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="btn-approve" onclick="approveResult(this)">Approve</button>
+                                        <button class="btn-reject" onclick="rejectResult(this)">Reject</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Tigist Haile</strong><br><span class="td-sub">tigist@email.com</span></td>
+                                <td><span class="badge badge-exam-theory">Theory</span></td>
+                                <td>Motorcycle (A)</td>
+                                <td><strong class="score-fail">55%</strong></td>
+                                <td>Apr 29, 2026</td>
+                                <td>Instructor Liya</td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="btn-approve" onclick="approveResult(this)">Approve</button>
+                                        <button class="btn-reject" onclick="rejectResult(this)">Reject</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Dawit Tesfaye</strong><br><span class="td-sub">dawit@email.com</span></td>
+                                <td><span class="badge badge-exam-practical">Practical</span></td>
+                                <td>Heavy Truck (C)</td>
+                                <td><strong class="score-pass">82%</strong></td>
+                                <td>Apr 30, 2026</td>
+                                <td>Instructor Bekele</td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="btn-approve" onclick="approveResult(this)">Approve</button>
+                                        <button class="btn-reject" onclick="rejectResult(this)">Reject</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            
+            <div class="tab-panel" id="tab-history">
+                <div class="approvals-table-wrap">
+                    <div class="table-header">
+                        <h3>Exam History</h3>
+                        <input type="text" class="search-input" placeholder="🔍 Search..." id="searchHistory">
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Student</th>
+                                <th>Exam Type</th>
+                                <th>Program</th>
+                                <th>Score</th>
+                                <th>Date</th>
+                                <th>Instructor</th>
+                                <th>Result</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyBody">
+                            <tr>
+                                <td><strong>Liya Tadesse</strong></td>
+                                <td><span class="badge badge-exam-theory">Theory</span></td>
+                                <td>Bus (D)</td>
+                                <td><strong class="score-pass">88%</strong></td>
+                                <td>Apr 10, 2026</td>
+                                <td>Instructor Bekele</td>
+                                <td><span class="badge badge-approved">Passed</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Meron Alemu</strong></td>
+                                <td><span class="badge badge-exam-practical">Practical</span></td>
+                                <td>Transport (E)</td>
+                                <td><strong class="score-pass">91%</strong></td>
+                                <td>Apr 12, 2026</td>
+                                <td>Instructor Yonas</td>
+                                <td><span class="badge badge-approved">Passed</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Biruk Tadesse</strong></td>
+                                <td><span class="badge badge-exam-theory">Theory</span></td>
+                                <td>Private Car (B)</td>
+                                <td><strong class="score-fail">48%</strong></td>
+                                <td>Apr 14, 2026</td>
+                                <td>Instructor Yonas</td>
+                                <td><span class="badge badge-rejected">Failed</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Selam Worku</strong></td>
+                                <td><span class="badge badge-exam-practical">Practical</span></td>
+                                <td>Motorcycle (A)</td>
+                                <td><strong class="score-pass">76%</strong></td>
+                                <td>Apr 15, 2026</td>
+                                <td>Instructor Liya</td>
+                                <td><span class="badge badge-approved">Passed</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Yonas Bekele</strong></td>
+                                <td><span class="badge badge-exam-theory">Theory</span></td>
+                                <td>Heavy Truck (C)</td>
+                                <td><strong class="score-fail">61%</strong></td>
+                                <td>Apr 16, 2026</td>
+                                <td>Instructor Bekele</td>
+                                <td><span class="badge badge-rejected">Failed</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    
+    <div class="modal-overlay" id="examModal">
+        <div class="modal modal-wide">
+            <h3 id="examModalTitle">Schedule Exam</h3>
+            <form id="examForm">
+                <div class="form-row-2">
+                    <div class="form-group">
+                        <label class="form-label">Exam Type</label>
+                        <select class="form-input" id="eType" required>
+                            <option value="">Select type...</option>
+                            <option value="Theory">Theory</option>
+                            <option value="Practical">Practical</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Program</label>
+                        <select class="form-input" id="eProgram" required>
+                            <option value="">Select program...</option>
+                            <option value="Motorcycle (A)">Motorcycle (A)</option>
+                            <option value="Private Car (B)">Private Car (B)</option>
+                            <option value="Heavy Truck (C)">Heavy Truck (C)</option>
+                            <option value="Bus (D)">Bus (D)</option>
+                            <option value="Transport (E)">Transport (E)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row-2">
+                    <div class="form-group">
+                        <label class="form-label">Date</label>
+                        <input type="date" class="form-input" id="eDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Time</label>
+                        <input type="time" class="form-input" id="eTime" required>
+                    </div>
+                </div>
+                <div class="form-row-2">
+                    <div class="form-group">
+                        <label class="form-label">Location</label>
+                        <input type="text" class="form-input" id="eLocation" placeholder="e.g. Room 101" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Instructor</label>
+                        <select class="form-input" id="eInstructor" required>
+                            <option value="">Select instructor...</option>
+                            <option value="Instructor Yonas">Instructor Yonas</option>
+                            <option value="Instructor Liya">Instructor Liya</option>
+                            <option value="Instructor Bekele">Instructor Bekele</option>
+                            <option value="Instructor Marta">Instructor Marta</option>
+                            <option value="Instructor Tesfaye">Instructor Tesfaye</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Max Students</label>
+                    <input type="number" class="form-input" id="eMaxStudents" min="1" max="50" placeholder="e.g. 15" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-close-modal" id="closeExamModal">Cancel</button>
+                    <button type="submit" class="btn-approve">Schedule</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/modal.js"></script>
+    <script>
+        let exams = [];
+
+        async function loadExamsFromAPI() {
+            try {
+                const response = await api.request('/manager/exams/getAll.php');
+                if (response.success && response.data) {
+                    exams = response.data;
+                    updateExamsTable(exams);
+                    updateStats();
+                }
+            } catch (error) {
+                console.error('Error loading exams:', error);
+            }
+        }
+
+        async function loadDropdownData() {
+            try {
+                const response = await api.request('/manager/enrollment/getDropdownData.php');
+                if (response.success && response.data) {
+                    const { students, instructors, programs } = response.data;
+                    
+                    const studentSelect = document.createElement('div'); // Not in modal yet, but good for future
+                    
+                    // Actually, the user modal in exams.html uses hardcoded programs
+                    // I'll update the programs select in the modal
+                    const pSelect = document.getElementById('eProgram');
+                    pSelect.innerHTML = '<option value="">Select program...</option>' + 
+                        programs.map(p => `<option value="${p.id}">${p.name}</option>`).join('');
+                        
+                    const iSelect = document.getElementById('eInstructor');
+                    iSelect.innerHTML = '<option value="">Select instructor...</option>' + 
+                        instructors.map(i => `<option value="${i.id}">${i.name}</option>`).join('');
+
+                    // We need a student select in the modal too if it's per student
+                    // The current modal seems to schedule for "all students" or something?
+                    // Usually exams are scheduled for a group or individual. 
+                    // I'll add a Student select to the modal.
+                }
+            } catch (error) {
+                console.error('Error loading dropdown data:', error);
+            }
+        }
+
+        function updateStats() {
+            const scheduled = exams.filter(e => e.status === 'scheduled').length;
+            const pending = exams.filter(e => e.status === 'scheduled' && new Date(e.scheduled_date) < new Date()).length; // Mock pending as past scheduled
+            const passed = exams.filter(e => e.status === 'passed').length;
+            const failed = exams.filter(e => e.status === 'failed').length;
+            
+            const stats = document.querySelectorAll('.stat-card .stat-value');
+            if (stats.length >= 4) {
+                stats[0].textContent = scheduled;
+                stats[1].textContent = pending;
+                stats[2].textContent = passed;
+                stats[3].textContent = failed;
+            }
+        }
+
+        function updateExamsTable(examsData) {
+            const scheduleBody = document.getElementById('scheduleBody');
+            const pendingBody = document.getElementById('pendingBody');
+            const historyBody = document.getElementById('historyBody');
+            
+            if (scheduleBody) {
+                const upcoming = examsData.filter(e => e.status === 'scheduled');
+                scheduleBody.innerHTML = upcoming.map(e => `
+                    <tr>
+                        <td><span class="badge badge-exam-${e.exam_type.toLowerCase()}">${capitalize(e.exam_type)}</span></td>
+                        <td>${e.program_name || 'N/A'}</td>
+                        <td>${new Date(e.scheduled_date).toLocaleDateString()}</td>
+                        <td>${new Date(e.scheduled_date).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</td>
+                        <td>N/A</td>
+                        <td>${e.instructor_name || 'N/A'}</td>
+                        <td>1</td>
+                        <td>
+                            <div class="action-btns">
+                                <button class="btn-view" onclick="openEditExam(${e.id})">Edit</button>
+                                <button class="btn-reject" onclick="cancelExam(${e.id})">Cancel</button>
+                            </div>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+            
+            if (pendingBody) {
+                // Pending are scheduled but in the past, waiting for score
+                const pending = examsData.filter(e => e.status === 'scheduled');
+                pendingBody.innerHTML = pending.map(e => `
+                    <tr>
+                        <td><strong>${e.student_name}</strong><br><span class="td-sub">${e.student_email}</span></td>
+                        <td><span class="badge badge-exam-${e.exam_type.toLowerCase()}">${capitalize(e.exam_type)}</span></td>
+                        <td>${e.program_name || 'N/A'}</td>
+                        <td>
+                            <input type="number" class="score-input" value="${e.score || 0}" style="width: 60px;" id="score-${e.id}"> %
+                        </td>
+                        <td>${new Date(e.scheduled_date).toLocaleDateString()}</td>
+                        <td>${e.instructor_name || 'N/A'}</td>
+                        <td>
+                            <div class="action-btns">
+                                <button class="btn-approve" onclick="submitResult(${e.id}, 'passed')">Pass</button>
+                                <button class="btn-reject" onclick="submitResult(${e.id}, 'failed')">Fail</button>
+                            </div>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+
+            if (historyBody) {
+                const history = examsData.filter(e => e.status === 'passed' || e.status === 'failed');
+                historyBody.innerHTML = history.map(e => `
+                    <tr>
+                        <td><strong>${e.student_name}</strong></td>
+                        <td><span class="badge badge-exam-${e.exam_type.toLowerCase()}">${capitalize(e.exam_type)}</span></td>
+                        <td>${e.program_name || 'N/A'}</td>
+                        <td><strong class="score-${e.status}">${Math.round(e.score)}%</strong></td>
+                        <td>${new Date(e.scheduled_date).toLocaleDateString()}</td>
+                        <td>${e.instructor_name || 'N/A'}</td>
+                        <td><span class="badge badge-${e.status === 'passed' ? 'approved' : 'rejected'}">${capitalize(e.status)}</span></td>
+                    </tr>
+                `).join('');
+            }
+        }
+
+        async function submitResult(id, status) {
+            const score = document.getElementById(`score-${id}`).value;
+            try {
+                const response = await api.request('/manager/exams/updateResult.php', {
+                    method: 'POST',
+                    body: JSON.stringify({ id, score, status })
+                });
+                if (response.success) {
+                    utils.showNotification(response.message, 'success');
+                    await loadExamsFromAPI();
+                } else {
+                    utils.showNotification(response.message, 'error');
+                }
+            } catch (error) {
+                utils.showNotification('Error updating result', 'error');
+            }
+        }
+
+        async function cancelExam(id) {
+            if (!confirm('Cancel this exam?')) return;
+            try {
+                const response = await api.request('/manager/exams/updateResult.php', {
+                    method: 'POST',
+                    body: JSON.stringify({ id, status: 'cancelled' })
+                });
+                if (response.success) {
+                    utils.showNotification('Exam cancelled', 'info');
+                    await loadExamsFromAPI();
+                }
+            } catch (error) {
+                utils.showNotification('Error cancelling exam', 'error');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', async function () {
+            const user = auth.getCurrentUser();
+            if (!user) { window.location.href = '../login.html'; return; }
+            document.getElementById('userName').textContent = user.name || 'Manager';
+
+            await loadExamsFromAPI();
+            await loadDropdownData();
+
+            document.getElementById('logoutBtn').addEventListener('click', () => auth.logout());
+
+            // Tabs
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+                    this.classList.add('active');
+                    document.getElementById('tab-' + this.dataset.tab).classList.add('active');
+                });
+            });
+
+            // Schedule Exam button
+            document.getElementById('scheduleExamBtn').addEventListener('click', function () {
+                document.getElementById('examModalTitle').textContent = 'Schedule Exam';
+                document.getElementById('examForm').reset();
+                // Add student select to the form dynamically
+                if (!document.getElementById('eStudent')) {
+                    const row = document.createElement('div');
+                    row.className = 'form-group';
+                    row.style.marginBottom = '16px';
+                    row.innerHTML = `
+                        <label class="form-label">Student</label>
+                        <select class="form-input" id="eStudent" required>
+                            <option value="">Select student...</option>
+                        </select>
+                    `;
+                    document.getElementById('examForm').prepend(row);
+                    // Populate students
+                    api.request('/manager/enrollment/getDropdownData.php').then(res => {
+                        if (res.success) {
+                            document.getElementById('eStudent').innerHTML = '<option value="">Select student...</option>' + 
+                                res.data.students.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+                        }
+                    });
+                }
+                document.getElementById('examModal').classList.add('open');
+            });
+
+            document.getElementById('closeExamModal').addEventListener('click', () => {
+                document.getElementById('examModal').classList.remove('open');
+            });
+
+            document.getElementById('examForm').addEventListener('submit', async function (e) {
+                e.preventDefault();
+                const data = {
+                    student_id: document.getElementById('eStudent').value,
+                    exam_type: document.getElementById('eType').value.toLowerCase(),
+                    scheduled_date: document.getElementById('eDate').value + ' ' + document.getElementById('eTime').value,
+                    instructor_id: document.getElementById('eInstructor').value
+                };
+
+                try {
+                    const response = await api.request('/manager/exams/schedule.php', {
+                        method: 'POST',
+                        body: JSON.stringify(data)
+                    });
+                    if (response.success) {
+                        utils.showNotification(response.message, 'success');
+                        document.getElementById('examModal').classList.remove('open');
+                        await loadExamsFromAPI();
+                    } else {
+                        utils.showNotification(response.message, 'error');
+                    }
+                } catch (error) {
+                    utils.showNotification('Error scheduling exam', 'error');
+                }
+            });
+
+            document.getElementById('examModal').addEventListener('click', function (e) {
+                if (e.target === this) this.classList.remove('open');
+            });
+        });
+
+        function capitalize(s) { if(!s) return ''; return s.charAt(0).toUpperCase() + s.slice(1); }
+    </script>
+</body>
+</html>

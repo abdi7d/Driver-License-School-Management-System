@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate - DLSM Ethiopia</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/certificate.css">
+    <link rel="stylesheet" href="../assets/css/dark-mode.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/auth-guard.js"></script>
+</head>
+<body class="dashboard-body">
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <img src="../assets/images/logo-DLSM.jpg" alt="DLSM Logo" class="logo-icon" style="height: 32px; width: auto; border-radius: 6px;">
+                <span class="logo-text">DLSM</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">
+                <span class="nav-icon">📊</span>
+                <span class="nav-text">Dashboard</span>
+            </a>
+            <a href="profile.html" class="nav-item">
+                <span class="nav-icon">👤</span>
+                <span class="nav-text">Student Profile</span>
+            </a>
+            <a href="schedule.html" class="nav-item">
+                <span class="nav-icon">📅</span>
+                <span class="nav-text">Training Schedule</span>
+            </a>
+            <a href="progress.html" class="nav-item">
+                <span class="nav-icon">📈</span>
+                <span class="nav-text">Training Progress</span>
+            </a>
+            <a href="exams.html" class="nav-item">
+                <span class="nav-icon">📝</span>
+                <span class="nav-text">Exams</span>
+            </a>
+            <a href="certificate.html" class="nav-item active">
+                <span class="nav-icon">🎓</span>
+                <span class="nav-text">Certificate</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <button class="btn-logout" id="logoutBtn">
+                <span class="nav-icon">🚪</span>
+                <span class="nav-text">Logout</span>
+            </button>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+                <div>
+                    <h1 class="page-title">Certificate</h1>
+                    <p class="page-subtitle">Your graduation certificate and status</p>
+                </div>
+            </div>
+            <div class="topbar-right">
+                <div class="user-profile">
+                    <div class="user-avatar" id="topbarAvatar">👤</div>
+                    <div class="user-info">
+                        <span class="user-name" id="userName">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="dashboard-container">
+            <div class="progress-page-card">
+                <div class="progress-tab-header">
+                    <span class="progress-tab-icon">🎓</span>
+                    <span class="progress-tab-heading">Graduation Certificate</span>
+                </div>
+
+                
+                <div style="padding: 1.5rem 1.5rem 0;">
+                    <p class="tab-instruction">* Complete all steps below to earn your certificate</p>
+                    <div class="cert-steps">
+                        <div class="cert-step">
+                            <div class="cert-step-icon">📚</div>
+                            <div class="cert-step-label">Theory Training</div>
+                            <div class="cert-step-status done">✓ Completed</div>
+                        </div>
+                        <div class="cert-step">
+                            <div class="cert-step-icon">📝</div>
+                            <div class="cert-step-label">Theory Exam</div>
+                            <div class="cert-step-status done">✓ Passed (85%)</div>
+                        </div>
+                        <div class="cert-step">
+                            <div class="cert-step-icon">🚗</div>
+                            <div class="cert-step-label">Practical Training</div>
+                            <div class="cert-step-status pending">⏳ In Progress</div>
+                        </div>
+                        <div class="cert-step">
+                            <div class="cert-step-icon">🏁</div>
+                            <div class="cert-step-label">Practical Exam</div>
+                            <div class="cert-step-status locked">🔒 Locked</div>
+                        </div>
+                        <div class="cert-step">
+                            <div class="cert-step-icon">✅</div>
+                            <div class="cert-step-label">Manager Approval</div>
+                            <div class="cert-step-status locked">🔒 Locked</div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="certLocked">
+                    <div class="cert-locked-overlay">
+                        <div class="cert-locked-icon">🔒</div>
+                        <h3 class="cert-locked-title">Certificate Not Yet Available</h3>
+                        <p class="cert-locked-desc">
+                            You need to complete all training hours, pass both the theory and practical exams,
+                            and receive manager approval before your certificate is issued.
+                        </p>
+
+                        
+                        <div class="dashboard-card" style="max-width: 500px; margin: 0 auto; text-align: left;">
+                            <h3 class="card-title">Your Progress</h3>
+                            <table class="progress-table" style="margin-top: 1rem;">
+                                <thead>
+                                    <tr>
+                                        <th>Requirement</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Complete Theory Training (15 hrs)</td>
+                                        <td><span class="badge-completed">Done</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pass Theory Exam (min 70%)</td>
+                                        <td><span class="badge-passed">Passed — 85%</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Complete Practical Training (25 hrs)</td>
+                                        <td><span class="badge-inprogress">10 / 25 hrs</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pass Practical Exam (min 70%)</td>
+                                        <td><span class="badge-locked">Not Taken</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Manager Approval</td>
+                                        <td><span class="badge-locked">Pending</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="certEarned" style="display: none; padding: 1.5rem;">
+                    <div class="certificate-card" id="certificatePrint">
+                        <div class="cert-watermark">DLSM ETHIOPIA</div>
+                        
+                        <div class="cert-header-official">
+                            <div class="cert-emblem">🇪🇹</div>
+                            <div class="cert-gov-header">
+                                <div class="cert-gov-title">Federal Democratic Republic of Ethiopia</div>
+                                <div class="cert-ministry">Ministry of Transport</div>
+                            </div>
+                        </div>
+
+                        <div class="cert-school-section">
+                            <img src="../assets/images/logo-DLSM.jpg" alt="DLSM Logo" class="cert-school-logo">
+                            <div class="cert-school-name">Driver License School Management (DLSM)</div>
+                            <div class="cert-school-license">License No: ET-DS-2024-001</div>
+                        </div>
+
+                        <div class="cert-title-section">
+                            <div class="cert-title-text">CERTIFICATE OF COMPLETION</div>
+                            <div class="cert-subtitle-text">Driver Training Program</div>
+                        </div>
+
+                        <div class="cert-body-section">
+                            <p class="cert-intro">This is to certify that</p>
+                            <div class="cert-student-name" id="certName">Student Name</div>
+                            <div class="cert-student-details">
+                                <span>National ID: <strong id="certNationalId">ET-123456789</strong></span>
+                                <span style="margin: 0 20px;">|</span>
+                                <span>Date of Birth: <strong id="certDOB">January 1, 2000</strong></span>
+                            </div>
+                            
+                            <p class="cert-body-text">
+                                has successfully completed all required theory and practical training,
+                                passed all examinations with distinction, and fulfilled all requirements for the
+                            </p>
+                            
+                            <div class="cert-license-badge" id="certLicense">
+                                <div class="cert-license-category">Level B</div>
+                                <div class="cert-license-type">Private Car License</div>
+                            </div>
+
+                            <div class="cert-training-details">
+                                <div class="cert-detail-item">
+                                    <span class="cert-detail-label">Training Period:</span>
+                                    <span class="cert-detail-value" id="certPeriod">Jan 15 - Apr 27, 2026</span>
+                                </div>
+                                <div class="cert-detail-item">
+                                    <span class="cert-detail-label">Total Hours:</span>
+                                    <span class="cert-detail-value" id="certHours">40 hours</span>
+                                </div>
+                                <div class="cert-detail-item">
+                                    <span class="cert-detail-label">Theory Exam:</span>
+                                    <span class="cert-detail-value" id="certTheoryScore">85% (Passed)</span>
+                                </div>
+                                <div class="cert-detail-item">
+                                    <span class="cert-detail-label">Practical Exam:</span>
+                                    <span class="cert-detail-value" id="certPracticalScore">90% (Passed)</span>
+                                </div>
+                            </div>
+
+                            <p class="cert-compliance">
+                                In accordance with the standards set by the Federal Transport Authority of Ethiopia
+                            </p>
+                        </div>
+
+                        <div class="cert-footer-section">
+                            <div class="cert-qr-section">
+                                <div class="cert-qr-code" id="certQRCode">
+                                    <canvas id="qrCanvas" width="100" height="100"></canvas>
+                                </div>
+                                <div class="cert-qr-text">Scan to verify</div>
+                            </div>
+
+                            <div class="cert-info-section">
+                                <div class="cert-info-item">
+                                    <div class="cert-info-label">Certificate No.</div>
+                                    <div class="cert-info-value" id="certNumber">DLSM-2026-B-00042</div>
+                                </div>
+                                <div class="cert-info-item">
+                                    <div class="cert-info-label">Issue Date</div>
+                                    <div class="cert-info-value" id="certDate">April 27, 2026</div>
+                                </div>
+                                <div class="cert-info-item">
+                                    <div class="cert-info-label">Valid Until</div>
+                                    <div class="cert-info-value" id="certValidUntil">October 27, 2026</div>
+                                </div>
+                            </div>
+
+                            <div class="cert-signatures">
+                                <div class="cert-signature">
+                                    <div class="cert-signature-line"></div>
+                                    <div class="cert-signature-name" id="certInstructor">Instructor Yonas Bekele</div>
+                                    <div class="cert-signature-title">Chief Instructor</div>
+                                </div>
+                                <div class="cert-signature">
+                                    <div class="cert-signature-line"></div>
+                                    <div class="cert-signature-name" id="certManager">Manager Abebe Tadesse</div>
+                                    <div class="cert-signature-title">School Director</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="cert-seal">
+                            <div class="cert-seal-circle">
+                                <div class="cert-seal-text">DLSM</div>
+                                <div class="cert-seal-subtext">ETHIOPIA</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cert-actions">
+                        <button class="btn-primary" onclick="printCertificate()">🖨️ Print Certificate</button>
+                        <button class="btn-primary" onclick="downloadCertificatePDF()">⬇️ Download PDF</button>
+                        <button class="btn-secondary" onclick="shareCertificate()">📤 Share</button>
+                        <button class="btn-secondary" onclick="verifyCertificate()">🔍 Verify</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <div id="toast" class="toast"></div>
+
+    
+    <div id="shareModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <h3 class="modal-title">Share Certificate</h3>
+                <button class="modal-close" onclick="closeModal('shareModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p style="margin-bottom: 1.5rem; color: #64748b;">Share your certificate with others</p>
+                <div class="share-options">
+                    <button class="share-btn" onclick="shareVia('email')">
+                        <span class="share-icon">📧</span>
+                        <span>Email</span>
+                    </button>
+                    <button class="share-btn" onclick="shareVia('whatsapp')">
+                        <span class="share-icon">💬</span>
+                        <span>WhatsApp</span>
+                    </button>
+                    <button class="share-btn" onclick="shareVia('facebook')">
+                        <span class="share-icon">👥</span>
+                        <span>Facebook</span>
+                    </button>
+                    <button class="share-btn" onclick="shareVia('copy')">
+                        <span class="share-icon">📋</span>
+                        <span>Copy Link</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/error-handler.js"></script>
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/dashboard.js"></script>
+    <script src="../assets/js/certificate.js"></script>
+    <script src="../assets/js/student-certificate-page.js"></script>
+</body>
+</html>

@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Approvals - DLSM Ethiopia</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/dark-mode.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/auth-guard.js"></script>
+</head>
+<body class="dashboard-body">
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <img src="../assets/images/logo-DLSM.jpg" alt="DLSM Logo" class="logo-icon" style="height: 32px; width: auto; border-radius: 6px;">
+                <span class="logo-text">DLSM</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">
+                <span class="nav-icon">📊</span>
+                <span class="nav-text">Dashboard</span>
+            </a>
+            <a href="users.html" class="nav-item">
+                <span class="nav-icon">👥</span>
+                <span class="nav-text">Users</span>
+            </a>
+            <a href="programs.html" class="nav-item">
+                <span class="nav-icon">📚</span>
+                <span class="nav-text">Programs</span>
+            </a>
+            <a href="enrollments.html" class="nav-item">
+                <span class="nav-icon">📋</span>
+                <span class="nav-text">Enrollments</span>
+            </a>
+            <a href="approvals.html" class="nav-item active">
+                <span class="nav-icon">✅</span>
+                <span class="nav-text">Approvals</span>
+            </a>
+            <a href="exams.html" class="nav-item">
+                <span class="nav-icon">📝</span>
+                <span class="nav-text">Exams</span>
+            </a>
+            <a href="certificates.html" class="nav-item">
+                <span class="nav-icon">🎓</span>
+                <span class="nav-text">Certificates</span>
+            </a>
+            <a href="reports.html" class="nav-item">
+                <span class="nav-icon">📈</span>
+                <span class="nav-text">Reports</span>
+            </a>
+            <a href="audit-logs.html" class="nav-item">
+                <span class="nav-icon">📜</span>
+                <span class="nav-text">Audit Logs</span>
+            </a>
+            <a href="notifications.html" class="nav-item">
+                <span class="nav-icon">🔔</span>
+                <span class="nav-text">Notifications</span>
+            </a>
+            <a href="profile.html" class="nav-item">
+                <span class="nav-icon">👤</span>
+                <span class="nav-text">My Profile</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <button class="btn-logout" id="logoutBtn">
+                <span class="nav-icon">🚪</span>
+                <span class="nav-text">Logout</span>
+            </button>
+        </div>
+    </aside>
+
+    
+    <main class="main-content">
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+                <div>
+                    <h1 class="page-title">Approvals</h1>
+                    <p class="page-subtitle">Review and manage pending requests</p>
+                </div>
+            </div>
+            <div class="topbar-right">
+                <div class="user-profile">
+                    <div class="user-avatar">👤</div>
+                    <div class="user-info">
+                        <span class="user-name" id="userName">Manager</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="dashboard-container">
+            
+            <div class="stats-grid">
+                <div class="stat-card blue">
+                    <div class="stat-icon">⏳</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Pending Registrations</p>
+                        <h3 class="stat-value" id="statPendingReg">3</h3>
+                    </div>
+                </div>
+                <div class="stat-card orange">
+                    <div class="stat-icon">📝</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Pending Exam Results</p>
+                        <h3 class="stat-value" id="statPendingExam">2</h3>
+                    </div>
+                </div>
+                <div class="stat-card purple">
+                    <div class="stat-icon">🎓</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Pending Certificates</p>
+                        <h3 class="stat-value" id="statPendingCert">1</h3>
+                    </div>
+                </div>
+                <div class="stat-card green">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Approved Today</p>
+                        <h3 class="stat-value" id="statApprovedToday">5</h3>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="registrations">Student Registrations</button>
+                <button class="tab-btn" data-tab="exam-results">Exam Results</button>
+                <button class="tab-btn" data-tab="certificates">Certificates</button>
+            </div>
+
+            
+            <div class="tab-panel active" id="tab-registrations">
+                <div class="approvals-table-wrap">
+                    <div class="table-header">
+                        <h3>Pending Student Registrations</h3>
+                        <input type="text" class="search-input" placeholder="🔍 Search students..." id="searchReg">
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Student</th>
+                                <th>Email</th>
+                                <th>Program</th>
+                                <th>Applied</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="regTableBody">
+                            <tr>
+                                <td><strong>Abebe Kebede</strong></td>
+                                <td>abebe@email.com</td>
+                                <td>Private Car (B)</td>
+                                <td>Apr 18, 2026</td>
+                                <td><span class="badge badge-pending">Pending</span></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="btn-view" onclick="viewDetail('reg', 'Abebe Kebede', 'abebe@email.com', 'Private Car (B)', 'Apr 18, 2026')">View</button>
+                                        <button class="btn-approve" onclick="handleAction(this, 'approved')">Approve</button>
+                                        <button class="btn-reject" onclick="handleAction(this, 'rejected')">Reject</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Tigist Haile</strong></td>
+                                <td>tigist@email.com</td>
+                                <td>Motorcycle (A)</td>
+                                <td>Apr 19, 2026</td>
+                                <td><span class="badge badge-pending">Pending</span></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="btn-view" onclick="viewDetail('reg', 'Tigist Haile', 'tigist@email.com', 'Motorcycle (A)', 'Apr 19, 2026')">View</button>
+                                        <button class="btn-approve" onclick="handleAction(this, 'approved')">Approve</button>
+                                        <button class="btn-reject" onclick="handleAction(this, 'rejected')">Reject</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Dawit Tesfaye</strong></td>
+                                <td>dawit@email.com</td>
+                                <td>Heavy Truck (C)</td>
+                                <td>Apr 20, 2026</td>
+                                <td><span class="badge badge-pending">Pending</span></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="btn-view" onclick="viewDetail('reg', 'Dawit Tesfaye', 'dawit@email.com', 'Heavy Truck (C)', 'Apr 20, 2026')">View</button>
+                                        <button class="btn-approve" onclick="handleAction(this, 'approved')">Approve</button>
+                                        <button class="btn-reject" onclick="handleAction(this, 'rejected')">Reject</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            
+            <div class="tab-panel" id="tab-exam-results">
+                <div class="approvals-table-wrap">
+                    <div class="table-header">
+                        <h3>Pending Exam Results</h3>
+                        <input type="text" class="search-input" placeholder="🔍 Search..." id="searchExam">
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Student</th>
+                                <th>Exam Type</th>
+                                <th>Score</th>
+                                <th>Date</th>
+                                <th>Instructor</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="examTableBody">
+                            <tr>
+                                <td><strong>Meron Alemu</strong></td>
+                                <td>Theory Exam</td>
+                                <td><strong style="color:#15803D">88%</strong></td>
+                                <td>Apr 17, 2026</td>
+                                <td>Instructor Yonas</td>
+                                <td><span class="badge badge-pending">Pending</span></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="btn-approve" onclick="handleAction(this, 'approved')">Approve</button>
+                                        <button class="btn-reject" onclick="handleAction(this, 'rejected')">Reject</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Samuel Girma</strong></td>
+                                <td>Practical Exam</td>
+                                <td><strong style="color:#15803D">75%</strong></td>
+                                <td>Apr 18, 2026</td>
+                                <td>Instructor Liya</td>
+                                <td><span class="badge badge-pending">Pending</span></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="btn-approve" onclick="handleAction(this, 'approved')">Approve</button>
+                                        <button class="btn-reject" onclick="handleAction(this, 'rejected')">Reject</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            
+            <div class="tab-panel" id="tab-certificates">
+                <div class="approvals-table-wrap">
+                    <div class="table-header">
+                        <h3>Pending Certificate Approvals</h3>
+                        <input type="text" class="search-input" placeholder="🔍 Search..." id="searchCert">
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Student</th>
+                                <th>Program</th>
+                                <th>Completion Date</th>
+                                <th>Final Score</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="certTableBody">
+                            <tr>
+                                <td><strong>Hana Bekele</strong></td>
+                                <td>Private Car (B)</td>
+                                <td>Apr 15, 2026</td>
+                                <td><strong style="color:#15803D">92%</strong></td>
+                                <td><span class="badge badge-pending">Pending</span></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="btn-approve" onclick="handleAction(this, 'approved')">Issue Certificate</button>
+                                        <button class="btn-reject" onclick="handleAction(this, 'rejected')">Reject</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    
+    <div class="modal-overlay" id="detailModal">
+        <div class="modal">
+            <h3>Student Details</h3>
+            <div id="modalContent"></div>
+            <div class="modal-actions">
+                <button class="btn-close-modal" onclick="closeModal()">Close</button>
+                <button class="btn-approve" id="modalApproveBtn">Approve</button>
+                <button class="btn-reject" id="modalRejectBtn">Reject</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/dashboard.js"></script>
+    <script src="../assets/js/modal.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async function () {
+            const user = auth.getCurrentUser();
+            if (!user) { window.location.href = '../login.html'; return; }
+            document.getElementById('userName').textContent = user.name || 'Manager';
+
+            await loadApprovalsData();
+
+            document.getElementById('logoutBtn').addEventListener('click', () => auth.logout());
+
+            // Tabs
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+                    this.classList.add('active');
+                    document.getElementById('tab-' + this.dataset.tab).classList.add('active');
+                });
+            });
+
+            // Search
+            document.getElementById('searchReg').addEventListener('input', function () { filterTable('regTableBody', this.value); });
+            document.getElementById('searchExam').addEventListener('input', function () { filterTable('examTableBody', this.value); });
+            document.getElementById('searchCert').addEventListener('input', function () { filterTable('certTableBody', this.value); });
+        });
+
+        async function loadApprovalsData() {
+            try {
+                // 1. Pending Registrations
+                const usersRes = await api.request('/manager/users/getAll.php');
+                if (usersRes.success) {
+                    const pendingUsers = usersRes.data.filter(u => u.status === 'pending');
+                    renderRegTable(pendingUsers);
+                    document.getElementById('statPendingReg').textContent = pendingUsers.length;
+                }
+
+                // 2. Pending Exam Results
+                const examsRes = await api.request('/manager/exams/getAll.php');
+                if (examsRes.success) {
+                    const pendingExams = examsRes.data.filter(e => e.status === 'scheduled');
+                    renderExamTable(pendingExams);
+                    document.getElementById('statPendingExam').textContent = pendingExams.length;
+                }
+
+                // 3. Pending Certificates
+                const certsRes = await api.request('/manager/certificates/getEligibleStudents.php');
+                if (certsRes.success) {
+                    renderCertTable(certsRes.data);
+                    document.getElementById('statPendingCert').textContent = certsRes.data.length;
+                }
+            } catch (error) {
+                console.error('Error loading approvals data:', error);
+            }
+        }
+
+        function renderRegTable(data) {
+            const tbody = document.getElementById('regTableBody');
+            if (data.length === 0) { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:20px;">No pending registrations</td></tr>'; return; }
+            tbody.innerHTML = data.map(u => `
+                <tr>
+                    <td><strong>${u.first_name} ${u.last_name}</strong></td>
+                    <td>${u.email}</td>
+                    <td>${u.role}</td>
+                    <td>${new Date(u.created_at).toLocaleDateString()}</td>
+                    <td><span class="badge badge-pending">Pending</span></td>
+                    <td>
+                        <div class="action-btns">
+                            <button class="btn-approve" onclick="approveUser(${u.id})">Approve</button>
+                            <button class="btn-reject" onclick="rejectUser(${u.id})">Reject</button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function renderExamTable(data) {
+            const tbody = document.getElementById('examTableBody');
+            if (data.length === 0) { tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:20px;">No pending exam results</td></tr>'; return; }
+            tbody.innerHTML = data.map(e => `
+                <tr>
+                    <td><strong>${e.student_name}</strong></td>
+                    <td>${e.exam_type}</td>
+                    <td>
+                        <input type="number" id="score-${e.id}" value="0" style="width:50px;"> %
+                    </td>
+                    <td>${new Date(e.scheduled_date).toLocaleDateString()}</td>
+                    <td>${e.instructor_name || 'N/A'}</td>
+                    <td><span class="badge badge-pending">Pending</span></td>
+                    <td>
+                        <div class="action-btns">
+                            <button class="btn-approve" onclick="submitExamResult(${e.id}, 'passed')">Pass</button>
+                            <button class="btn-reject" onclick="submitExamResult(${e.id}, 'failed')">Fail</button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function renderCertTable(data) {
+            const tbody = document.getElementById('certTableBody');
+            if (data.length === 0) { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:20px;">No pending certificates</td></tr>'; return; }
+            tbody.innerHTML = data.map(c => `
+                <tr>
+                    <td><strong>${c.student_name}</strong></td>
+                    <td>${c.program_name}</td>
+                    <td>${new Date(c.completion_date).toLocaleDateString()}</td>
+                    <td><strong style="color:#15803D">${Math.round(c.final_score)}%</strong></td>
+                    <td><span class="badge badge-pending">Pending</span></td>
+                    <td>
+                        <div class="action-btns">
+                            <button class="btn-approve" onclick="issueCertificate(${c.student_id}, ${c.program_id})">Issue</button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        async function approveUser(id) {
+            try {
+                const res = await api.request('/manager/users/updateStatus.php', {
+                    method: 'POST',
+                    body: JSON.stringify({ user_id: id, status: 'active' })
+                });
+                if (res.success) { utils.showNotification('User approved', 'success'); await loadApprovalsData(); }
+            } catch (error) { utils.showNotification('Error approving user', 'error'); }
+        }
+
+        async function rejectUser(id) {
+            if (!confirm('Reject this registration?')) return;
+            try {
+                const res = await api.request('/manager/users/updateStatus.php', {
+                    method: 'POST',
+                    body: JSON.stringify({ user_id: id, status: 'inactive' })
+                });
+                if (res.success) { utils.showNotification('User rejected', 'info'); await loadApprovalsData(); }
+            } catch (error) { utils.showNotification('Error rejecting user', 'error'); }
+        }
+
+        async function submitExamResult(id, status) {
+            const score = document.getElementById(`score-${id}`).value;
+            try {
+                const res = await api.request('/manager/exams/updateResult.php', {
+                    method: 'POST',
+                    body: JSON.stringify({ id, score, status })
+                });
+                if (res.success) { utils.showNotification('Exam result updated', 'success'); await loadApprovalsData(); }
+            } catch (error) { utils.showNotification('Error updating result', 'error'); }
+        }
+
+        async function issueCertificate(studentId, programId) {
+            try {
+                const res = await api.request('/manager/certificates/issue.php', {
+                    method: 'POST',
+                    body: JSON.stringify({ student_id: studentId, program_id: programId })
+                });
+                if (res.success) { utils.showNotification('Certificate issued', 'success'); await loadApprovalsData(); }
+            } catch (error) { utils.showNotification('Error issuing certificate', 'error'); }
+        }
+
+        function filterTable(tbodyId, query) {
+            const rows = document.getElementById(tbodyId).querySelectorAll('tr');
+            rows.forEach(row => { row.style.display = row.textContent.toLowerCase().includes(query.toLowerCase()) ? '' : 'none'; });
+        }
+
+        function closeModal() { document.getElementById('detailModal').classList.remove('open'); }
+        document.getElementById('detailModal').addEventListener('click', function (e) { if (e.target === this) closeModal(); });
+    </script>
+</body>
+</html>

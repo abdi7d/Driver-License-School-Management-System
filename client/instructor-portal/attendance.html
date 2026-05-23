@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance - DLSM Ethiopia</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/dark-mode.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/auth-guard.js"></script>
+</head>
+<body class="dashboard-body">
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <img src="../assets/images/logo-DLSM.jpg" alt="DLSM Logo" class="logo-icon" style="height: 32px; width: auto; border-radius: 6px;">
+                <span class="logo-text">DLSM</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">
+                <span class="nav-icon">📊</span>
+                <span class="nav-text">Dashboard</span>
+            </a>
+            <a href="profile.html" class="nav-item">
+                <span class="nav-icon">👤</span>
+                <span class="nav-text">Profile</span>
+            </a>
+            <a href="my-students.html" class="nav-item">
+                <span class="nav-icon">👥</span>
+                <span class="nav-text">My Students</span>
+            </a>
+            <a href="sessions.html" class="nav-item">
+                <span class="nav-icon">🚗</span>
+                <span class="nav-text">Sessions</span>
+            </a>
+            <a href="schedule.html" class="nav-item">
+                <span class="nav-icon">📅</span>
+                <span class="nav-text">Schedule</span>
+            </a>
+            <a href="attendance.html" class="nav-item active">
+                <span class="nav-icon">✅</span>
+                <span class="nav-text">Attendance</span>
+            </a>
+            <a href="evaluations.html" class="nav-item">
+                <span class="nav-icon">📝</span>
+                <span class="nav-text">Evaluations</span>
+            </a>
+            <a href="feedback.html" class="nav-item">
+                <span class="nav-icon">💬</span>
+                <span class="nav-text">Feedback</span>
+            </a>
+            <a href="progress.html" class="nav-item">
+                <span class="nav-icon">📈</span>
+                <span class="nav-text">Progress</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <button class="btn-logout" id="logoutBtn">
+                <span class="nav-icon">🚪</span>
+                <span class="nav-text">Logout</span>
+            </button>
+        </div>
+    </aside>
+
+    
+    <main class="main-content">
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+                <div>
+                    <h1 class="page-title">Attendance</h1>
+                    <p class="page-subtitle">Track and manage student attendance</p>
+                </div>
+            </div>
+            <div class="topbar-right">
+                <div class="user-profile">
+                    <div class="user-avatar" id="topbarAvatar">👤</div>
+                    <div class="user-info">
+                        <span class="user-name" id="userName">Instructor</span>
+                        <span class="user-role">Instructor</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="dashboard-container">
+            
+            <div class="stats-grid">
+                <div class="stat-card green">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Present Today</p>
+                        <h3 class="stat-value">18</h3>
+                    </div>
+                </div>
+                <div class="stat-card red">
+                    <div class="stat-icon">❌</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Absent Today</p>
+                        <h3 class="stat-value">3</h3>
+                    </div>
+                </div>
+                <div class="stat-card orange">
+                    <div class="stat-icon">⏰</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Late Today</p>
+                        <h3 class="stat-value">2</h3>
+                    </div>
+                </div>
+                <div class="stat-card blue">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Avg Attendance</p>
+                        <h3 class="stat-value">92%</h3>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="card" style="margin-bottom: 24px;">
+                <div style="display: flex; justify-content: center; align-items: center; gap: 16px; padding: 20px;">
+                    <button class="btn-secondary">←</button>
+                    <input type="date" class="form-control" style="max-width: 200px;" value="2024-06-10">
+                    <button class="btn-secondary">→</button>
+                    <button class="btn-primary">+ Mark Attendance</button>
+                </div>
+            </div>
+
+            
+            <div class="card">
+                <div class="card-title">
+                    <span>✅ Today's Attendance</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Student</th>
+                                <th>Program</th>
+                                <th>Status</th>
+                                <th>Time</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 12px;">
+                                        <div class="user-avatar" style="width: 40px; height: 40px; font-size: 14px;">AJ</div>
+                                        <div>
+                                            <div style="font-weight: 600;">Alice Johnson</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Level B</td>
+                                <td><span class="badge-success">✓ Present</span></td>
+                                <td>09:00</td>
+                                <td><button class="btn-sm-secondary">Edit</button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 12px;">
+                                        <div class="user-avatar" style="width: 40px; height: 40px; font-size: 14px;">BS</div>
+                                        <div>
+                                            <div style="font-weight: 600;">Bob Smith</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Level B</td>
+                                <td><span class="badge-success">✓ Present</span></td>
+                                <td>09:05</td>
+                                <td><button class="btn-sm-secondary">Edit</button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 12px;">
+                                        <div class="user-avatar" style="width: 40px; height: 40px; font-size: 14px;">CD</div>
+                                        <div>
+                                            <div style="font-weight: 600;">Carol Davis</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Level C</td>
+                                <td><span class="badge-warning">⏰ Late</span></td>
+                                <td>09:15</td>
+                                <td><button class="btn-sm-secondary">Edit</button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 12px;">
+                                        <div class="user-avatar" style="width: 40px; height: 40px; font-size: 14px;">DW</div>
+                                        <div>
+                                            <div style="font-weight: 600;">David Wilson</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Level B</td>
+                                <td><span class="badge-danger">✗ Absent</span></td>
+                                <td>-</td>
+                                <td><button class="btn-sm-secondary">Edit</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/dashboard.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+            const user = auth.getCurrentUser();
+            if (!user) {
+                window.location.href = '../login.html';
+                return;
+            }
+            document.getElementById('userName').textContent = user.name || 'Instructor';
+            
+            // Load attendance data from API
+            await loadAttendanceFromAPI();
+            
+
+            
+            // Mobile menu is auto-initialized by dashboard.js
+            
+        });
+        
+        // Load attendance data from API
+        async function loadAttendanceFromAPI() {
+            try {
+                // We use the schedule API to get lessons for today
+                const response = await api.get('/schedule.php');
+                if (response.success && response.data) {
+                    updateAttendanceTable(response.data);
+                }
+            } catch (error) {
+                console.error('Error loading attendance:', error);
+            }
+        }
+        
+        // Update attendance table with API data
+        function updateAttendanceTable(lessons) {
+            const tbody = document.querySelector('.data-table tbody');
+            if (!tbody) return;
+            
+            tbody.innerHTML = '';
+            
+            if (lessons.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">No lessons found</td></tr>';
+                return;
+            }
+
+            let presentToday = 0;
+            let absentToday = 0;
+            let pendingToday = 0;
+            const todayStr = new Date().toDateString();
+
+            lessons.forEach(lesson => {
+                const sessionDate = new Date(lesson.session_date);
+                const isToday = sessionDate.toDateString() === todayStr;
+                const dateStr = sessionDate.toLocaleDateString();
+                const timeStr = sessionDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                
+                const isPresent = lesson.attendance == 1;
+                
+                if (isToday) {
+                    if (isPresent) presentToday++;
+                    else pendingToday++; // If not marked, it's pending for today
+                }
+
+                const statusBadge = isPresent ? '<span class="badge-success">✓ Present</span>' : '<span class="badge-pending">Pending</span>';
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div class="user-avatar" style="width: 40px; height: 40px; font-size: 14px;">
+                                ${lesson.student_fname.charAt(0)}${lesson.student_lname.charAt(0)}
+                            </div>
+                            <div>
+                                <div style="font-weight: 600;">${lesson.student_fname} ${lesson.student_lname}</div>
+                                <div style="font-size: 12px; color: #64748b;">${dateStr}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>${lesson.program_name} (${lesson.lesson_type})</td>
+                    <td>${statusBadge}</td>
+                    <td>${timeStr}</td>
+                    <td>
+                        <button class="btn-sm-approve" onclick="markAttendance(${lesson.id}, true)" ${isPresent ? 'disabled' : ''}>Present</button>
+                        <button class="btn-sm-reject" onclick="markAttendance(${lesson.id}, false)" ${isPresent ? '' : 'style="display:none"'}>Absent</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            // Update Stats
+            document.querySelectorAll('.stat-card .stat-value')[0].textContent = presentToday;
+            document.querySelectorAll('.stat-card .stat-value')[1].textContent = absentToday; // Need absent logic if we support marking absent
+            document.querySelectorAll('.stat-card .stat-value')[2].textContent = pendingToday;
+            
+            const totalPresent = lessons.filter(l => l.attendance == 1).length;
+            const avgAttendance = lessons.length > 0 ? Math.round((totalPresent / lessons.length) * 100) : 0;
+            document.querySelectorAll('.stat-card .stat-value')[3].textContent = avgAttendance + '%';
+        }
+
+        async function markAttendance(lessonId, isPresent) {
+            try {
+                const response = await api.post('/attendance.php', {
+                    lesson_id: lessonId,
+                    attendance: isPresent
+                });
+                if (response.success) {
+                    utils.showNotification(response.message, 'success');
+                    loadAttendanceFromAPI(); // Refresh table
+                } else {
+                    utils.showNotification(response.message, 'error');
+                }
+            } catch (error) {
+                console.error('Error marking attendance:', error);
+                utils.showNotification('Failed to mark attendance', 'error');
+            }
+        }
+    </script>
+</body>
+</html>

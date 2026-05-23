@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Students - DLSM Ethiopia</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/dark-mode.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/auth-guard.js"></script>
+    <style>
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body class="dashboard-body">
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <img src="../assets/images/logo-DLSM.jpg" alt="DLSM Logo" class="logo-icon" style="height: 32px; width: auto; border-radius: 6px;">
+                <span class="logo-text">DLSM</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">
+                <span class="nav-icon">📊</span>
+                <span class="nav-text">Dashboard</span>
+            </a>
+            <a href="profile.html" class="nav-item">
+                <span class="nav-icon">👤</span>
+                <span class="nav-text">Profile</span>
+            </a>
+            <a href="my-students.html" class="nav-item active">
+                <span class="nav-icon">👥</span>
+                <span class="nav-text">My Students</span>
+            </a>
+            <a href="sessions.html" class="nav-item">
+                <span class="nav-icon">🚗</span>
+                <span class="nav-text">Sessions</span>
+            </a>
+            <a href="schedule.html" class="nav-item">
+                <span class="nav-icon">📅</span>
+                <span class="nav-text">Schedule</span>
+            </a>
+            <a href="attendance.html" class="nav-item">
+                <span class="nav-icon">✅</span>
+                <span class="nav-text">Attendance</span>
+            </a>
+            <a href="evaluations.html" class="nav-item">
+                <span class="nav-icon">📝</span>
+                <span class="nav-text">Evaluations</span>
+            </a>
+            <a href="feedback.html" class="nav-item">
+                <span class="nav-icon">💬</span>
+                <span class="nav-text">Feedback</span>
+            </a>
+            <a href="progress.html" class="nav-item">
+                <span class="nav-icon">📈</span>
+                <span class="nav-text">Progress</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <button class="btn-logout" id="logoutBtn">
+                <span class="nav-icon">🚪</span>
+                <span class="nav-text">Logout</span>
+            </button>
+        </div>
+    </aside>
+
+    
+    <main class="main-content">
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+                <div>
+                    <h1 class="page-title">My Students</h1>
+                    <p class="page-subtitle">Manage and track your students' progress</p>
+                </div>
+            </div>
+            <div class="topbar-right">
+                <div class="user-profile">
+                    <div class="user-avatar" id="topbarAvatar">👤</div>
+                    <div class="user-info">
+                        <span class="user-name" id="userName">Instructor</span>
+                        <span class="user-role">Instructor</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="dashboard-container">
+            
+            <div class="stats-grid">
+                <div class="stat-card blue">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Total Students</p>
+                        <h3 class="stat-value" id="totalStudents">...</h3>
+                    </div>
+                </div>
+                <div class="stat-card green">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Active Students</p>
+                        <h3 class="stat-value" id="activeStudents">...</h3>
+                    </div>
+                </div>
+                <div class="stat-card orange">
+                    <div class="stat-icon">🎓</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Completed</p>
+                        <h3 class="stat-value" id="completedStudents">...</h3>
+                    </div>
+                </div>
+                <div class="stat-card purple">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Avg Progress</p>
+                        <h3 class="stat-value" id="avgProgress">...</h3>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="card" style="margin-bottom: 24px;">
+                <div style="display: grid; grid-template-columns: 1fr auto auto auto; gap: 16px; align-items: end; padding: 20px;">
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label class="form-label">Search Students</label>
+                        <input type="text" class="form-control" id="searchInput" placeholder="Search by name, email, or phone..." onkeyup="filterStudents()">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label class="form-label">Status</label>
+                        <select class="form-control" id="statusFilter" onchange="filterStudents()">
+                            <option value="">All Status</option>
+                            <option value="active">Active</option>
+                            <option value="completed">Completed</option>
+                            <option value="on-hold">On Hold</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label class="form-label">Program</label>
+                        <select class="form-control" id="programFilter" onchange="filterStudents()">
+                            <option value="">All Programs</option>
+                            <option value="level-b">Level B</option>
+                            <option value="level-c">Level C</option>
+                            <option value="level-d">Level D</option>
+                        </select>
+                    </div>
+                    <button class="btn-primary" onclick="openModal('addStudentModal')" style="margin-bottom: 0;">+ Add Student</button>
+                </div>
+            </div>
+
+            
+            <div class="card">
+                <div class="card-title">
+                    <span>👥 Students List</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Student</th>
+                                <th>Program</th>
+                                <th>Progress</th>
+                                <th>Sessions</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentsTableBody">
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    
+    <div class="modal-overlay" id="addStudentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Student</h3>
+                <button class="modal-close" onclick="closeModal('addStudentModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="addStudentForm">
+                    <div class="form-group">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="studentName" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" id="studentEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Phone</label>
+                        <input type="tel" class="form-control" id="studentPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Program</label>
+                        <select class="form-control" id="studentProgram" required>
+                            <option value="">Select program...</option>
+                            <option value="level-b">Level B - Private Car</option>
+                            <option value="level-c">Level C - Heavy Truck</option>
+                            <option value="level-d">Level D - Bus</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal('addStudentModal')">Cancel</button>
+                <button class="btn-primary" onclick="addStudent()">Add Student</button>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="modal-overlay" id="editStudentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit Student</h3>
+                <button class="modal-close" onclick="closeModal('editStudentModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="editStudentForm">
+                    <input type="hidden" id="editStudentId">
+                    <div class="form-group">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="editStudentName" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" id="editStudentEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Phone</label>
+                        <input type="tel" class="form-control" id="editStudentPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Program</label>
+                        <select class="form-control" id="editStudentProgram" required>
+                            <option value="">Select program...</option>
+                            <option value="level-b">Level B - Private Car</option>
+                            <option value="level-c">Level C - Heavy Truck</option>
+                            <option value="level-d">Level D - Bus</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Status</label>
+                        <select class="form-control" id="editStudentStatus" required>
+                            <option value="active">Active</option>
+                            <option value="completed">Completed</option>
+                            <option value="on-hold">On Hold</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal('editStudentModal')">Cancel</button>
+                <button class="btn-primary" onclick="updateStudent()">Update Student</button>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="modal-overlay" id="viewStudentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Student Details</h3>
+                <button class="modal-close" onclick="closeModal('viewStudentModal')">&times;</button>
+            </div>
+            <div class="modal-body" id="viewStudentContent">
+                
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal('viewStudentModal')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/dashboard.js"></script>
+    <script>
+        // Students data - will be loaded from API
+        let students = [];
+        let nextId = 7;
+        let filteredStudents = [];
+
+        // Load students from API
+        async function loadStudentsFromAPI() {
+            try {
+                console.log('Fetching students from API...');
+                const response = await api.get('/instructors/students.php');
+                console.log('API Response:', response);
+                if (response.success && response.data) {
+                    students = response.data;
+                    filteredStudents = [...students];
+                    console.log('Loaded students:', students.length);
+                    loadStudents();
+                } else {
+                    console.error('API Error Response:', response);
+                    utils.showNotification(response.message || 'Failed to load students', 'error');
+                    // Reset stats if error
+                    updateStats();
+                }
+            } catch (error) {
+                console.error('Catch Error:', error);
+                utils.showNotification('Network error occurred', 'error');
+                updateStats();
+            }
+        }
+
+        function loadStudents() {
+            const tbody = document.getElementById('studentsTableBody');
+            
+            if (filteredStudents.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 40px;">No students found</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = filteredStudents.map(student => {
+                const initials = student.name.split(' ').map(n => n[0]).join('');
+                const canRecommend = student.progress >= 80 && student.status === 'active' && !student.recommended;
+                
+                return `
+                <tr>
+                    <td>
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div class="user-avatar" style="width: 40px; height: 40px; font-size: 14px;">
+                                ${initials}
+                            </div>
+                            <div>
+                                <div style="font-weight: 600;">${student.name}</div>
+                                <div style="font-size: 12px; color: #64748b;">${student.email}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>${student.program}</td>
+                    <td>
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div class="prog-bar" style="flex: 1;">
+                                <div class="prog-fill ${student.progress >= 80 ? 'fill-green' : student.progress >= 50 ? 'fill-orange' : 'fill-red'}" style="width: ${student.progress}%;"></div>
+                            </div>
+                            <span style="font-weight: 700; min-width: 40px;">${Math.round(student.progress)}%</span>
+                        </div>
+                    </td>
+                    <td><strong>${student.sessions}</strong></td>
+                    <td>
+                        <span class="badge-${student.status === 'active' ? 'success' : student.status === 'completed' ? 'info' : 'warning'}">${student.status}</span>
+                        ${student.recommended ? '<br><span style="font-size:10px; color:#10b981;">★ Recommended</span>' : ''}
+                    </td>
+                    <td>
+                        <button class="btn-sm-secondary" onclick="viewStudent(${student.id})">View</button>
+                        ${canRecommend ? `<button class="btn-sm-primary" onclick="recommendForExam(${student.id}, '${student.name}')" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">Recommend</button>` : ''}
+                        <button class="btn-sm-secondary" onclick="editStudent(${student.id})">Edit</button>
+                    </td>
+                </tr>
+            `}).join('');
+            
+            updateStats();
+        }
+
+        async function recommendForExam(enrollmentId, studentName) {
+            if (confirm(`Officially recommend ${studentName} for their final exam?`)) {
+                try {
+                    const response = await api.post('/recommend-exam.php', {
+                        enrollment_id: enrollmentId,
+                        recommended: true
+                    });
+                    if (response.success) {
+                        utils.showNotification(response.message, 'success');
+                        loadStudentsFromAPI();
+                    } else {
+                        utils.showNotification(response.message, 'error');
+                    }
+                } catch (error) {
+                    console.error('Error recommending student:', error);
+                    utils.showNotification('Failed to recommend student', 'error');
+                }
+            }
+        }
+
+        function updateStats() {
+            document.getElementById('totalStudents').textContent = students ? students.length : 0;
+            document.getElementById('activeStudents').textContent = students ? students.filter(s => s.status === 'active').length : 0;
+            document.getElementById('completedStudents').textContent = students ? students.filter(s => s.status === 'graduated' || s.status === 'completed').length : 0;
+            const avgProgress = (students && students.length > 0) ? Math.round(students.reduce((sum, s) => sum + (s.progress || 0), 0) / students.length) : 0;
+            document.getElementById('avgProgress').textContent = avgProgress + '%';
+        }
+
+        function filterStudents() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const status = document.getElementById('statusFilter').value;
+            const program = document.getElementById('programFilter').value;
+            
+            filteredStudents = students.filter(student => {
+                const matchesSearch = student.name.toLowerCase().includes(search) || 
+                                     student.email.toLowerCase().includes(search) ||
+                                     student.phone.includes(search);
+                const matchesStatus = !status || student.status === status;
+                const matchesProgram = !program || student.program.toLowerCase().includes(program);
+                
+                return matchesSearch && matchesStatus && matchesProgram;
+            });
+            
+            loadStudents();
+        }
+
+        function viewStudent(id) {
+            const student = students.find(s => s.id === id);
+            if (!student) return;
+            
+            const content = document.getElementById('viewStudentContent');
+            content.innerHTML = `
+                <div style="display: grid; gap: 16px;">
+                    <div>
+                        <label style="font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase;">Full Name</label>
+                        <p style="font-size: 16px; font-weight: 600; margin-top: 4px;">${student.name}</p>
+                    </div>
+                    <div>
+                        <label style="font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase;">Email</label>
+                        <p style="font-size: 16px; margin-top: 4px;">${student.email}</p>
+                    </div>
+                    <div>
+                        <label style="font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase;">Phone</label>
+                        <p style="font-size: 16px; margin-top: 4px;">${student.phone}</p>
+                    </div>
+                    <div>
+                        <label style="font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase;">Program</label>
+                        <p style="font-size: 16px; margin-top: 4px;">${student.program}</p>
+                    </div>
+                    <div>
+                        <label style="font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase;">Progress</label>
+                        <div style="display: flex; align-items: center; gap: 12px; margin-top: 4px;">
+                            <div class="prog-bar" style="flex: 1;">
+                                <div class="prog-fill ${student.progress >= 80 ? 'fill-green' : student.progress >= 50 ? 'fill-orange' : 'fill-red'}" style="width: ${student.progress}%;"></div>
+                            </div>
+                            <span style="font-weight: 700;">${student.progress}%</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label style="font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase;">Sessions Completed</label>
+                        <p style="font-size: 16px; margin-top: 4px;">${student.sessions}</p>
+                    </div>
+                    <div>
+                        <label style="font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase;">Status</label>
+                        <p style="margin-top: 4px;"><span class="badge-${student.status === 'active' ? 'success' : student.status === 'completed' ? 'info' : 'warning'}">${student.status}</span></p>
+                    </div>
+                </div>
+            `;
+            openModal('viewStudentModal');
+        }
+
+        function editStudent(id) {
+            const student = students.find(s => s.id === id);
+            if (!student) return;
+            
+            document.getElementById('editStudentId').value = student.id;
+            document.getElementById('editStudentName').value = student.name;
+            document.getElementById('editStudentEmail').value = student.email;
+            document.getElementById('editStudentPhone').value = student.phone;
+            document.getElementById('editStudentProgram').value = student.programValue;
+            document.getElementById('editStudentStatus').value = student.status;
+            
+            openModal('editStudentModal');
+        }
+
+        function updateStudent() {
+            const id = parseInt(document.getElementById('editStudentId').value);
+            const name = document.getElementById('editStudentName').value.trim();
+            const email = document.getElementById('editStudentEmail').value.trim();
+            const phone = document.getElementById('editStudentPhone').value.trim();
+            const programValue = document.getElementById('editStudentProgram').value;
+            const status = document.getElementById('editStudentStatus').value;
+            
+            // Validation
+            if (!name) {
+                showNotification('Please enter student name', 'error');
+                return;
+            }
+            if (!email || !validateEmail(email)) {
+                showNotification('Please enter a valid email address', 'error');
+                return;
+            }
+            if (!phone || !validatePhone(phone)) {
+                showNotification('Please enter a valid phone number', 'error');
+                return;
+            }
+            if (!programValue) {
+                showNotification('Please select a program', 'error');
+                return;
+            }
+            
+            // Check for duplicate email (excluding current student)
+            if (students.some(s => s.id !== id && s.email.toLowerCase() === email.toLowerCase())) {
+                showNotification('A student with this email already exists', 'error');
+                return;
+            }
+            
+            const student = students.find(s => s.id === id);
+            if (student) {
+                student.name = name;
+                student.email = email;
+                student.phone = phone;
+                student.programValue = programValue;
+                student.program = document.getElementById('editStudentProgram').options[document.getElementById('editStudentProgram').selectedIndex].text.split(' - ')[0];
+                student.status = status;
+                
+                filterStudents();
+                closeModal('editStudentModal');
+                showNotification('Student updated successfully!', 'success');
+            }
+        }
+
+        function deleteStudent(id) {
+            const student = students.find(s => s.id === id);
+            if (!student) return;
+            
+            if (confirm(`Are you sure you want to remove ${student.name} from your students list? This action cannot be undone.`)) {
+                students = students.filter(s => s.id !== id);
+                filterStudents();
+                showNotification('Student removed successfully!', 'success');
+            }
+        }
+
+        function validateEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        function validatePhone(phone) {
+            const phoneRegex = /^[\d\s\-\+\(\)]{10,}$/;
+            return phoneRegex.test(phone);
+        }
+
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 16px 24px;
+                background: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#f59e0b'};
+                color: white;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                z-index: 10000;
+                animation: slideIn 0.3s ease-out;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-out';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        function addStudent() {
+            const name = document.getElementById('studentName').value.trim();
+            const email = document.getElementById('studentEmail').value.trim();
+            const phone = document.getElementById('studentPhone').value.trim();
+            const programValue = document.getElementById('studentProgram').value;
+            
+            // Validation
+            if (!name) {
+                showNotification('Please enter student name', 'error');
+                return;
+            }
+            if (!email || !validateEmail(email)) {
+                showNotification('Please enter a valid email address', 'error');
+                return;
+            }
+            if (!phone || !validatePhone(phone)) {
+                showNotification('Please enter a valid phone number', 'error');
+                return;
+            }
+            if (!programValue) {
+                showNotification('Please select a program', 'error');
+                return;
+            }
+            
+            // Check for duplicate email
+            if (students.some(s => s.email.toLowerCase() === email.toLowerCase())) {
+                showNotification('A student with this email already exists', 'error');
+                return;
+            }
+            
+            const newStudent = {
+                id: nextId++,
+                name: name,
+                email: email,
+                phone: phone,
+                programValue: programValue,
+                program: document.getElementById('studentProgram').options[document.getElementById('studentProgram').selectedIndex].text.split(' - ')[0],
+                progress: 0,
+                sessions: 0,
+                status: 'active'
+            };
+            
+            students.push(newStudent);
+            filterStudents();
+            closeModal('addStudentModal');
+            document.getElementById('addStudentForm').reset();
+            showNotification('Student added successfully!', 'success');
+        }
+
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('open');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Close modal when clicking outside
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal-overlay')) {
+                e.target.classList.remove('open');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Close modal on ESC key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal-overlay.open').forEach(modal => {
+                    modal.classList.remove('open');
+                    document.body.style.overflow = '';
+                });
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', async function() {
+            const user = auth.getCurrentUser();
+            if (!user) {
+                window.location.href = '../login.html';
+                return;
+            }
+            document.getElementById('userName').textContent = user.name || 'Instructor';
+            
+            // Load students from API
+            await loadStudentsFromAPI();
+            
+
+            
+            // Mobile menu is auto-initialized by dashboard.js
+            
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const sidebar = document.getElementById('sidebar');
+            const backdrop = document.getElementById('sidebarBackdrop');
+
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    sidebar.classList.toggle('mobile-open');
+                    backdrop.classList.toggle('active');
+                });
+            }
+            
+            if (backdrop) {
+                backdrop.addEventListener('click', function () {
+                    sidebar.classList.remove('mobile-open');
+                    backdrop.classList.remove('active');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

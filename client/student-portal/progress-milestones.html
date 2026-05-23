@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress & Milestones - DLSM Ethiopia</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/dark-mode.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/auth-guard.js"></script>
+    <style>
+        .progress-container {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .milestone-timeline {
+            background: white;
+            border-radius: 8px;
+            padding: 32px 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .timeline-track {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #e2e8f0;
+            transform: translateX(-50%);
+        }
+
+        .milestones-list {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .milestone {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .milestone:nth-child(even) {
+            direction: rtl;
+        }
+
+        .milestone:nth-child(even) > * {
+            direction: ltr;
+        }
+
+        .milestone-content {
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 8px;
+            border-left: 4px solid #e2e8f0;
+            transition: all 0.3s;
+        }
+
+        .milestone.completed .milestone-content {
+            background: #f0fdf4;
+            border-left-color: #10b981;
+        }
+
+        .milestone.in-progress .milestone-content {
+            background: #fffbeb;
+            border-left-color: #f59e0b;
+        }
+
+        .milestone.pending .milestone-content {
+            background: #f8fafc;
+            border-left-color: #cbd5e1;
+        }
+
+        .milestone-dot {
+            width: 32px;
+            height: 32px;
+            background: white;
+            border: 3px solid #e2e8f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+        }
+
+        .milestone.completed .milestone-dot {
+            background: #10b981;
+            border-color: #10b981;
+            color: white;
+        }
+
+        .milestone.in-progress .milestone-dot {
+            background: #f59e0b;
+            border-color: #f59e0b;
+            color: white;
+            animation: pulse 2s infinite;
+        }
+
+        .milestone-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .milestone-description {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 12px;
+        }
+
+        .milestone-progress {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .milestone-progress-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            font-weight: 600;
+            color: #64748b;
+        }
+
+        .milestone-progress-bar {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .milestone-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+            transition: width 0.3s;
+        }
+
+        .milestone.in-progress .milestone-progress-fill {
+            background: linear-gradient(90deg, #f59e0b 0%, #d97706 100%);
+        }
+
+        .milestone-date {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-top: 8px;
+        }
+
+        .progress-sidebar {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            height: fit-content;
+        }
+
+        .sidebar-card {
+            margin-bottom: 20px;
+        }
+
+        .sidebar-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .sidebar-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #64748b;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .progress-stat {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .progress-stat:last-child {
+            border-bottom: none;
+        }
+
+        .progress-stat-label {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .progress-stat-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: #0284c7;
+        }
+
+        .graduation-estimate {
+            padding: 16px;
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            border-radius: 8px;
+            border-left: 4px solid #0284c7;
+        }
+
+        .graduation-label {
+            font-size: 12px;
+            color: #0369a1;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .graduation-date {
+            font-size: 18px;
+            font-weight: 700;
+            color: #0284c7;
+        }
+
+        .graduation-days {
+            font-size: 12px;
+            color: #0369a1;
+            margin-top: 4px;
+        }
+
+        .milestone-checklist {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            padding: 8px;
+            background: #f8fafc;
+            border-radius: 6px;
+        }
+
+        .checklist-item.completed {
+            background: #f0fdf4;
+            color: #10b981;
+        }
+
+        .checklist-icon {
+            font-size: 16px;
+        }
+
+        .overall-progress {
+            margin-bottom: 20px;
+        }
+
+        .overall-progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .overall-progress-bar {
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .overall-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #0284c7 0%, #0369a1 100%);
+            transition: width 0.3s;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            padding: 16px;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-radius: 8px;
+            border-left: 4px solid #0284c7;
+            text-align: center;
+        }
+
+        .stat-card-label {
+            font-size: 12px;
+            color: #0369a1;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .stat-card-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #0284c7;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7);
+            }
+            50% {
+                box-shadow: 0 0 0 8px rgba(245, 158, 11, 0);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .progress-container {
+                grid-template-columns: 1fr;
+            }
+
+            .progress-sidebar {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                height: auto;
+            }
+
+            .milestone {
+                grid-template-columns: 1fr;
+            }
+
+            .milestone:nth-child(even) {
+                direction: ltr;
+            }
+
+            .milestone-dot {
+                position: static;
+                transform: none;
+                margin-bottom: 12px;
+            }
+
+            .timeline-track {
+                left: 16px;
+            }
+
+            .milestone-timeline {
+                padding-left: 60px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .milestone-timeline {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body class="dashboard-body">
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <img src="../assets/images/logo-DLSM.jpg" alt="DLSM Logo" class="logo-icon" style="height: 32px; width: auto; border-radius: 6px;">
+                <span class="logo-text">DLSM</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">
+                <span class="nav-icon">📊</span>
+                <span class="nav-text">Dashboard</span>
+            </a>
+            <a href="profile.html" class="nav-item">
+                <span class="nav-icon">👤</span>
+                <span class="nav-text">Profile</span>
+            </a>
+            <a href="schedule.html" class="nav-item">
+                <span class="nav-icon">📅</span>
+                <span class="nav-text">Schedule</span>
+            </a>
+            <a href="progress.html" class="nav-item">
+                <span class="nav-icon">📈</span>
+                <span class="nav-text">Progress</span>
+            </a>
+            <a href="progress-milestones.html" class="nav-item active">
+                <span class="nav-icon">🎯</span>
+                <span class="nav-text">Milestones</span>
+            </a>
+            <a href="exams.html" class="nav-item">
+                <span class="nav-icon">📝</span>
+                <span class="nav-text">Exams</span>
+            </a>
+            <a href="certificate.html" class="nav-item">
+                <span class="nav-icon">🎓</span>
+                <span class="nav-text">Certificate</span>
+            </a>
+            <a href="messages.html" class="nav-item">
+                <span class="nav-icon">💬</span>
+                <span class="nav-text">Messages</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <button class="btn-logout" id="logoutBtn">
+                <span class="nav-icon">🚪</span>
+                <span class="nav-text">Logout</span>
+            </button>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+                <div>
+                    <h1 class="page-title">Progress & Milestones</h1>
+                    <p class="page-subtitle">Track your journey to graduation</p>
+                </div>
+            </div>
+            <div class="topbar-right">
+                <div class="user-profile">
+                    <div class="user-avatar">👤</div>
+                    <div class="user-info">
+                        <span class="user-name" id="userName">Student</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="dashboard-container">
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-card-label">Overall Progress</div>
+                    <div class="stat-card-value" id="overallProgress">75%</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-label">Lessons Done</div>
+                    <div class="stat-card-value" id="lessonsDone">16/20</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-label">Hours Completed</div>
+                    <div class="stat-card-value" id="hoursCompleted">32/40</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-label">Est. Graduation</div>
+                    <div class="stat-card-value" id="estGraduation">45 days</div>
+                </div>
+            </div>
+
+            <!-- Main Progress Container -->
+            <div class="progress-container">
+                <!-- Timeline -->
+                <div class="milestone-timeline">
+                    <div class="timeline-track"></div>
+                    <div class="milestones-list" id="milestonesList">
+                        <!-- Milestones will be generated here -->
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="progress-sidebar">
+                    <!-- Overall Progress -->
+                    <div class="sidebar-card">
+                        <div class="sidebar-title">Overall Progress</div>
+                        <div class="overall-progress">
+                            <div class="overall-progress-label">
+                                <span>Completion</span>
+                                <span id="progressPercent">75%</span>
+                            </div>
+                            <div class="overall-progress-bar">
+                                <div class="overall-progress-fill" id="progressFill" style="width: 75%;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Graduation Estimate -->
+                    <div class="sidebar-card">
+                        <div class="graduation-estimate">
+                            <div class="graduation-label">Estimated Graduation</div>
+                            <div class="graduation-date" id="gradDate">June 14, 2026</div>
+                            <div class="graduation-days">45 days remaining</div>
+                        </div>
+                    </div>
+
+                    <!-- Progress Stats -->
+                    <div class="sidebar-card">
+                        <div class="sidebar-title">Progress Stats</div>
+                        <div class="progress-stat">
+                            <span class="progress-stat-label">Theory Hours</span>
+                            <span class="progress-stat-value">16/16</span>
+                        </div>
+                        <div class="progress-stat">
+                            <span class="progress-stat-label">Practical Hours</span>
+                            <span class="progress-stat-value">16/24</span>
+                        </div>
+                        <div class="progress-stat">
+                            <span class="progress-stat-label">Lessons</span>
+                            <span class="progress-stat-value">16/20</span>
+                        </div>
+                        <div class="progress-stat">
+                            <span class="progress-stat-label">Avg. Score</span>
+                            <span class="progress-stat-value">82%</span>
+                        </div>
+                    </div>
+
+                    <!-- Checklist -->
+                    <div class="sidebar-card">
+                        <div class="sidebar-title">Graduation Checklist</div>
+                        <div class="milestone-checklist">
+                            <div class="checklist-item completed">
+                                <span class="checklist-icon">✓</span>
+                                <span>Theory Training</span>
+                            </div>
+                            <div class="checklist-item completed">
+                                <span class="checklist-icon">✓</span>
+                                <span>Theory Exam</span>
+                            </div>
+                            <div class="checklist-item">
+                                <span class="checklist-icon">◐</span>
+                                <span>Practical Training</span>
+                            </div>
+                            <div class="checklist-item">
+                                <span class="checklist-icon">○</span>
+                                <span>Practical Exam</span>
+                            </div>
+                            <div class="checklist-item">
+                                <span class="checklist-icon">○</span>
+                                <span>Final Approval</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/dashboard.js"></script>
+    <script>
+        let progressData = null;
+
+        document.addEventListener('DOMContentLoaded', async function() {
+            const user = auth.getCurrentUser();
+            if (!user) {
+                window.location.href = '../login.html';
+                return;
+            }
+
+            document.getElementById('userName').textContent = user.name || 'Student';
+
+            // Load progress data
+            await loadProgressData();
+            renderMilestones();
+
+            // Mobile menu
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const sidebar = document.getElementById('sidebar');
+            const backdrop = document.getElementById('sidebarBackdrop');
+
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    sidebar.classList.toggle('mobile-open');
+                    backdrop.classList.toggle('active');
+                });
+            }
+
+            if (backdrop) {
+                backdrop.addEventListener('click', function() {
+                    sidebar.classList.remove('mobile-open');
+                    backdrop.classList.remove('active');
+                });
+            }
+        });
+
+        async function loadProgressData() {
+            try {
+                const response = await api.get('/student/progress');
+                if (response.success && response.data) {
+                    progressData = response.data;
+                }
+            } catch (error) {
+                console.error('Error loading progress:', error);
+                // Demo data
+                progressData = {
+                    total_hours: 40,
+                    completed_hours: 32,
+                    theory_hours: 16,
+                    theory_completed: 16,
+                    practical_hours: 24,
+                    practical_completed: 16,
+                    progress_percentage: 75,
+                    lessons_completed: 16,
+                    lessons_total: 20,
+                    next_lesson: null
+                };
+            }
+
+            updateStats();
+        }
+
+        function updateStats() {
+            const percent = progressData.progress_percentage || 75;
+            document.getElementById('overallProgress').textContent = percent + '%';
+            document.getElementById('lessonsDone').textContent = progressData.lessons_completed + '/' + progressData.lessons_total;
+            document.getElementById('hoursCompleted').textContent = progressData.completed_hours + '/' + progressData.total_hours;
+            document.getElementById('progressPercent').textContent = percent + '%';
+            document.getElementById('progressFill').style.width = percent + '%';
+
+            // Calculate graduation date
+            const daysRemaining = Math.ceil((progressData.total_hours - progressData.completed_hours) / 2);
+            const gradDate = new Date();
+            gradDate.setDate(gradDate.getDate() + daysRemaining);
+            document.getElementById('gradDate').textContent = gradDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+            document.getElementById('estGraduation').textContent = daysRemaining + ' days';
+        }
+
+        function renderMilestones() {
+            const milestones = [
+                {
+                    title: 'Theory Training',
+                    description: 'Complete all theory classes and materials',
+                    status: 'completed',
+                    progress: 100,
+                    date: 'Completed on April 15, 2026'
+                },
+                {
+                    title: 'Theory Exam',
+                    description: 'Pass the theory examination',
+                    status: 'completed',
+                    progress: 100,
+                    date: 'Completed on April 20, 2026'
+                },
+                {
+                    title: 'Practical Training',
+                    description: 'Complete practical driving sessions',
+                    status: 'in-progress',
+                    progress: 67,
+                    date: 'In progress - 16 of 24 hours done'
+                },
+                {
+                    title: 'Practical Exam',
+                    description: 'Pass the practical driving test',
+                    status: 'pending',
+                    progress: 0,
+                    date: 'Scheduled for May 15, 2026'
+                },
+                {
+                    title: 'Final Approval',
+                    description: 'Receive graduation approval from supervisor',
+                    status: 'pending',
+                    progress: 0,
+                    date: 'Expected by June 14, 2026'
+                }
+            ];
+
+            const list = document.getElementById('milestonesList');
+            list.innerHTML = milestones.map((milestone, index) => `
+                <div class="milestone ${milestone.status}">
+                    <div class="milestone-dot">${milestone.status === 'completed' ? '✓' : milestone.status === 'in-progress' ? '◐' : '○'}</div>
+                    <div class="milestone-content">
+                        <div class="milestone-title">${milestone.title}</div>
+                        <div class="milestone-description">${milestone.description}</div>
+                        <div class="milestone-progress">
+                            <div class="milestone-progress-label">
+                                <span>Progress</span>
+                                <span>${milestone.progress}%</span>
+                            </div>
+                            <div class="milestone-progress-bar">
+                                <div class="milestone-progress-fill" style="width: ${milestone.progress}%;"></div>
+                            </div>
+                        </div>
+                        <div class="milestone-date">${milestone.date}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+    </script>
+</body>
+</html>

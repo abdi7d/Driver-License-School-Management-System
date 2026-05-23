@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluations - DLSM Ethiopia</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/dark-mode.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/auth-guard.js"></script>
+</head>
+<body class="dashboard-body">
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <img src="../assets/images/logo-DLSM.jpg" alt="DLSM Logo" class="logo-icon" style="height: 32px; width: auto; border-radius: 6px;">
+                <span class="logo-text">DLSM</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">
+                <span class="nav-icon">📊</span>
+                <span class="nav-text">Dashboard</span>
+            </a>
+            <a href="profile.html" class="nav-item">
+                <span class="nav-icon">👤</span>
+                <span class="nav-text">Profile</span>
+            </a>
+            <a href="my-students.html" class="nav-item">
+                <span class="nav-icon">👥</span>
+                <span class="nav-text">My Students</span>
+            </a>
+            <a href="sessions.html" class="nav-item">
+                <span class="nav-icon">🚗</span>
+                <span class="nav-text">Sessions</span>
+            </a>
+            <a href="schedule.html" class="nav-item">
+                <span class="nav-icon">📅</span>
+                <span class="nav-text">Schedule</span>
+            </a>
+            <a href="attendance.html" class="nav-item">
+                <span class="nav-icon">✅</span>
+                <span class="nav-text">Attendance</span>
+            </a>
+            <a href="evaluations.html" class="nav-item active">
+                <span class="nav-icon">📝</span>
+                <span class="nav-text">Evaluations</span>
+            </a>
+            <a href="feedback.html" class="nav-item">
+                <span class="nav-icon">💬</span>
+                <span class="nav-text">Feedback</span>
+            </a>
+            <a href="progress.html" class="nav-item">
+                <span class="nav-icon">📈</span>
+                <span class="nav-text">Progress</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <button class="btn-logout" id="logoutBtn">
+                <span class="nav-icon">🚪</span>
+                <span class="nav-text">Logout</span>
+            </button>
+        </div>
+    </aside>
+
+    
+    <main class="main-content">
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+                <div>
+                    <h1 class="page-title">Evaluations</h1>
+                    <p class="page-subtitle">Assess and track student performance</p>
+                </div>
+            </div>
+            <div class="topbar-right">
+                <div class="user-profile">
+                    <div class="user-avatar" id="topbarAvatar">👤</div>
+                    <div class="user-info">
+                        <span class="user-name" id="userName">Instructor</span>
+                        <span class="user-role">Instructor</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="dashboard-container">
+            
+            <div class="stats-grid">
+                <div class="stat-card blue">
+                    <div class="stat-icon">📝</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Total Evaluations</p>
+                        <h3 class="stat-value">48</h3>
+                    </div>
+                </div>
+                <div class="stat-card green">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Passed</p>
+                        <h3 class="stat-value">42</h3>
+                    </div>
+                </div>
+                <div class="stat-card orange">
+                    <div class="stat-icon">⏳</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Pending</p>
+                        <h3 class="stat-value">6</h3>
+                    </div>
+                </div>
+                <div class="stat-card purple">
+                    <div class="stat-icon">⭐</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Avg Score</p>
+                        <h3 class="stat-value">85%</h3>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="card" style="margin-bottom: 24px;">
+                <div style="display: grid; grid-template-columns: 1fr auto auto auto; gap: 16px; align-items: end; padding: 20px;">
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label class="form-label">Search Evaluations</label>
+                        <input type="text" class="form-control" placeholder="Search by student name...">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label class="form-label">Type</label>
+                        <select class="form-control">
+                            <option value="">All Types</option>
+                            <option value="practical">Practical</option>
+                            <option value="theory">Theory</option>
+                            <option value="final">Final Exam</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label class="form-label">Status</label>
+                        <select class="form-control">
+                            <option value="">All Status</option>
+                            <option value="passed">Passed</option>
+                            <option value="failed">Failed</option>
+                            <option value="pending">Pending</option>
+                        </select>
+                    </div>
+                    <button class="btn-primary" style="margin-bottom: 0;">+ Add Evaluation</button>
+                </div>
+            </div>
+
+            
+            <div class="card">
+                <div class="card-title">
+                    <span>📝 Evaluation Records</span>
+                </div>
+                <div style="padding: 20px;">
+                    <div style="padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 16px;">
+                        <div style="display: flex; justify-content: space-between; align-items: start;">
+                            <div style="flex: 1;">
+                                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                                    <h4 style="font-size: 16px; font-weight: 700;">Alice Johnson</h4>
+                                    <span class="badge-success">Practical</span>
+                                    <span class="badge-success">Passed</span>
+                                </div>
+                                <div style="font-size: 13px; color: #64748b;">
+                                    📅 2024-06-10 • 📊 Score: 92%
+                                </div>
+                                <p style="margin-top: 8px; font-size: 14px; color: #64748b;">Excellent driving skills</p>
+                            </div>
+                            <div style="font-size: 32px; font-weight: 800; color: #10b981;">92%</div>
+                        </div>
+                        <div style="margin-top: 12px;">
+                            <button class="btn-sm-secondary">View Details</button>
+                        </div>
+                    </div>
+
+                    <div style="padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 16px;">
+                        <div style="display: flex; justify-content: space-between; align-items: start;">
+                            <div style="flex: 1;">
+                                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                                    <h4 style="font-size: 16px; font-weight: 700;">Bob Smith</h4>
+                                    <span class="badge-info">Theory</span>
+                                    <span class="badge-success">Passed</span>
+                                </div>
+                                <div style="font-size: 13px; color: #64748b;">
+                                    📅 2024-06-09 • 📊 Score: 78%
+                                </div>
+                                <p style="margin-top: 8px; font-size: 14px; color: #64748b;">Good understanding of traffic rules</p>
+                            </div>
+                            <div style="font-size: 32px; font-weight: 800; color: #10b981;">78%</div>
+                        </div>
+                        <div style="margin-top: 12px;">
+                            <button class="btn-sm-secondary">View Details</button>
+                        </div>
+                    </div>
+
+                    <div style="padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 16px;">
+                        <div style="display: flex; justify-content: space-between; align-items: start;">
+                            <div style="flex: 1;">
+                                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                                    <h4 style="font-size: 16px; font-weight: 700;">Frank Miller</h4>
+                                    <span class="badge-success">Practical</span>
+                                    <span class="badge-warning">Pending</span>
+                                </div>
+                                <div style="font-size: 13px; color: #64748b;">
+                                    📅 2024-06-11 • Scheduled for tomorrow
+                                </div>
+                            </div>
+                            <div style="font-size: 14px; color: #64748b;">Not graded</div>
+                        </div>
+                        <div style="margin-top: 12px;">
+                            <button class="btn-sm-primary">Grade</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/dashboard.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+            const user = auth.getCurrentUser();
+            if (!user) {
+                window.location.href = '../login.html';
+                return;
+            }
+            document.getElementById('userName').textContent = user.name || 'Instructor';
+            
+            // Load evaluations from API
+            await loadEvaluationsFromAPI();
+            
+
+            
+            // Mobile menu is auto-initialized by dashboard.js
+            
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const sidebar = document.getElementById('sidebar');
+            const backdrop = document.getElementById('sidebarBackdrop');
+
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    sidebar.classList.toggle('mobile-open');
+                    backdrop.classList.toggle('active');
+                });
+            }
+            
+            if (backdrop) {
+                backdrop.addEventListener('click', function () {
+                    sidebar.classList.remove('mobile-open');
+                    backdrop.classList.remove('active');
+                });
+            }
+        });
+        
+        // Load evaluations from API
+        async function loadEvaluationsFromAPI() {
+            try {
+                const response = await api.get('/schedule.php');
+                if (response.success && response.data) {
+                    updateEvaluationsList(response.data);
+                }
+            } catch (error) {
+                console.error('Error loading evaluations:', error);
+            }
+        }
+        
+        function updateEvaluationsList(lessons) {
+            const listContainer = document.querySelector('.card:last-child > div:last-child');
+            if (!listContainer) return;
+            
+            listContainer.innerHTML = '';
+            
+            if (lessons.length === 0) {
+                listContainer.innerHTML = '<p style="text-align:center; padding:20px;">No lesson records found.</p>';
+                return;
+            }
+
+            let totalEvaluations = 0;
+            let passedCount = 0;
+            let pendingCount = 0;
+            let totalScore = 0;
+            let scoredCount = 0;
+
+            lessons.forEach(lesson => {
+                const sessionDate = new Date(lesson.session_date);
+                const isGraded = lesson.performance_score !== null;
+                
+                totalEvaluations++;
+                if (isGraded) {
+                    scoredCount++;
+                    totalScore += parseFloat(lesson.performance_score);
+                    if (parseFloat(lesson.performance_score) >= 70) passedCount++;
+                } else {
+                    pendingCount++;
+                }
+
+                const statusBadge = isGraded ? '<span class="badge-success">Graded</span>' : '<span class="badge-warning">Pending</span>';
+                const scoreDisplay = isGraded ? `${lesson.performance_score}%` : 'Not graded';
+                
+                const card = document.createElement('div');
+                card.style = 'padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 16px;';
+                card.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div style="flex: 1;">
+                            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                                <h4 style="font-size: 16px; font-weight: 700;">${lesson.student_fname} ${lesson.student_lname}</h4>
+                                <span class="badge-info">${capitalize(lesson.lesson_type)}</span>
+                                ${statusBadge}
+                            </div>
+                            <div style="font-size: 13px; color: #64748b;">
+                                📅 ${sessionDate.toLocaleDateString()} • 📊 ${lesson.program_name}
+                            </div>
+                            ${lesson.notes ? `<p style="margin-top: 8px; font-size: 14px; color: #64748b;">${lesson.notes}</p>` : ''}
+                        </div>
+                        <div style="font-size: 32px; font-weight: 800; color: ${isGraded ? '#10b981' : '#cbd5e1'};">${scoreDisplay}</div>
+                    </div>
+                    <div style="margin-top: 12px;">
+                        <button class="btn-sm-primary" onclick="openGradingModal(${lesson.id})">${isGraded ? 'Update Grade' : 'Grade'}</button>
+                    </div>
+                `;
+                listContainer.appendChild(card);
+            });
+
+            // Update Stats
+            const statValues = document.querySelectorAll('.stat-card .stat-value');
+            if (statValues.length >= 4) {
+                statValues[0].textContent = totalEvaluations;
+                statValues[1].textContent = passedCount;
+                statValues[2].textContent = pendingCount;
+                const avgScore = scoredCount > 0 ? Math.round(totalScore / scoredCount) : 0;
+                statValues[3].textContent = avgScore + '%';
+            }
+        }
+
+        function capitalize(s) {
+            return s.charAt(0).toUpperCase() + s.slice(1);
+        }
+
+        async function openGradingModal(lessonId) {
+            const score = prompt("Enter performance score (0-100):");
+            if (score === null) return;
+            
+            const numScore = parseFloat(score);
+            if (isNaN(numScore) || numScore < 0 || numScore > 100) {
+                alert("Please enter a valid score between 0 and 100");
+                return;
+            }
+
+            const notes = prompt("Enter evaluation notes (optional):");
+            
+            try {
+                const response = await api.post('/evaluation.php', {
+                    lesson_id: lessonId,
+                    performance_score: numScore,
+                    notes: notes || ""
+                });
+                if (response.success) {
+                    utils.showNotification(response.message, 'success');
+                    loadEvaluationsFromAPI();
+                } else {
+                    utils.showNotification(response.message, 'error');
+                }
+            } catch (error) {
+                console.error('Error saving evaluation:', error);
+                utils.showNotification('Failed to save evaluation', 'error');
+            }
+        }
+    </script>
+</body>
+</html>

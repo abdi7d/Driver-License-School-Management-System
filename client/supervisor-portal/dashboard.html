@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supervisor Dashboard - DLSM Ethiopia</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/dark-mode.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/auth-guard.js"></script>
+</head>
+<body class="dashboard-body">
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <img src="../assets/images/logo-DLSM.jpg" alt="DLSM Logo" class="logo-icon" style="height: 32px; width: auto; border-radius: 6px;">
+                <span class="logo-text">DLSM</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item active">
+                <span class="nav-icon">📊</span>
+                <span class="nav-text">Dashboard</span>
+            </a>
+            <a href="profile.html" class="nav-item">
+                <span class="nav-icon">👤</span>
+                <span class="nav-text">My Profile</span>
+            </a>
+            <a href="assignments.html" class="nav-item">
+                <span class="nav-icon">👥</span>
+                <span class="nav-text">Assignments</span>
+            </a>
+            <a href="monitor.html" class="nav-item">
+                <span class="nav-icon">👁️</span>
+                <span class="nav-text">Monitor</span>
+            </a>
+            <a href="exam-approvals.html" class="nav-item">
+                <span class="nav-icon">✅</span>
+                <span class="nav-text">Exam Approvals</span>
+            </a>
+            <a href="complaints.html" class="nav-item">
+                <span class="nav-icon">📢</span>
+                <span class="nav-text">Complaints</span>
+            </a>
+            <a href="reports.html" class="nav-item">
+                <span class="nav-icon">📈</span>
+                <span class="nav-text">Reports</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <button class="btn-logout" id="logoutBtn">
+                <span class="nav-icon">🚪</span>
+                <span class="nav-text">Logout</span>
+            </button>
+        </div>
+    </aside>
+
+    
+    <main class="main-content">
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+                <div>
+                    <h1 class="page-title">Supervisor Dashboard</h1>
+                    <p class="page-subtitle" id="welcomeMsg">Welcome back! Monitor training quality and oversee operations.</p>
+                </div>
+            </div>
+            <div class="topbar-right">
+                <div class="user-profile">
+                    <div class="user-avatar" id="topbarAvatar">👤</div>
+                    <div class="user-info">
+                        <span class="user-name" id="userName">Supervisor</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="dashboard-container">
+
+            
+            <div class="stats-grid">
+                <div class="stat-card orange">
+                    <div class="stat-icon">👨‍🏫</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Active Instructors</p>
+                        <h3 class="stat-value">...</h3>
+                        <span class="stat-change">Live in system</span>
+                    </div>
+                </div>
+                <div class="stat-card blue">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Students Supervised</p>
+                        <h3 class="stat-value">...</h3>
+                        <span class="stat-change">Total managed</span>
+                    </div>
+                </div>
+                <div class="stat-card purple">
+                    <div class="stat-icon">⏳</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Pending Approvals</p>
+                        <h3 class="stat-value">...</h3>
+                        <span class="stat-change">Needs review</span>
+                    </div>
+                </div>
+                <div class="stat-card green">
+                    <div class="stat-icon">📢</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Open Complaints</p>
+                        <h3 class="stat-value">...</h3>
+                        <span class="stat-change">Awaiting resolution</span>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="card" style="margin-bottom: 32px;">
+                <div class="card-title">
+                    <span>⚡ Quick Actions</span>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+                    <a href="assignments.html" class="quick-action-btn">
+                        <div class="qa-icon" style="background: #fed7aa;">👥</div>
+                        <div class="qa-text">Assign Instructor</div>
+                    </a>
+                    <a href="exam-approvals.html" class="quick-action-btn">
+                        <div class="qa-icon" style="background: #dcfce7;">✅</div>
+                        <div class="qa-text">Review Exam Readiness</div>
+                    </a>
+                    <a href="monitor.html" class="quick-action-btn">
+                        <div class="qa-icon" style="background: #dbeafe;">👁️</div>
+                        <div class="qa-text">Monitor Activities</div>
+                    </a>
+                    <a href="complaints.html" class="quick-action-btn">
+                        <div class="qa-icon" style="background: #fecaca;">📢</div>
+                        <div class="qa-text">Handle Complaints</div>
+                    </a>
+                </div>
+            </div>
+
+            
+            <div class="card" style="margin-bottom: 32px;">
+                <div class="card-title">
+                    <span>⏳ Pending Exam Approvals</span>
+                    <a href="exam-approvals.html">View All →</a>
+                </div>
+                <div id="pendingApprovals">
+                    <p style="padding: 20px; text-align: center; color: #64748b;">Loading pending approvals...</p>
+                </div>
+            </div>
+
+            
+            <div class="dashboard-grid-3">
+                
+                <div class="card">
+                    <div class="card-title"><span>🕐 Recent Activities</span></div>
+                    <div id="recentActivities">
+                        <p style="padding: 20px; text-align: center; color: #64748b;">Loading activities...</p>
+                    </div>
+                </div>
+
+                
+                <div class="card">
+                    <div class="card-title"><span>📊 Top Instructors</span></div>
+                    <div id="topInstructors">
+                        <p style="padding: 20px; text-align: center; color: #64748b;">Loading performance data...</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/dashboard.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async function () {
+            // Force disable demo mode if the user wants real data
+            if (localStorage.getItem('DEMO_MODE') === 'true') {
+                console.log('🔄 Disabling Demo Mode to fetch real supervisor data...');
+                localStorage.setItem('DEMO_MODE', 'false');
+                window.location.reload();
+                return;
+            }
+
+            const user = auth.getCurrentUser();
+            if (!user) { 
+                window.location.href = '../login.html'; 
+                return; 
+            }
+            
+            // Load supervisor dashboard data from API
+            await loadSupervisorDashboard();
+            
+            // Update welcome message
+            const welcomeMsg = document.getElementById('welcomeMsg');
+            if (welcomeMsg) {
+                welcomeMsg.textContent = 'Welcome back, ' + (user.name || 'Supervisor') + '! Monitor training quality and oversee operations.';
+            }
+
+            // Update profile info
+            document.getElementById('userName').textContent = user.name || 'Supervisor';
+        });
+        
+        async function loadSupervisorDashboard() {
+            try {
+                console.log('🌐 Fetching dashboard data from:', api.baseUrl + '/supervisor/dashboard.php');
+                const response = await api.get('/supervisor/dashboard.php');
+                
+                if (response.success && response.data) {
+                    const data = response.data;
+                    const stats = data.stats;
+                    
+                    // Update stat cards
+                    const statValues = document.querySelectorAll('.stat-card .stat-value');
+                    if (statValues.length >= 4) {
+                        statValues[0].textContent = stats.active_instructors || 0;
+                        statValues[1].textContent = stats.total_students || 0;
+                        statValues[2].textContent = stats.pending_approvals || 0;
+                        statValues[3].textContent = stats.open_complaints || 0;
+                    }
+                    
+                    // Update Pending Approvals List
+                    const approvalsContainer = document.getElementById('pendingApprovals');
+                    if (approvalsContainer && data.recent_approvals) {
+                        if (data.recent_approvals.length === 0) {
+                            approvalsContainer.innerHTML = '<p style="padding: 20px; text-align: center; color: #64748b;">No pending exam approvals.</p>';
+                        } else {
+                            approvalsContainer.innerHTML = data.recent_approvals.map(app => `
+                                <div class="approval-item">
+                                    <div class="approval-avatar">${app.student_name ? app.student_name.substring(0, 1) : 'S'}</div>
+                                    <div class="approval-info">
+                                        <h4>${app.student_name}</h4>
+                                        <p>${app.exam_type} Exam · Program: ${app.program_name}</p>
+                                        <span style="font-size: 12px; color: #15803D;">✓ Instructor Recommended</span>
+                                    </div>
+                                    <div class="approval-actions">
+                                        <button class="btn-sm-approve" onclick="quickApprove(this, ${app.id})">Approve</button>
+                                        <button class="btn-sm-reject" onclick="quickReject(this, ${app.id})">Reject</button>
+                                    </div>
+                                </div>
+                            `).join('');
+                        }
+                    }
+                    
+                    // Update Recent Activities
+                    const activityContainer = document.getElementById('recentActivities');
+                    if (activityContainer) {
+                        activityContainer.innerHTML = '<p style="padding: 20px; text-align: center; color: #64748b;">No recent activities logged.</p>';
+                    }
+
+                    // Update Top Instructors
+                    const instructorContainer = document.getElementById('topInstructors');
+                    if (instructorContainer) {
+                        instructorContainer.innerHTML = '<p style="padding: 20px; text-align: center; color: #64748b;">No instructor performance data available.</p>';
+                    }
+                    
+                    console.log('✅ Supervisor dashboard data loaded successfully');
+                } else {
+                    console.error('❌ Failed to load dashboard:', response.message || 'Unknown error');
+                    if (typeof utils !== 'undefined') utils.showNotification(response.message || 'Failed to load dashboard data', 'error');
+                    
+                    // Reset stats
+                    document.querySelectorAll('.stat-card .stat-value').forEach(el => el.textContent = '!');
+                }
+            } catch (error) {
+                console.error('❌ Error loading supervisor dashboard:', error);
+            }
+        }
+
+        async function quickApprove(btn, examId) {
+            try {
+                const response = await api.post('/supervisor/exams.php', { exam_id: examId, approved: 1 });
+                if (response.success) {
+                    if (typeof utils !== 'undefined') utils.showNotification('Exam approved!', 'success');
+                    const item = btn.closest('.approval-item');
+                    item.style.opacity = '0.5';
+                    item.style.pointerEvents = 'none';
+                    setTimeout(() => item.remove(), 500);
+                    // Refresh stats
+                    loadSupervisorDashboard();
+                }
+            } catch (error) {
+                console.error('Error approving exam:', error);
+            }
+        }
+
+        async function quickReject(btn, examId) {
+            if (confirm('Are you sure you want to reject this readiness check?')) {
+                try {
+                    const response = await api.post('/supervisor/exams.php', { exam_id: examId, approved: 0 });
+                    if (response.success) {
+                        if (typeof utils !== 'undefined') utils.showNotification('Exam rejected.', 'warning');
+                        const item = btn.closest('.approval-item');
+                        item.remove();
+                        loadSupervisorDashboard();
+                    }
+                } catch (error) {
+                    console.error('Error rejecting exam:', error);
+                }
+            }
+        }
+    </script>
+</body>
+</html>

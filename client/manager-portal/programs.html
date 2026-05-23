@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programs - DLSM Ethiopia</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/dark-mode.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/auth-guard.js"></script>
+</head>
+<body class="dashboard-body">
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <img src="../assets/images/logo-DLSM.jpg" alt="DLSM Logo" class="logo-icon" style="height: 32px; width: auto; border-radius: 6px;">
+                <span class="logo-text">DLSM</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item"><span class="nav-icon">📊</span><span class="nav-text">Dashboard</span></a>
+            <a href="users.html" class="nav-item"><span class="nav-icon">👥</span><span class="nav-text">Users</span></a>
+            <a href="programs.html" class="nav-item active"><span class="nav-icon">📚</span><span class="nav-text">Programs</span></a>
+            <a href="enrollments.html" class="nav-item"><span class="nav-icon">📋</span><span class="nav-text">Enrollments</span></a>
+            <a href="approvals.html" class="nav-item"><span class="nav-icon">✅</span><span class="nav-text">Approvals</span></a>
+            <a href="exams.html" class="nav-item"><span class="nav-icon">📝</span><span class="nav-text">Exams</span></a>
+            <a href="certificates.html" class="nav-item"><span class="nav-icon">🎓</span><span class="nav-text">Certificates</span></a>
+            <a href="reports.html" class="nav-item"><span class="nav-icon">📈</span><span class="nav-text">Reports</span></a>
+            <a href="notifications.html" class="nav-item"><span class="nav-icon">🔔</span><span class="nav-text">Notifications</span></a>
+            <a href="profile.html" class="nav-item"><span class="nav-icon">👤</span><span class="nav-text">My Profile</span></a>
+        </nav>
+        <div class="sidebar-footer">
+            <button class="btn-logout" id="logoutBtn"><span class="nav-icon">🚪</span><span class="nav-text">Logout</span></button>
+        </div>
+    </aside>
+
+    
+    <main class="main-content">
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+                <div>
+                    <h1 class="page-title">Programs</h1>
+                    <p class="page-subtitle">Create and manage training programs</p>
+                </div>
+            </div>
+            <div class="topbar-right">
+                <button class="btn-primary topbar-action-btn" id="addProgramBtn">+ Add Program</button>
+                <div class="user-profile">
+                    <div class="user-avatar">👤</div>
+                    <div class="user-info">
+                        <span class="user-name" id="userName">Manager</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="dashboard-container">
+
+            
+            <div class="stats-grid">
+                <div class="stat-card blue">
+                    <div class="stat-icon">📚</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Total Programs</p>
+                        <h3 class="stat-value" id="statTotal">5</h3>
+                    </div>
+                </div>
+                <div class="stat-card green">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Active Programs</p>
+                        <h3 class="stat-value" id="statActive">4</h3>
+                    </div>
+                </div>
+                <div class="stat-card orange">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Total Enrolled</p>
+                        <h3 class="stat-value" id="statEnrolled">87</h3>
+                    </div>
+                </div>
+                <div class="stat-card purple">
+                    <div class="stat-icon">📈</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Avg Completion Rate</p>
+                        <h3 class="stat-value">74%</h3>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="programs-grid" id="programsGrid"></div>
+
+        </div>
+    </main>
+
+    
+    <div class="modal-overlay" id="programModal">
+        <div class="modal modal-wide">
+            <h3 id="programModalTitle">Add Program</h3>
+            <form id="programForm">
+                <div class="form-row-2">
+                    <div class="form-group">
+                        <label class="form-label">Program Name</label>
+                        <input type="text" class="form-input" id="pName" placeholder="e.g. Private Car Training" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">License Category</label>
+                        <select class="form-input" id="pCategory" required>
+                            <option value="">Select...</option>
+                            <option value="A">A – Motorcycle</option>
+                            <option value="B">B – Private Car</option>
+                            <option value="C">C – Heavy Truck</option>
+                            <option value="D">D – Bus</option>
+                            <option value="E">E – Transport</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row-3">
+                    <div class="form-group">
+                        <label class="form-label">Total Duration (hrs)</label>
+                        <input type="number" class="form-input" id="pDuration" min="1" placeholder="e.g. 40" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Theory Hours</label>
+                        <input type="number" class="form-input" id="pTheory" min="0" placeholder="e.g. 16" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Practical Hours</label>
+                        <input type="number" class="form-input" id="pPractical" min="0" placeholder="e.g. 24" required>
+                    </div>
+                </div>
+                <div class="form-row-2">
+                    <div class="form-group">
+                        <label class="form-label">Minimum Age</label>
+                        <input type="number" class="form-input" id="pMinAge" min="16" placeholder="e.g. 18" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Price (ETB)</label>
+                        <input type="number" class="form-input" id="pPrice" min="0" placeholder="e.g. 3500" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-input form-textarea" id="pDescription" placeholder="Brief program description..." rows="3"></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-close-modal" id="closeProgramModal">Cancel</button>
+                    <button type="submit" class="btn-approve" id="programSubmitBtn">Add Program</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/modal.js"></script>
+    <script>
+        let programs = [
+            { id: 1, name: 'Motorcycle Training',    category: 'A', duration: 30, theory: 12, practical: 18, minAge: 18, price: 2500, enrolled: 14, active: true,  description: 'Complete motorcycle riding course covering traffic rules and safe riding techniques.' },
+            { id: 2, name: 'Private Car Training',   category: 'B', duration: 40, theory: 16, practical: 24, minAge: 18, price: 3500, enrolled: 32, active: true,  description: 'Comprehensive private car driving program for beginners and intermediate learners.' },
+            { id: 3, name: 'Heavy Truck Training',   category: 'C', duration: 60, theory: 20, practical: 40, minAge: 21, price: 5500, enrolled: 18, active: true,  description: 'Professional heavy truck driving course with emphasis on load management and safety.' },
+            { id: 4, name: 'Bus Driving Training',   category: 'D', duration: 55, theory: 18, practical: 37, minAge: 21, price: 5000, enrolled: 15, active: true,  description: 'Passenger bus driving program covering urban and inter-city routes.' },
+            { id: 5, name: 'Transport Vehicle Training', category: 'E', duration: 50, theory: 16, practical: 34, minAge: 20, price: 4500, enrolled: 8, active: false, description: 'Specialized transport vehicle training for commercial freight operations.' },
+        ];
+
+        let editingProgramId = null;
+
+        const categoryColors = { A: 'cat-a', B: 'cat-b', C: 'cat-c', D: 'cat-d', E: 'cat-e' };
+        const categoryEmojis = { A: '🏍️', B: '🚗', C: '🚛', D: '🚌', E: '🚐' };
+
+        // Load programs from API
+        async function loadProgramsFromAPI() {
+            try {
+                const response = await api.request('/manager/programs/getAll.php');
+                if (response.success && response.data) {
+                    programs = response.data;
+                    renderPrograms();
+                }
+            } catch (error) {
+                console.error('Error loading programs:', error);
+            }
+        }
+
+        function renderPrograms() {
+            const grid = document.getElementById('programsGrid');
+            grid.innerHTML = programs.map(p => {
+                const category = p.license_category || 'B';
+                const isActive = p.is_active == 1;
+                
+                return `
+                    <div class="program-card ${isActive ? '' : 'program-card-inactive'}">
+                        <div class="program-card-header">
+                            <div class="program-card-icon">${categoryEmojis[category] || '🚗'}</div>
+                            <span class="badge program-cat-badge ${categoryColors[category] || 'cat-b'}">Cat. ${category}</span>
+                        </div>
+                        <h3 class="program-card-name">${p.name}</h3>
+                        <p class="program-card-desc">${p.description || 'No description available.'}</p>
+                        <div class="program-card-stats">
+                            <div class="program-stat-item">
+                                <span class="program-stat-label">Duration</span>
+                                <span class="program-stat-value">${p.duration_hours || 0} hrs</span>
+                            </div>
+                            <div class="program-stat-item">
+                                <span class="program-stat-label">Theory</span>
+                                <span class="program-stat-value">${p.theory_hours || 0} hrs</span>
+                            </div>
+                            <div class="program-stat-item">
+                                <span class="program-stat-label">Practical</span>
+                                <span class="program-stat-value">${p.practical_hours || 0} hrs</span>
+                            </div>
+                            <div class="program-stat-item">
+                                <span class="program-stat-label">Min Age</span>
+                                <span class="program-stat-value">${p.min_age || 18} yrs</span>
+                            </div>
+                        </div>
+                        <div class="program-card-footer">
+                            <div class="program-enrolled">
+                                <span class="program-enrolled-count">👥 ${p.enrolled || 0} enrolled</span>
+                                <span class="badge ${isActive ? 'badge-approved' : 'badge-pending'}">${isActive ? 'Active' : 'Inactive'}</span>
+                            </div>
+                            <div class="program-price">ETB ${parseFloat(p.fee || 0).toLocaleString()}</div>
+                        </div>
+                        <div class="program-card-actions">
+                            <button class="btn-view" onclick="openEditProgram(${p.id})">Edit</button>
+                            <button class="btn-reject" onclick="deleteProgram(${p.id})">Delete</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            // Update stats
+            document.getElementById('statTotal').textContent = programs.length;
+            document.getElementById('statActive').textContent = programs.filter(p => p.is_active == 1).length;
+            document.getElementById('statEnrolled').textContent = programs.reduce((sum, p) => sum + parseInt(p.enrolled || 0), 0);
+        }
+
+        function openEditProgram(id) {
+            const p = programs.find(x => x.id === id);
+            if (!p) return;
+            editingProgramId = id;
+            document.getElementById('programModalTitle').textContent = 'Edit Program';
+            document.getElementById('programSubmitBtn').textContent = 'Save Changes';
+            document.getElementById('pName').value        = p.name;
+            document.getElementById('pCategory').value    = p.license_category;
+            document.getElementById('pDuration').value    = p.duration_hours;
+            document.getElementById('pTheory').value      = p.theory_hours;
+            document.getElementById('pPractical').value   = p.practical_hours;
+            document.getElementById('pMinAge').value      = p.min_age;
+            document.getElementById('pPrice').value       = p.fee;
+            document.getElementById('pDescription').value = p.description;
+            document.getElementById('programModal').classList.add('open');
+        }
+
+        async function deleteProgram(id) {
+            if (!confirm('Delete this program? This action cannot be undone.')) return;
+            // In a real app, you'd call a delete API. For now, we'll just deactivate it.
+            try {
+                const response = await api.request('/manager/programs/update.php', {
+                    method: 'POST',
+                    body: JSON.stringify({ id: id, name: programs.find(p=>p.id===id).name, active: false })
+                });
+                if (response.success) {
+                    utils.showNotification('Program deactivated', 'success');
+                    await loadProgramsFromAPI();
+                }
+            } catch (error) {
+                console.error('Error deleting program:', error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', async function () {
+            const user = auth.getCurrentUser();
+            if (!user) { window.location.href = '../login.html'; return; }
+            document.getElementById('userName').textContent = user.name || 'Manager';
+
+            await loadProgramsFromAPI();
+
+            document.getElementById('logoutBtn').addEventListener('click', () => auth.logout());
+
+            document.getElementById('addProgramBtn').addEventListener('click', function () {
+                editingProgramId = null;
+                document.getElementById('programModalTitle').textContent = 'Add Program';
+                document.getElementById('programSubmitBtn').textContent = 'Add Program';
+                document.getElementById('programForm').reset();
+                document.getElementById('programModal').classList.add('open');
+            });
+
+            document.getElementById('closeProgramModal').addEventListener('click', () => {
+                document.getElementById('programModal').classList.remove('open');
+            });
+
+            document.getElementById('programForm').addEventListener('submit', async function (e) {
+                e.preventDefault();
+                const data = {
+                    name:           document.getElementById('pName').value.trim(),
+                    category:       document.getElementById('pCategory').value,
+                    duration_hours: parseInt(document.getElementById('pDuration').value),
+                    theory_hours:   parseInt(document.getElementById('pTheory').value),
+                    practical_hours: parseInt(document.getElementById('pPractical').value),
+                    min_age:        parseInt(document.getElementById('pMinAge').value),
+                    fee:            parseFloat(document.getElementById('pPrice').value),
+                    description:    document.getElementById('pDescription').value.trim(),
+                };
+
+                try {
+                    let response;
+                    if (editingProgramId) {
+                        data.id = editingProgramId;
+                        response = await api.request('/manager/programs/update.php', {
+                            method: 'POST',
+                            body: JSON.stringify(data)
+                        });
+                    } else {
+                        response = await api.request('/manager/programs/create.php', {
+                            method: 'POST',
+                            body: JSON.stringify(data)
+                        });
+                    }
+
+                    if (response.success) {
+                        utils.showNotification(response.message, 'success');
+                        document.getElementById('programModal').classList.remove('open');
+                        await loadProgramsFromAPI();
+                    } else {
+                        utils.showNotification(response.message, 'error');
+                    }
+                } catch (error) {
+                    console.error('Error saving program:', error);
+                    utils.showNotification('Error saving program', 'error');
+                }
+            });
+
+            document.getElementById('programModal').addEventListener('click', function (e) {
+                if (e.target === this) this.classList.remove('open');
+            });
+        });
+    </script>
+</body>
+</html>

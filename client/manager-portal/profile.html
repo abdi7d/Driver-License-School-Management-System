@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Manager | DLSM Ethiopia</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/dark-mode.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/auth-guard.js"></script>
+</head>
+<body class="dashboard-body">
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <img src="../assets/images/logo-DLSM.jpg" alt="DLSM Logo" class="logo-icon" style="height: 32px; width: auto; border-radius: 6px;">
+                <span class="logo-text">DLSM</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item"><span class="nav-icon">📊</span><span class="nav-text">Dashboard</span></a>
+            <a href="users.html" class="nav-item"><span class="nav-icon">👥</span><span class="nav-text">Users</span></a>
+            <a href="programs.html" class="nav-item"><span class="nav-icon">📚</span><span class="nav-text">Programs</span></a>
+            <a href="enrollments.html" class="nav-item"><span class="nav-icon">📋</span><span class="nav-text">Enrollments</span></a>
+            <a href="approvals.html" class="nav-item"><span class="nav-icon">✅</span><span class="nav-text">Approvals</span></a>
+            <a href="exams.html" class="nav-item"><span class="nav-icon">📝</span><span class="nav-text">Exams</span></a>
+            <a href="certificates.html" class="nav-item"><span class="nav-icon">🎓</span><span class="nav-text">Certificates</span></a>
+            <a href="reports.html" class="nav-item"><span class="nav-icon">📈</span><span class="nav-text">Reports</span></a>
+            <a href="notifications.html" class="nav-item"><span class="nav-icon">🔔</span><span class="nav-text">Notifications</span></a>
+            <a href="profile.html" class="nav-item active"><span class="nav-icon">👤</span><span class="nav-text">My Profile</span></a>
+        </nav>
+        <div class="sidebar-footer">
+            <button class="btn-logout" id="logoutBtn"><span class="nav-icon">🚪</span><span class="nav-text">Logout</span></button>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+                <div>
+                    <h1 class="page-title">My Profile</h1>
+                    <p class="page-subtitle">View and update your account information</p>
+                </div>
+            </div>
+            <div class="topbar-right">
+                <div class="user-profile">
+                    <div class="user-avatar" id="topbarAvatar">👤</div>
+                    <div class="user-info">
+                        <span class="user-name" id="userName">Manager</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="dashboard-container">
+            <div class="profile-layout">
+
+                
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <div class="profile-avatar-large" id="profileAvatarLarge">
+                            <span class="avatar-icon" id="avatarIcon">👤</span>
+                        </div>
+                        <input type="file" id="photoInput" accept="image/*" style="display: none;">
+                        <button class="btn-primary btn-small" id="changePhotoBtn">Change Photo</button>
+                    </div>
+                    <div class="profile-info-center">
+                        <h2 id="profileName">Loading...</h2>
+                        <p class="profile-email" id="profileEmail">email@example.com</p>
+                        <span class="status-badge active">Active</span>
+                    </div>
+                    <div class="profile-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">124</span>
+                            <span class="stat-label">Total Students</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">42</span>
+                            <span class="stat-label">Certificates Issued</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">6</span>
+                            <span class="stat-label">Pending Approvals</span>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3 class="card-title">Personal Information</h3>
+                        <button class="btn-primary btn-small" id="editBtn">Edit Profile</button>
+                    </div>
+                    <form id="profileForm" class="profile-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Full Name</label>
+                                <input type="text" id="fullName" class="form-input" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Email Address</label>
+                                <input type="email" id="email" class="form-input" disabled>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Phone Number</label>
+                                <input type="tel" id="phone" class="form-input" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Employee ID</label>
+                                <input type="text" id="employeeId" class="form-input" disabled>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Department</label>
+                                <input type="text" id="department" class="form-input" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Member Since</label>
+                                <input type="text" id="memberSince" class="form-input" disabled>
+                            </div>
+                        </div>
+                        <div class="form-actions" id="formActions" style="display:none;">
+                            <button type="button" class="btn-primary btn-small" id="cancelBtn" style="background:#64748b;">Cancel</button>
+                            <button type="submit" class="btn-primary btn-small">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+
+                
+                <div class="dashboard-card">
+                    <h3 class="card-title">Change Password</h3>
+                    <form id="passwordForm" class="profile-form">
+                        <div class="form-group">
+                            <label class="form-label">Current Password</label>
+                            <input type="password" id="currentPassword" class="form-input" placeholder="Enter current password">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">New Password</label>
+                            <input type="password" id="newPassword" class="form-input" placeholder="Enter new password">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Confirm New Password</label>
+                            <input type="password" id="confirmPassword" class="form-input" placeholder="Confirm new password">
+                        </div>
+                        <button type="submit" class="btn-primary btn-small">Update Password</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <div id="toast" class="toast"></div>
+
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/modal.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async function () {
+            const user = auth.getCurrentUser();
+            if (!user) { window.location.href = '../login.html'; return; }
+
+            document.getElementById('userName').textContent    = user.name || 'Manager';
+            document.getElementById('profileName').textContent = user.name || 'Manager';
+            document.getElementById('profileEmail').textContent = user.email || 'manager@dlsm.et';
+            document.getElementById('fullName').value    = user.name || 'Manager';
+            document.getElementById('email').value       = user.email || 'manager@dlsm.et';
+            document.getElementById('phone').value       = '+251 911 000 001';
+            document.getElementById('employeeId').value  = 'MGR-001';
+            document.getElementById('department').value  = 'Administration';
+            document.getElementById('memberSince').value = 'January 2024';
+
+            // Load manager profile from API
+            try {
+                const response = await api.get('/manager/profile');
+                if (response.success && response.data) {
+                    const profile = response.data;
+                    document.getElementById('profileName').textContent = profile.name || 'Manager';
+                    document.getElementById('profileEmail').textContent = profile.email || 'manager@dlsm.et';
+                    document.getElementById('fullName').value = profile.name || 'Manager';
+                    document.getElementById('email').value = profile.email || 'manager@dlsm.et';
+                    document.getElementById('phone').value = profile.phone || '+251 911 000 001';
+                    console.log('Manager profile loaded from API:', profile);
+                }
+            } catch (error) {
+                console.error('Error loading manager profile:', error);
+            }
+
+            // Load saved photo
+            const savedPhoto = localStorage.getItem('managerPhoto');
+            if (savedPhoto) setPhoto(savedPhoto);
+
+            document.getElementById('logoutBtn').addEventListener('click', function () {
+                if (confirm('Are you sure you want to logout?')) auth.logout();
+            });
+
+            // Mobile menu is auto-initialized by dashboard.js
+
+            // Photo change
+            document.getElementById('changePhotoBtn').addEventListener('click', () => document.getElementById('photoInput').click());
+            document.getElementById('photoInput').addEventListener('change', function (e) {
+                const file = e.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = function (ev) {
+                    localStorage.setItem('managerPhoto', ev.target.result);
+                    setPhoto(ev.target.result);
+                };
+                reader.readAsDataURL(file);
+            });
+
+            // Edit profile
+            document.getElementById('editBtn').addEventListener('click', function () {
+                ['fullName', 'phone'].forEach(id => document.getElementById(id).disabled = false);
+                document.getElementById('formActions').style.display = 'flex';
+                this.style.display = 'none';
+            });
+
+            document.getElementById('cancelBtn').addEventListener('click', function () {
+                ['fullName', 'phone'].forEach(id => document.getElementById(id).disabled = true);
+                document.getElementById('formActions').style.display = 'none';
+                document.getElementById('editBtn').style.display = 'inline-block';
+            });
+
+            document.getElementById('profileForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+                const user = auth.getCurrentUser();
+                user.name = document.getElementById('fullName').value.trim();
+                localStorage.setItem('user', JSON.stringify(user));
+                document.getElementById('profileName').textContent = user.name;
+                document.getElementById('userName').textContent = user.name;
+                ['fullName', 'phone'].forEach(id => document.getElementById(id).disabled = true);
+                document.getElementById('formActions').style.display = 'none';
+                document.getElementById('editBtn').style.display = 'inline-block';
+                showToast('Profile updated successfully!', 'success');
+            });
+
+            document.getElementById('passwordForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+                const np = document.getElementById('newPassword').value;
+                const cp = document.getElementById('confirmPassword').value;
+                if (np.length < 8) { showToast('Password must be at least 8 characters', 'error'); return; }
+                if (np !== cp)     { showToast('Passwords do not match', 'error'); return; }
+                this.reset();
+                showToast('Password updated successfully!', 'success');
+            });
+        });
+
+        function setPhoto(src) {
+            document.getElementById('avatarIcon').innerHTML = `<img src="${src}" alt="Photo" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+            document.getElementById('topbarAvatar').innerHTML = `<img src="${src}" alt="Photo" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+        }
+
+        function showToast(msg, type) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.className = `toast ${type} show`;
+            setTimeout(() => t.classList.remove('show'), 3000);
+        }
+    </script>
+</body>
+</html>

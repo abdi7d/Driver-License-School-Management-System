@@ -1,0 +1,317 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - DLSM Ethiopia</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="dashboard-body">
+    
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <span class="logo-icon">🚗</span>
+                <span class="logo-text">DLSM</span>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item active">
+                <span class="nav-icon">📊</span>
+                <span class="nav-text">Dashboard</span>
+            </a>
+            <a href="pages/profile.html" class="nav-item">
+                <span class="nav-icon">👤</span>
+                <span class="nav-text">My Profile</span>
+            </a>
+            <a href="pages/schedule.html" class="nav-item">
+                <span class="nav-icon">📅</span>
+                <span class="nav-text">Schedule</span>
+            </a>
+            <a href="pages/progress.html" class="nav-item">
+                <span class="nav-icon">📈</span>
+                <span class="nav-text">My Progress</span>
+            </a>
+            <a href="pages/exams.html" class="nav-item">
+                <span class="nav-icon">📝</span>
+                <span class="nav-text">Exams</span>
+            </a>
+            <a href="pages/certificate.html" class="nav-item">
+                <span class="nav-icon">🎓</span>
+                <span class="nav-text">Certificate</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <button class="btn-logout" id="logoutBtn">
+                <span class="nav-icon">🚪</span>
+                <span class="nav-text">Logout</span>
+            </button>
+        </div>
+    </aside>
+
+    
+    <main class="main-content">
+        
+        <header class="topbar">
+            <div class="topbar-left">
+                <h1 class="page-title">Dashboard</h1>
+                <p class="page-subtitle">Welcome back! Here's your learning progress</p>
+            </div>
+            <div class="topbar-right">
+                <div class="user-profile">
+                    <div class="user-avatar">👤</div>
+                    <div class="user-info">
+                        <span class="user-name" id="userName">Loading...</span>
+                        <span class="user-role" id="userRole">Student</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        
+        <div class="dashboard-container">
+            
+            <div id="statusAlert" class="status-alert" style="display: none;">
+                <div class="alert-icon">⏳</div>
+                <div class="alert-content">
+                    <h3 class="alert-title">Account Pending Approval</h3>
+                    <p class="alert-message">Your account is waiting for admin approval. You will be notified once approved and enrolled in a program.</p>
+                </div>
+            </div>
+
+            
+            <div class="stats-grid" id="statsGrid">
+                <div class="stat-card blue">
+                    <div class="stat-icon">📚</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Total Hours</p>
+                        <h3 class="stat-value" id="totalHours">40</h3>
+                        <span class="stat-change">Required for completion</span>
+                    </div>
+                </div>
+
+                <div class="stat-card green">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Completed</p>
+                        <h3 class="stat-value" id="completedHours">25</h3>
+                        <span class="stat-change positive">+5 this week</span>
+                    </div>
+                </div>
+
+                <div class="stat-card orange">
+                    <div class="stat-icon">⏳</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Remaining</p>
+                        <h3 class="stat-value" id="remainingHours">15</h3>
+                        <span class="stat-change">Hours left</span>
+                    </div>
+                </div>
+
+                <div class="stat-card purple">
+                    <div class="stat-icon">📈</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Progress</p>
+                        <h3 class="stat-value" id="progressPercent">62%</h3>
+                        <span class="stat-change positive">On track!</span>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="progress-section">
+                <div class="section-header">
+                    <h2 class="section-title">Your Learning Journey</h2>
+                    <span class="section-badge">62% Complete</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 62%"></div>
+                    </div>
+                    <div class="progress-labels">
+                        <span>Started</span>
+                        <span>In Progress</span>
+                        <span>Almost There</span>
+                        <span>Completed</span>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="dashboard-grid">
+                
+                <div class="dashboard-card">
+                    <h3 class="card-title">Quick Actions</h3>
+                    <div class="quick-actions">
+                        <a href="pages/schedule.html" class="action-btn blue">
+                            <span class="action-icon">📅</span>
+                            <div class="action-content">
+                                <span class="action-title">Book Lesson</span>
+                                <span class="action-desc">Schedule your next session</span>
+                            </div>
+                        </a>
+                        <a href="pages/exams.html" class="action-btn green">
+                            <span class="action-icon">📝</span>
+                            <div class="action-content">
+                                <span class="action-title">Take Exam</span>
+                                <span class="action-desc">Start theory test</span>
+                            </div>
+                        </a>
+                        <a href="pages/progress.html" class="action-btn orange">
+                            <span class="action-icon">📊</span>
+                            <div class="action-content">
+                                <span class="action-title">View Progress</span>
+                                <span class="action-desc">Check detailed stats</span>
+                            </div>
+                        </a>
+                        <a href="pages/profile.html" class="action-btn purple">
+                            <span class="action-icon">⚙️</span>
+                            <div class="action-content">
+                                <span class="action-title">Settings</span>
+                                <span class="action-desc">Update your profile</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                
+                <div class="dashboard-card">
+                    <h3 class="card-title">Upcoming Sessions</h3>
+                    <div class="sessions-list">
+                        <div class="session-item">
+                            <div class="session-date">
+                                <span class="date-day">15</span>
+                                <span class="date-month">Jun</span>
+                            </div>
+                            <div class="session-info">
+                                <h4 class="session-title">Practical Driving</h4>
+                                <p class="session-details">10:00 AM - 12:00 PM</p>
+                                <p class="session-instructor">Instructor: John Doe</p>
+                            </div>
+                            <span class="session-status confirmed">Confirmed</span>
+                        </div>
+
+                        <div class="session-item">
+                            <div class="session-date">
+                                <span class="date-day">17</span>
+                                <span class="date-month">Jun</span>
+                            </div>
+                            <div class="session-info">
+                                <h4 class="session-title">Theory Class</h4>
+                                <p class="session-details">2:00 PM - 4:00 PM</p>
+                                <p class="session-instructor">Instructor: Jane Smith</p>
+                            </div>
+                            <span class="session-status pending">Pending</span>
+                        </div>
+
+                        <div class="session-item">
+                            <div class="session-date">
+                                <span class="date-day">20</span>
+                                <span class="date-month">Jun</span>
+                            </div>
+                            <div class="session-info">
+                                <h4 class="session-title">Practical Driving</h4>
+                                <p class="session-details">9:00 AM - 11:00 AM</p>
+                                <p class="session-instructor">Instructor: John Doe</p>
+                            </div>
+                            <span class="session-status confirmed">Confirmed</span>
+                        </div>
+                    </div>
+                    <a href="pages/schedule.html" class="view-all-link">View All Sessions →</a>
+                </div>
+            </div>
+
+            
+            <div class="dashboard-card">
+                <h3 class="card-title">Recent Activity</h3>
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <div class="activity-icon success">✓</div>
+                        <div class="activity-content">
+                            <p class="activity-title">Completed Practical Session</p>
+                            <p class="activity-time">2 hours ago</p>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon info">📚</div>
+                        <div class="activity-content">
+                            <p class="activity-title">Theory Exam Scheduled</p>
+                            <p class="activity-time">Yesterday</p>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon success">✓</div>
+                        <div class="activity-content">
+                            <p class="activity-title">Passed Theory Test</p>
+                            <p class="activity-time">3 days ago</p>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon info">📅</div>
+                        <div class="activity-content">
+                            <p class="activity-title">Lesson Booked Successfully</p>
+                            <p class="activity-time">5 days ago</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="assets/js/utils.js"></script>
+    <script src="assets/js/auth.js"></script>
+    <script>
+        // Check if user is logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = auth.getCurrentUser();
+            
+            if (!user) {
+                // Not logged in, redirect to login
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // Display user info
+            document.getElementById('userName').textContent = user.name || 'Student';
+            document.getElementById('userRole').textContent = user.role || 'Student';
+            
+            // Check user status and show appropriate content
+            checkUserStatus(user);
+            
+
+        });
+
+        function checkUserStatus(user) {
+            // In real app, fetch enrollment status from backend
+            // For demo, check user status
+            
+            if (user.status === 'pending') {
+                // Show pending alert, hide stats
+                document.getElementById('statusAlert').style.display = 'flex';
+                document.getElementById('statsGrid').style.display = 'none';
+                document.querySelector('.progress-section').style.display = 'none';
+                document.querySelector('.dashboard-grid').style.display = 'none';
+                document.querySelectorAll('.dashboard-card').forEach(card => {
+                    if (!card.closest('.dashboard-grid')) card.style.display = 'none';
+                });
+                
+                // Disable navigation items except profile
+                document.querySelectorAll('.nav-item').forEach(item => {
+                    if (!item.href.includes('profile.html') && !item.href.includes('dashboard.html')) {
+                        item.style.opacity = '0.5';
+                        item.style.pointerEvents = 'none';
+                        item.title = 'Available after account approval';
+                    }
+                });
+            } else if (user.status === 'active') {
+                // Show normal dashboard
+                document.getElementById('statusAlert').style.display = 'none';
+                // All content visible by default
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complaints & Issues - DLSM Ethiopia</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/dark-mode.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="../assets/js/auth-guard.js"></script>
+</head>
+<body class="dashboard-body">
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <img src="../assets/images/logo-DLSM.jpg" alt="DLSM Logo" class="logo-icon" style="height: 32px; width: auto; border-radius: 6px;">
+                <span class="logo-text">DLSM</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">
+                <span class="nav-icon">🎛️</span>
+                <span class="nav-text">Dashboard</span>
+            </a>
+            <a href="profile.html" class="nav-item">
+                <span class="nav-icon">👤</span>
+                <span class="nav-text">My Profile</span>
+            </a>
+            <a href="assignments.html" class="nav-item">
+                <span class="nav-icon">👥</span>
+                <span class="nav-text">Assignments</span>
+            </a>
+            <a href="monitor.html" class="nav-item">
+                <span class="nav-icon">🖥️</span>
+                <span class="nav-text">Monitor</span>
+            </a>
+            <a href="exam-approvals.html" class="nav-item">
+                <span class="nav-icon">📝</span>
+                <span class="nav-text">Exam Approvals</span>
+            </a>
+            <a href="complaints.html" class="nav-item active">
+                <span class="nav-icon">📢</span>
+                <span class="nav-text">Complaints</span>
+            </a>
+            <a href="reports.html" class="nav-item">
+                <span class="nav-icon">📈</span>
+                <span class="nav-text">Reports</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <button class="btn-logout" id="logoutBtn">
+                <span class="nav-icon">🚪</span>
+                <span class="nav-text">Logout</span>
+            </button>
+        </div>
+    </aside>
+
+    
+    <main class="main-content">
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+                <div>
+                    <h1 class="page-title">Complaints & Issues</h1>
+                    <p class="page-subtitle">Handle complaints and ensure training quality standards</p>
+                </div>
+            </div>
+            <div class="topbar-right">
+                <button class="theme-toggle" id="themeToggle" title="Toggle Dark Mode">🌙</button>
+            </div>
+        </header>
+
+        <div class="dashboard-container">
+
+            
+            <div class="stats-grid">
+                <div class="stat-card orange">
+                    <div class="stat-icon">📢</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Open Complaints</p>
+                        <h3 class="stat-value">3</h3>
+                        <span class="stat-change">Needs attention</span>
+                    </div>
+                </div>
+                <div class="stat-card blue">
+                    <div class="stat-icon">🔄</div>
+                    <div class="stat-info">
+                        <p class="stat-label">In Progress</p>
+                        <h3 class="stat-value">5</h3>
+                        <span class="stat-change">Being resolved</span>
+                    </div>
+                </div>
+                <div class="stat-card green">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Resolved This Week</p>
+                        <h3 class="stat-value">12</h3>
+                        <span class="stat-change positive">+4 from last week</span>
+                    </div>
+                </div>
+                <div class="stat-card purple">
+                    <div class="stat-icon">⏱️</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Avg. Resolution Time</p>
+                        <h3 class="stat-value">2.3d</h3>
+                        <span class="stat-change positive">-0.5d improvement</span>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="card" style="margin-bottom: 24px;">
+                <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
+                    <input type="text" placeholder="Search complaints..." class="search-input" style="flex: 1; min-width: 250px;">
+                    <select class="form-input" style="width: 180px;">
+                        <option>All Categories</option>
+                        <option>Instructor Issue</option>
+                        <option>Facility Problem</option>
+                        <option>Schedule Conflict</option>
+                        <option>Training Quality</option>
+                        <option>Other</option>
+                    </select>
+                    <select class="form-input" style="width: 160px;">
+                        <option>All Status</option>
+                        <option>Open</option>
+                        <option>In Progress</option>
+                        <option>Resolved</option>
+                        <option>Closed</option>
+                    </select>
+                    <select class="form-input" style="width: 160px;">
+                        <option>All Priority</option>
+                        <option>High</option>
+                        <option>Medium</option>
+                        <option>Low</option>
+                    </select>
+                </div>
+            </div>
+
+            
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab('open')">Open (3)</button>
+                <button class="tab-btn" onclick="switchTab('progress')">In Progress (5)</button>
+                <button class="tab-btn" onclick="switchTab('resolved')">Resolved (12)</button>
+                <button class="tab-btn" onclick="switchTab('all')">All Complaints</button>
+            </div>
+
+            
+            <div class="tab-panel active" id="open-tab">
+                <div class="card">
+                    <div class="card-title">
+                        <span>📢 Open Complaints</span>
+                        <span style="font-size: 14px; color: #f59e0b; font-weight: 600;">3 Require Action</span>
+                    </div>
+
+                    
+                    <div style="border: 2px solid #fecaca; border-radius: 12px; padding: 24px; margin-bottom: 16px; background: #fef2f2;">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 16px;">
+                            <div style="flex: 1;">
+                                <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 8px;">
+                                    <span class="badge badge-danger">High Priority</span>
+                                    <span class="badge" style="background: #fef3c7; color: #92400e;">Instructor Issue</span>
+                                    <span style="font-size: 13px; color: #64748b;">ID: CMP-2024-045</span>
+                                </div>
+                                <h3 style="font-size: 18px; font-weight: 700; color: #1e293b; margin-bottom: 8px;">Instructor Frequently Late to Sessions</h3>
+                                <p style="font-size: 14px; color: #64748b; margin-bottom: 12px;">Submitted by: <strong>Abebe Kebede</strong> · Apr 20, 2024 at 2:30 PM</p>
+                            </div>
+                        </div>
+
+                        <div style="background: white; padding: 16px; border-radius: 8px; margin-bottom: 16px;">
+                            <div style="font-size: 13px; font-weight: 600; color: #1e293b; margin-bottom: 8px;">Complaint Details:</div>
+                            <p style="font-size: 14px; color: #64748b; line-height: 1.6;">"My instructor, Yonas Bekele, has been late to 4 out of the last 6 practical sessions. Each time he arrives 15-20 minutes late, which reduces my training time. This is affecting my progress and I'm concerned about being ready for my exam."</p>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 16px;">
+                            <div style="background: white; padding: 12px; border-radius: 8px;">
+                                <div style="font-size: 12px; color: #64748b; margin-bottom: 4px;">Instructor</div>
+                                <div style="font-weight: 600; color: #1e293b;">Yonas Bekele</div>
+                            </div>
+                            <div style="background: white; padding: 12px; border-radius: 8px;">
+                                <div style="font-size: 12px; color: #64748b; margin-bottom: 4px;">Program</div>
+                                <div style="font-weight: 600; color: #1e293b;">Heavy Truck (C)</div>
+                            </div>
+                            <div style="background: white; padding: 12px; border-radius: 8px;">
+                                <div style="font-size: 12px; color: #64748b; margin-bottom: 4px;">Status</div>
+                                <div style="font-weight: 600; color: #dc2626;">Open</div>
+                            </div>
+                            <div style="background: white; padding: 12px; border-radius: 8px;">
+                                <div style="font-size: 12px; color: #64748b; margin-bottom: 4px;">Age</div>
+                                <div style="font-weight: 600; color: #1e293b;">1 day</div>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 12px; justify-content: flex-end;">
+                            <button class="btn-secondary" onclick="viewComplaintDetails()">View Details</button>
+                            <button class="btn-primary" onclick="assignComplaint()">Assign & Investigate</button>
+                        </div>
+                    </div>
+
+                    
+                    <div style="border: 2px solid #fed7aa; border-radius: 12px; padding: 24px; margin-bottom: 16px; background: #fff7ed;">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 16px;">
+                            <div style="flex: 1;">
+                                <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 8px;">
+                                    <span class="badge badge-warning">Medium Priority</span>
+                                    <span class="badge" style="background: #dbeafe; color: #1e40af;">Facility Problem</span>
+                                    <span style="font-size: 13px; color: #64748b;">ID: CMP-2024-046</span>
+                                </div>
+                                <h3 style="font-size: 18px; font-weight: 700; color: #1e293b; margin-bottom: 8px;">Training Vehicle Maintenance Issue</h3>
+                                <p style="font-size: 14px; color: #64748b; margin-bottom: 12px;">Submitted by: <strong>Tigist Haile</strong> · Apr 21, 2024 at 9:15 AM</p>
+                            </div>
+                        </div>
+
+                        <div style="background: white; padding: 16px; border-radius: 8px; margin-bottom: 16px;">
+                            <div style="font-size: 13px; font-weight: 600; color: #1e293b; margin-bottom: 8px;">Complaint Details:</div>
+                            <p style="font-size: 14px; color: #64748b; line-height: 1.6;">"The motorcycle I've been assigned for practical training (Bike #7) has a faulty brake system. The rear brake feels spongy and doesn't engage properly. This is a safety concern."</p>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 16px;">
+                            <div style="background: white; padding: 12px; border-radius: 8px;">
+                                <div style="font-size: 12px; color: #64748b; margin-bottom: 4px;">Vehicle</div>
+                                <div style="font-weight: 600; color: #1e293b;">Bike #7</div>
+                            </div>
+                            <div style="background: white; padding: 12px; border-radius: 8px;">
+                                <div style="font-size: 12px; color: #64748b; margin-bottom: 4px;">Program</div>
+                                <div style="font-weight: 600; color: #1e293b;">Motorcycle (A)</div>
+                            </div>
+                            <div style="background: white; padding: 12px; border-radius: 8px;">
+                                <div style="font-size: 12px; color: #64748b; margin-bottom: 4px;">Status</div>
+                                <div style="font-weight: 600; color: #f59e0b;">Open</div>
+                            </div>
+                            <div style="background: white; padding: 12px; border-radius: 8px;">
+                                <div style="font-size: 12px; color: #64748b; margin-bottom: 4px;">Age</div>
+                                <div style="font-weight: 600; color: #1e293b;">4 hours</div>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 12px; justify-content: flex-end;">
+                            <button class="btn-secondary" onclick="viewComplaintDetails()">View Details</button>
+                            <button class="btn-primary" onclick="assignComplaint()">Assign to Maintenance</button>
+                        </div>
+                    </div>
+
+                    
+                    <div style="border: 2px solid #dbeafe; border-radius: 12px; padding: 24px; margin-bottom: 16px; background: #eff6ff;">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 16px;">
+                            <div style="flex: 1;">
+                                <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 8px;">
+                                    <span class="badge" style="background: #e0e7ff; color: #4338ca;">Low Priority</span>
+                                    <span class="badge" style="background: #dcfce7; color: #15803D;">Schedule Conflict</span>
+                                    <span style="font-size: 13px; color: #64748b;">ID: CMP-2024-047</span>
+                                </div>
+                                <h3 style="font-size: 18px; font-weight: 700; color: #1e293b; margin-bottom: 8px;">Request for Schedule Change</h3>
+                                <p style="font-size: 14px; color: #64748b; margin-bottom: 12px;">Submitted by: <strong>Samuel Girma</strong> · Apr 21, 2024 at 11:00 AM</p>
+                            </div>
+                        </div>
+
+                        <div style="background: white; padding: 16px; border-radius: 8px; margin-bottom: 16px;">
+                            <div style="font-size: 13px; font-weight: 600; color: #1e293b; margin-bottom: 8px;">Complaint Details:</div>
+                            <p style="font-size: 14px; color: #64748b; line-height: 1.6;">"My work schedule has changed and I can no longer attend the 2 PM sessions. I would like to request a change to morning sessions if possible."</p>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 16px;">
+                            <div style="background: white; padding: 12px; border-radius: 8px;">
+                                <div style="font-size: 12px; color: #64748b; margin-bottom: 4px;">Instructor</div>
+                                <div style="font-weight: 600; color: #1e293b;">Yonas Bekele</div>
+                            </div>
+                            <div style="background: white; padding: 12px; border-radius: 8px;">
+                                <div style="font-size: 12px; color: #64748b; margin-bottom: 4px;">Current Time</div>
+                                <div style="font-weight: 600; color: #1e293b;">2:00 PM</div>
+                            </div>
+                            <div style="background: white; padding: 12px; border-radius: 8px;">
+                                <div style="font-size: 12px; color: #64748b; margin-bottom: 4px;">Status</div>
+                                <div style="font-weight: 600; color: #1E40AF;">Open</div>
+                            </div>
+                            <div style="background: white; padding: 12px; border-radius: 8px;">
+                                <div style="font-size: 12px; color: #64748b; margin-bottom: 4px;">Age</div>
+                                <div style="font-weight: 600; color: #1e293b;">2 hours</div>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 12px; justify-content: flex-end;">
+                            <button class="btn-secondary" onclick="viewComplaintDetails()">View Details</button>
+                            <button class="btn-primary" onclick="resolveSchedule()">Adjust Schedule</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            
+            <div class="tab-panel" id="progress-tab">
+                <div class="card">
+                    <div class="card-title"><span>🔄 Complaints In Progress</span></div>
+                    <p style="text-align: center; padding: 40px; color: #64748b;">5 complaints being resolved</p>
+                </div>
+            </div>
+
+            
+            <div class="tab-panel" id="resolved-tab">
+                <div class="card">
+                    <div class="card-title"><span>✅ Resolved Complaints</span></div>
+                    <p style="text-align: center; padding: 40px; color: #64748b;">12 complaints resolved this week</p>
+                </div>
+            </div>
+
+            
+            <div class="tab-panel" id="all-tab">
+                <div class="card">
+                    <div class="card-title"><span>📋 All Complaints</span></div>
+                    <p style="text-align: center; padding: 40px; color: #64748b;">View all complaint records</p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/dashboard.js"></script>
+    <script>
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-panel').forEach(panel => {
+                panel.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            document.getElementById(tabName + '-tab').classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function viewComplaintDetails() {
+            if (typeof utils !== 'undefined') {
+                utils.showNotification('Opening complaint details...', 'info');
+            }
+        }
+
+        function assignComplaint() {
+            if (typeof utils !== 'undefined') {
+                utils.showNotification('Assigning complaint for investigation...', 'success');
+            }
+        }
+
+        function resolveSchedule() {
+            if (typeof utils !== 'undefined') {
+                utils.showNotification('Opening schedule adjustment...', 'info');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Force disable demo mode if the user wants real data
+            if (localStorage.getItem('DEMO_MODE') === 'true') {
+                console.log('🔄 Disabling Demo Mode to fetch real complaints data...');
+                localStorage.setItem('DEMO_MODE', 'false');
+                window.location.reload();
+                return;
+            }
+
+            const user = auth.getCurrentUser();
+            if (!user) {
+                window.location.href = '../login.html';
+                return;
+            }
+
+            await loadComplaintsData();
+        });
+
+        // Load complaints data from API
+        async function loadComplaintsData() {
+            try {
+                const response = await api.get('/supervisor/complaints.php');
+                if (response.success && response.data) {
+                    renderComplaints(response.data);
+                }
+            } catch (error) {
+                console.error('Error loading complaints:', error);
+            }
+        }
+
+        function renderComplaints(complaints) {
+            const openContainer = document.getElementById('open-tab').querySelector('.card');
+            const progressContainer = document.getElementById('progress-tab').querySelector('.card');
+            const resolvedContainer = document.getElementById('resolved-tab').querySelector('.card');
+            
+            const open = complaints.filter(c => c.status === 'open' || c.status === 'pending');
+            const progress = complaints.filter(c => c.status === 'in-progress' || c.status === 'assigned');
+            const resolved = complaints.filter(c => c.status === 'resolved' || c.status === 'closed');
+
+            // Update Tab Counts
+            document.querySelectorAll('.tab-btn')[0].textContent = `Open (${open.length})`;
+            document.querySelectorAll('.tab-btn')[1].textContent = `In Progress (${progress.length})`;
+            document.querySelectorAll('.tab-btn')[2].textContent = `Resolved (${resolved.length})`;
+
+            // Update Stats
+            const statValues = document.querySelectorAll('.stat-card .stat-value');
+            if (statValues.length >= 3) {
+                statValues[0].textContent = open.length;
+                statValues[1].textContent = progress.length;
+                statValues[2].textContent = resolved.length;
+            }
+
+            const renderList = (list, title) => {
+                let html = `<div class="card-title"><span>📢 ${title}</span></div>`;
+                if (list.length === 0) {
+                    html += `<p style="padding: 40px; text-align: center; color: #64748b;">No complaints in this category.</p>`;
+                } else {
+                    list.forEach(c => {
+                        html += `
+                            <div style="border: 2px solid #e2e8f0; border-radius: 12px; padding: 24px; margin-bottom: 16px; background: white;">
+                                <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 8px;">
+                                    <span class="badge ${c.priority === 'high' ? 'badge-danger' : 'badge-warning'}">${c.priority.toUpperCase()}</span>
+                                    <span class="badge" style="background: #f1f5f9; color: #475569;">${c.category}</span>
+                                    <span style="font-size: 13px; color: #64748b;">ID: CMP-${c.id}</span>
+                                </div>
+                                <h3 style="font-size: 18px; font-weight: 700; color: #1e293b; margin-bottom: 8px;">${c.subject}</h3>
+                                <p style="font-size: 14px; color: #64748b; margin-bottom: 12px;">Submitted by: <strong>${c.student_name}</strong> · ${new Date(c.created_at).toLocaleString()}</p>
+                                <div style="background: #f8fafc; padding: 16px; border-radius: 8px; margin-bottom: 16px;">
+                                    <p style="font-size: 14px; color: #64748b; line-height: 1.6;">"${c.description}"</p>
+                                </div>
+                                <div style="display: flex; gap: 12px; justify-content: flex-end;">
+                                    <button class="btn-secondary" onclick="updateComplaintStatus(${c.id}, 'resolved')">Mark Resolved</button>
+                                    <button class="btn-primary" onclick="updateComplaintStatus(${c.id}, 'in-progress')">Take Action</button>
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+                return html;
+            };
+
+            openContainer.innerHTML = renderList(open, 'Open Complaints');
+            progressContainer.innerHTML = renderList(progress, 'In Progress');
+            resolvedContainer.innerHTML = renderList(resolved, 'Resolved History');
+        }
+
+        async function updateComplaintStatus(id, status) {
+            try {
+                const response = await api.post('/supervisor/complaints.php', { complaint_id: id, status: status });
+                if (response.success) {
+                    if (typeof utils !== 'undefined') utils.showNotification(`Complaint #${id} updated to ${status}`, 'success');
+                    await loadComplaintsData();
+                }
+            } catch (error) {
+                console.error('Error updating complaint:', error);
+            }
+        }
+    </script>
+</body>
+</html>

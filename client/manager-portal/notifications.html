@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications - Manager | DLSM Ethiopia</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/dark-mode.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/auth-guard.js"></script>
+</head>
+<body class="dashboard-body">
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <img src="../assets/images/logo-DLSM.jpg" alt="DLSM Logo" class="logo-icon" style="height: 32px; width: auto; border-radius: 6px;">
+                <span class="logo-text">DLSM</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item"><span class="nav-icon">📊</span><span class="nav-text">Dashboard</span></a>
+            <a href="users.html" class="nav-item"><span class="nav-icon">👥</span><span class="nav-text">Users</span></a>
+            <a href="programs.html" class="nav-item"><span class="nav-icon">📚</span><span class="nav-text">Programs</span></a>
+            <a href="enrollments.html" class="nav-item"><span class="nav-icon">📋</span><span class="nav-text">Enrollments</span></a>
+            <a href="approvals.html" class="nav-item"><span class="nav-icon">✅</span><span class="nav-text">Approvals</span></a>
+            <a href="exams.html" class="nav-item"><span class="nav-icon">📝</span><span class="nav-text">Exams</span></a>
+            <a href="certificates.html" class="nav-item"><span class="nav-icon">🎓</span><span class="nav-text">Certificates</span></a>
+            <a href="reports.html" class="nav-item"><span class="nav-icon">📈</span><span class="nav-text">Reports</span></a>
+            <a href="notifications.html" class="nav-item active"><span class="nav-icon">🔔</span><span class="nav-text">Notifications</span></a>
+        </nav>
+        <div class="sidebar-footer">
+            <button class="btn-logout" id="logoutBtn"><span class="nav-icon">🚪</span><span class="nav-text">Logout</span></button>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+                <div>
+                    <h1 class="page-title">Notifications</h1>
+                    <p class="page-subtitle">System alerts and activity updates</p>
+                </div>
+            </div>
+            <div class="topbar-right">
+                <button class="btn-view" id="markAllBtn">Mark all as read</button>
+                <div class="user-profile">
+                    <div class="user-avatar">👤</div>
+                    <div class="user-info">
+                        <span class="user-name" id="userName">Manager</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="dashboard-container">
+
+            
+            <div class="stats-grid">
+                <div class="stat-card blue">
+                    <div class="stat-icon">🔔</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Total</p>
+                        <h3 class="stat-value" id="statTotal">8</h3>
+                    </div>
+                </div>
+                <div class="stat-card orange">
+                    <div class="stat-icon">🔴</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Unread</p>
+                        <h3 class="stat-value" id="statUnread">5</h3>
+                    </div>
+                </div>
+                <div class="stat-card green">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Read</p>
+                        <h3 class="stat-value" id="statRead">3</h3>
+                    </div>
+                </div>
+                <div class="stat-card purple">
+                    <div class="stat-icon">⚠️</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Alerts</p>
+                        <h3 class="stat-value" id="statAlerts">2</h3>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="tabs tabs-mt">
+                <button class="tab-btn active" data-filter="all">All</button>
+                <button class="tab-btn" data-filter="unread">Unread</button>
+                <button class="tab-btn" data-filter="approval">Approvals</button>
+                <button class="tab-btn" data-filter="exam">Exams</button>
+                <button class="tab-btn" data-filter="system">System</button>
+            </div>
+
+            
+            <div class="card" id="notifList"></div>
+
+        </div>
+    </main>
+
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/modal.js"></script>
+    <script>
+        let notifications = [
+            { id: 1, type: 'approval', icon: '👤', title: 'New Student Registration',      message: 'Abebe Kebede has registered and is awaiting approval.',         time: '10 min ago',  read: false, link: 'approvals.html' },
+            { id: 2, type: 'approval', icon: '🎓', title: 'Certificate Request',            message: 'Hana Bekele has completed training and requests a certificate.', time: '30 min ago',  read: false, link: 'certificates.html' },
+            { id: 3, type: 'exam',     icon: '📝', title: 'Exam Result Pending',            message: 'Samuel Girma\'s practical exam result needs your approval.',     time: '1 hour ago',  read: false, link: 'exams.html' },
+            { id: 4, type: 'approval', icon: '📋', title: 'Enrollment Request',             message: 'Tigist Haile has applied for Motorcycle (A) program.',           time: '2 hours ago', read: false, link: 'enrollments.html' },
+            { id: 5, type: 'system',   icon: '⚠️', title: 'System Alert',                  message: 'Instructor Marta\'s account has been inactive for 30 days.',     time: '3 hours ago', read: false, link: 'users.html' },
+            { id: 6, type: 'exam',     icon: '📅', title: 'Exam Scheduled',                 message: 'Theory exam for Private Car (B) scheduled on May 05, 2026.',    time: 'Yesterday',   read: true,  link: 'exams.html' },
+            { id: 7, type: 'system',   icon: '⚠️', title: 'Low Pass Rate Alert',            message: 'Transport (E) program has a 57% pass rate this month.',         time: 'Yesterday',   read: true,  link: 'reports.html' },
+            { id: 8, type: 'approval', icon: '✅', title: 'Registration Approved',          message: 'You approved Liya Tadesse\'s registration successfully.',        time: '2 days ago',  read: true,  link: 'approvals.html' },
+        ];
+
+        let activeFilter = 'all';
+
+        function renderNotifications() {
+            const list = document.getElementById('notifList');
+            const filtered = notifications.filter(n => {
+                if (activeFilter === 'all')    return true;
+                if (activeFilter === 'unread') return !n.read;
+                return n.type === activeFilter;
+            });
+
+            if (filtered.length === 0) {
+                list.innerHTML = '<div class="empty-state"><div class="empty-icon">🔔</div><p>No notifications found</p></div>';
+                return;
+            }
+
+            list.innerHTML = filtered.map(n => `
+                <div class="notif-item ${n.read ? 'notif-read' : 'notif-unread'}" data-id="${n.id}">
+                    <div class="notif-icon-wrap ${n.read ? '' : 'notif-icon-active'}">${n.icon}</div>
+                    <div class="notif-content">
+                        <div class="notif-header">
+                            <h4 class="notif-title">${n.title}</h4>
+                            ${!n.read ? '<span class="notif-dot"></span>' : ''}
+                        </div>
+                        <p class="notif-message">${n.message}</p>
+                        <span class="notif-time">${n.time}</span>
+                    </div>
+                    <div class="notif-actions">
+                        <a href="${n.link}" class="btn-view">View</a>
+                        ${!n.read ? `<button class="btn-sm-approve" onclick="markRead(${n.id})">Mark read</button>` : ''}
+                    </div>
+                </div>
+            `).join('');
+
+            updateStats();
+        }
+
+        function markRead(id) {
+            const n = notifications.find(x => x.id === id);
+            if (n) { n.read = true; renderNotifications(); }
+        }
+
+        function updateStats() {
+            const unread = notifications.filter(n => !n.read).length;
+            const alerts = notifications.filter(n => n.type === 'system').length;
+            document.getElementById('statTotal').textContent  = notifications.length;
+            document.getElementById('statUnread').textContent = unread;
+            document.getElementById('statRead').textContent   = notifications.length - unread;
+            document.getElementById('statAlerts').textContent = alerts;
+        }
+
+        document.addEventListener('DOMContentLoaded', async function () {
+            const user = auth.getCurrentUser();
+            if (!user) { window.location.href = '../login.html'; return; }
+            document.getElementById('userName').textContent = user.name || 'Manager';
+
+            // Load notifications from API
+            try {
+                const response = await api.get('/manager/notifications');
+                if (response.success && response.data) {
+                    notifications = response.data;
+                    console.log('Notifications loaded from API:', notifications);
+                }
+            } catch (error) {
+                console.error('Error loading notifications:', error);
+            }
+
+            renderNotifications();
+
+            document.getElementById('logoutBtn').addEventListener('click', function () {
+                if (confirm('Are you sure you want to logout?')) auth.logout();
+            });
+
+            // Mobile menu is auto-initialized by dashboard.js
+
+            // Filter tabs
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    activeFilter = this.dataset.filter;
+                    renderNotifications();
+                });
+            });
+
+            // Mark all read
+            document.getElementById('markAllBtn').addEventListener('click', function () {
+                notifications.forEach(n => n.read = true);
+                renderNotifications();
+            });
+        });
+    </script>
+</body>
+</html>

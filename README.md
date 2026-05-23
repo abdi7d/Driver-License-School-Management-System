@@ -153,10 +153,18 @@ cd Driver-License-School
 mysql -u root -p < server/database/schema.sql
 ```
 
-Or import using phpMyAdmin:
+For XAMPP and phpMyAdmin on Windows, do this instead:
 
-1. Create database: `driver_license_school`
-2. Import `server/database/schema.sql`
+1. Start **Apache** and **MySQL** from the XAMPP Control Panel.
+2. Open `http://localhost/phpmyadmin` in your browser.
+3. Click **Databases**.
+4. Create a new database named `driver_license_school` with collation `utf8mb4_unicode_ci`.
+5. Open the `driver_license_school` database.
+6. Click **Import**.
+7. Choose [server/database/schema.sql](server/database/schema.sql).
+8. Click **Import** to load the tables and seed data.
+
+Note: `schema.sql` already contains `CREATE DATABASE IF NOT EXISTS driver_license_school`, so if you import it directly in phpMyAdmin it can create the database for you as well.
 
 ### Step 3: Install Server Dependencies
 
@@ -876,4 +884,4 @@ For inquiries or support, please refer to your project documentation or contact 
 ---
 
 _This README covers the complete Driver License School Management System. For more detailed information, please refer to specific documentation files in the project directories._
-"# -Driver-License-School-Management-System" 
+"# -Driver-License-School-Management-System"

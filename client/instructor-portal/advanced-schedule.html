@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Schedule - DLSM Ethiopia</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/dark-mode.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/auth-guard.js"></script>
+    <style>
+        .schedule-container {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .calendar-wrapper {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .calendar-header h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .calendar-nav {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-calendar-nav {
+            padding: 8px 12px;
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .btn-calendar-nav:hover {
+            background: #e2e8f0;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .calendar-day-header {
+            text-align: center;
+            font-weight: 700;
+            font-size: 12px;
+            color: #64748b;
+            padding: 8px;
+            text-transform: uppercase;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+            font-weight: 600;
+            position: relative;
+        }
+
+        .calendar-day:hover {
+            background: #f1f5f9;
+            border-color: #0284c7;
+        }
+
+        .calendar-day.other-month {
+            color: #cbd5e1;
+            background: #f8fafc;
+        }
+
+        .calendar-day.today {
+            background: #0284c7;
+            color: white;
+            border-color: #0284c7;
+        }
+
+        .calendar-day.selected {
+            background: #dbeafe;
+            border-color: #0284c7;
+        }
+
+        .calendar-day.has-events::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            width: 4px;
+            height: 4px;
+            background: #ef4444;
+            border-radius: 50%;
+        }
+
+        .schedule-sidebar {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            height: fit-content;
+        }
+
+        .sidebar-section {
+            margin-bottom: 24px;
+        }
+
+        .sidebar-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .sidebar-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #64748b;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .filter-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .filter-checkbox input {
+            cursor: pointer;
+        }
+
+        .filter-checkbox label {
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .schedule-view {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .view-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .view-tab {
+            padding: 12px 16px;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-weight: 600;
+            color: #64748b;
+            transition: all 0.2s;
+        }
+
+        .view-tab.active {
+            color: #0284c7;
+            border-bottom-color: #0284c7;
+        }
+
+        .view-tab:hover {
+            color: #0284c7;
+        }
+
+        .schedule-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .schedule-item {
+            padding: 16px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            display: grid;
+            grid-template-columns: 80px 1fr auto;
+            gap: 16px;
+            align-items: center;
+            transition: all 0.2s;
+        }
+
+        .schedule-item:hover {
+            border-color: #0284c7;
+            background: #f8fafc;
+        }
+
+        .schedule-item.conflict {
+            border-color: #ef4444;
+            background: #fef2f2;
+        }
+
+        .schedule-time {
+            font-weight: 700;
+            color: #0284c7;
+            font-size: 14px;
+        }
+
+        .schedule-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .schedule-info-title {
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .schedule-info-detail {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .schedule-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-sm {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .btn-sm-edit {
+            background: #dbeafe;
+            color: #0284c7;
+        }
+
+        .btn-sm-edit:hover {
+            background: #bfdbfe;
+        }
+
+        .btn-sm-delete {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .btn-sm-delete:hover {
+            background: #fecaca;
+        }
+
+        .conflict-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 8px;
+            background: #fef2f2;
+            color: #dc2626;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .quick-add {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 12px;
+            padding: 16px;
+            background: #f8fafc;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .quick-add-input {
+            padding: 10px 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .btn-add-session {
+            padding: 10px 16px;
+            background: #0284c7;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .btn-add-session:hover {
+            background: #0369a1;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #94a3b8;
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .empty-state-text {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stat-box {
+            padding: 16px;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-radius: 8px;
+            border-left: 4px solid #0284c7;
+        }
+
+        .stat-box-label {
+            font-size: 12px;
+            color: #64748b;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .stat-box-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #0284c7;
+        }
+
+        @media (max-width: 1024px) {
+            .schedule-container {
+                grid-template-columns: 1fr;
+            }
+
+            .schedule-sidebar {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                height: auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .schedule-item {
+                grid-template-columns: 1fr;
+            }
+
+            .schedule-actions {
+                justify-content: flex-start;
+            }
+
+            .calendar-grid {
+                gap: 4px;
+            }
+
+            .calendar-day {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body class="dashboard-body">
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <img src="../assets/images/logo-DLSM.jpg" alt="DLSM Logo" class="logo-icon" style="height: 32px; width: auto; border-radius: 6px;">
+                <span class="logo-text">DLSM</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">
+                <span class="nav-icon">📊</span>
+                <span class="nav-text">Dashboard</span>
+            </a>
+            <a href="my-students.html" class="nav-item">
+                <span class="nav-icon">👥</span>
+                <span class="nav-text">My Students</span>
+            </a>
+            <a href="schedule.html" class="nav-item">
+                <span class="nav-icon">📅</span>
+                <span class="nav-text">Schedule</span>
+            </a>
+            <a href="advanced-schedule.html" class="nav-item active">
+                <span class="nav-icon">📆</span>
+                <span class="nav-text">Advanced Schedule</span>
+            </a>
+            <a href="messages.html" class="nav-item">
+                <span class="nav-icon">💬</span>
+                <span class="nav-text">Messages</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <button class="btn-logout" id="logoutBtn">
+                <span class="nav-icon">🚪</span>
+                <span class="nav-text">Logout</span>
+            </button>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+                <div>
+                    <h1 class="page-title">Advanced Schedule</h1>
+                    <p class="page-subtitle">Manage lessons with conflict detection</p>
+                </div>
+            </div>
+            <div class="topbar-right">
+                <div class="user-profile">
+                    <div class="user-avatar">👤</div>
+                    <div class="user-info">
+                        <span class="user-name" id="userName">Instructor</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="dashboard-container">
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-box-label">This Week</div>
+                    <div class="stat-box-value" id="weekSessions">12</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-box-label">Conflicts</div>
+                    <div class="stat-box-value" id="conflictCount" style="color: #ef4444;">0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-box-label">Total Hours</div>
+                    <div class="stat-box-value" id="totalHours">24</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-box-label">Students</div>
+                    <div class="stat-box-value" id="studentCount">8</div>
+                </div>
+            </div>
+
+            <!-- Main Schedule Container -->
+            <div class="schedule-container">
+                <!-- Calendar & Schedule View -->
+                <div>
+                    <!-- Calendar -->
+                    <div class="calendar-wrapper">
+                        <div class="calendar-header">
+                            <h3 id="monthYear">April 2026</h3>
+                            <div class="calendar-nav">
+                                <button class="btn-calendar-nav" onclick="previousMonth()">← Prev</button>
+                                <button class="btn-calendar-nav" onclick="nextMonth()">Next →</button>
+                            </div>
+                        </div>
+                        <div class="calendar-grid" id="calendarGrid">
+                            <!-- Calendar will be generated here -->
+                        </div>
+                    </div>
+
+                    <!-- Schedule View -->
+                    <div class="schedule-view">
+                        <div class="view-tabs">
+                            <button class="view-tab active" onclick="switchView('list')">📋 List View</button>
+                            <button class="view-tab" onclick="switchView('week')">📅 Week View</button>
+                            <button class="view-tab" onclick="switchView('conflicts')">⚠️ Conflicts</button>
+                        </div>
+
+                        <div class="quick-add">
+                            <input type="text" class="quick-add-input" id="quickAddInput" placeholder="Add new session...">
+                            <button class="btn-add-session" onclick="quickAddSession()">+ Add</button>
+                        </div>
+
+                        <div id="scheduleContent">
+                            <!-- Schedule content will be generated here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar Filters -->
+                <div class="schedule-sidebar">
+                    <div class="sidebar-section">
+                        <div class="sidebar-title">Filter by Type</div>
+                        <div class="filter-group">
+                            <label class="filter-checkbox">
+                                <input type="checkbox" checked onchange="applyFilters()"> Theory
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox" checked onchange="applyFilters()"> Practical
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <div class="sidebar-title">Filter by Student</div>
+                        <div class="filter-group" id="studentFilter">
+                            <!-- Student filters will be generated here -->
+                        </div>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <div class="sidebar-title">Filter by Status</div>
+                        <div class="filter-group">
+                            <label class="filter-checkbox">
+                                <input type="checkbox" checked onchange="applyFilters()"> Confirmed
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox" checked onchange="applyFilters()"> Pending
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox" onchange="applyFilters()"> Cancelled
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <div class="sidebar-title">Legend</div>
+                        <div style="display: flex; flex-direction: column; gap: 8px; font-size: 13px;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <div style="width: 12px; height: 12px; background: #0284c7; border-radius: 3px;"></div>
+                                <span>Confirmed</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <div style="width: 12px; height: 12px; background: #f59e0b; border-radius: 3px;"></div>
+                                <span>Pending</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <div style="width: 12px; height: 12px; background: #ef4444; border-radius: 3px;"></div>
+                                <span>Conflict</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/dashboard.js"></script>
+    <script>
+        let currentDate = new Date();
+        let allSessions = [];
+        let currentView = 'list';
+        let selectedDate = null;
+
+        document.addEventListener('DOMContentLoaded', async function() {
+            const user = auth.getCurrentUser();
+            if (!user) {
+                window.location.href = '../login.html';
+                return;
+            }
+
+            document.getElementById('userName').textContent = user.name || 'Instructor';
+
+            // Load sessions
+            await loadSessions();
+            renderCalendar();
+            renderScheduleView();
+            renderStudentFilters();
+
+            // Mobile menu
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const sidebar = document.getElementById('sidebar');
+            const backdrop = document.getElementById('sidebarBackdrop');
+
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    sidebar.classList.toggle('mobile-open');
+                    backdrop.classList.toggle('active');
+                });
+            }
+
+            if (backdrop) {
+                backdrop.addEventListener('click', function() {
+                    sidebar.classList.remove('mobile-open');
+                    backdrop.classList.remove('active');
+                });
+            }
+        });
+
+        async function loadSessions() {
+            try {
+                const response = await api.get('/instructor/schedule');
+                if (response.success && response.data) {
+                    allSessions = response.data.map(session => ({
+                        ...session,
+                        id: Math.random(),
+                        student: session.student || 'Student Name',
+                        type: session.type || 'Practical',
+                        status: session.status || 'confirmed',
+                        duration: session.duration || 1.5
+                    }));
+                    detectConflicts();
+                }
+            } catch (error) {
+                console.error('Error loading sessions:', error);
+                // Demo data
+                allSessions = [
+                    { id: 1, date: '2026-04-28', time: '09:00', duration: 2, student: 'Elena Rodriguez', type: 'Practical', status: 'confirmed', location: 'Training Ground A' },
+                    { id: 2, date: '2026-04-28', time: '11:30', duration: 1.5, student: 'David Miller', type: 'Theory', status: 'confirmed', location: 'Classroom 2' },
+                    { id: 3, date: '2026-04-29', time: '14:00', duration: 2, student: 'Emma Wright', type: 'Practical', status: 'pending', location: 'Training Ground B' },
+                    { id: 4, date: '2026-04-30', time: '10:00', duration: 1.5, student: 'James Wilson', type: 'Theory', status: 'confirmed', location: 'Classroom 1' },
+                    { id: 5, date: '2026-05-01', time: '09:00', duration: 2, student: 'Sarah Chen', type: 'Practical', status: 'confirmed', location: 'Training Ground A' },
+                    { id: 6, date: '2026-05-02', time: '15:00', duration: 1, student: 'Michael Brown', type: 'Theory', status: 'pending', location: 'Classroom 3' }
+                ];
+                detectConflicts();
+            }
+        }
+
+        function detectConflicts() {
+            // Check for overlapping sessions
+            allSessions.forEach(session => {
+                session.hasConflict = false;
+                const sessionStart = new Date(`${session.date}T${session.time}`);
+                const sessionEnd = new Date(sessionStart.getTime() + session.duration * 60 * 60 * 1000);
+
+                allSessions.forEach(other => {
+                    if (session.id !== other.id && session.date === other.date) {
+                        const otherStart = new Date(`${other.date}T${other.time}`);
+                        const otherEnd = new Date(otherStart.getTime() + other.duration * 60 * 60 * 1000);
+
+                        if ((sessionStart < otherEnd && sessionEnd > otherStart)) {
+                            session.hasConflict = true;
+                            other.hasConflict = true;
+                        }
+                    }
+                });
+            });
+
+            updateStats();
+        }
+
+        function updateStats() {
+            const weekStart = new Date(currentDate);
+            weekStart.setDate(weekStart.getDate() - weekStart.getDay());
+            const weekEnd = new Date(weekStart);
+            weekEnd.setDate(weekEnd.getDate() + 6);
+
+            const weekSessions = allSessions.filter(s => {
+                const d = new Date(s.date);
+                return d >= weekStart && d <= weekEnd;
+            });
+
+            const conflicts = allSessions.filter(s => s.hasConflict).length;
+            const totalHours = allSessions.reduce((sum, s) => sum + s.duration, 0);
+            const students = new Set(allSessions.map(s => s.student)).size;
+
+            document.getElementById('weekSessions').textContent = weekSessions.length;
+            document.getElementById('conflictCount').textContent = conflicts;
+            document.getElementById('totalHours').textContent = totalHours.toFixed(1);
+            document.getElementById('studentCount').textContent = students;
+        }
+
+        function renderCalendar() {
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+
+            document.getElementById('monthYear').textContent = currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            const daysInMonth = lastDay.getDate();
+            const startingDayOfWeek = firstDay.getDay();
+
+            const grid = document.getElementById('calendarGrid');
+            grid.innerHTML = '';
+
+            // Day headers
+            const dayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            dayHeaders.forEach(day => {
+                const header = document.createElement('div');
+                header.className = 'calendar-day-header';
+                header.textContent = day;
+                grid.appendChild(header);
+            });
+
+            // Previous month days
+            for (let i = startingDayOfWeek - 1; i >= 0; i--) {
+                const day = document.createElement('div');
+                day.className = 'calendar-day other-month';
+                day.textContent = new Date(year, month, -i).getDate();
+                grid.appendChild(day);
+            }
+
+            // Current month days
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayEl = document.createElement('div');
+                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                const hasSessions = allSessions.some(s => s.date === dateStr);
+
+                dayEl.className = 'calendar-day';
+                if (hasSessions) dayEl.classList.add('has-events');
+
+                const today = new Date();
+                if (day === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
+                    dayEl.classList.add('today');
+                }
+
+                if (selectedDate === dateStr) {
+                    dayEl.classList.add('selected');
+                }
+
+                dayEl.textContent = day;
+                dayEl.onclick = () => selectDate(dateStr);
+                grid.appendChild(dayEl);
+            }
+
+            // Next month days
+            const remainingDays = 42 - (startingDayOfWeek + daysInMonth);
+            for (let day = 1; day <= remainingDays; day++) {
+                const dayEl = document.createElement('div');
+                dayEl.className = 'calendar-day other-month';
+                dayEl.textContent = day;
+                grid.appendChild(dayEl);
+            }
+        }
+
+        function selectDate(dateStr) {
+            selectedDate = selectedDate === dateStr ? null : dateStr;
+            renderCalendar();
+            renderScheduleView();
+        }
+
+        function renderScheduleView() {
+            const content = document.getElementById('scheduleContent');
+            let sessions = allSessions;
+
+            if (selectedDate) {
+                sessions = sessions.filter(s => s.date === selectedDate);
+            }
+
+            if (currentView === 'conflicts') {
+                sessions = sessions.filter(s => s.hasConflict);
+            }
+
+            if (sessions.length === 0) {
+                content.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📭</div>
+                        <div class="empty-state-text">No sessions found</div>
+                        <div style="font-size: 13px; color: #cbd5e1;">Try selecting a different date or view</div>
+                    </div>
+                `;
+                return;
+            }
+
+            content.innerHTML = `
+                <div class="schedule-list">
+                    ${sessions.map(session => `
+                        <div class="schedule-item ${session.hasConflict ? 'conflict' : ''}">
+                            <div class="schedule-time">${session.time}</div>
+                            <div class="schedule-info">
+                                <div class="schedule-info-title">${session.student}</div>
+                                <div class="schedule-info-detail">${session.type} • ${session.duration}h • ${session.location}</div>
+                                ${session.hasConflict ? `<div class="conflict-badge">⚠️ Time Conflict</div>` : ''}
+                            </div>
+                            <div class="schedule-actions">
+                                <button class="btn-sm btn-sm-edit" onclick="editSession(${session.id})">Edit</button>
+                                <button class="btn-sm btn-sm-delete" onclick="deleteSession(${session.id})">Delete</button>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function renderStudentFilters() {
+            const students = [...new Set(allSessions.map(s => s.student))];
+            const filter = document.getElementById('studentFilter');
+            filter.innerHTML = students.map(student => `
+                <label class="filter-checkbox">
+                    <input type="checkbox" checked onchange="applyFilters()"> ${student}
+                </label>
+            `).join('');
+        }
+
+        function switchView(view) {
+            currentView = view;
+            document.querySelectorAll('.view-tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            renderScheduleView();
+        }
+
+        function previousMonth() {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            renderCalendar();
+        }
+
+        function nextMonth() {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            renderCalendar();
+        }
+
+        function applyFilters() {
+            renderScheduleView();
+        }
+
+        function quickAddSession() {
+            const input = document.getElementById('quickAddInput');
+            if (input.value.trim()) {
+                utils.showNotification('Session added! (Demo mode)', 'success');
+                input.value = '';
+            }
+        }
+
+        function editSession(id) {
+            utils.showNotification('Edit session feature coming soon', 'info');
+        }
+
+        function deleteSession(id) {
+            if (confirm('Delete this session?')) {
+                allSessions = allSessions.filter(s => s.id !== id);
+                detectConflicts();
+                renderCalendar();
+                renderScheduleView();
+                utils.showNotification('Session deleted', 'success');
+            }
+        }
+    </script>
+</body>
+</html>

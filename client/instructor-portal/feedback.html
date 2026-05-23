@@ -1,0 +1,313 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback - DLSM Ethiopia</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/dark-mode.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/auth-guard.js"></script>
+</head>
+<body class="dashboard-body">
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <img src="../assets/images/logo-DLSM.jpg" alt="DLSM Logo" class="logo-icon" style="height: 32px; width: auto; border-radius: 6px;">
+                <span class="logo-text">DLSM</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">
+                <span class="nav-icon">📊</span>
+                <span class="nav-text">Dashboard</span>
+            </a>
+            <a href="profile.html" class="nav-item">
+                <span class="nav-icon">👤</span>
+                <span class="nav-text">Profile</span>
+            </a>
+            <a href="my-students.html" class="nav-item">
+                <span class="nav-icon">👥</span>
+                <span class="nav-text">My Students</span>
+            </a>
+            <a href="sessions.html" class="nav-item">
+                <span class="nav-icon">🚗</span>
+                <span class="nav-text">Sessions</span>
+            </a>
+            <a href="schedule.html" class="nav-item">
+                <span class="nav-icon">📅</span>
+                <span class="nav-text">Schedule</span>
+            </a>
+            <a href="attendance.html" class="nav-item">
+                <span class="nav-icon">✅</span>
+                <span class="nav-text">Attendance</span>
+            </a>
+            <a href="evaluations.html" class="nav-item">
+                <span class="nav-icon">📝</span>
+                <span class="nav-text">Evaluations</span>
+            </a>
+            <a href="feedback.html" class="nav-item active">
+                <span class="nav-icon">💬</span>
+                <span class="nav-text">Feedback</span>
+            </a>
+            <a href="progress.html" class="nav-item">
+                <span class="nav-icon">📈</span>
+                <span class="nav-text">Progress</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <button class="btn-logout" id="logoutBtn">
+                <span class="nav-icon">🚪</span>
+                <span class="nav-text">Logout</span>
+            </button>
+        </div>
+    </aside>
+
+    
+    <main class="main-content">
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+                <div>
+                    <h1 class="page-title">Student Feedback</h1>
+                    <p class="page-subtitle">Provide feedback to help students improve</p>
+                </div>
+            </div>
+            <div class="topbar-right">
+                <div class="user-profile">
+                    <div class="user-avatar" id="topbarAvatar">👤</div>
+                    <div class="user-info">
+                        <span class="user-name" id="userName">Instructor</span>
+                        <span class="user-role">Instructor</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="dashboard-container">
+            
+            <div class="stats-grid">
+                <div class="stat-card blue">
+                    <div class="stat-icon">💬</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Total Feedback</p>
+                        <h3 class="stat-value">156</h3>
+                    </div>
+                </div>
+                <div class="stat-card green">
+                    <div class="stat-icon">👍</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Positive</p>
+                        <h3 class="stat-value">132</h3>
+                    </div>
+                </div>
+                <div class="stat-card orange">
+                    <div class="stat-icon">⚠️</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Needs Improvement</p>
+                        <h3 class="stat-value">24</h3>
+                    </div>
+                </div>
+                <div class="stat-card purple">
+                    <div class="stat-icon">⭐</div>
+                    <div class="stat-info">
+                        <p class="stat-label">This Week</p>
+                        <h3 class="stat-value">12</h3>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="card" style="margin-bottom: 24px;">
+                <div style="display: grid; grid-template-columns: 1fr auto auto auto; gap: 16px; align-items: end; padding: 20px;">
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label class="form-label">Search Feedback</label>
+                        <input type="text" class="form-control" placeholder="Search by student name...">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label class="form-label">Type</label>
+                        <select class="form-control">
+                            <option value="">All Types</option>
+                            <option value="positive">Positive</option>
+                            <option value="constructive">Constructive</option>
+                            <option value="improvement">Needs Improvement</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label class="form-label">Level</label>
+                        <select class="form-control">
+                            <option value="">All Levels</option>
+                            <option value="driving-skills">Driving Skills</option>
+                            <option value="theory">Theory Knowledge</option>
+                            <option value="attitude">Attitude</option>
+                            <option value="safety">Safety Awareness</option>
+                        </select>
+                    </div>
+                    <button class="btn-primary" style="margin-bottom: 0;">+ Add Feedback</button>
+                </div>
+            </div>
+
+            
+            <div class="card">
+                <div class="card-title">
+                    <span>💬 Feedback History</span>
+                </div>
+                <div style="padding: 20px;">
+                    <div style="padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 16px;">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
+                            <div style="flex: 1;">
+                                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                                    <h4 style="font-size: 16px; font-weight: 700;">Alice Johnson</h4>
+                                    <span class="badge-success">👍 Positive</span>
+                                    <span class="badge-info">Driving Skills</span>
+                                </div>
+                                <div style="font-size: 13px; color: #64748b;">📅 2024-06-10</div>
+                            </div>
+                        </div>
+                        <div style="background: #f8fafc; padding: 16px; border-radius: 8px; margin-bottom: 12px;">
+                            <p style="font-size: 14px; line-height: 1.6; margin-bottom: 12px;">
+                                Excellent parallel parking technique. Shows great spatial awareness.
+                            </p>
+                            <div style="border-top: 1px solid #e2e8f0; padding-top: 12px;">
+                                <div style="font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; margin-bottom: 4px;">Recommendations:</div>
+                                <p style="font-size: 13px; color: #64748b;">Continue practicing highway merging</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 8px;">
+                            <button class="btn-sm-secondary">Edit</button>
+                            <button class="btn-sm-secondary">View Student</button>
+                        </div>
+                    </div>
+
+                    <div style="padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 16px;">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
+                            <div style="flex: 1;">
+                                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                                    <h4 style="font-size: 16px; font-weight: 700;">Bob Smith</h4>
+                                    <span class="badge-info">💡 Constructive</span>
+                                    <span class="badge-info">Theory</span>
+                                </div>
+                                <div style="font-size: 13px; color: #64748b;">📅 2024-06-09</div>
+                            </div>
+                        </div>
+                        <div style="background: #f8fafc; padding: 16px; border-radius: 8px; margin-bottom: 12px;">
+                            <p style="font-size: 14px; line-height: 1.6; margin-bottom: 12px;">
+                                Good understanding of traffic signs but needs to review right-of-way rules.
+                            </p>
+                            <div style="border-top: 1px solid #e2e8f0; padding-top: 12px;">
+                                <div style="font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; margin-bottom: 4px;">Recommendations:</div>
+                                <p style="font-size: 13px; color: #64748b;">Study chapter 5 on intersections</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 8px;">
+                            <button class="btn-sm-secondary">Edit</button>
+                            <button class="btn-sm-secondary">View Student</button>
+                        </div>
+                    </div>
+
+                    <div style="padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 16px;">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
+                            <div style="flex: 1;">
+                                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                                    <h4 style="font-size: 16px; font-weight: 700;">David Wilson</h4>
+                                    <span class="badge-warning">⚠️ Improvement</span>
+                                    <span class="badge-info">Safety</span>
+                                </div>
+                                <div style="font-size: 13px; color: #64748b;">📅 2024-06-07</div>
+                            </div>
+                        </div>
+                        <div style="background: #f8fafc; padding: 16px; border-radius: 8px; margin-bottom: 12px;">
+                            <p style="font-size: 14px; line-height: 1.6; margin-bottom: 12px;">
+                                Needs to check blind spots more consistently before lane changes.
+                            </p>
+                            <div style="border-top: 1px solid #e2e8f0; padding-top: 12px;">
+                                <div style="font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; margin-bottom: 4px;">Recommendations:</div>
+                                <p style="font-size: 13px; color: #64748b;">Practice mirror checks and head turns</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 8px;">
+                            <button class="btn-sm-secondary">Edit</button>
+                            <button class="btn-sm-secondary">View Student</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/dashboard.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+            const user = auth.getCurrentUser();
+            if (!user) {
+                window.location.href = '../login.html';
+                return;
+            }
+            document.getElementById('userName').textContent = user.name || 'Instructor';
+            
+            // Load feedback from API
+            await loadFeedbackFromAPI();
+            
+
+            
+            // Mobile menu is auto-initialized by dashboard.js
+            
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const sidebar = document.getElementById('sidebar');
+            const backdrop = document.getElementById('sidebarBackdrop');
+
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    sidebar.classList.toggle('mobile-open');
+                    backdrop.classList.toggle('active');
+                });
+            }
+            
+            if (backdrop) {
+                backdrop.addEventListener('click', function () {
+                    sidebar.classList.remove('mobile-open');
+                    backdrop.classList.remove('active');
+                });
+            }
+        });
+        
+        // Load feedback from API
+        async function loadFeedbackFromAPI() {
+            try {
+                const response = await api.get('/instructor/feedback');
+                if (response.success && response.data) {
+                    updateFeedbackTable(response.data);
+                    console.log('Feedback loaded from API:', response.data);
+                }
+            } catch (error) {
+                console.error('Error loading feedback:', error);
+            }
+        }
+        
+        // Update feedback table with API data
+        function updateFeedbackTable(feedbackData) {
+            const tbody = document.querySelector('.feedback-table tbody');
+            if (!tbody) return;
+            
+            tbody.innerHTML = feedbackData.map(fb => `
+                <tr>
+                    <td>${fb.student}</td>
+                    <td>${fb.date}</td>
+                    <td>${fb.type}</td>
+                    <td>${fb.message}</td>
+                    <td><span class="badge-${fb.status === 'sent' ? 'success' : 'warning'}">${fb.status}</span></td>
+                </tr>
+            `).join('');
+        }
+    </script>
+</body>
+</html>

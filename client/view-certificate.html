@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DLSM Certificate - Ethiopia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            min-height: 100vh;
+            padding: 2rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(30, 64, 175, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .certificate-card {
+            border: 6px solid transparent;
+            border-image: linear-gradient(135deg, #d4af37 0%, #f4e5a1 50%, #d4af37 100%) 1;
+            border-radius: 0;
+            padding: 4rem;
+            text-align: center;
+            background: 
+                linear-gradient(white, white) padding-box,
+                linear-gradient(135deg, #d4af37 0%, #f4e5a1 50%, #d4af37 100%) border-box;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                0 30px 90px rgba(0,0,0,0.5),
+                inset 0 0 0 1px rgba(212, 175, 55, 0.2),
+                0 0 60px rgba(212, 175, 55, 0.3);
+        }
+
+        .certificate-card::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            pointer-events: none;
+        }
+
+        .certificate-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: repeating-linear-gradient(
+                90deg,
+                #d4af37 0px,
+                #d4af37 20px,
+                transparent 20px,
+                transparent 40px
+            );
+        }
+
+        .cert-watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 6rem;
+            font-weight: 900;
+            color: rgba(212, 175, 55, 0.04);
+            letter-spacing: 1rem;
+            white-space: nowrap;
+            pointer-events: none;
+            z-index: 0;
+            text-shadow: 2px 2px 4px rgba(212, 175, 55, 0.1);
+        }
+
+        .cert-corner-ornament {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border: 3px solid #d4af37;
+            z-index: 1;
+        }
+
+        .cert-corner-ornament.top-left {
+            top: 30px;
+            left: 30px;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .cert-corner-ornament.top-right {
+            top: 30px;
+            right: 30px;
+            border-left: none;
+            border-bottom: none;
+        }
+
+        .cert-corner-ornament.bottom-left {
+            bottom: 30px;
+            left: 30px;
+            border-right: none;
+            border-top: none;
+        }
+
+        .cert-corner-ornament.bottom-right {
+            bottom: 30px;
+            right: 30px;
+            border-left: none;
+            border-top: none;
+        }
+
+        .cert-header-official {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.05) 100%);
+            border-radius: 12px;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .cert-emblem {
+            font-size: 4rem;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .cert-gov-header {
+            text-align: left;
+        }
+
+        .cert-gov-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #1e293b;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #1e293b 0%, #475569 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .cert-ministry {
+            font-size: 1rem;
+            color: #64748b;
+            font-weight: 700;
+            margin-top: 0.25rem;
+        }
+
+        .cert-school-section {
+            margin: 1.5rem 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cert-school-logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 12px;
+            margin-bottom: 0.75rem;
+            border: 2px solid #d4af37;
+        }
+
+        .cert-school-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1e40af;
+            margin-bottom: 0.25rem;
+        }
+
+        .cert-school-license {
+            font-size: 0.85rem;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .cert-title-section {
+            margin: 2rem 0 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cert-title-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #d4af37 0%, #f4e5a1 50%, #d4af37 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+            filter: drop-shadow(0 2px 4px rgba(212, 175, 55, 0.2));
+        }
+
+        .cert-subtitle-text {
+            font-size: 1.3rem;
+            color: #475569;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .cert-body-section {
+            margin: 2rem 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cert-intro {
+            font-size: 1rem;
+            color: #475569;
+            margin-bottom: 0.75rem;
+        }
+
+        .cert-student-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 900;
+            color: #1e293b;
+            border-bottom: 4px double #d4af37;
+            display: inline-block;
+            padding-bottom: 0.75rem;
+            margin: 1rem 0 1.5rem;
+            position: relative;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .cert-student-name::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, #d4af37 50%, transparent 100%);
+        }
+
+        .cert-student-details {
+            font-size: 0.95rem;
+            color: #64748b;
+            margin-bottom: 1.5rem;
+        }
+
+        .cert-body-text {
+            font-size: 1rem;
+            color: #475569;
+            line-height: 1.8;
+            max-width: 600px;
+            margin: 1rem auto;
+        }
+
+        .cert-license-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #1e40af 100%);
+            color: white;
+            padding: 1.5rem 3rem;
+            border-radius: 16px;
+            margin: 2rem 0;
+            box-shadow: 
+                0 8px 24px rgba(30, 64, 175, 0.4),
+                inset 0 1px 0 rgba(255,255,255,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cert-license-badge::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            50%, 100% { left: 100%; }
+        }
+
+        .cert-license-category {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+            letter-spacing: 4px;
+        }
+
+        .cert-license-type {
+            font-size: 1.1rem;
+            font-weight: 600;
+            opacity: 0.95;
+            letter-spacing: 1px;
+        }
+
+        .cert-training-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.05) 0%, rgba(212, 175, 55, 0.1) 100%);
+            border-radius: 16px;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            box-shadow: inset 0 2px 8px rgba(212, 175, 55, 0.1);
+        }
+
+        .cert-detail-item {
+            text-align: center;
+        }
+
+        .cert-detail-label {
+            font-size: 0.85rem;
+            color: #64748b;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.25rem;
+        }
+
+        .cert-detail-value {
+            font-size: 1.1rem;
+            color: #1e293b;
+            font-weight: 700;
+        }
+
+        .cert-compliance {
+            font-size: 0.9rem;
+            color: #64748b;
+            font-style: italic;
+            margin-top: 1.5rem;
+        }
+
+        .cert-footer-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 2px solid #d4af37;
+            gap: 2rem;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cert-qr-section {
+            text-align: center;
+            flex: 0 0 auto;
+        }
+
+        .cert-qr-code {
+            width: 100px;
+            height: 100px;
+            border: 2px solid #d4af37;
+            border-radius: 8px;
+            padding: 5px;
+            background: white;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .cert-qr-text {
+            font-size: 0.75rem;
+            color: #64748b;
+        }
+
+        .cert-info-section {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .cert-info-item {
+            text-align: center;
+        }
+
+        .cert-info-label {
+            font-size: 0.75rem;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.25rem;
+        }
+
+        .cert-info-value {
+            font-size: 1rem;
+            color: #1e293b;
+            font-weight: 700;
+        }
+
+        .cert-signatures {
+            display: flex;
+            justify-content: space-around;
+            gap: 3rem;
+            margin-top: 2rem;
+            width: 100%;
+        }
+
+        .cert-signature {
+            text-align: center;
+            flex: 1;
+        }
+
+        .cert-signature-line {
+            width: 180px;
+            height: 2px;
+            background: #1e293b;
+            margin: 0 auto 0.5rem;
+        }
+
+        .cert-signature-name {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 0.25rem;
+        }
+
+        .cert-signature-title {
+            font-size: 0.85rem;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .cert-seal {
+            position: absolute;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 2;
+        }
+
+        .cert-seal-circle {
+            width: 120px;
+            height: 120px;
+            border: 5px double #d4af37;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: 
+                radial-gradient(circle, #fff 0%, #fffef7 50%, #fff8e1 100%);
+            box-shadow: 
+                0 8px 24px rgba(212, 175, 55, 0.4),
+                inset 0 0 20px rgba(212, 175, 55, 0.1);
+            position: relative;
+        }
+
+        .cert-seal-circle::before {
+            content: '';
+            position: absolute;
+            inset: 8px;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 50%;
+        }
+
+        .cert-seal-text {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #1e40af;
+            letter-spacing: 2px;
+        }
+
+        .cert-seal-subtext {
+            font-size: 0.75rem;
+            color: #64748b;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1.25rem 2.5rem;
+            border: none;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #d4af37 0%, #f4e5a1 50%, #d4af37 100%);
+            color: #1e293b;
+            box-shadow: 0 8px 24px rgba(212, 175, 55, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 12px 32px rgba(212, 175, 55, 0.6);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            box-shadow: 0 8px 24px rgba(30, 64, 175, 0.4);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 12px 32px rgba(30, 64, 175, 0.6);
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .header,
+            .actions {
+                display: none;
+            }
+            .certificate-card {
+                box-shadow: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            .cert-title-text {
+                font-size: 1.8rem;
+                letter-spacing: 2px;
+            }
+            .cert-student-name {
+                font-size: 1.6rem;
+            }
+            .cert-footer-section {
+                flex-direction: column;
+                align-items: center;
+            }
+            .cert-signatures {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            .cert-seal {
+                position: static;
+                margin: 2rem auto 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎓 DLSM Certificate</h1>
+            <p>Federal Democratic Republic of Ethiopia</p>
+        </div>
+
+        <div class="certificate-card" id="certificate">
+            <div class="cert-corner-ornament top-left"></div>
+            <div class="cert-corner-ornament top-right"></div>
+            <div class="cert-corner-ornament bottom-left"></div>
+            <div class="cert-corner-ornament bottom-right"></div>
+            <div class="cert-watermark">DLSM ETHIOPIA</div>
+            
+            <div class="cert-header-official">
+                <div class="cert-emblem">🇪🇹</div>
+                <div class="cert-gov-header">
+                    <div class="cert-gov-title">Federal Democratic Republic of Ethiopia</div>
+                    <div class="cert-ministry">Ministry of Transport</div>
+                </div>
+            </div>
+
+            <div class="cert-school-section">
+                <img src="assets/images/logo-DLSM.jpg" alt="DLSM Logo" class="cert-school-logo" onerror="this.style.display='none'">
+                <div class="cert-school-name">Driver License School Management (DLSM)</div>
+                <div class="cert-school-license">License No: ET-DS-2024-001</div>
+            </div>
+
+            <div class="cert-title-section">
+                <div class="cert-title-text">CERTIFICATE OF COMPLETION</div>
+                <div class="cert-subtitle-text">Driver Training Program</div>
+            </div>
+
+            <div class="cert-body-section">
+                <p class="cert-intro">This is to certify that</p>
+                <div class="cert-student-name">Abebe Kebede Tadesse</div>
+                <div class="cert-student-details">
+                    <span>National ID: <strong>ET-987654321</strong></span>
+                    <span style="margin: 0 20px;">|</span>
+                    <span>Date of Birth: <strong>March 15, 1998</strong></span>
+                </div>
+                
+                <p class="cert-body-text">
+                    has successfully completed all required theory and practical training,
+                    passed all examinations with distinction, and fulfilled all requirements for the
+                </p>
+                
+                <div class="cert-license-badge">
+                    <div class="cert-license-category">Level B</div>
+                    <div class="cert-license-type">Private Car License</div>
+                </div>
+
+                <div class="cert-training-details">
+                    <div class="cert-detail-item">
+                        <span class="cert-detail-label">Training Period:</span>
+                        <span class="cert-detail-value">Jan 15 - Apr 27, 2026</span>
+                    </div>
+                    <div class="cert-detail-item">
+                        <span class="cert-detail-label">Total Hours:</span>
+                        <span class="cert-detail-value">40 hours</span>
+                    </div>
+                    <div class="cert-detail-item">
+                        <span class="cert-detail-label">Theory Exam:</span>
+                        <span class="cert-detail-value">85% (Passed)</span>
+                    </div>
+                    <div class="cert-detail-item">
+                        <span class="cert-detail-label">Practical Exam:</span>
+                        <span class="cert-detail-value">92% (Passed)</span>
+                    </div>
+                </div>
+
+                <p class="cert-compliance">
+                    In accordance with the standards set by the Federal Transport Authority of Ethiopia
+                </p>
+            </div>
+
+            <div class="cert-footer-section">
+                <div class="cert-qr-section">
+                    <div class="cert-qr-code">📱</div>
+                    <div class="cert-qr-text">Scan to verify</div>
+                </div>
+
+                <div class="cert-info-section">
+                    <div class="cert-info-item">
+                        <div class="cert-info-label">Certificate No.</div>
+                        <div class="cert-info-value">DLSM-2026-B-00042</div>
+                    </div>
+                    <div class="cert-info-item">
+                        <div class="cert-info-label">Issue Date</div>
+                        <div class="cert-info-value">April 27, 2026</div>
+                    </div>
+                    <div class="cert-info-item">
+                        <div class="cert-info-label">Valid Until</div>
+                        <div class="cert-info-value">October 27, 2026</div>
+                    </div>
+                </div>
+
+                <div class="cert-signatures">
+                    <div class="cert-signature">
+                        <div class="cert-signature-line"></div>
+                        <div class="cert-signature-name">Yonas Bekele</div>
+                        <div class="cert-signature-title">Chief Instructor</div>
+                    </div>
+                    <div class="cert-signature">
+                        <div class="cert-signature-line"></div>
+                        <div class="cert-signature-name">Abebe Tadesse</div>
+                        <div class="cert-signature-title">School Director</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cert-seal">
+                <div class="cert-seal-circle">
+                    <div class="cert-seal-text">DLSM</div>
+                    <div class="cert-seal-subtext">ETHIOPIA</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button class="btn btn-primary" onclick="window.print()">🖨️ Print Certificate</button>
+            <button class="btn btn-secondary" onclick="alert('✅ Certificate is ready to share!')">📤 Share</button>
+        </div>
+    </div>
+</body>
+</html>

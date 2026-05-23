@@ -1,0 +1,315 @@
+<!-- Slide 1 -->
+<div class="slide active title-slide">
+  <h1>🎓 Driver License School Management System</h1>
+  <h2>Automating Driving School Operations</h2>
+  <div class="subtitle">
+    <p>Project Presentation</p>
+    <p>May 2026</p>
+  </div>
+</div>
+
+<!-- Slide 2 -->
+<div class="slide">
+  <h1>Introduction</h1>
+  <div class="highlight">
+    <strong>Purpose:</strong> To automate and manage the complete learner-driver lifecycle from registration to certification.
+  </div>
+  <h2>Scope</h2>
+  <ul>
+    <li>Student registration and enrollment</li>
+    <li>Training and lesson scheduling</li>
+    <li>Progress tracking</li>
+    <li>Exam administration</li>
+    <li>Certification management</li>
+    <li>Reporting and analytics</li>
+  </ul>
+</div>
+
+<!-- Slide 3 -->
+<div class="slide">
+  <h1>Problem Statement</h1>
+  <div class="two-column">
+    <div class="column">
+      <h3>Current Challenges</h3>
+      <ul>
+        <li>Paper-based records</li>
+        <li>Manual scheduling</li>
+        <li>Difficult progress tracking</li>
+        <li>Inefficient exam management</li>
+      </ul>
+    </div>
+    <div class="column">
+      <h3>Impact</h3>
+      <ul>
+        <li>Time-consuming operations</li>
+        <li>Data inconsistency</li>
+        <li>Limited reporting</li>
+        <li>Delayed certification</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 4 -->
+<div class="slide">
+  <h1>Proposed Solution</h1>
+  <div class="highlight">
+    A centralized web-based Driver License School Management System.
+  </div>
+  <ul>
+    <li>Automated registration</li>
+    <li>Training management</li>
+    <li>Progress monitoring</li>
+    <li>Exam administration</li>
+    <li>Digital certification</li>
+    <li>Reporting and analytics</li>
+  </ul>
+</div>
+
+<!-- Slide 5 -->
+<div class="slide">
+  <h1>System Users</h1>
+  <table>
+    <tr>
+      <th>User</th>
+      <th>Responsibilities</th>
+    </tr>
+    <tr>
+      <td>Student</td>
+      <td>Registration, training, exams</td>
+    </tr>
+    <tr>
+      <td>Instructor</td>
+      <td>Teaching and evaluation</td>
+    </tr>
+    <tr>
+      <td>Supervisor</td>
+      <td>Monitoring and quality control</td>
+    </tr>
+    <tr>
+      <td>Manager</td>
+      <td>Administration and reporting</td>
+    </tr>
+  </table>
+</div>
+
+<!-- Slide 6 -->
+<div class="slide">
+  <h1>Core Features</h1>
+  <div class="feature-grid">
+    <div class="feature-box">
+      <h3>Student Management</h3>
+      <p>Registration, profiles, documents</p>
+    </div>
+    <div class="feature-box">
+      <h3>Training Management</h3>
+      <p>Scheduling and attendance</p>
+    </div>
+    <div class="feature-box">
+      <h3>Exam Management</h3>
+      <p>Theory and practical exams</p>
+    </div>
+    <div class="feature-box">
+      <h3>Reporting</h3>
+      <p>Statistics and analytics</p>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 7 -->
+<div class="slide">
+  <h1>Student Workflow</h1>
+  <div class="flow-diagram" style="flex-direction: column">
+    <div class="flow-step">Registration</div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step">Enrollment Approval</div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step">Training Program Assignment</div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step">Theory Training & Exam</div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step">Practical Training & Exam</div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step">Supervisor Validation</div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step">Certificate Issued</div>
+  </div>
+</div>
+
+<!-- Slide 8 -->
+<div class="slide">
+  <h1>System Architecture</h1>
+  <div class="tech-stack">
+    <div class="tech-item">
+      <div class="label">Frontend</div>
+      <div class="value">HTML, CSS, JS</div>
+    </div>
+    <div class="tech-item">
+      <div class="label">Backend</div>
+      <div class="value">PHP 8+</div>
+    </div>
+    <div class="tech-item">
+      <div class="label">Database</div>
+      <div class="value">MySQL 8+</div>
+    </div>
+  </div>
+
+  <div class="feature-grid">
+    <div class="feature-box">REST API</div>
+    <div class="feature-box">JWT Authentication</div>
+    <div class="feature-box">MVC Pattern</div>
+    <div class="feature-box">Role-Based Access</div>
+  </div>
+</div>
+
+<!-- Slide 9 -->
+<div class="slide">
+  <h1>Database Design</h1>
+  <table>
+    <tr>
+      <th>Module</th>
+      <th>Tables</th>
+    </tr>
+    <tr>
+      <td>Users</td>
+      <td>users, student_details, instructor_details</td>
+    </tr>
+    <tr>
+      <td>Training</td>
+      <td>training_programs, enrollments, lessons</td>
+    </tr>
+    <tr>
+      <td>Assessment</td>
+      <td>exams, certificates</td>
+    </tr>
+    <tr>
+      <td>Support</td>
+      <td>documents, notifications</td>
+    </tr>
+  </table>
+</div>
+
+<!-- Slide 10 -->
+<div class="slide">
+  <h1>Security & Quality</h1>
+  <div class="feature-grid">
+    <div class="feature-box">
+      <h3>Security</h3>
+      <ul>
+        <li>JWT Authentication</li>
+        <li>Password Encryption</li>
+        <li>Access Control</li>
+      </ul>
+    </div>
+
+    <div class="feature-box">
+      <h3>Quality</h3>
+      <ul>
+        <li>Performance</li>
+        <li>Reliability</li>
+        <li>Scalability</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 11 -->
+<div class="slide">
+  <h1>API Coverage</h1>
+  <div class="stat-box">
+    <span class="number">70+</span>
+    <span class="label">REST API Endpoints</span>
+  </div>
+
+  <ul>
+    <li>Authentication APIs</li>
+    <li>Student APIs</li>
+    <li>Instructor APIs</li>
+    <li>Manager APIs</li>
+    <li>Reporting APIs</li>
+  </ul>
+</div>
+
+<!-- Slide 12 -->
+<div class="slide">
+  <h1>Benefits</h1>
+  <div class="two-column">
+    <div class="column">
+      <h3>Driving Schools</h3>
+      <ul>
+        <li>Reduced paperwork</li>
+        <li>Faster operations</li>
+        <li>Better organization</li>
+      </ul>
+    </div>
+
+    <div class="column">
+      <h3>Management</h3>
+      <ul>
+        <li>Real-time reports</li>
+        <li>Performance tracking</li>
+        <li>Data-driven decisions</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 13 -->
+<div class="slide">
+  <h1>Future Enhancements</h1>
+  <ul>
+    <li>Mobile Application</li>
+    <li>Online Theory Exams</li>
+    <li>SMS Notifications</li>
+    <li>GPS Driving Tracking</li>
+    <li>Online Payments</li>
+    <li>National Licensing Integration</li>
+  </ul>
+</div>
+
+<!-- Slide 14 -->
+<div class="slide">
+  <h1>Project Achievements</h1>
+
+  <div class="feature-grid">
+    <div class="stat-box">
+      <span class="number">70+</span>
+      <span class="label">API Endpoints</span>
+    </div>
+
+    <div class="stat-box">
+      <span class="number">10</span>
+      <span class="label">Database Tables</span>
+    </div>
+
+    <div class="stat-box">
+      <span class="number">4</span>
+      <span class="label">User Roles</span>
+    </div>
+
+    <div class="stat-box">
+      <span class="number">100%</span>
+      <span class="label">Requirements Covered</span>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 15 -->
+<div class="slide">
+  <h1>Conclusion</h1>
+
+  <div class="highlight">
+    <strong>Key Result:</strong>
+    A complete web-based solution that automates registration,
+    training, examinations, certification, and reporting
+    for driving schools.
+  </div>
+
+  <div class="stat-box">
+    <span style="font-size:28px">
+      Thank You! 🎓
+      <br><br>
+      Questions & Discussion
+    </span>
+  </div>
+</div>

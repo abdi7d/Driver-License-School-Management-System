@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audit Logs - DLSM Ethiopia</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/dark-mode.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="../assets/js/auth-guard.js"></script>
+</head>
+<body class="dashboard-body">
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <img src="../assets/images/logo-DLSM.jpg" alt="DLSM Logo" class="logo-icon" style="height: 32px; width: auto; border-radius: 6px;">
+                <span class="logo-text">DLSM</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">
+                <span class="nav-icon">📊</span>
+                <span class="nav-text">Dashboard</span>
+            </a>
+            <a href="profile.html" class="nav-item">
+                <span class="nav-icon">👤</span>
+                <span class="nav-text">Profile</span>
+            </a>
+            <a href="users.html" class="nav-item">
+                <span class="nav-icon">👥</span>
+                <span class="nav-text">Users</span>
+            </a>
+            <a href="programs.html" class="nav-item">
+                <span class="nav-icon">📚</span>
+                <span class="nav-text">Programs</span>
+            </a>
+            <a href="enrollments.html" class="nav-item">
+                <span class="nav-icon">📝</span>
+                <span class="nav-text">Enrollments</span>
+            </a>
+            <a href="approvals.html" class="nav-item">
+                <span class="nav-icon">✅</span>
+                <span class="nav-text">Approvals</span>
+            </a>
+            <a href="exams.html" class="nav-item">
+                <span class="nav-icon">📋</span>
+                <span class="nav-text">Exams</span>
+            </a>
+            <a href="certificates.html" class="nav-item">
+                <span class="nav-icon">🎓</span>
+                <span class="nav-text">Certificates</span>
+            </a>
+            <a href="reports.html" class="nav-item">
+                <span class="nav-icon">📈</span>
+                <span class="nav-text">Reports</span>
+            </a>
+            <a href="audit-logs.html" class="nav-item active">
+                <span class="nav-icon">📜</span>
+                <span class="nav-text">Audit Logs</span>
+            </a>
+            <a href="notifications.html" class="nav-item">
+                <span class="nav-icon">🔔</span>
+                <span class="nav-text">Notifications</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <button class="btn-logout" id="logoutBtn">
+                <span class="nav-icon">🚪</span>
+                <span class="nav-text">Logout</span>
+            </button>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+                <div>
+                    <h1 class="page-title">Audit Logs</h1>
+                    <p class="page-subtitle">Track all system activities and changes</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="dashboard-container">
+            <div class="stats-grid">
+                <div class="stat-card blue">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Total Activities</p>
+                        <h3 class="stat-value" id="totalLogs">0</h3>
+                        <span class="stat-change">Last 30 days</span>
+                    </div>
+                </div>
+                <div class="stat-card green">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Approvals</p>
+                        <h3 class="stat-value" id="totalApprovals">0</h3>
+                        <span class="stat-change positive">System actions</span>
+                    </div>
+                </div>
+                <div class="stat-card orange">
+                    <div class="stat-icon">🔄</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Updates</p>
+                        <h3 class="stat-value" id="totalUpdates">0</h3>
+                        <span class="stat-change">Data changes</span>
+                    </div>
+                </div>
+                <div class="stat-card purple">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Active Users</p>
+                        <h3 class="stat-value" id="activeUsers">0</h3>
+                        <span class="stat-change">Today</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="margin-bottom: 24px;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+                    <div>
+                        <label class="form-label">User Role</label>
+                        <select class="form-input" id="userFilter" onchange="filterLogs()">
+                            <option value="">All Users</option>
+                            <option value="manager">Managers</option>
+                            <option value="instructor">Instructors</option>
+                            <option value="supervisor">Supervisors</option>
+                            <option value="student">Students</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="form-label">Action Type</label>
+                        <select class="form-input" id="actionFilter" onchange="filterLogs()">
+                            <option value="">All Actions</option>
+                            <option value="login">Login</option>
+                            <option value="create">Create</option>
+                            <option value="update">Update</option>
+                            <option value="delete">Delete</option>
+                            <option value="approve">Approve</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="form-label">Date From</label>
+                        <input type="date" class="form-input" id="dateFrom" onchange="filterLogs()">
+                    </div>
+                    <div>
+                        <label class="form-label">Date To</label>
+                        <input type="date" class="form-input" id="dateTo" onchange="filterLogs()">
+                    </div>
+                </div>
+                <div style="display: flex; gap: 12px; margin-top: 16px;">
+                    <button class="btn-secondary btn-small" onclick="clearFilters()">Clear Filters</button>
+                    <button class="btn-primary btn-small" onclick="refreshLogs()">🔄 Refresh</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">System Activity Log</h3>
+                    <div style="display: flex; gap: 8px;">
+                        <button class="btn-secondary btn-small" onclick="exportLogs()">📥 Export CSV</button>
+                        <button class="btn-primary btn-small" onclick="printLogs()">🖨️ Print</button>
+                    </div>
+                </div>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Timestamp</th>
+                                <th>User</th>
+                                <th>Role</th>
+                                <th>Action</th>
+                                <th>Details</th>
+                                <th>IP Address</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="logsTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/dashboard.js"></script>
+    <script>
+        let allLogs = [];
+
+        document.addEventListener('DOMContentLoaded', async function() {
+            const user = auth.getCurrentUser();
+            if (!user) {
+                window.location.href = '../login.html';
+                return;
+            }
+
+            await loadAuditLogs();
+
+            // Mobile menu is auto-initialized by dashboard.js
+
+            document.getElementById('logoutBtn').addEventListener('click', function() {
+                if (confirm('Are you sure you want to logout?')) {
+                    auth.logout();
+                }
+            });
+        });
+
+        async function loadAuditLogs() {
+            try {
+                console.log('Loading audit logs from API...');
+                const response = await api.get('/manager/audit-logs');
+                console.log('Audit logs API response:', response);
+                
+                if (response.success && response.data) {
+                    allLogs = response.data;
+                    renderLogs(allLogs);
+                    updateStats(allLogs);
+                }
+            } catch (error) {
+                console.error('Error loading audit logs:', error);
+            }
+        }
+
+        function updateStats(logs) {
+            document.getElementById('totalLogs').textContent = logs.length;
+            document.getElementById('totalApprovals').textContent = logs.filter(l => l.action === 'approve').length;
+            document.getElementById('totalUpdates').textContent = logs.filter(l => l.action === 'update').length;
+            
+            const uniqueUsers = [...new Set(logs.map(l => l.user))];
+            document.getElementById('activeUsers').textContent = uniqueUsers.length;
+        }
+
+        function renderLogs(logs) {
+            const tbody = document.getElementById('logsTableBody');
+            
+            if (logs.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 40px; color: #64748b;">No logs found</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = logs.map(log => `
+                <tr>
+                    <td><strong>${log.timestamp}</strong></td>
+                    <td>${log.user}</td>
+                    <td><span class="badge badge-${log.role === 'manager' ? 'purple' : log.role === 'instructor' ? 'blue' : log.role === 'supervisor' ? 'orange' : 'green'}">${log.role}</span></td>
+                    <td><span class="badge badge-${log.action === 'delete' ? 'danger' : log.action === 'approve' ? 'success' : log.action === 'create' ? 'info' : 'warning'}">${log.action}</span></td>
+                    <td>${log.details}</td>
+                    <td style="font-family: monospace; font-size: 12px;">${log.ip}</td>
+                    <td>
+                        <button class="btn-sm-secondary" onclick="viewLogDetails(${log.id})">View</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function filterLogs() {
+            const userFilter = document.getElementById('userFilter').value;
+            const actionFilter = document.getElementById('actionFilter').value;
+            const dateFrom = document.getElementById('dateFrom').value;
+            const dateTo = document.getElementById('dateTo').value;
+
+            let filtered = allLogs;
+
+            if (userFilter) {
+                filtered = filtered.filter(log => log.role === userFilter);
+            }
+            if (actionFilter) {
+                filtered = filtered.filter(log => log.action === actionFilter);
+            }
+            if (dateFrom) {
+                filtered = filtered.filter(log => new Date(log.timestamp) >= new Date(dateFrom));
+            }
+            if (dateTo) {
+                filtered = filtered.filter(log => new Date(log.timestamp) <= new Date(dateTo));
+            }
+
+            renderLogs(filtered);
+            updateStats(filtered);
+        }
+
+        function clearFilters() {
+            document.getElementById('userFilter').value = '';
+            document.getElementById('actionFilter').value = '';
+            document.getElementById('dateFrom').value = '';
+            document.getElementById('dateTo').value = '';
+            renderLogs(allLogs);
+            updateStats(allLogs);
+            utils.showNotification('Filters cleared', 'info');
+        }
+
+        function refreshLogs() {
+            loadAuditLogs();
+            utils.showNotification('Logs refreshed successfully', 'success');
+        }
+
+        function exportLogs() {
+            const csv = 'Timestamp,User,Role,Action,Details,IP\n' + 
+                allLogs.map(log => `"${log.timestamp}","${log.user}","${log.role}","${log.action}","${log.details}","${log.ip}"`).join('\n');
+            
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `audit-logs-${new Date().toISOString().split('T')[0]}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+            
+            utils.showNotification('Audit logs exported successfully', 'success');
+        }
+
+        function printLogs() {
+            window.print();
+            utils.showNotification('Print dialog opened', 'info');
+        }
+
+        function viewLogDetails(logId) {
+            const log = allLogs.find(l => l.id === logId);
+            if (log) {
+                alert(`Log Details:\n\nTimestamp: ${log.timestamp}\nUser: ${log.user}\nRole: ${log.role}\nAction: ${log.action}\nDetails: ${log.details}\nIP: ${log.ip}`);
+            }
+        }
+    </script>
+</body>
+</html>

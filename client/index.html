@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DLSM Ethiopia - Driver License School Management</title>
+    <link rel="stylesheet" href="assets/css/landing-formal.css" />
+    <link rel="stylesheet" href="assets/css/responsive.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <script src="assets/js/theme.js"></script>
+  </head>
+  <body>
+    
+    <nav class="landing-nav">
+      <div class="nav-container">
+        <div class="nav-brand">
+          <img src="assets/images/logo-DLSM.jpg" alt="DLSM Logo" style="height: 40px; width: auto; border-radius: 8px;">
+          <span class="brand-text">DLSM Ethiopia</span>
+        </div>
+        <div class="nav-menu">
+          <a href="#home" class="nav-link">Home</a>
+          <a href="#about" class="nav-link">About</a>
+          <a href="#programs" class="nav-link">Programs</a>
+          <a href="#contact" class="nav-link">Contact</a>
+        </div>
+        <div class="nav-actions">
+          <a href="login.html" class="btn-nav-outline">Sign In</a>
+          <a href="register.html" class="btn-nav-primary">Register Now</a>
+          <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu">☰</button>
+        </div>
+      </div>
+      
+      <div class="nav-mobile-menu" id="navMobileMenu">
+        <a href="#home" class="nav-mobile-link">Home</a>
+        <a href="#about" class="nav-mobile-link">About</a>
+        <a href="#programs" class="nav-mobile-link">Programs</a>
+        <a href="#contact" class="nav-mobile-link">Contact</a>
+        <a href="login.html" class="nav-mobile-link">Sign In</a>
+        <a href="register.html" class="nav-mobile-link nav-mobile-primary">Register Now</a>
+      </div>
+    </nav>
+
+    
+    <section class="hero-section" id="home">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="badge-icon">🇪🇹</span>
+          Federal Transport Authority Approved
+        </div>
+        <h1 class="hero-title">
+          Your Journey to Safe Driving<br />
+          <span class="hero-highlight typewriter-hero">Starts Here</span>
+        </h1>
+        <p class="hero-subtitle">
+          Professional driver training with certified instructors.<br />
+          From registration to graduation - we guide you every step.
+        </p>
+        <div class="hero-buttons">
+          <button id="getStarted" class="btn-hero-primary">Get Started</button>
+          <a href="#programs" class="btn-hero-secondary">View Programs</a>
+        </div>
+        <script>
+          document.getElementById("getStarted").onclick = () => {
+            window.location.href = "login.html";
+          };
+        </script>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-number">5000+</div>
+            <div class="stat-label">Graduates</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">50+</div>
+            <div class="stat-label">Instructors</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">95%</div>
+            <div class="stat-label">Pass Rate</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+    <section class="about-section" id="about">
+      <div class="section-container">
+        <div class="section-header">
+          <span class="section-badge">About Us</span>
+          <h2 class="section-title">Why Choose DLSM Ethiopia?</h2>
+          <p class="section-subtitle">
+            We provide comprehensive driver training that meets international
+            standards
+          </p>
+        </div>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">👨‍🏫</div>
+            <h3 class="feature-title">Certified Instructors</h3>
+            <p class="feature-desc">
+              Learn from experienced, government-certified driving instructors
+              with years of expertise.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🚗</div>
+            <h3 class="feature-title">Modern Fleet</h3>
+            <p class="feature-desc">
+              Practice with well-maintained vehicles equipped with dual controls
+              for safety.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">📚</div>
+            <h3 class="feature-title">Theory & Practical</h3>
+            <p class="feature-desc">
+              Comprehensive training covering both theoretical knowledge and
+              hands-on driving skills.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">📱</div>
+            <h3 class="feature-title">Digital Tracking</h3>
+            <p class="feature-desc">
+              Monitor your progress online, schedule lessons, and track your
+              journey to licensing.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🎓</div>
+            <h3 class="feature-title">Guaranteed Results</h3>
+            <p class="feature-desc">
+              95% pass rate with our proven training methodology and dedicated
+              support.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">⏰</div>
+            <h3 class="feature-title">Flexible Schedule</h3>
+            <p class="feature-desc">
+              Choose training times that fit your schedule - morning, afternoon,
+              or evening slots.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+    <section class="programs-section" id="programs">
+      <div class="section-container">
+        <div class="section-header">
+          <span class="section-badge">Training Programs</span>
+          <h2 class="section-title typewriter">Choose Your License Type</h2>
+          <p class="section-subtitle">
+            Professional training programs for all vehicle categories
+          </p>
+        </div>
+        <div class="programs-grid-modern">
+          
+          <div class="modern-program-card featured-card">
+            <div class="card-badge">Most Popular</div>
+            <div class="card-icon-wrapper">
+              <img src="assets/images/private-car.jpg" alt="Private Car" class="card-image">
+              <div class="card-overlay">
+                <span class="class-badge">Level 2</span>
+              </div>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">Private Car License</h3>
+              <p class="card-description">
+                Master driving cars, pickups, and light vehicles with confidence and safety.
+              </p>
+              <div class="card-stats">
+                <div class="stat-item-card">
+                  <span class="stat-icon-card">⏱️</span>
+                  <span class="stat-text">40 Hours</span>
+                </div>
+                <div class="stat-item-card">
+                  <span class="stat-icon-card">📚</span>
+                  <span class="stat-text">Theory + Practical</span>
+                </div>
+              </div>
+              <div class="card-footer-modern">
+                <div class="price-tag">
+                  <span class="price-amount">5,000</span>
+                  <span class="price-currency">ETB</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          
+          <div class="modern-program-card">
+            <div class="card-icon-wrapper">
+              <img src="assets/images/motor-cycle.jpg" alt="Motorcycle" class="card-image">
+              <div class="card-overlay">
+                <span class="class-badge">Level 1</span>
+              </div>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">Motorcycle License</h3>
+              <p class="card-description">
+                Learn to ride motorcycles and tricycles safely with expert guidance.
+              </p>
+              <div class="card-stats">
+                <div class="stat-item-card">
+                  <span class="stat-icon-card">⏱️</span>
+                  <span class="stat-text">30 Hours</span>
+                </div>
+                <div class="stat-item-card">
+                  <span class="stat-icon-card">👤</span>
+                  <span class="stat-text">Age 21+</span>
+                </div>
+              </div>
+              <div class="card-footer-modern">
+                <div class="price-tag">
+                  <span class="price-amount">3,500</span>
+                  <span class="price-currency">ETB</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          
+          <div class="modern-program-card">
+            <div class="card-icon-wrapper">
+              <img src="assets/images/heavy-truck-car.jpg" alt="Heavy Truck" class="card-image">
+              <div class="card-overlay">
+                <span class="class-badge">Level 3</span>
+              </div>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">Heavy Truck License</h3>
+              <p class="card-description">
+                Professional training for heavy vehicles and commercial trucks.
+              </p>
+              <div class="card-stats">
+                <div class="stat-item-card">
+                  <span class="stat-icon-card">⏱️</span>
+                  <span class="stat-text">60 Hours</span>
+                </div>
+                <div class="stat-item-card">
+                  <span class="stat-icon-card">🚛</span>
+                  <span class="stat-text">Commercial</span>
+                </div>
+              </div>
+              <div class="card-footer-modern">
+                <div class="price-tag">
+                  <span class="price-amount">8,500</span>
+                  <span class="price-currency">ETB</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    
+    <section class="process-section-formal">
+      <div class="section-container">
+        <div class="section-header-formal">
+          <h2 class="section-title-formal">Enrollment Process</h2>
+          <p class="section-subtitle-formal">
+            A structured pathway from registration to certification
+          </p>
+        </div>
+        <div class="process-grid-formal">
+          <div class="process-card-formal">
+            <div class="process-icon-formal">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="8.5" cy="7" r="4"/>
+                <polyline points="17 11 19 13 23 9"/>
+              </svg>
+            </div>
+            <div class="process-number-formal">01</div>
+            <h3 class="process-title-formal">Registration</h3>
+            <p class="process-desc-formal">
+              Submit your application online with required documents and select your preferred license level.
+            </p>
+          </div>
+
+          <div class="process-card-formal">
+            <div class="process-icon-formal">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+            </div>
+            <div class="process-number-formal">02</div>
+            <h3 class="process-title-formal">Approval</h3>
+            <p class="process-desc-formal">
+              Administrative review and verification of submitted credentials by management team.
+            </p>
+          </div>
+
+          <div class="process-card-formal">
+            <div class="process-icon-formal">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+              </svg>
+            </div>
+            <div class="process-number-formal">03</div>
+            <h3 class="process-title-formal">Theory Training</h3>
+            <p class="process-desc-formal">
+              Comprehensive classroom instruction covering traffic regulations and road safety principles.
+            </p>
+          </div>
+
+          <div class="process-card-formal">
+            <div class="process-icon-formal">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="1" y="3" width="15" height="13"/>
+                <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+                <circle cx="5.5" cy="18.5" r="2.5"/>
+                <circle cx="18.5" cy="18.5" r="2.5"/>
+              </svg>
+            </div>
+            <div class="process-number-formal">04</div>
+            <h3 class="process-title-formal">Practical Training</h3>
+            <p class="process-desc-formal">
+              Supervised driving sessions with certified instructors using modern training vehicles.
+            </p>
+          </div>
+
+          <div class="process-card-formal">
+            <div class="process-icon-formal">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="16" y1="13" x2="8" y2="13"/>
+                <line x1="16" y1="17" x2="8" y2="17"/>
+                <polyline points="10 9 9 9 8 9"/>
+              </svg>
+            </div>
+            <div class="process-number-formal">05</div>
+            <h3 class="process-title-formal">Examination</h3>
+            <p class="process-desc-formal">
+              Written and practical assessments conducted by authorized examiners to evaluate competency.
+            </p>
+          </div>
+
+          <div class="process-card-formal">
+            <div class="process-icon-formal">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+              </svg>
+            </div>
+            <div class="process-number-formal">06</div>
+            <h3 class="process-title-formal">Certification</h3>
+            <p class="process-desc-formal">
+              Upon successful completion, receive your official driving certificate and license eligibility.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+    <section class="cta-section-formal">
+      <div class="cta-container-formal">
+        <div class="cta-content-formal">
+          <h2 class="cta-title-formal">Begin Your Driver Training</h2>
+          <p class="cta-text-formal">
+            Join our professional driver education program. Enroll today to start your journey toward safe and confident driving.
+          </p>
+          <div class="cta-buttons-formal">
+            <a href="register.html" class="btn-cta-primary-formal">
+              <span>Enroll Now</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="5" y1="12" x2="19" y2="12"/>
+                <polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </a>
+            <a href="login.html" class="btn-cta-secondary-formal">
+              <span>Sign In</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+   
+<footer class="landing-footer" id="contact">
+    <div class="footer-container">
+        <div class="footer-grid">
+            
+            
+            <div class="footer-col footer-about">
+                <div class="footer-logo">
+                    <img src="assets/images/logo-DLSM.jpg" alt="DLSM Logo" class="footer-logo-icon" style="height: 38px; width: auto; border-radius: 8px;">
+                    <span class="footer-logo-text">DLSM Ethiopia</span>
+                </div>
+                <p class="footer-desc">
+                    A modern and reliable Driver Licensing School Management System designed 
+                    to streamline learner registration, training, examination, and certification 
+                    processes in accordance with the standards set by the Federal Transport Authority of Ethiopia.
+                </p>
+                <div class="footer-social">
+                    <a href="#" class="social-link" aria-label="Facebook">📘</a>
+                    <a href="#" class="social-link" aria-label="Instagram">📷</a>
+                    <a href="#" class="social-link" aria-label="Telegram">📱</a>
+                    <a href="#" class="social-link" aria-label="YouTube">📺</a>
+                </div>
+            </div>
+
+            
+            <div class="footer-col">
+                <h4 class="footer-heading">Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#about">About the School</a></li>
+                    <li><a href="#programs">Training Programs</a></li>
+                    <li><a href="register.html">Register as Student</a></li>
+                    <li><a href="login.html">Login to Portal</a></li>
+                </ul>
+            </div>
+
+            
+            <div class="footer-col">
+                <h4 class="footer-heading">Our Training Programs</h4>
+                <ul class="footer-links">
+                    <li><a href="register.html">Motorcycle License Training (Level A)</a></li>
+                    <li><a href="register.html">Private Car Driving (Level B)</a></li>
+                    <li><a href="register.html">Heavy Vehicle / Truck (Level C)</a></li>
+                    <li><a href="register.html">Bus and Public Transport Driving</a></li>
+                    <li><a href="register.html">Defensive Driving Course</a></li>
+                </ul>
+            </div>
+
+            
+            <div class="footer-col">
+                <h4 class="footer-heading">Contact Information</h4>
+                <ul class="footer-contact">
+                    <li>
+                        <span class="contact-icon">📍</span>
+                        <span>Bishoftu, Oromia Region, Ethiopia</span>
+                    </li>
+                    <li>
+                        <span class="contact-icon">📞</span>
+                        <span>+251 911 234 567</span>
+                    </li>
+                    <li>
+                        <span class="contact-icon">✉️</span>
+                        <span>info@dlsm.et</span>
+                    </li>
+                    <li>
+                        <span class="contact-icon">🕒</span>
+                        <span>Monday - Saturday: 8:00 AM - 5:30 PM</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        
+        <div class="footer-bottom">
+            <div class="footer-bottom-content">
+                <p>&copy; 2026 DLSM Ethiopia. All Rights Reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <span>•</span>
+                    <a href="#">Terms of Service</a>
+                    <span>•</span>
+                    <a href="#">Federal Transport Authority Approved</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script src="assets/js/utils.js"></script>
+    <script>
+      // Landing page mobile nav
+      const hamburger = document.getElementById('navHamburger');
+      const mobileMenu = document.getElementById('navMobileMenu');
+      if (hamburger && mobileMenu) {
+        hamburger.addEventListener('click', function () {
+          mobileMenu.classList.toggle('open');
+          hamburger.textContent = mobileMenu.classList.contains('open') ? '✕' : '☰';
+        });
+        // Close on link click
+        mobileMenu.querySelectorAll('.nav-mobile-link').forEach(link => {
+          link.addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+            hamburger.textContent = '☰';
+          });
+        });
+      }
+      
+      // Typewriter effect - stop blinking after animation
+      document.addEventListener('DOMContentLoaded', function() {
+        // Stop blinking for hero typewriter after 3 seconds
+        setTimeout(() => {
+          const heroTypewriter = document.querySelector('.typewriter-hero');
+          if (heroTypewriter) {
+            heroTypewriter.classList.add('animation-done');
+          }
+        }, 3000);
+        
+        // Stop blinking for section typewriters after 4 seconds
+        setTimeout(() => {
+          const typewriters = document.querySelectorAll('.typewriter');
+          typewriters.forEach(el => {
+            el.classList.add('animation-done');
+          });
+        }, 4500);
+      });
+    </script>
+</html>

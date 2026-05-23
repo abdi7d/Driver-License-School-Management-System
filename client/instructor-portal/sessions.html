@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sessions - DLSM Ethiopia</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/dark-mode.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/auth-guard.js"></script>
+</head>
+<body class="dashboard-body">
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <img src="../assets/images/logo-DLSM.jpg" alt="DLSM Logo" class="logo-icon" style="height: 32px; width: auto; border-radius: 6px;">
+                <span class="logo-text">DLSM</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">
+                <span class="nav-icon">📊</span>
+                <span class="nav-text">Dashboard</span>
+            </a>
+            <a href="profile.html" class="nav-item">
+                <span class="nav-icon">👤</span>
+                <span class="nav-text">Profile</span>
+            </a>
+            <a href="my-students.html" class="nav-item">
+                <span class="nav-icon">👥</span>
+                <span class="nav-text">My Students</span>
+            </a>
+            <a href="sessions.html" class="nav-item active">
+                <span class="nav-icon">🚗</span>
+                <span class="nav-text">Sessions</span>
+            </a>
+            <a href="schedule.html" class="nav-item">
+                <span class="nav-icon">📅</span>
+                <span class="nav-text">Schedule</span>
+            </a>
+            <a href="attendance.html" class="nav-item">
+                <span class="nav-icon">✅</span>
+                <span class="nav-text">Attendance</span>
+            </a>
+            <a href="evaluations.html" class="nav-item">
+                <span class="nav-icon">📝</span>
+                <span class="nav-text">Evaluations</span>
+            </a>
+            <a href="feedback.html" class="nav-item">
+                <span class="nav-icon">💬</span>
+                <span class="nav-text">Feedback</span>
+            </a>
+            <a href="progress.html" class="nav-item">
+                <span class="nav-icon">📈</span>
+                <span class="nav-text">Progress</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <button class="btn-logout" id="logoutBtn">
+                <span class="nav-icon">🚪</span>
+                <span class="nav-text">Logout</span>
+            </button>
+        </div>
+    </aside>
+
+    
+    <main class="main-content">
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+                <div>
+                    <h1 class="page-title">Training Sessions</h1>
+                    <p class="page-subtitle">Manage and track your training sessions</p>
+                </div>
+            </div>
+            <div class="topbar-right">
+                <div class="user-profile">
+                    <div class="user-avatar" id="topbarAvatar">👤</div>
+                    <div class="user-info">
+                        <span class="user-name" id="userName">Instructor</span>
+                        <span class="user-role">Instructor</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="dashboard-container">
+            
+            <div class="stats-grid">
+                <div class="stat-card blue">
+                    <div class="stat-icon">🕐</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Total Sessions</p>
+                        <h3 class="stat-value" id="statTotalSessions">...</h3>
+                    </div>
+                </div>
+                <div class="stat-card green">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Active Today</p>
+                        <h3 class="stat-value" id="statActiveToday">...</h3>
+                    </div>
+                </div>
+                <div class="stat-card orange">
+                    <div class="stat-icon">🎯</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Completed</p>
+                        <h3 class="stat-value" id="statCompleted">...</h3>
+                    </div>
+                </div>
+                <div class="stat-card purple">
+                    <div class="stat-icon">⏱️</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Avg Duration</p>
+                        <h3 class="stat-value" id="statAvgDuration">...</h3>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="card" style="margin-bottom: 24px;">
+                <div style="display: grid; grid-template-columns: 1fr auto auto auto; gap: 16px; align-items: end; padding: 20px;">
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label class="form-label">Search Sessions</label>
+                        <input type="text" class="form-control" id="searchInput" placeholder="Search by student name..." onkeyup="filterSessions()">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label class="form-label">Type</label>
+                        <select class="form-control" id="typeFilter" onchange="filterSessions()">
+                            <option value="">All Types</option>
+                            <option value="theory">Theory</option>
+                            <option value="practical">Practical</option>
+                            <option value="evaluation">Evaluation</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label class="form-label">Status</label>
+                        <select class="form-control" id="statusFilter" onchange="filterSessions()">
+                            <option value="">All Status</option>
+                            <option value="completed">Completed</option>
+                            <option value="in-progress">In Progress</option>
+                            <option value="scheduled">Scheduled</option>
+                        </select>
+                    </div>
+                    <button class="btn-primary" style="margin-bottom: 0;" onclick="openModal('addSessionModal')">+ Start Session</button>
+                </div>
+            </div>
+
+            
+            <div class="card">
+                <div class="card-title">
+                    <span>🚗 Session History</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Student</th>
+                                <th>Type</th>
+                                <th>Duration</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sessionsTableBody">
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    <div class="modal-overlay" id="addSessionModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Start New Session</h3>
+                <button class="modal-close" onclick="closeModal('addSessionModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="addSessionForm">
+                    <div class="form-group">
+                        <label class="form-label">Select Student</label>
+                        <select class="form-control" id="sessionStudent" required>
+                            <option value="">Loading students...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Session Type</label>
+                        <select class="form-control" id="sessionType" required>
+                            <option value="practical">Practical</option>
+                            <option value="theory">Theory</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Date & Time</label>
+                        <input type="datetime-local" class="form-control" id="sessionDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Expected Duration (minutes)</label>
+                        <input type="number" class="form-control" id="sessionDuration" value="60" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal('addSessionModal')">Cancel</button>
+                <button class="btn-primary" onclick="submitNewSession()">Start Session</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/dashboard.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+            const user = auth.getCurrentUser();
+            if (!user) {
+                window.location.href = '../login.html';
+                return;
+            }
+            document.getElementById('userName').textContent = user.name || 'Instructor';
+            
+            // Load sessions from API
+            await loadSessionsFromAPI();
+            
+
+            
+            // Mobile menu is auto-initialized by dashboard.js
+            
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const sidebar = document.getElementById('sidebar');
+            const backdrop = document.getElementById('sidebarBackdrop');
+
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    sidebar.classList.toggle('mobile-open');
+                    backdrop.classList.toggle('active');
+                });
+            }
+            
+            if (backdrop) {
+                backdrop.addEventListener('click', function () {
+                    sidebar.classList.remove('mobile-open');
+                    backdrop.classList.remove('active');
+                });
+            }
+        });
+        
+        // Load sessions from API
+        async function loadSessionsFromAPI() {
+            try {
+                const response = await api.get('/schedule.php');
+                if (response.success && response.data) {
+                    updateSessionsTable(response.data);
+                }
+            } catch (error) {
+                console.error('Error loading sessions:', error);
+            }
+        }
+        
+        // Update sessions table with API data
+        function updateSessionsTable(lessons) {
+            const tbody = document.getElementById('sessionsTableBody');
+            if (!tbody) return;
+            
+            tbody.innerHTML = '';
+            
+            if (lessons.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">No sessions found</td></tr>';
+                updateStats(lessons);
+                return;
+            }
+
+            lessons.forEach(lesson => {
+                const sessionDate = new Date(lesson.session_date);
+                const dateStr = sessionDate.toLocaleDateString();
+                const timeStr = sessionDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                
+                const isCompleted = lesson.attendance == 1;
+                const statusBadge = isCompleted ? '<span class="badge-success">Completed</span>' : '<span class="badge-info">Scheduled</span>';
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${dateStr}</td>
+                    <td>${timeStr}</td>
+                    <td>${lesson.student_name}</td>
+                    <td>${lesson.lesson_type}</td>
+                    <td>${lesson.duration_minutes || '-'} min</td>
+                    <td>${statusBadge}</td>
+                    <td>
+                        ${!isCompleted ? `<button class="btn-sm-primary" onclick="endSession(${lesson.id})">End Session</button>` : '<button class="btn-sm-secondary" disabled>Finished</button>'}
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+            
+            updateStats(lessons);
+        }
+        
+        function updateStats(lessons) {
+            document.getElementById('statTotalSessions').textContent = lessons.length;
+            
+            const todayStr = new Date().toLocaleDateString();
+            const activeToday = lessons.filter(l => new Date(l.session_date).toLocaleDateString() === todayStr && l.attendance != 1).length;
+            document.getElementById('statActiveToday').textContent = activeToday;
+            
+            const completed = lessons.filter(l => l.attendance == 1).length;
+            document.getElementById('statCompleted').textContent = completed;
+            
+            const completedLessons = lessons.filter(l => l.attendance == 1 && l.duration_minutes);
+            let avgDuration = 0;
+            if (completedLessons.length > 0) {
+                const totalMins = completedLessons.reduce((sum, l) => sum + parseInt(l.duration_minutes), 0);
+                avgDuration = Math.round(totalMins / completedLessons.length);
+            }
+            document.getElementById('statAvgDuration').textContent = avgDuration > 0 ? avgDuration + 'min' : '-';
+        }
+
+        async function endSession(lessonId) {
+            const duration = prompt("Enter actual duration in minutes:", "60");
+            if (duration === null) return;
+
+            const notes = prompt("Enter session notes (optional):");
+            
+            try {
+                const response = await api.post('/update-lesson.php', {
+                    lesson_id: lessonId,
+                    attendance: true,
+                    duration_minutes: parseInt(duration),
+                    notes: notes || ""
+                });
+                if (response.success) {
+                    utils.showNotification(response.message, 'success');
+                    loadSessionsFromAPI();
+                } else {
+                    utils.showNotification(response.message, 'error');
+                }
+            } catch (error) {
+                console.error('Error updating session:', error);
+                utils.showNotification('Failed to update session', 'error');
+            }
+        }
+
+        async function submitNewSession() {
+            const enrollmentId = document.getElementById('sessionStudent').value;
+            const lessonType = document.getElementById('sessionType').value;
+            const sessionDate = document.getElementById('sessionDate').value;
+            const duration = document.getElementById('sessionDuration').value;
+
+            if (!enrollmentId || !sessionDate) {
+                utils.showNotification('Please select a student and date/time', 'error');
+                return;
+            }
+
+            // Convert local datetime to format accepted by backend
+            const formattedDate = sessionDate.replace('T', ' ') + ':00';
+
+            try {
+                const response = await api.post('/schedule.php', {
+                    enrollment_id: parseInt(enrollmentId),
+                    session_date: formattedDate,
+                    lesson_type: lessonType,
+                    duration_minutes: parseInt(duration)
+                });
+
+                if (response.success) {
+                    utils.showNotification('Session started successfully!', 'success');
+                    closeModal('addSessionModal');
+                    document.getElementById('addSessionForm').reset();
+                    loadSessionsFromAPI();
+                } else {
+                    utils.showNotification(response.message || 'Failed to start session', 'error');
+                }
+            } catch (error) {
+                console.error('Error starting session:', error);
+                utils.showNotification('Network error occurred', 'error');
+            }
+        }
+
+        async function loadStudentsForDropdown() {
+            try {
+                const response = await api.get('/instructors/students.php');
+                const select = document.getElementById('sessionStudent');
+                select.innerHTML = '<option value="">Select student...</option>';
+                
+                if (response.success && response.data) {
+                    response.data.forEach(student => {
+                        select.innerHTML += `<option value="${student.id}">${student.name} - ${student.program}</option>`;
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading students:', error);
+            }
+        }
+
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('open');
+                document.body.style.overflow = 'hidden';
+                if (modalId === 'addSessionModal') {
+                    // Set current time as default
+                    const now = new Date();
+                    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+                    document.getElementById('sessionDate').value = now.toISOString().slice(0,16);
+                    loadStudentsForDropdown();
+                }
+            }
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('open');
+                document.body.style.overflow = '';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate - DLSM</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 10px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: linear-gradient(to bottom, #fefefe 0%, #f8f9fa 100%);
+            padding: 25px 30px;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            border: 12px solid;
+            border-image: repeating-linear-gradient(
+                45deg,
+                #4A6FA5 0px,
+                #6B8EC3 10px,
+                #8BA8D8 20px,
+                #6B8EC3 30px,
+                #4A6FA5 40px
+            ) 12;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            right: 8px;
+            bottom: 8px;
+            border: 3px double #6B8EC3;
+            pointer-events: none;
+            box-shadow: inset 0 0 15px rgba(107, 142, 195, 0.1);
+        }
+
+        .container::after {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            bottom: 15px;
+            border: 1px solid rgba(107, 142, 195, 0.3);
+            pointer-events: none;
+        }
+
+        .corner-decoration {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            z-index: 10;
+        }
+
+        .corner-decoration.top-left {
+            top: 5px;
+            left: 5px;
+            background: radial-gradient(circle at top left, rgba(107, 142, 195, 0.3) 0%, transparent 70%);
+        }
+
+        .corner-decoration.top-right {
+            top: 5px;
+            right: 5px;
+            background: radial-gradient(circle at top right, rgba(107, 142, 195, 0.3) 0%, transparent 70%);
+        }
+
+        .corner-decoration.bottom-left {
+            bottom: 5px;
+            left: 5px;
+            background: radial-gradient(circle at bottom left, rgba(107, 142, 195, 0.3) 0%, transparent 70%);
+        }
+
+        .corner-decoration.bottom-right {
+            bottom: 5px;
+            right: 5px;
+            background: radial-gradient(circle at bottom right, rgba(107, 142, 195, 0.3) 0%, transparent 70%);
+        }
+
+        .ornament {
+            position: absolute;
+            font-size: 40px;
+            color: #6B8EC3;
+            opacity: 0.6;
+            z-index: 5;
+        }
+
+        .ornament.top-left { top: 30px; left: 30px; }
+        .ornament.top-right { top: 30px; right: 30px; }
+        .ornament.bottom-left { bottom: 30px; left: 30px; }
+        .ornament.bottom-right { bottom: 30px; right: 30px; }
+
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #6B8EC3;
+            padding-bottom: 8px;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            margin-bottom: 4px;
+        }
+
+        .school-name {
+            font-size: 14px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 2px;
+        }
+
+        .gov-text {
+            font-size: 9px;
+            color: #666;
+        }
+
+        .title {
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .title h1 {
+            font-size: 24px;
+            color: #4A6FA5;
+            margin-bottom: 4px;
+            text-shadow: 1px 1px 2px rgba(74, 111, 165, 0.2);
+            letter-spacing: 2px;
+            font-weight: 900;
+        }
+
+        .title p {
+            font-size: 10px;
+            color: #666;
+        }
+
+        .content {
+            text-align: center;
+            line-height: 1.4;
+            color: #333;
+        }
+
+        .intro {
+            font-size: 10px;
+            margin-bottom: 8px;
+        }
+
+        .student-name {
+            font-size: 22px;
+            font-weight: 900;
+            color: #2C3E50;
+            margin: 10px 0;
+            padding: 8px 0;
+            border-bottom: 3px double #4A90E2;
+            display: inline-block;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .details {
+            font-size: 9px;
+            color: #666;
+            margin: 8px 0;
+        }
+
+        .license-sentence {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin: 10px auto;
+            line-height: 1.4;
+        }
+
+        .license-sentence .label {
+            color: #666;
+            font-weight: 500;
+        }
+
+        .license-sentence .category {
+            font-size: 20px;
+            font-weight: 900;
+            color: #2C3E50;
+            margin: 0 4px;
+        }
+
+        .license-sentence .type {
+            font-weight: 700;
+            color: #4A6FA5;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin: 12px 0;
+            padding: 10px;
+            background: linear-gradient(135deg, rgba(74, 144, 226, 0.08) 0%, rgba(91, 163, 245, 0.08) 100%);
+            border: 2px solid rgba(74, 144, 226, 0.3);
+            border-radius: 8px;
+            position: relative;
+            z-index: 1;
+            box-shadow: inset 0 1px 4px rgba(74, 144, 226, 0.1);
+        }
+
+        .info-item {
+            text-align: left;
+        }
+
+        .info-label {
+            font-size: 8px;
+            color: #666;
+            text-transform: uppercase;
+            margin-bottom: 2px;
+        }
+
+        .info-value {
+            font-size: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 2px solid #6B8EC3;
+            position: relative;
+            z-index: 1;
+        }
+
+        .signature {
+            text-align: center;
+            flex: 1;
+        }
+
+        .signature-line {
+            width: 120px;
+            height: 1px;
+            background: #333;
+            margin: 0 auto 4px;
+        }
+
+        .signature-name {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 2px;
+            font-size: 10px;
+        }
+
+        .signature-title {
+            font-size: 8px;
+            color: #666;
+        }
+
+        .cert-number {
+            text-align: center;
+            margin-top: 10px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(107, 142, 195, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .cert-number-label {
+            font-size: 8px;
+            color: #666;
+            margin-bottom: 2px;
+        }
+
+        .cert-number-value {
+            font-size: 10px;
+            font-weight: bold;
+            color: #333;
+            font-family: monospace;
+        }
+
+        .buttons {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        button {
+            padding: 12px 30px;
+            margin: 0 10px;
+            border: 2px solid #6B8EC3;
+            background: linear-gradient(135deg, #6B8EC3 0%, #8BA8D8 100%);
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #5A7DB2 0%, #7A98C7 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(107, 142, 195, 0.3);
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .buttons {
+                display: none;
+            }
+            .container {
+                box-shadow: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            .title h1 {
+                font-size: 28px;
+            }
+            .student-name {
+                font-size: 24px;
+            }
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer {
+                flex-direction: column;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="corner-decoration top-left"></div>
+        <div class="corner-decoration top-right"></div>
+        <div class="corner-decoration bottom-left"></div>
+        <div class="corner-decoration bottom-right"></div>
+        
+        <div class="ornament top-left">✦</div>
+        <div class="ornament top-right">✦</div>
+        <div class="ornament bottom-left">✦</div>
+        <div class="ornament bottom-right">✦</div>
+        
+        <div class="header">
+            <div class="logo">
+                <img src="assets/images/logo-DLSM.jpg" alt="Ethiopian Driver & Vehicle Licensing Authority" style="width: 50px; height: 50px; border-radius: 50%; border: 2px solid #4A90E2; box-shadow: 0 2px 8px rgba(74, 144, 226, 0.3);">
+            </div>
+            <div class="school-name" style="margin-top: 15px;">የአሽከርካሪዎች ፈቃድና ተሽከርካሪ ቁጥጥር ባለስልጣን</div>
+            <div class="school-name">DRIVER LICENSE SCHOOL MANAGEMENT</div>
+            <div class="gov-text" style="margin-top: 10px;">Federal Democratic Republic of Ethiopia</div>
+            <div class="gov-text">Ministry of Transport</div>
+            <div class="gov-text" style="margin-top: 5px; font-weight: 600; color: #4A90E2;">Driver & Vehicle Licensing & Control Authority</div>
+        </div>
+
+        <div class="title">
+            <h1>CERTIFICATE OF COMPLETION</h1>
+            <p>Driver Training Program</p>
+        </div>
+
+        <div class="content">
+            <p class="intro">This is to certify that</p>
+            
+            <div class="student-name">Abebe Kebede Tadesse</div>
+            
+            <div class="details">
+                National ID: <strong>ET-987654321</strong> | 
+                Date of Birth: <strong>March 15, 1998</strong>
+            </div>
+
+            <p class="intro">
+                has successfully completed all required theory and practical training<br>
+                and fulfilled all requirements for the
+            </p>
+
+            <p class="license-sentence">
+                <span class="label">License Level</span>
+                <span class="category">2</span>
+                <span class="type">Private Car License</span>
+            </p>
+
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">Training Period</div>
+                    <div class="info-value">Jan 15 - Apr 27, 2026</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Total Hours</div>
+                    <div class="info-value">40 hours</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Theory Exam</div>
+                    <div class="info-value">85% (Passed)</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Practical Exam</div>
+                    <div class="info-value">92% (Passed)</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Issue Date</div>
+                    <div class="info-value">April 27, 2026</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Valid Until</div>
+                    <div class="info-value">October 27, 2026</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="signature">
+                <div class="signature-line"></div>
+                <div class="signature-name">Yonas Bekele</div>
+                <div class="signature-title">Chief Instructor</div>
+            </div>
+            <div class="signature">
+                <div class="signature-line"></div>
+                <div class="signature-name">Abebe Tadesse</div>
+                <div class="signature-title">School Director</div>
+            </div>
+        </div>
+
+        <div class="cert-number">
+            <div class="cert-number-label">Certificate Number</div>
+            <div class="cert-number-value" id="certNumber">DLSM-2026-B-00042</div>
+        </div>
+
+        <div style="text-align: center; margin-top: 10px; padding-top: 8px; border-top: 1px solid rgba(107, 142, 195, 0.3); position: relative; z-index: 1;">
+            <div id="qrcode" style="display: inline-block; padding: 4px; border: 2px solid #6B8EC3; border-radius: 6px; background: white;"></div>
+            <div style="font-size: 8px; color: #6B8EC3; margin-top: 4px; font-weight: 600;">Scan to verify certificate</div>
+        </div>
+    </div>
+
+    <div class="buttons">
+        <button onclick="window.print()">🖨️ Print</button>
+        <button onclick="alert('Certificate ready to share!')">📤 Share</button>
+        <button onclick="window.open(getVerifyUrl(document.getElementById('certNumber').textContent), '_blank')">🔍 Verify</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script>
+        function getVerifyUrl(certNumber) {
+            const currentPath = window.location.pathname;
+            const isInStudentPortal = currentPath.includes('student-portal');
+
+            if (isInStudentPortal) {
+                // Student portal pages live one folder deeper than verify-certificate.html
+                const base = currentPath.substring(0, currentPath.lastIndexOf('/student-portal'));
+                return `${window.location.origin}${base}/verify-certificate.html?cert=${encodeURIComponent(certNumber)}`;
+            }
+
+            // Default: verify-certificate.html in the same folder as this page
+            const directory = currentPath.substring(0, currentPath.lastIndexOf('/'));
+            return `${window.location.origin}${directory}/verify-certificate.html?cert=${encodeURIComponent(certNumber)}`;
+        }
+
+        window.addEventListener('DOMContentLoaded', function() {
+            try {
+                const certNumber = document.getElementById('certNumber').textContent;
+                const verifyUrl = getVerifyUrl(certNumber);
+                
+                console.log('QR Code URL:', verifyUrl);
+                
+                // Check if QRCode library is loaded
+                if (typeof QRCode !== 'undefined') {
+                    new QRCode(document.getElementById('qrcode'), {
+                        text: verifyUrl,
+                        width: 60,
+                        height: 60,
+                        colorDark: "#000000",
+                        colorLight: "#ffffff",
+                        correctLevel: QRCode.CorrectLevel.H
+                    });
+                    
+                    console.log('✅ QR Code generated successfully!');
+                    console.log('📱 Scan this QR code with your phone to test');
+                } else {
+                    console.error('❌ QRCode library not loaded');
+                    document.getElementById('qrcode').innerHTML = '<div style="width:60px;height:60px;background:#f3f4f6;display:flex;align-items:center;justify-content:center;font-size:10px;text-align:center;">QR<br>Error</div>';
+                }
+            } catch (error) {
+                console.error('Error generating QR code:', error);
+                document.getElementById('qrcode').innerHTML = '<div style="width:60px;height:60px;background:#fee2e2;display:flex;align-items:center;justify-content:center;font-size:10px;text-align:center;color:#dc2626;">Error</div>';
+            }
+        });
+    </script>
+</body>
+</html>

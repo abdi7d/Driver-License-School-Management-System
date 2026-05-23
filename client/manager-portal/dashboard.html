@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager Dashboard - DLSM Ethiopia</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/dark-mode.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="../assets/js/auth-guard.js"></script>
+</head>
+<body class="dashboard-body">
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <img src="../assets/images/logo-DLSM.jpg" alt="DLSM Logo" class="logo-icon" style="height: 32px; width: auto; border-radius: 6px;">
+                <span class="logo-text">DLSM</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item active">
+                <span class="nav-icon">📊</span>
+                <span class="nav-text">Dashboard</span>
+            </a>
+            <a href="profile.html" class="nav-item">
+                <span class="nav-icon">👤</span>
+                <span class="nav-text">My Profile</span>
+            </a>
+            <a href="users.html" class="nav-item">
+                <span class="nav-icon">👥</span>
+                <span class="nav-text">Users</span>
+            </a>
+            <a href="programs.html" class="nav-item">
+                <span class="nav-icon">📚</span>
+                <span class="nav-text">Programs</span>
+            </a>
+            <a href="enrollments.html" class="nav-item">
+                <span class="nav-icon">📋</span>
+                <span class="nav-text">Enrollments</span>
+            </a>
+            <a href="approvals.html" class="nav-item">
+                <span class="nav-icon">✅</span>
+                <span class="nav-text">Approvals</span>
+            </a>
+            <a href="exams.html" class="nav-item">
+                <span class="nav-icon">📝</span>
+                <span class="nav-text">Exams</span>
+            </a>
+            <a href="certificates.html" class="nav-item">
+                <span class="nav-icon">🎓</span>
+                <span class="nav-text">Certificates</span>
+            </a>
+            <a href="reports.html" class="nav-item">
+                <span class="nav-icon">📈</span>
+                <span class="nav-text">Reports</span>
+            </a>
+            <a href="billing.html" class="nav-item">
+                <span class="nav-icon">💳</span>
+                <span class="nav-text">Billing</span>
+            </a>
+            <a href="audit-logs.html" class="nav-item">
+                <span class="nav-icon">📜</span>
+                <span class="nav-text">Audit Logs</span>
+            </a>
+            <a href="notifications.html" class="nav-item">
+                <span class="nav-icon">🔔</span>
+                <span class="nav-text">Notifications</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <button class="btn-logout" id="logoutBtn">
+                <span class="nav-icon">🚪</span>
+                <span class="nav-text">Logout</span>
+            </button>
+        </div>
+    </aside>
+
+    
+    <main class="main-content">
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+                <div>
+                    <h1 class="page-title">Manager Dashboard</h1>
+                    <p class="page-subtitle" id="welcomeMsg">Welcome back! Here's what's happening today.</p>
+                </div>
+            </div>
+            <div class="topbar-right">
+                <div class="user-profile">
+                    <div class="user-avatar">👤</div>
+                    <div class="user-info">
+                        <span class="user-name" id="userName">Manager</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="dashboard-container">
+
+            
+            <div class="stats-grid">
+                <div class="stat-card blue">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Total Students</p>
+                        <h3 class="stat-value">124</h3>
+                        <span class="stat-change positive">+8 this month</span>
+                    </div>
+                </div>
+                <div class="stat-card green">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Active Enrollments</p>
+                        <h3 class="stat-value">87</h3>
+                        <span class="stat-change positive">+3 this week</span>
+                    </div>
+                </div>
+                <div class="stat-card orange">
+                    <div class="stat-icon">⏳</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Pending Approvals</p>
+                        <h3 class="stat-value">6</h3>
+                        <span class="stat-change">Needs attention</span>
+                    </div>
+                </div>
+                <div class="stat-card purple">
+                    <div class="stat-icon">🎓</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Certificates Issued</p>
+                        <h3 class="stat-value">42</h3>
+                        <span class="stat-change positive">+2 this week</span>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="card" style="margin-bottom: 24px;">
+                <div class="card-title">
+                    <span>⏳ Pending Approvals</span>
+                    <a href="approvals.html">View All →</a>
+                </div>
+                <div id="pendingList">
+                    <div class="approval-item">
+                        <div class="approval-avatar">👤</div>
+                        <div class="approval-info">
+                            <h4>Abebe Kebede</h4>
+                            <p>Registration · Private Car (B) · Apr 18</p>
+                        </div>
+                        <div class="approval-actions">
+                            <button class="btn-sm-approve" onclick="quickApprove(this)">✓</button>
+                            <button class="btn-sm-reject" onclick="quickReject(this)">✕</button>
+                        </div>
+                    </div>
+                    <div class="approval-item">
+                        <div class="approval-avatar">👤</div>
+                        <div class="approval-info">
+                            <h4>Tigist Haile</h4>
+                            <p>Registration · Motorcycle (A) · Apr 19</p>
+                        </div>
+                        <div class="approval-actions">
+                            <button class="btn-sm-approve" onclick="quickApprove(this)">✓</button>
+                            <button class="btn-sm-reject" onclick="quickReject(this)">✕</button>
+                        </div>
+                    </div>
+                    <div class="approval-item">
+                        <div class="approval-avatar">📝</div>
+                        <div class="approval-info">
+                            <h4>Meron Alemu</h4>
+                            <p>Exam Result · Theory · Score: 88%</p>
+                        </div>
+                        <div class="approval-actions">
+                            <button class="btn-sm-approve" onclick="quickApprove(this)">✓</button>
+                            <button class="btn-sm-reject" onclick="quickReject(this)">✕</button>
+                        </div>
+                    </div>
+                    <div class="approval-item">
+                        <div class="approval-avatar">🎓</div>
+                        <div class="approval-info">
+                            <h4>Hana Bekele</h4>
+                            <p>Certificate · Private Car (B) · 92%</p>
+                        </div>
+                        <div class="approval-actions">
+                            <button class="btn-sm-approve" onclick="quickApprove(this)">✓</button>
+                            <button class="btn-sm-reject" onclick="quickReject(this)">✕</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="dashboard-grid-3">
+                
+                <div class="card">
+                    <div class="card-title"><span>🕐 Recent Activity</span></div>
+                    <div class="activity-item">
+                        <div class="activity-dot dot-green">✅</div>
+                        <div class="activity-text">
+                            <h4>Samuel Girma approved for Practical Exam</h4>
+                            <p>2 hours ago</p>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-dot dot-blue">👤</div>
+                        <div class="activity-text">
+                            <h4>New student registered — Dawit Tesfaye</h4>
+                            <p>4 hours ago</p>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-dot dot-purple">🎓</div>
+                        <div class="activity-text">
+                            <h4>Certificate issued to Liya Tadesse</h4>
+                            <p>Yesterday</p>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-dot dot-orange">📝</div>
+                        <div class="activity-text">
+                            <h4>Theory exam scheduled — Apr 25</h4>
+                            <p>Yesterday</p>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-dot dot-green">✅</div>
+                        <div class="activity-text">
+                            <h4>3 students enrolled in Heavy Truck (C)</h4>
+                            <p>2 days ago</p>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="card">
+                    <div class="card-title"><span>📊 Enrollment by Program</span></div>
+                    <div class="program-item">
+                        <div class="program-label">
+                            <span>🚗 Private Car (B)</span>
+                            <span>48 students</span>
+                        </div>
+                        <div class="prog-bar"><div class="prog-fill fill-blue" style="width: 78%"></div></div>
+                    </div>
+                    <div class="program-item">
+                        <div class="program-label">
+                            <span>🏍️ Motorcycle (A)</span>
+                            <span>22 students</span>
+                        </div>
+                        <div class="prog-bar"><div class="prog-fill fill-green" style="width: 36%"></div></div>
+                    </div>
+                    <div class="program-item">
+                        <div class="program-label">
+                            <span>🚌 Bus (D)</span>
+                            <span>18 students</span>
+                        </div>
+                        <div class="prog-bar"><div class="prog-fill fill-orange" style="width: 29%"></div></div>
+                    </div>
+                    <div class="program-item">
+                        <div class="program-label">
+                            <span>🚛 Heavy Truck (C)</span>
+                            <span>15 students</span>
+                        </div>
+                        <div class="prog-bar"><div class="prog-fill fill-purple" style="width: 24%"></div></div>
+                    </div>
+                    <div class="program-item">
+                        <div class="program-label">
+                            <span>🚐 Transport (E)</span>
+                            <span>21 students</span>
+                        </div>
+                        <div class="prog-bar"><div class="prog-fill fill-blue" style="width: 34%"></div></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/dashboard.js"></script>
+    <script src="../assets/js/modal.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async function () {
+            const user = auth.getCurrentUser();
+            if (!user) { window.location.href = '../login.html'; return; }
+            
+            // Update welcome message
+            const welcomeMsg = document.getElementById('welcomeMsg');
+            if (welcomeMsg) welcomeMsg.textContent = `Welcome back, ${user.name || 'Manager'}! Here's what's happening today.`;
+            
+            document.getElementById('userName').textContent = user.name || 'Manager';
+            document.getElementById('logoutBtn').addEventListener('click', () => auth.logout());
+
+            await loadManagerDashboard();
+        });
+        
+        async function loadManagerDashboard() {
+            try {
+                const response = await api.request('/manager/dashboard.php');
+                if (response.success && response.data) {
+                    const data = response.data;
+                    
+                    // Update stats
+                    const statValues = document.querySelectorAll('.stat-card .stat-value');
+                    if (statValues.length >= 4) {
+                        statValues[0].textContent = data.stats.total_students;
+                        statValues[1].textContent = data.stats.active_enrollments;
+                        statValues[2].textContent = data.stats.pending_approvals;
+                        statValues[3].textContent = data.stats.certificates_issued;
+                    }
+                    
+                    // Update Pending List
+                    const pendingContainer = document.getElementById('pendingList');
+                    if (pendingContainer) {
+                        if (data.pending.length === 0) {
+                            pendingContainer.innerHTML = '<p style="padding: 20px; text-align: center; color: #6b7280;">No pending approvals.</p>';
+                        } else {
+                            pendingContainer.innerHTML = data.pending.map(p => `
+                                <div class="approval-item" id="pending-user-${p.id}">
+                                    <div class="approval-avatar">👤</div>
+                                    <div class="approval-info">
+                                        <h4>${p.name}</h4>
+                                        <p>Registration · ${p.program} · ${new Date(p.date).toLocaleDateString()}</p>
+                                    </div>
+                                    <div class="approval-actions">
+                                        <button class="btn-sm-approve" onclick="approveStudent(${p.id})">✓</button>
+                                        <button class="btn-sm-reject" onclick="rejectStudent(${p.id})">✕</button>
+                                    </div>
+                                </div>
+                            `).join('');
+                        }
+                    }
+
+                    // Update Program Bars
+                    const programBarsCard = document.querySelector('.card:last-child');
+                    if (programBarsCard && data.programs) {
+                        const title = programBarsCard.querySelector('.card-title');
+                        let content = data.programs.map(p => {
+                            const pct = data.stats.total_students > 0 ? Math.round((p.students / data.stats.total_students) * 100) : 0;
+                            return `
+                                <div class="program-item">
+                                    <div class="program-label">
+                                        <span>${p.name}</span>
+                                        <span>${p.students} students</span>
+                                    </div>
+                                    <div class="prog-bar"><div class="prog-fill fill-blue" style="width: ${pct}%"></div></div>
+                                </div>
+                            `;
+                        }).join('');
+                        programBarsCard.innerHTML = '';
+                        programBarsCard.appendChild(title);
+                        const wrap = document.createElement('div');
+                        wrap.innerHTML = content;
+                        programBarsCard.appendChild(wrap);
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading dashboard:', error);
+            }
+        }
+
+        async function approveStudent(id) {
+            try {
+                const response = await api.request('/manager/users/updateStatus.php', {
+                    method: 'POST',
+                    body: JSON.stringify({ user_id: id, status: 'active' })
+                });
+                if (response.success) {
+                    utils.showNotification('Student approved successfully', 'success');
+                    await loadManagerDashboard();
+                }
+            } catch (error) {
+                utils.showNotification('Error approving student', 'error');
+            }
+        }
+
+        async function rejectStudent(id) {
+            if (!confirm('Are you sure you want to reject this registration?')) return;
+            try {
+                const response = await api.request('/manager/users/updateStatus.php', {
+                    method: 'POST',
+                    body: JSON.stringify({ user_id: id, status: 'inactive' })
+                });
+                if (response.success) {
+                    utils.showNotification('Student registration rejected', 'info');
+                    await loadManagerDashboard();
+                }
+            } catch (error) {
+                utils.showNotification('Error rejecting student', 'error');
+            }
+        }          if (typeof utils !== 'undefined') {
+                utils.showNotification('Rejected successfully', 'info');
+            }
+        }
+    </script>
+</body>
+</html>

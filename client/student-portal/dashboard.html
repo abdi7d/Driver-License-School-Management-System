@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - DLSM Ethiopia</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/dark-mode.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/auth-guard.js"></script>
+    
+    
+    <script>
+        // Check authentication BEFORE page renders
+        (function() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                // No token = Not logged in → Redirect immediately
+                window.location.href = '../login.html';
+            }
+        })();
+    </script>
+</head>
+<body class="dashboard-body">
+    
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+    
+    
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <img src="../assets/images/logo-DLSM.jpg" alt="DLSM Logo" class="logo-icon" style="height: 32px; width: auto; border-radius: 6px;">
+                <span class="logo-text">DLSM</span>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item active">
+                <span class="nav-icon">📊</span>
+                <span class="nav-text">Dashboard</span>
+            </a>
+            <a href="profile.html" class="nav-item">
+                <span class="nav-icon">👤</span>
+                <span class="nav-text">My Profile</span>
+            </a>
+            <a href="schedule.html" class="nav-item">
+                <span class="nav-icon">📅</span>
+                <span class="nav-text">Schedule</span>
+            </a>
+            <a href="progress.html" class="nav-item">
+                <span class="nav-icon">📈</span>
+                <span class="nav-text">My Progress</span>
+            </a>
+            <a href="exams.html" class="nav-item">
+                <span class="nav-icon">📝</span>
+                <span class="nav-text">Exams</span>
+            </a>
+            <a href="certificate.html" class="nav-item">
+                <span class="nav-icon">🎓</span>
+                <span class="nav-text">Certificate</span>
+            </a>
+            <a href="payments.html" class="nav-item">
+                <span class="nav-icon">💳</span>
+                <span class="nav-text">Payments</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <button class="btn-logout" id="logoutBtn">
+                <span class="nav-icon">🚪</span>
+                <span class="nav-text">Logout</span>
+            </button>
+        </div>
+    </aside>
+
+    
+    <main class="main-content">
+        
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+                <div>
+                    <h1 class="page-title typewriter-page">Dashboard</h1>
+                    <p class="page-subtitle">Welcome back! Here's your learning progress</p>
+                </div>
+            </div>
+            <div class="topbar-right">
+                <div class="user-profile">
+                    <div class="user-avatar" id="topbarAvatar">👤</div>
+                    <div class="user-info">
+                        <span class="user-name" id="userName">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        
+        <div class="dashboard-container">
+            
+            <div id="statusAlert" class="status-alert" style="display: none;">
+                <div class="alert-icon">⏳</div>
+                <div class="alert-content">
+                    <h3 class="alert-title">Account Pending Approval</h3>
+                    <p class="alert-message">Your account is waiting for admin approval. You will be notified once approved and enrolled in a program.</p>
+                </div>
+            </div>
+
+            
+            <div class="stats-grid" id="statsGrid">
+                <div class="stat-card blue">
+                    <div class="stat-icon">📚</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Total Hours</p>
+                        <h3 class="stat-value" id="totalHours">40</h3>
+                        <span class="stat-change">Required for completion</span>
+                    </div>
+                </div>
+
+                <div class="stat-card green">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Completed</p>
+                        <h3 class="stat-value" id="completedHours">25</h3>
+                        <span class="stat-change positive">+5 this week</span>
+                    </div>
+                </div>
+
+                <div class="stat-card orange">
+                    <div class="stat-icon">⏳</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Remaining</p>
+                        <h3 class="stat-value" id="remainingHours">15</h3>
+                        <span class="stat-change">Hours left</span>
+                    </div>
+                </div>
+
+                <div class="stat-card purple">
+                    <div class="stat-icon">📈</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Progress</p>
+                        <h3 class="stat-value" id="progressPercent">62%</h3>
+                        <span class="stat-change positive">On track!</span>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="progress-section">
+                <div class="section-header">
+                    <h2 class="section-title">Your Learning Journey</h2>
+                    <span class="section-badge">62% Complete</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 62%"></div>
+                    </div>
+                    <div class="progress-labels">
+                        <span>Started</span>
+                        <span>In Progress</span>
+                        <span>Almost There</span>
+                        <span>Completed</span>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="dashboard-grid">
+                
+                <div class="dashboard-card">
+                    <h3 class="card-title">Quick Actions</h3>
+                    <div class="quick-actions">
+                        <a href="schedule.html" class="action-btn blue">
+                            <span class="action-icon">📅</span>
+                            <div class="action-content">
+                                <span class="action-title">Book Lesson</span>
+                                <span class="action-desc">Schedule your next session</span>
+                            </div>
+                        </a>
+                        <a href="exams.html" class="action-btn green">
+                            <span class="action-icon">📝</span>
+                            <div class="action-content">
+                                <span class="action-title">Take Exam</span>
+                                <span class="action-desc">Start theory test</span>
+                            </div>
+                        </a>
+                        <a href="progress.html" class="action-btn orange">
+                            <span class="action-icon">📊</span>
+                            <div class="action-content">
+                                <span class="action-title">View Progress</span>
+                                <span class="action-desc">Check detailed stats</span>
+                            </div>
+                        </a>
+                        <a href="profile.html" class="action-btn purple">
+                            <span class="action-icon">⚙️</span>
+                            <div class="action-content">
+                                <span class="action-title">Settings</span>
+                                <span class="action-desc">Update your profile</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                
+                <div class="dashboard-card">
+                    <h3 class="card-title">Upcoming Sessions</h3>
+                    <div class="sessions-list">
+                        <div class="session-item">
+                            <div class="session-date">
+                                <span class="date-day">15</span>
+                                <span class="date-month">Jun</span>
+                            </div>
+                            <div class="session-info">
+                                <h4 class="session-title">Practical Driving</h4>
+                                <p class="session-details">10:00 AM - 12:00 PM</p>
+                                <p class="session-instructor">Instructor: John Doe</p>
+                            </div>
+                            <span class="session-status confirmed">Confirmed</span>
+                        </div>
+
+                        <div class="session-item">
+                            <div class="session-date">
+                                <span class="date-day">17</span>
+                                <span class="date-month">Jun</span>
+                            </div>
+                            <div class="session-info">
+                                <h4 class="session-title">Theory Class</h4>
+                                <p class="session-details">2:00 PM - 4:00 PM</p>
+                                <p class="session-instructor">Instructor: Jane Smith</p>
+                            </div>
+                            <span class="session-status pending">Pending</span>
+                        </div>
+
+                        <div class="session-item">
+                            <div class="session-date">
+                                <span class="date-day">20</span>
+                                <span class="date-month">Jun</span>
+                            </div>
+                            <div class="session-info">
+                                <h4 class="session-title">Practical Driving</h4>
+                                <p class="session-details">9:00 AM - 11:00 AM</p>
+                                <p class="session-instructor">Instructor: John Doe</p>
+                            </div>
+                            <span class="session-status confirmed">Confirmed</span>
+                        </div>
+                    </div>
+                    <a href="schedule.html" class="view-all-link">View All Sessions →</a>
+                </div>
+            </div>
+
+            
+            <div class="dashboard-card">
+                <h3 class="card-title">Recent Activity</h3>
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <div class="activity-icon success">✓</div>
+                        <div class="activity-content">
+                            <p class="activity-title">Completed Practical Session</p>
+                            <p class="activity-time">2 hours ago</p>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon info">📚</div>
+                        <div class="activity-content">
+                            <p class="activity-title">Theory Exam Scheduled</p>
+                            <p class="activity-time">Yesterday</p>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon success">✓</div>
+                        <div class="activity-content">
+                            <p class="activity-title">Passed Theory Test</p>
+                            <p class="activity-time">3 days ago</p>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon info">📅</div>
+                        <div class="activity-content">
+                            <p class="activity-title">Lesson Booked Successfully</p>
+                            <p class="activity-time">5 days ago</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/error-handler.js"></script>
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/dashboard.js"></script>
+    <script>
+        // Additional student dashboard logic
+        document.addEventListener('DOMContentLoaded', async function() {
+            const user = auth.getCurrentUser();
+            
+            if (!user) {
+                window.location.href = '../login.html';
+                return;
+            }
+            
+            // Set user name
+            document.getElementById('userName').textContent = user.name || 'Student';
+            
+            // Load dashboard stats from API
+            await loadDashboardStats();
+            
+            // Load upcoming sessions
+            await loadUpcomingSessions();
+        });
+        
+        async function loadDashboardStats() {
+            try {
+                console.log('Loading dashboard stats from API...');
+                const response = await api.request('/students/progress.php');
+                
+                if (response && response.completed_hours !== undefined) {
+                    const total = response.total_required_hours || 40;
+                    const completed = response.completed_hours || 0;
+                    const progress = response.progress_percentage || 0;
+                    
+                    document.getElementById('totalHours').textContent = total;
+                    document.getElementById('completedHours').textContent = completed;
+                    document.getElementById('remainingHours').textContent = total - completed;
+                    document.getElementById('progressPercent').textContent = progress + '%';
+                    
+                    const progressBar = document.querySelector('.progress-fill');
+                    if (progressBar) progressBar.style.width = progress + '%';
+                    
+                    const sectionBadge = document.querySelector('.section-badge');
+                    if (sectionBadge) sectionBadge.textContent = progress + '% Complete';
+                }
+            } catch (error) {
+                console.error('Error loading stats:', error);
+            }
+        }
+
+        async function loadUpcomingSessions() {
+            try {
+                const response = await api.request('/schedule.php');
+                if (response.success && response.data) {
+                    const sessions = response.data.slice(0, 3); // Get first 3
+                    const container = document.querySelector('.sessions-list');
+                    
+                    if (sessions.length === 0) {
+                        container.innerHTML = '<p style="padding: 20px; text-align: center; color: #64748b;">No upcoming sessions</p>';
+                        return;
+                    }
+                    
+                    container.innerHTML = sessions.map(s => {
+                        const date = new Date(s.session_date);
+                        const day = date.getDate();
+                        const month = date.toLocaleString('default', { month: 'short' });
+                        const time = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                        const instructor = `${s.instructor_fname} ${s.instructor_lname}`;
+                        
+                        return `
+                            <div class="session-item">
+                                <div class="session-date">
+                                    <span class="date-day">${day}</span>
+                                    <span class="date-month">${month}</span>
+                                </div>
+                                <div class="session-info">
+                                    <h4 class="session-title">${s.lesson_type} Driving</h4>
+                                    <p class="session-details">${time}</p>
+                                    <p class="session-instructor">Instructor: ${instructor}</p>
+                                </div>
+                                <span class="session-status confirmed">Confirmed</span>
+                            </div>
+                        `;
+                    }).join('');
+                }
+            } catch (error) {
+                console.error('Error loading upcoming sessions:', error);
+            }
+        }
+    </script>
+</body>
+</html>

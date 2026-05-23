@@ -1,0 +1,318 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Progress - DLSM Ethiopia</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/dark-mode.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/auth-guard.js"></script>
+</head>
+<body class="dashboard-body">
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <img src="../assets/images/logo-DLSM.jpg" alt="DLSM Logo" class="logo-icon" style="height: 32px; width: auto; border-radius: 6px;">
+                <span class="logo-text">DLSM</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">
+                <span class="nav-icon">📊</span>
+                <span class="nav-text">Dashboard</span>
+            </a>
+            <a href="profile.html" class="nav-item">
+                <span class="nav-icon">👤</span>
+                <span class="nav-text">Profile</span>
+            </a>
+            <a href="my-students.html" class="nav-item">
+                <span class="nav-icon">👥</span>
+                <span class="nav-text">My Students</span>
+            </a>
+            <a href="sessions.html" class="nav-item">
+                <span class="nav-icon">🚗</span>
+                <span class="nav-text">Sessions</span>
+            </a>
+            <a href="schedule.html" class="nav-item">
+                <span class="nav-icon">📅</span>
+                <span class="nav-text">Schedule</span>
+            </a>
+            <a href="attendance.html" class="nav-item">
+                <span class="nav-icon">✅</span>
+                <span class="nav-text">Attendance</span>
+            </a>
+            <a href="evaluations.html" class="nav-item">
+                <span class="nav-icon">📝</span>
+                <span class="nav-text">Evaluations</span>
+            </a>
+            <a href="feedback.html" class="nav-item">
+                <span class="nav-icon">💬</span>
+                <span class="nav-text">Feedback</span>
+            </a>
+            <a href="progress.html" class="nav-item active">
+                <span class="nav-icon">📈</span>
+                <span class="nav-text">Progress</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <button class="btn-logout" id="logoutBtn">
+                <span class="nav-icon">🚪</span>
+                <span class="nav-text">Logout</span>
+            </button>
+        </div>
+    </aside>
+
+    
+    <main class="main-content">
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+                <div>
+                    <h1 class="page-title">Student Progress</h1>
+                    <p class="page-subtitle">Track and update learner progress status</p>
+                </div>
+            </div>
+            <div class="topbar-right">
+                <div class="user-profile">
+                    <div class="user-avatar" id="topbarAvatar">👤</div>
+                    <div class="user-info">
+                        <span class="user-name" id="userName">Instructor</span>
+                        <span class="user-role">Instructor</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="dashboard-container">
+            
+            <div class="stats-grid">
+                <div class="stat-card green">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Ready for Exam</p>
+                        <h3 class="stat-value">6</h3>
+                    </div>
+                </div>
+                <div class="stat-card blue">
+                    <div class="stat-icon">📚</div>
+                    <div class="stat-info">
+                        <p class="stat-label">In Progress</p>
+                        <h3 class="stat-value">12</h3>
+                    </div>
+                </div>
+                <div class="stat-card orange">
+                    <div class="stat-icon">⏱️</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Avg Progress</p>
+                        <h3 class="stat-value">78%</h3>
+                    </div>
+                </div>
+                <div class="stat-card purple">
+                    <div class="stat-icon">🎓</div>
+                    <div class="stat-info">
+                        <p class="stat-label">Completed</p>
+                        <h3 class="stat-value">6</h3>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="card" style="margin-bottom: 24px;">
+                <div style="display: grid; grid-template-columns: 1fr auto auto auto; gap: 16px; align-items: end; padding: 20px;">
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label class="form-label">Search Students</label>
+                        <input type="text" class="form-control" placeholder="Search by name...">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label class="form-label">Status</label>
+                        <select class="form-control">
+                            <option value="">All Status</option>
+                            <option value="ready">Ready for Exam</option>
+                            <option value="in-progress">In Progress</option>
+                            <option value="completed">Completed</option>
+                            <option value="on-hold">On Hold</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label class="form-label">Sort By</label>
+                        <select class="form-control">
+                            <option value="progress">Progress</option>
+                            <option value="name">Name</option>
+                            <option value="sessions">Sessions</option>
+                        </select>
+                    </div>
+                    <button class="btn-primary" style="margin-bottom: 0;">+ Update Progress</button>
+                </div>
+            </div>
+
+            
+            <div class="card">
+                <div class="card-title">
+                    <span>📈 Student Progress Tracking</span>
+                </div>
+                <div style="padding: 20px;">
+                    <div style="padding: 24px; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 16px;">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 16px;">
+                            <div style="flex: 1;">
+                                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                                    <h4 style="font-size: 16px; font-weight: 700;">Alice Johnson</h4>
+                                    <span class="badge-success">Ready</span>
+                                    <span class="badge-success">✓ Exam Ready</span>
+                                </div>
+                                <div style="font-size: 13px; color: #64748b;">
+                                    15 sessions completed • Last updated: 2024-06-10
+                                </div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="font-size: 32px; font-weight: 800; color: #10b981;">92%</div>
+                                <div style="font-size: 12px; color: #64748b;">Overall</div>
+                            </div>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                            <div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                    <span style="font-size: 13px; font-weight: 600;">Theory</span>
+                                    <span style="font-size: 13px; font-weight: 700; color: #10b981;">95%</span>
+                                </div>
+                                <div class="prog-bar">
+                                    <div class="prog-fill fill-green" style="width: 95%;"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                    <span style="font-size: 13px; font-weight: 600;">Practical</span>
+                                    <span style="font-size: 13px; font-weight: 700; color: #10b981;">90%</span>
+                                </div>
+                                <div class="prog-bar">
+                                    <div class="prog-fill fill-green" style="width: 90%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; gap: 8px;">
+                            <button class="btn-sm-primary">Update Progress</button>
+                            <button class="btn-sm-secondary">View Details</button>
+                        </div>
+                    </div>
+
+                    <div style="padding: 24px; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 16px;">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 16px;">
+                            <div style="flex: 1;">
+                                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                                    <h4 style="font-size: 16px; font-weight: 700;">Bob Smith</h4>
+                                    <span class="badge-info">In Progress</span>
+                                </div>
+                                <div style="font-size: 13px; color: #64748b;">
+                                    12 sessions completed • Last updated: 2024-06-09
+                                </div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="font-size: 32px; font-weight: 800; color: #f59e0b;">78%</div>
+                                <div style="font-size: 12px; color: #64748b;">Overall</div>
+                            </div>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                            <div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                    <span style="font-size: 13px; font-weight: 600;">Theory</span>
+                                    <span style="font-size: 13px; font-weight: 700; color: #10b981;">85%</span>
+                                </div>
+                                <div class="prog-bar">
+                                    <div class="prog-fill fill-green" style="width: 85%;"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                    <span style="font-size: 13px; font-weight: 600;">Practical</span>
+                                    <span style="font-size: 13px; font-weight: 700; color: #f59e0b;">70%</span>
+                                </div>
+                                <div class="prog-bar">
+                                    <div class="prog-fill fill-orange" style="width: 70%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; gap: 8px;">
+                            <button class="btn-sm-primary">Update Progress</button>
+                            <button class="btn-sm-secondary">View Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/dashboard.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+            const user = auth.getCurrentUser();
+            if (!user) {
+                window.location.href = '../login.html';
+                return;
+            }
+            document.getElementById('userName').textContent = user.name || 'Instructor';
+            
+            // Load instructor progress from API
+            await loadInstructorProgressFromAPI();
+            
+
+            
+            // Mobile menu is auto-initialized by dashboard.js
+            
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const sidebar = document.getElementById('sidebar');
+            const backdrop = document.getElementById('sidebarBackdrop');
+
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    sidebar.classList.toggle('mobile-open');
+                    backdrop.classList.toggle('active');
+                });
+            }
+            
+            if (backdrop) {
+                backdrop.addEventListener('click', function () {
+                    sidebar.classList.remove('mobile-open');
+                    backdrop.classList.remove('active');
+                });
+            }
+        });
+        
+        // Load instructor progress from API
+        async function loadInstructorProgressFromAPI() {
+            try {
+                const response = await api.get('/instructor/progress');
+                if (response.success && response.data) {
+                    updateProgressStats(response.data);
+                    console.log('Instructor progress loaded from API:', response.data);
+                }
+            } catch (error) {
+                console.error('Error loading instructor progress:', error);
+            }
+        }
+        
+        // Update progress stats with API data
+        function updateProgressStats(progressData) {
+            const statCards = document.querySelectorAll('.stat-card .stat-value');
+            if (statCards.length >= 4) {
+                statCards[0].textContent = progressData.total_students || '24';
+                statCards[1].textContent = progressData.active_students || '18';
+                statCards[2].textContent = progressData.lessons_completed || '156';
+                statCards[3].textContent = (progressData.completion_rate || 92) + '%';
+            }
+        }
+    </script>
+</body>
+</html>

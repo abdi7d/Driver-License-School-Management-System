@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Progress - DLSM Ethiopia</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/dark-mode.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/auth-guard.js"></script>
+</head>
+<body class="dashboard-body">
+    
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+    
+    
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <img src="../assets/images/logo-DLSM.jpg" alt="DLSM Logo" class="logo-icon" style="height: 32px; width: auto; border-radius: 6px;">
+                <span class="logo-text">DLSM</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">
+                <span class="nav-icon">📊</span>
+                <span class="nav-text">Dashboard</span>
+            </a>
+            <a href="profile.html" class="nav-item">
+                <span class="nav-icon">👤</span>
+                <span class="nav-text">Student Profile</span>
+            </a>
+            <a href="schedule.html" class="nav-item">
+                <span class="nav-icon">📅</span>
+                <span class="nav-text">Training Schedule</span>
+            </a>
+            <a href="progress.html" class="nav-item active">
+                <span class="nav-icon">📈</span>
+                <span class="nav-text">Training Progress</span>
+            </a>
+            <a href="exams.html" class="nav-item">
+                <span class="nav-icon">📝</span>
+                <span class="nav-text">Exams</span>
+            </a>
+            <a href="certificate.html" class="nav-item">
+                <span class="nav-icon">🎓</span>
+                <span class="nav-text">Certificate</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <button class="btn-logout" id="logoutBtn">
+                <span class="nav-icon">🚪</span>
+                <span class="nav-text">Logout</span>
+            </button>
+        </div>
+    </aside>
+
+    
+    <main class="main-content">
+        
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+            </div>
+            <div class="topbar-right">
+                <div class="user-profile">
+                    <div class="user-avatar" id="topbarAvatar">👤</div>
+                    <div class="user-info">
+                        <span class="user-name" id="userName">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="dashboard-container">
+        
+            <div class="progress-page-card">
+        
+                <div class="progress-tab-header">
+                    <span class="progress-tab-icon">📈</span>
+                    <span class="progress-tab-heading">Training Progress</span>
+                </div>
+
+                
+                <div class="progress-tabs">
+                    <button class="progress-tab active" data-tab="summary">Training Summary</button>
+                    <button class="progress-tab" data-tab="theory">Theory Sessions</button>
+                    <button class="progress-tab" data-tab="practical">Practical Sessions</button>
+                    <button class="progress-tab" data-tab="skills">Skills Assessment</button>
+                    <button class="progress-tab" data-tab="attendance">Attendance</button>
+                </div>
+
+                
+                <div class="progress-tab-content">
+
+
+                    <div class="tab-panel active" id="tab-summary">
+                        <div class="summary-grid">
+                            <div class="summary-stat-card">
+                                <p class="summary-label">Total Hours Required</p>
+                                <p class="summary-value blue">40 hrs</p>
+                            </div>
+                            <div class="summary-stat-card">
+                                <p class="summary-label">Hours Completed</p>
+                                <p class="summary-value green">25 hrs</p>
+                            </div>
+                            <div class="summary-stat-card">
+                                <p class="summary-label">Hours Remaining</p>
+                                <p class="summary-value orange">15 hrs</p>
+                            </div>
+                            <div class="summary-stat-card">
+                                <p class="summary-label">Overall Progress</p>
+                                <p class="summary-value blue">62%</p>
+                            </div>
+                        </div>
+
+                        <div class="progress-bar-section">
+                            <div class="progress-bar-label">
+                                <span>Overall Completion</span>
+                                <span>62%</span>
+                            </div>
+                            <div class="progress-bar-track">
+                                <div class="progress-bar-fill" style="width: 62%"></div>
+                            </div>
+                        </div>
+                        <table class="progress-table">
+                            <thead>
+                                <tr>
+                                    <th>Phase</th>
+                                    <th>Type</th>
+                                    <th>Hours</th>
+                                    <th>Completed</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Theory Training</td>
+                                    <td>Theory</td>
+                                    <td>15 hrs</td>
+                                    <td>15 hrs</td>
+                                    <td><span class="badge-completed">Completed</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Theory Exam</td>
+                                    <td>Exam</td>
+                                    <td>—</td>
+                                    <td>Score: 85/100</td>
+                                    <td><span class="badge-passed">Passed</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Practical Training</td>
+                                    <td>Practical</td>
+                                    <td>25 hrs</td>
+                                    <td>10 hrs</td>
+                                    <td><span class="badge-inprogress">In Progress</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Practical Exam</td>
+                                    <td>Exam</td>
+                                    <td>—</td>
+                                    <td>—</td>
+                                    <td><span class="badge-locked">Locked</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Certification</td>
+                                    <td>Certificate</td>
+                                    <td>—</td>
+                                    <td>—</td>
+                                    <td><span class="badge-locked">Locked</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    
+                    <div class="tab-panel" id="tab-theory">
+                        <p class="tab-instruction">* Choose a theory session to view assessment result</p>
+                        <select class="session-select" id="theorySelect">
+                            <option value="">Please Select...</option>
+                            <option value="t1">Traffic Rules & Regulations (June 8)</option>
+                            <option value="t2">Road Signs & Markings (June 10)</option>
+                            <option value="t3">Vehicle Maintenance Basics (June 12)</option>
+                            <option value="t4">Emergency Procedures (June 14)</option>
+                        </select>
+
+                        <div class="session-result" id="theoryResult" style="display: none;">
+                            <table class="progress-table">
+                                <thead>
+                                    <tr>
+                                        <th>Session</th>
+                                        <th>Date</th>
+                                        <th>Instructor</th>
+                                        <th>Duration</th>
+                                        <th>Score</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="theoryResultBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    
+                    <div class="tab-panel" id="tab-practical">
+                        <p class="tab-instruction">* Choose a practical session to view assessment result</p>
+                        <select class="session-select" id="practicalSelect">
+                            <option value="">Please Select...</option>
+                            <option value="p1">Basic Driving Skills (June 15)</option>
+                            <option value="p2">Parking Practice (June 17)</option>
+                            <option value="p3">Highway Driving (June 20)</option>
+                        </select>
+
+                        <div class="session-result" id="practicalResult" style="display: none;">
+                            <table class="progress-table">
+                                <thead>
+                                    <tr>
+                                        <th>Session</th>
+                                        <th>Date</th>
+                                        <th>Instructor</th>
+                                        <th>Duration</th>
+                                        <th>Rating</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="practicalResultBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    
+                    <div class="tab-panel" id="tab-skills">
+                        <p class="tab-instruction">* Instructor evaluation of your driving skills</p>
+                        <table class="progress-table">
+                            <thead>
+                                <tr>
+                                    <th>Skill</th>
+                                    <th>Score</th>
+                                    <th>Max</th>
+                                    <th>Progress</th>
+                                    <th>Grade</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Vehicle Control</td>
+                                    <td>8</td>
+                                    <td>10</td>
+                                    <td>
+                                        <div class="mini-bar"><div class="mini-fill" style="width:80%"></div></div>
+                                    </td>
+                                    <td><span class="badge-passed">Good</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Traffic Rules</td>
+                                    <td>9</td>
+                                    <td>10</td>
+                                    <td>
+                                        <div class="mini-bar"><div class="mini-fill" style="width:90%"></div></div>
+                                    </td>
+                                    <td><span class="badge-completed">Excellent</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Parking</td>
+                                    <td>7</td>
+                                    <td>10</td>
+                                    <td>
+                                        <div class="mini-bar"><div class="mini-fill" style="width:70%"></div></div>
+                                    </td>
+                                    <td><span class="badge-inprogress">Average</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Lane Changing</td>
+                                    <td>8</td>
+                                    <td>10</td>
+                                    <td>
+                                        <div class="mini-bar"><div class="mini-fill" style="width:80%"></div></div>
+                                    </td>
+                                    <td><span class="badge-passed">Good</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Emergency Response</td>
+                                    <td>6</td>
+                                    <td>10</td>
+                                    <td>
+                                        <div class="mini-bar"><div class="mini-fill orange" style="width:60%"></div></div>
+                                    </td>
+                                    <td><span class="badge-locked">Needs Work</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Confidence</td>
+                                    <td>8</td>
+                                    <td>10</td>
+                                    <td>
+                                        <div class="mini-bar"><div class="mini-fill" style="width:80%"></div></div>
+                                    </td>
+                                    <td><span class="badge-passed">Good</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    
+                    <div class="tab-panel" id="tab-attendance">
+                        <p class="tab-instruction">* Your attendance record for all sessions</p>
+                        <div class="attendance-summary">
+                            <div class="att-stat">
+                                <span class="att-number green">12</span>
+                                <span class="att-label">Present</span>
+                            </div>
+                            <div class="att-stat">
+                                <span class="att-number orange">2</span>
+                                <span class="att-label">Absent</span>
+                            </div>
+                            <div class="att-stat">
+                                <span class="att-number blue">86%</span>
+                                <span class="att-label">Attendance Rate</span>
+                            </div>
+                        </div>
+                        <table class="progress-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Session</th>
+                                    <th>Date</th>
+                                    <th>Type</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Traffic Rules & Regulations</td>
+                                    <td>June 8, 2024</td>
+                                    <td>Theory</td>
+                                    <td><span class="badge-completed">Present</span></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Road Signs & Markings</td>
+                                    <td>June 10, 2024</td>
+                                    <td>Theory</td>
+                                    <td><span class="badge-completed">Present</span></td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Basic Driving Skills</td>
+                                    <td>June 12, 2024</td>
+                                    <td>Practical</td>
+                                    <td><span class="badge-completed">Present</span></td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Vehicle Maintenance</td>
+                                    <td>June 14, 2024</td>
+                                    <td>Theory</td>
+                                    <td><span class="badge-failed">Absent</span></td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>Parking Practice</td>
+                                    <td>June 17, 2024</td>
+                                    <td>Practical</td>
+                                    <td><span class="badge-completed">Present</span></td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td>Emergency Procedures</td>
+                                    <td>June 19, 2024</td>
+                                    <td>Theory</td>
+                                    <td><span class="badge-failed">Absent</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="toast" class="toast"></div>
+
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/dashboard.js"></script>
+    <script>
+        // Demo session data
+        const theoryData = {
+            t1: { name: 'Traffic Rules & Regulations', date: 'June 8, 2024', instructor: 'Jane Smith', duration: '2 hrs', score: '90/100', status: 'passed' },
+            t2: { name: 'Road Signs & Markings',       date: 'June 10, 2024', instructor: 'Jane Smith', duration: '2 hrs', score: '85/100', status: 'passed' },
+            t3: { name: 'Vehicle Maintenance Basics',  date: 'June 12, 2024', instructor: 'Jane Smith', duration: '2 hrs', score: '78/100', status: 'passed' },
+            t4: { name: 'Emergency Procedures',        date: 'June 14, 2024', instructor: 'Jane Smith', duration: '2 hrs', score: '—',      status: 'absent' }
+        };
+
+        const practicalData = {
+            p1: { name: 'Basic Driving Skills', date: 'June 15, 2024', instructor: 'John Doe', duration: '2 hrs', rating: '8/10', status: 'completed' },
+            p2: { name: 'Parking Practice',     date: 'June 17, 2024', instructor: 'John Doe', duration: '2 hrs', rating: '7/10', status: 'completed' },
+            p3: { name: 'Highway Driving',      date: 'June 20, 2024', instructor: 'John Doe', duration: '2 hrs', rating: '—',    status: 'upcoming' }
+        };
+
+        let globalLessons = [];
+
+        document.addEventListener('DOMContentLoaded', async function() {
+            const user = dashboard.init({ requiredRole: 'student' });
+            if (!user) return;
+
+            document.getElementById('userName').textContent = user.name || 'Student';
+
+            // Load progress data from API
+            await loadProgressData();
+
+            // Tab switching
+            document.querySelectorAll('.progress-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    document.querySelectorAll('.progress-tab').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+                    this.classList.add('active');
+                    document.getElementById('tab-' + this.dataset.tab).classList.add('active');
+                });
+            });
+
+            // Theory session dropdown
+            document.getElementById('theorySelect').addEventListener('change', function() {
+                const id = this.value;
+                const resultDiv = document.getElementById('theoryResult');
+                const tbody = document.getElementById('theoryResultBody');
+
+                if (!id) { resultDiv.style.display = 'none'; return; }
+
+                const d = globalLessons.find(l => l.id == id);
+                if (!d) return;
+                
+                const statusBadge = d.attendance == 1 ? 'badge-completed' : 'badge-inprogress';
+                const statusText  = d.attendance == 1 ? 'Completed' : 'Pending';
+                const dateStr = new Date(d.session_date).toLocaleDateString();
+
+                tbody.innerHTML = `
+                    <tr>
+                        <td>Session ID: ${d.id}</td>
+                        <td>${dateStr}</td>
+                        <td>${d.instructor_name}</td>
+                        <td>${d.duration_minutes} mins</td>
+                        <td>${d.performance_score || '—'}</td>
+                        <td><span class="${statusBadge}">${statusText}</span></td>
+                    </tr>`;
+                resultDiv.style.display = 'block';
+            });
+
+            // Practical session dropdown
+            document.getElementById('practicalSelect').addEventListener('change', function() {
+                const id = this.value;
+                const resultDiv = document.getElementById('practicalResult');
+                const tbody = document.getElementById('practicalResultBody');
+
+                if (!id) { resultDiv.style.display = 'none'; return; }
+
+                const d = globalLessons.find(l => l.id == id);
+                if (!d) return;
+
+                const statusBadge = d.attendance == 1 ? 'badge-completed' : 'badge-inprogress';
+                const statusText  = d.attendance == 1 ? 'Completed' : 'Pending';
+                const dateStr = new Date(d.session_date).toLocaleDateString();
+
+                tbody.innerHTML = `
+                    <tr>
+                        <td>Session ID: ${d.id}</td>
+                        <td>${dateStr}</td>
+                        <td>${d.instructor_name}</td>
+                        <td>${d.duration_minutes} mins</td>
+                        <td>${d.performance_score || '—'}</td>
+                        <td><span class="${statusBadge}">${statusText}</span></td>
+                    </tr>`;
+                resultDiv.style.display = 'block';
+            });
+
+            // Mobile menu logic (omitted unchanged parts)
+        });
+
+        // Load progress data from API
+        async function loadProgressData() {
+            try {
+                const response = await api.get('/students/progress.php');
+                
+                if (response.success && response.data) {
+                    const data = response.data;
+                    globalLessons = data.lesson_history || [];
+                    
+                    // Update summary stats
+                    document.querySelector('.summary-stat-card:nth-child(1) .summary-value').textContent = data.total_hours + ' hrs';
+                    document.querySelector('.summary-stat-card:nth-child(2) .summary-value').textContent = data.completed_hours + ' hrs';
+                    document.querySelector('.summary-stat-card:nth-child(3) .summary-value').textContent = Math.max(0, data.total_hours - data.completed_hours) + ' hrs';
+                    document.querySelector('.summary-stat-card:nth-child(4) .summary-value').textContent = data.progress_percentage + '%';
+                    
+                    // Update progress bar
+                    const progressBar = document.querySelector('.progress-bar-fill');
+                    const progressLabel = document.querySelector('.progress-bar-label span:last-child');
+                    if (progressBar && progressLabel) {
+                        progressBar.style.width = data.progress_percentage + '%';
+                        progressLabel.textContent = data.progress_percentage + '%';
+                    }
+                    
+                    // Update dropdowns
+                    populateDropdowns(globalLessons);
+                    
+                    // Update attendance tab
+                    updateAttendanceTab(globalLessons);
+                    
+                    // Update progress table with real data
+                    updateProgressTable(data);
+                    
+                    console.log('Progress data loaded from API:', data);
+                } else {
+                    console.error('Failed to load progress data:', response.message);
+                }
+            } catch (error) {
+                console.error('Error loading progress data:', error);
+            }
+        }
+        
+        function populateDropdowns(lessons) {
+            const theorySelect = document.getElementById('theorySelect');
+            const practicalSelect = document.getElementById('practicalSelect');
+            
+            theorySelect.innerHTML = '<option value="">Please Select...</option>';
+            practicalSelect.innerHTML = '<option value="">Please Select...</option>';
+            
+            lessons.forEach(l => {
+                const dateStr = new Date(l.session_date).toLocaleDateString();
+                const option = `<option value="${l.id}">Session on ${dateStr} (${l.duration_minutes} mins)</option>`;
+                if (l.lesson_type === 'theory') {
+                    theorySelect.innerHTML += option;
+                } else {
+                    practicalSelect.innerHTML += option;
+                }
+            });
+        }
+        
+        function updateAttendanceTab(lessons) {
+            const tbody = document.querySelector('#tab-attendance tbody');
+            if (!tbody) return;
+            
+            let presentCount = 0;
+            let totalCount = lessons.length;
+            
+            tbody.innerHTML = lessons.map((l, index) => {
+                if (l.attendance == 1) presentCount++;
+                const statusBadge = l.attendance == 1 ? 'badge-completed' : 'badge-inprogress';
+                const statusText = l.attendance == 1 ? 'Present' : 'Pending';
+                const dateStr = new Date(l.session_date).toLocaleDateString();
+                return `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>Session ID: ${l.id}</td>
+                        <td>${dateStr}</td>
+                        <td>${l.lesson_type}</td>
+                        <td><span class="${statusBadge}">${statusText}</span></td>
+                    </tr>
+                `;
+            }).join('');
+            
+            if (totalCount === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">No sessions found</td></tr>';
+            }
+            
+            const rate = totalCount > 0 ? Math.round((presentCount / totalCount) * 100) : 0;
+            
+            const stats = document.querySelectorAll('.attendance-summary .att-number');
+            if (stats.length >= 3) {
+                stats[0].textContent = presentCount;
+                stats[1].textContent = totalCount - presentCount;
+                stats[2].textContent = rate + '%';
+            }
+        }
+
+        // Update progress table with API data
+        function updateProgressTable(data) {
+            const tbody = document.querySelector('.progress-table tbody');
+            if (!tbody) return;
+            
+            const theoryCompleted = data.theory_completed || 0;
+            const theoryTotal = data.theory_hours || 16;
+            const theoryStatus = theoryCompleted >= theoryTotal ? 'Completed' : 'In Progress';
+            const theoryBadge = theoryCompleted >= theoryTotal ? 'badge-completed' : 'badge-inprogress';
+            
+            const practicalCompleted = data.practical_completed || 0;
+            const practicalTotal = data.practical_hours || 24;
+            const practicalStatus = practicalCompleted >= practicalTotal ? 'Completed' : 'In Progress';
+            const practicalBadge = practicalCompleted >= practicalTotal ? 'badge-completed' : 'badge-inprogress';
+            
+            tbody.innerHTML = `
+                <tr>
+                    <td>Theory Training</td>
+                    <td>Theory</td>
+                    <td>${theoryTotal} hrs</td>
+                    <td>${theoryCompleted} hrs</td>
+                    <td><span class="${theoryBadge}">${theoryStatus}</span></td>
+                </tr>
+                <tr>
+                    <td>Theory Exam</td>
+                    <td>Exam</td>
+                    <td>—</td>
+                    <td>Score: ${data.enrollment.recommended_for_exam ? 'Passed' : 'Pending'}</td>
+                    <td><span class="${data.enrollment.recommended_for_exam ? 'badge-passed' : 'badge-locked'}">${data.enrollment.recommended_for_exam ? 'Passed' : 'Pending'}</span></td>
+                </tr>
+                <tr>
+                    <td>Practical Training</td>
+                    <td>Practical</td>
+                    <td>${practicalTotal} hrs</td>
+                    <td>${practicalCompleted} hrs</td>
+                    <td><span class="${practicalBadge}">${practicalStatus}</span></td>
+                </tr>
+                <tr>
+                    <td>Practical Exam</td>
+                    <td>Exam</td>
+                    <td>—</td>
+                    <td>—</td>
+                    <td><span class="badge-locked">Locked</span></td>
+                </tr>
+                <tr>
+                    <td>Certification</td>
+                    <td>Certificate</td>
+                    <td>—</td>
+                    <td>—</td>
+                    <td><span class="badge-locked">Locked</span></td>
+                </tr>
+            `;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pie Chart Tooltip Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .info {
+            background-color: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        .chart-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fafafa;
+        }
+        .chart-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        canvas {
+            border: 1px solid #ccc;
+            background-color: white;
+            display: block;
+            margin: 0 auto;
+            cursor: crosshair;
+        }
+        .test-results {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+        }
+        .test-results h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .test-item {
+            padding: 8px;
+            margin: 5px 0;
+            background-color: white;
+            border-left: 3px solid #ddd;
+            border-radius: 2px;
+        }
+        .test-item.pass {
+            border-left-color: #4CAF50;
+            background-color: #f1f8f4;
+        }
+        .test-item.fail {
+            border-left-color: #f44336;
+            background-color: #fef5f5;
+        }
+        .test-item.info {
+            border-left-color: #2196F3;
+            background-color: #f3f9ff;
+        }
+        .instructions {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        .revenue-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .revenue-table th,
+        .revenue-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        .revenue-table th {
+            background-color: #f5f5f5;
+            font-weight: bold;
+        }
+        .revenue-table tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Pie Chart Tooltip Test</h1>
+        
+        <div class="info">
+            <strong>Purpose:</strong> Test the Revenue Distribution pie chart tooltip functionality to ensure it displays correct values when hovering or touching.
+        </div>
+
+        <div class="instructions">
+            <strong>Instructions:</strong>
+            <ul>
+                <li>Hover over each pie slice with your mouse to see the tooltip</li>
+                <li>On mobile/tablet, touch each slice to see the tooltip</li>
+                <li>Verify the tooltip shows the correct program name and revenue amount</li>
+                <li>Check the console (F12) for debug information</li>
+            </ul>
+        </div>
+
+        <h2>Expected Revenue Values</h2>
+        <table class="revenue-table">
+            <thead>
+                <tr>
+                    <th>Program</th>
+                    <th>Enrolled</th>
+                    <th>Price (ETB)</th>
+                    <th>Total Revenue (ETB)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Motorcycle (A)</td>
+                    <td>14</td>
+                    <td>2,500</td>
+                    <td><strong>35,000</strong></td>
+                </tr>
+                <tr>
+                    <td>Private Car (B)</td>
+                    <td>32</td>
+                    <td>3,500</td>
+                    <td><strong>112,000</strong></td>
+                </tr>
+                <tr>
+                    <td>Heavy Truck (C)</td>
+                    <td>18</td>
+                    <td>5,500</td>
+                    <td><strong>99,000</strong></td>
+                </tr>
+                <tr>
+                    <td>Bus (D)</td>
+                    <td>15</td>
+                    <td>5,000</td>
+                    <td><strong>75,000</strong></td>
+                </tr>
+                <tr>
+                    <td>Transport (E)</td>
+                    <td>8</td>
+                    <td>4,500</td>
+                    <td><strong>36,000</strong></td>
+                </tr>
+                <tr style="background-color: #e8f5e9; font-weight: bold;">
+                    <td>TOTAL</td>
+                    <td>87</td>
+                    <td>—</td>
+                    <td>357,000</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="chart-section">
+            <div class="chart-title">Revenue Distribution by Program</div>
+            <canvas id="revenueChart" width="500" height="500"></canvas>
+        </div>
+
+        <div class="test-results">
+            <h3>Test Results</h3>
+            <div id="testResults"></div>
+        </div>
+    </div>
+
+    <script src="assets/js/chart-utils.js"></script>
+    <script>
+        // Mock data matching the API response
+        const mockPrograms = [
+            { name: 'Motorcycle (A)', enrolled: 14, price: 2500 },
+            { name: 'Private Car (B)', enrolled: 32, price: 3500 },
+            { name: 'Heavy Truck (C)', enrolled: 18, price: 5500 },
+            { name: 'Bus (D)', enrolled: 15, price: 5000 },
+            { name: 'Transport (E)', enrolled: 8, price: 4500 }
+        ];
+
+        // Test results tracking
+        const testResults = [];
+
+        function addTestResult(type, message) {
+            testResults.push({ type, message });
+            const resultsDiv = document.getElementById('testResults');
+            const item = document.createElement('div');
+            item.className = `test-item ${type}`;
+            item.textContent = message;
+            resultsDiv.appendChild(item);
+            console.log(`[${type.toUpperCase()}] ${message}`);
+        }
+
+        // Initialize chart
+        function initChart() {
+            try {
+                const canvas = document.getElementById('revenueChart');
+                
+                // Calculate revenue
+                const revenue = mockPrograms.map(p => p.enrolled * p.price);
+                const total = revenue.reduce((sum, val) => sum + val, 0);
+                
+                // Log calculations
+                console.log('=== Revenue Calculations ===');
+                mockPrograms.forEach((prog, idx) => {
+                    const rev = revenue[idx];
+                    const pct = ((rev / total) * 100).toFixed(1);
+                    console.log(`${prog.name}: ${prog.enrolled} × ${prog.price} = ${rev} (${pct}%)`);
+                    addTestResult('info', `${prog.name}: ${prog.enrolled} × ${prog.price} = ${rev} (${pct}%)`);
+                });
+                
+                console.log(`Total Revenue: ${total}`);
+                addTestResult('info', `Total Revenue: ${total}`);
+
+                // Create chart data
+                const chartData = {
+                    labels: mockPrograms.map(p => p.name),
+                    values: revenue,
+                    colors: ['#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#ef4444'],
+                    revenue: revenue
+                };
+
+                console.log('Chart Data:', chartData);
+                addTestResult('info', 'Chart data created successfully');
+
+                // Create and draw pie chart
+                const pieChart = new PieChart(canvas, chartData, {
+                    title: 'Revenue Distribution by Program',
+                    centerX: 250,
+                    centerY: 200,
+                    radius: 120
+                });
+
+                pieChart.draw();
+                addTestResult('pass', 'Pie chart rendered successfully');
+
+                // Test tooltip detection
+                console.log('=== Testing Tooltip Detection ===');
+                testTooltipDetection(pieChart);
+
+            } catch (error) {
+                console.error('Error initializing chart:', error);
+                addTestResult('fail', `Error: ${error.message}`);
+            }
+        }
+
+        function testTooltipDetection(pieChart) {
+            // Test points on each slice
+            const testPoints = [
+                { x: 250, y: 80, expectedSlice: 0, name: 'Motorcycle (A)' },
+                { x: 350, y: 200, expectedSlice: 1, name: 'Private Car (B)' },
+                { x: 250, y: 320, expectedSlice: 2, name: 'Heavy Truck (C)' },
+                { x: 150, y: 200, expectedSlice: 3, name: 'Bus (D)' },
+                { x: 280, y: 150, expectedSlice: 4, name: 'Transport (E)' }
+            ];
+
+            testPoints.forEach(point => {
+                const sliceIndex = pieChart.getSliceAtPoint(point.x, point.y);
+                if (sliceIndex >= 0) {
+                    const revenue = pieChart.data.revenue[sliceIndex];
+                    const label = pieChart.data.labels[sliceIndex];
+                    addTestResult('pass', `✓ ${point.name}: Detected at (${point.x}, ${point.y}) → Revenue: ${revenue}`);
+                } else {
+                    addTestResult('fail', `✗ ${point.name}: Not detected at (${point.x}, ${point.y})`);
+                }
+            });
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', initChart);
+
+        // Add mouse move logging for debugging
+        document.getElementById('revenueChart').addEventListener('mousemove', (e) => {
+            const canvas = e.target;
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            // Uncomment to see coordinates in console
+            // console.log(`Mouse at: (${Math.round(x)}, ${Math.round(y)})`);
+        });
+    </script>
+</body>
+</html>

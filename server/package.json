@@ -1,0 +1,13 @@
+{
+  "name": "driver-license-school-server",
+  "version": "1.0.0",
+  "description": "PHP Backend for Driver License School Management System",
+  "main": "index.php",
+  "scripts": {
+    "build": "echo 'Building PHP server... Done.'",
+    "test": "echo 'No tests specified.'",
+    "start": "php -S localhost:8000 -t ."
+  },
+  "author": "",
+  "license": "ISC"
+}

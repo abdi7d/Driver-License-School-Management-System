@@ -1,0 +1,517 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule - DLSM Ethiopia</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/dark-mode.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/auth-guard.js"></script>
+</head>
+<body class="dashboard-body">
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <img src="../assets/images/logo-DLSM.jpg" alt="DLSM Logo" class="logo-icon" style="height: 32px; width: auto; border-radius: 6px;">
+                <span class="logo-text">DLSM</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">
+                <span class="nav-icon">📊</span>
+                <span class="nav-text">Dashboard</span>
+            </a>
+            <a href="profile.html" class="nav-item">
+                <span class="nav-icon">👤</span>
+                <span class="nav-text">Profile</span>
+            </a>
+            <a href="my-students.html" class="nav-item">
+                <span class="nav-icon">👥</span>
+                <span class="nav-text">My Students</span>
+            </a>
+            <a href="sessions.html" class="nav-item">
+                <span class="nav-icon">🚗</span>
+                <span class="nav-text">Sessions</span>
+            </a>
+            <a href="schedule.html" class="nav-item active">
+                <span class="nav-icon">📅</span>
+                <span class="nav-text">Schedule</span>
+            </a>
+            <a href="attendance.html" class="nav-item">
+                <span class="nav-icon">✅</span>
+                <span class="nav-text">Attendance</span>
+            </a>
+            <a href="evaluations.html" class="nav-item">
+                <span class="nav-icon">📝</span>
+                <span class="nav-text">Evaluations</span>
+            </a>
+            <a href="feedback.html" class="nav-item">
+                <span class="nav-icon">💬</span>
+                <span class="nav-text">Feedback</span>
+            </a>
+            <a href="progress.html" class="nav-item">
+                <span class="nav-icon">📈</span>
+                <span class="nav-text">Progress</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <button class="btn-logout" id="logoutBtn">
+                <span class="nav-icon">🚪</span>
+                <span class="nav-text">Logout</span>
+            </button>
+        </div>
+    </aside>
+
+    
+    <main class="main-content">
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+                <div>
+                    <h1 class="page-title">Schedule</h1>
+                    <p class="page-subtitle">Manage your training sessions and appointments</p>
+                </div>
+            </div>
+            <div class="topbar-right">
+                <div class="user-profile">
+                    <div class="user-avatar" id="topbarAvatar">👤</div>
+                    <div class="user-info">
+                        <span class="user-name" id="userName">Instructor</span>
+                        <span class="user-role">Instructor</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="dashboard-container">
+            
+            <div class="card" style="margin-bottom: 24px;">
+                <div style="display: grid; grid-template-columns: auto 1fr auto auto; gap: 16px; align-items: center; padding: 20px;">
+                    <button class="btn-secondary" onclick="changeDate(-1)">← Previous</button>
+                    <div style="text-align: center;">
+                        <input type="date" class="form-control" id="scheduleDate" onchange="loadSchedule()" style="max-width: 200px; margin: 0 auto;">
+                    </div>
+                    <button class="btn-secondary" onclick="changeDate(1)">Next →</button>
+                    <button class="btn-primary" onclick="openModal('addScheduleModal')">+ Add Schedule</button>
+                </div>
+            </div>
+
+            
+            <div class="card">
+                <div class="card-title">
+                    <span>📅 Schedule List</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Student</th>
+                                <th>Session Type</th>
+                                <th>Duration</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="scheduleTableBody">
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    
+    <div class="modal-overlay" id="addScheduleModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Schedule</h3>
+                <button class="modal-close" onclick="closeModal('addScheduleModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="addScheduleForm">
+                    <div class="form-group">
+                        <label class="form-label">Student</label>
+                        <select class="form-control" id="scheduleStudent" required>
+                            <option value="">Select student...</option>
+                            <option value="1">Alice Johnson</option>
+                            <option value="2">Bob Smith</option>
+                            <option value="3">Carol Davis</option>
+                            <option value="4">David Wilson</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Session Type</label>
+                        <select class="form-control" id="scheduleType" required>
+                            <option value="">Select type...</option>
+                            <option value="theory">Theory Class</option>
+                            <option value="practical">Practical Driving</option>
+                            <option value="evaluation">Evaluation</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Date</label>
+                        <input type="date" class="form-control" id="scheduleNewDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Time</label>
+                        <input type="time" class="form-control" id="scheduleTime" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Duration (minutes)</label>
+                        <select class="form-control" id="scheduleDuration" required>
+                            <option value="30">30 minutes</option>
+                            <option value="60" selected>60 minutes</option>
+                            <option value="90">90 minutes</option>
+                            <option value="120">120 minutes</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Notes (optional)</label>
+                        <textarea class="form-control" id="scheduleNotes" rows="3" placeholder="Session objectives, focus areas..."></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal('addScheduleModal')">Cancel</button>
+                <button class="btn-primary" onclick="addSchedule()">Add Schedule</button>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="modal-overlay" id="editScheduleModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit Schedule</h3>
+                <button class="modal-close" onclick="closeModal('editScheduleModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="editScheduleForm">
+                    <input type="hidden" id="editScheduleId">
+                    <div class="form-group">
+                        <label class="form-label">Student</label>
+                        <select class="form-control" id="editScheduleStudent" required>
+                            <option value="">Select student...</option>
+                            <option value="1">Alice Johnson</option>
+                            <option value="2">Bob Smith</option>
+                            <option value="3">Carol Davis</option>
+                            <option value="4">David Wilson</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Session Type</label>
+                        <select class="form-control" id="editScheduleType" required>
+                            <option value="">Select type...</option>
+                            <option value="theory">Theory Class</option>
+                            <option value="practical">Practical Driving</option>
+                            <option value="evaluation">Evaluation</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Date</label>
+                        <input type="date" class="form-control" id="editScheduleDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Time</label>
+                        <input type="time" class="form-control" id="editScheduleTime" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Duration (minutes)</label>
+                        <select class="form-control" id="editScheduleDuration" required>
+                            <option value="30">30 minutes</option>
+                            <option value="60">60 minutes</option>
+                            <option value="90">90 minutes</option>
+                            <option value="120">120 minutes</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Status</label>
+                        <select class="form-control" id="editScheduleStatus" required>
+                            <option value="scheduled">Scheduled</option>
+                            <option value="in-progress">In Progress</option>
+                            <option value="completed">Completed</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Notes</label>
+                        <textarea class="form-control" id="editScheduleNotes" rows="3"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal('editScheduleModal')">Cancel</button>
+                <button class="btn-primary" onclick="updateSchedule()">Update Schedule</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/dashboard.js"></script>
+    <script>
+        // Demo data
+        let schedules = [
+            { id: 1, studentId: 1, student: 'Alice Johnson', type: 'practical', date: '2024-06-10', time: '09:00', duration: 60, status: 'scheduled', notes: 'Advanced City Maneuvers' },
+            { id: 2, studentId: 2, student: 'Bob Smith', type: 'theory', date: '2024-06-10', time: '11:00', duration: 60, status: 'scheduled', notes: 'Traffic Signs and Rules' },
+            { id: 3, studentId: 3, student: 'Carol Davis', type: 'evaluation', date: '2024-06-11', time: '14:00', duration: 90, status: 'scheduled', notes: 'Final Evaluation' },
+            { id: 4, studentId: 4, student: 'David Wilson', type: 'practical', date: '2024-06-12', time: '10:00', duration: 60, status: 'scheduled', notes: 'Highway Driving' },
+            { id: 5, studentId: 1, student: 'Alice Johnson', type: 'practical', date: '2024-06-13', time: '09:00', duration: 60, status: 'scheduled', notes: 'Parallel Parking' }
+        ];
+
+        let nextId = 6;
+
+        function loadSchedule() {
+            const tbody = document.getElementById('scheduleTableBody');
+            const selectedDate = document.getElementById('scheduleDate').value;
+            
+            let filteredSchedules = schedules;
+            if (selectedDate) {
+                filteredSchedules = schedules.filter(s => s.date === selectedDate);
+            }
+            
+            if (filteredSchedules.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 40px;">No schedules found for this date</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = filteredSchedules.map(schedule => `
+                <tr>
+                    <td>${schedule.date}</td>
+                    <td><strong>${schedule.time}</strong></td>
+                    <td>${schedule.student}</td>
+                    <td><span class="badge-${schedule.type === 'practical' ? 'success' : schedule.type === 'theory' ? 'info' : 'warning'}">${schedule.type}</span></td>
+                    <td>${schedule.duration} min</td>
+                    <td><span class="badge-${schedule.status === 'completed' ? 'success' : schedule.status === 'in-progress' ? 'warning' : schedule.status === 'cancelled' ? 'danger' : 'info'}">${schedule.status}</span></td>
+                    <td>
+                        <button class="btn-sm-secondary" onclick="editSchedule(${schedule.id})">Edit</button>
+                        <button class="btn-sm-primary" onclick="startSession(${schedule.id})">Start</button>
+                        <button class="btn-sm-secondary" onclick="deleteSchedule(${schedule.id})" style="background: #fee2e2; color: #dc2626;">Delete</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function changeDate(days) {
+            const dateInput = document.getElementById('scheduleDate');
+            const currentDate = new Date(dateInput.value || new Date());
+            currentDate.setDate(currentDate.getDate() + days);
+            dateInput.value = currentDate.toISOString().split('T')[0];
+            loadSchedule();
+        }
+
+        function addSchedule() {
+            const student = document.getElementById('scheduleStudent');
+            const type = document.getElementById('scheduleType').value;
+            const date = document.getElementById('scheduleNewDate').value;
+            const time = document.getElementById('scheduleTime').value;
+            const duration = document.getElementById('scheduleDuration').value;
+            const notes = document.getElementById('scheduleNotes').value;
+            
+            if (!student.value || !type || !date || !time || !duration) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            const newSchedule = {
+                id: nextId++,
+                studentId: parseInt(student.value),
+                student: student.options[student.selectedIndex].text,
+                type: type,
+                date: date,
+                time: time,
+                duration: parseInt(duration),
+                status: 'scheduled',
+                notes: notes
+            };
+            
+            schedules.push(newSchedule);
+            loadSchedule();
+            closeModal('addScheduleModal');
+            document.getElementById('addScheduleForm').reset();
+            alert('Schedule added successfully!');
+        }
+
+        function editSchedule(id) {
+            const schedule = schedules.find(s => s.id === id);
+            if (!schedule) return;
+            
+            document.getElementById('editScheduleId').value = schedule.id;
+            document.getElementById('editScheduleStudent').value = schedule.studentId;
+            document.getElementById('editScheduleType').value = schedule.type;
+            document.getElementById('editScheduleDate').value = schedule.date;
+            document.getElementById('editScheduleTime').value = schedule.time;
+            document.getElementById('editScheduleDuration').value = schedule.duration;
+            document.getElementById('editScheduleStatus').value = schedule.status;
+            document.getElementById('editScheduleNotes').value = schedule.notes || '';
+            
+            openModal('editScheduleModal');
+        }
+
+        function updateSchedule() {
+            const id = parseInt(document.getElementById('editScheduleId').value);
+            const student = document.getElementById('editScheduleStudent');
+            const type = document.getElementById('editScheduleType').value;
+            const date = document.getElementById('editScheduleDate').value;
+            const time = document.getElementById('editScheduleTime').value;
+            const duration = document.getElementById('editScheduleDuration').value;
+            const status = document.getElementById('editScheduleStatus').value;
+            const notes = document.getElementById('editScheduleNotes').value;
+            
+            const schedule = schedules.find(s => s.id === id);
+            if (schedule) {
+                schedule.studentId = parseInt(student.value);
+                schedule.student = student.options[student.selectedIndex].text;
+                schedule.type = type;
+                schedule.date = date;
+                schedule.time = time;
+                schedule.duration = parseInt(duration);
+                schedule.status = status;
+                schedule.notes = notes;
+                
+                loadSchedule();
+                closeModal('editScheduleModal');
+                alert('Schedule updated successfully!');
+            }
+        }
+
+        function deleteSchedule(id) {
+            if (confirm('Are you sure you want to delete this schedule?')) {
+                schedules = schedules.filter(s => s.id !== id);
+                loadSchedule();
+                alert('Schedule deleted successfully!');
+            }
+        }
+
+        function startSession(id) {
+            const schedule = schedules.find(s => s.id === id);
+            if (schedule) {
+                schedule.status = 'in-progress';
+                loadSchedule();
+                alert(`Session started with ${schedule.student}`);
+            }
+        }
+
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('open');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Close modal when clicking outside
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal-overlay')) {
+                e.target.classList.remove('open');
+                document.body.style.overflow = '';
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', async function() {
+            const user = auth.getCurrentUser();
+            if (!user) {
+                window.location.href = '../login.html';
+                return;
+            }
+            document.getElementById('userName').textContent = user.name || 'Instructor';
+            
+            // Load schedule data from API
+            await loadScheduleFromAPI();
+            
+
+            
+            // Mobile menu is auto-initialized by dashboard.js
+            
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const sidebar = document.getElementById('sidebar');
+            const backdrop = document.getElementById('sidebarBackdrop');
+
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    sidebar.classList.toggle('mobile-open');
+                    backdrop.classList.toggle('active');
+                });
+            }
+            
+            if (backdrop) {
+                backdrop.addEventListener('click', function () {
+                    sidebar.classList.remove('mobile-open');
+                    backdrop.classList.remove('active');
+                });
+            }
+            
+            // Set today's date
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('scheduleDate').value = today;
+            document.getElementById('scheduleNewDate').setAttribute('min', today);
+            
+            loadSchedule();
+        });
+        
+        // Load schedule data from API
+        async function loadScheduleFromAPI() {
+            try {
+                const response = await api.get('/instructor/schedule');
+                if (response.success && response.data) {
+                    updateScheduleTable(response.data);
+                    console.log('Instructor schedule loaded from API:', response.data);
+                }
+            } catch (error) {
+                console.error('Error loading instructor schedule:', error);
+            }
+        }
+        
+        // Update schedule table with API data
+        function updateScheduleTable(scheduleData) {
+            const tbody = document.querySelector('.schedule-table tbody');
+            if (!tbody) return;
+            
+            // Clear existing rows
+            tbody.innerHTML = '';
+            
+            // Add rows from API data
+            scheduleData.forEach(lesson => {
+                const statusClass = lesson.status === 'in_progress' ? 'badge-success' : 
+                                  lesson.status === 'upcoming' ? 'badge-info' : 'badge-secondary';
+                const statusText = lesson.status === 'in_progress' ? 'In Progress' : 
+                                 lesson.status === 'upcoming' ? 'Upcoming' : 'Scheduled';
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${lesson.time}</td>
+                    <td>${lesson.student}</td>
+                    <td>${lesson.type}</td>
+                    <td>2 hours</td>
+                    <td>${lesson.car}</td>
+                    <td><span class="${statusClass}">${statusText}</span></td>
+                    <td>
+                        <button class="btn-sm-primary" onclick="editLesson(${lesson.id})">Edit</button>
+                        <button class="btn-sm-danger" onclick="cancelLesson(${lesson.id})">Cancel</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+    </script>
+</body>
+</html>

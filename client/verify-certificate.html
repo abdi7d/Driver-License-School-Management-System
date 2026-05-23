@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Certificate - DLSM Ethiopia</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body style="background: white; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem;">
+    
+    <div style="background: white; border-radius: 20px; padding: 3rem; max-width: 600px; width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <div style="font-size: 4rem; margin-bottom: 1rem;">🔍</div>
+            <h1 style="font-size: 2rem; font-weight: 800; color: #1e293b; margin-bottom: 0.5rem;">Certificate Verification</h1>
+            <p style="color: #64748b; font-size: 1rem;">Verify the authenticity of DLSM certificates</p>
+        </div>
+
+        <div style="margin-bottom: 2rem;">
+            <label style="display: block; font-weight: 600; color: #1e293b; margin-bottom: 0.5rem;">Certificate Number</label>
+            <input 
+                type="text" 
+                id="certNumber" 
+                placeholder="e.g., DLSM-2026-B-00042"
+                style="width: 100%; padding: 1rem; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 1rem; transition: all 0.3s;"
+                onfocus="this.style.borderColor='#667eea'"
+                onblur="this.style.borderColor='#e2e8f0'"
+            >
+        </div>
+
+        <button 
+            onclick="verifyCert()" 
+            style="width: 100%; padding: 1rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 12px; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: transform 0.2s;"
+            onmouseover="this.style.transform='translateY(-2px)'"
+            onmouseout="this.style.transform='translateY(0)'"
+        >
+            Verify Certificate
+        </button>
+
+        <div id="verifyResult" style="margin-top: 2rem;"></div>
+
+        <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 2px solid #e2e8f0;">
+            <a href="index.html" style="color: #667eea; text-decoration: none; font-weight: 600;">← Back to Home</a>
+        </div>
+    </div>
+    <script src="assets/js/api.js"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const certParam = urlParams.get('cert');
+            if (certParam) {
+                document.getElementById('certNumber').value = certParam;
+                verifyCert();
+            }
+        });
+
+        async function verifyCert() {
+            const certNum = document.getElementById('certNumber').value.trim();
+            const resultDiv = document.getElementById('verifyResult');
+            
+            if (!certNum) {
+                resultDiv.innerHTML = `
+                    <div style="background: #fef3c7; border: 2px solid #fbbf24; border-radius: 12px; padding: 1.5rem; text-align: center;">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">⚠️</div>
+                        <div style="font-weight: 600; color: #92400e;">Please enter a certificate number</div>
+                    </div>
+                `;
+                return;
+            }
+
+            resultDiv.innerHTML = `
+                <div style="text-align: center; padding: 2rem;">
+                    <div style="font-size: 2rem; animation: spin 1s linear infinite;">⏳</div>
+                    <div style="margin-top: 1rem; color: #64748b;">Verifying certificate...</div>
+                </div>
+            `;
+
+            try {
+                const response = await api.get(`/certificates/verify/${certNum}`);
+                
+                if (response.success && response.data && response.data.valid) {
+                    const cert = response.data;
+                    resultDiv.innerHTML = `
+                        <div style="background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); border: 3px solid #10b981; border-radius: 16px; padding: 2rem;">
+                            <div style="text-align: center; margin-bottom: 1.5rem;">
+                                <div style="font-size: 3rem; margin-bottom: 0.5rem;">✅</div>
+                                <div style="font-size: 1.5rem; font-weight: 800; color: #065f46;">Valid Certificate</div>
+                            </div>
+                            
+                            <div style="background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem;">
+                                <div style="display: grid; gap: 1rem;">
+                                    <div>
+                                        <div style="font-size: 0.85rem; color: #64748b; font-weight: 600; margin-bottom: 0.25rem;">Student Name</div>
+                                        <div style="font-size: 1.1rem; font-weight: 700; color: #1e293b;">${cert.student_name || 'N/A'}</div>
+                                    </div>
+                                    <div>
+                                        <div style="font-size: 0.85rem; color: #64748b; font-weight: 600; margin-bottom: 0.25rem;">License Level</div>
+                                        <div style="font-size: 1.1rem; font-weight: 700; color: #1e293b;">Level ${cert.license_category || 'N/A'}</div>
+                                    </div>
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                                        <div>
+                                            <div style="font-size: 0.85rem; color: #64748b; font-weight: 600; margin-bottom: 0.25rem;">Issue Date</div>
+                                            <div style="font-size: 0.95rem; font-weight: 600; color: #1e293b;">${new Date(cert.issue_date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</div>
+                                        </div>
+                                        <div>
+                                            <div style="font-size: 0.85rem; color: #64748b; font-weight: 600; margin-bottom: 0.25rem;">Valid Until</div>
+                                            <div style="font-size: 0.95rem; font-weight: 600; color: #1e293b;">${new Date(cert.valid_until).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div style="font-size: 0.85rem; color: #64748b; font-weight: 600; margin-bottom: 0.25rem;">Certificate Number</div>
+                                        <div style="font-size: 0.95rem; font-weight: 700; color: #667eea; font-family: monospace;">${certNum}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div style="text-align: center; font-size: 0.85rem; color: #065f46; font-weight: 600;">
+                                This certificate is authentic and issued by DLSM Ethiopia
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div style="background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); border: 3px solid #ef4444; border-radius: 16px; padding: 2rem; text-align: center;">
+                            <div style="font-size: 3rem; margin-bottom: 0.5rem;">❌</div>
+                            <div style="font-size: 1.5rem; font-weight: 800; color: #991b1b; margin-bottom: 1rem;">Invalid Certificate</div>
+                            <div style="background: white; border-radius: 12px; padding: 1rem; margin-bottom: 1rem;">
+                                <div style="color: #64748b; font-size: 0.95rem;">Certificate number <strong style="color: #1e293b;">${certNum}</strong> is not found in our records.</div>
+                            </div>
+                            <div style="font-size: 0.85rem; color: #991b1b; font-weight: 600;">
+                                This certificate may be fake or expired
+                            </div>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Verification error:', error);
+                resultDiv.innerHTML = `
+                    <div style="background: #fef3c7; border: 2px solid #fbbf24; border-radius: 12px; padding: 1.5rem; text-align: center;">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">⚠️</div>
+                        <div style="font-weight: 600; color: #92400e; margin-bottom: 0.5rem;">Verification Error</div>
+                        <div style="color: #78350f; font-size: 0.9rem;">Unable to verify certificate. Please try again later.</div>
+                    </div>
+                `;
+            }
+        }
+    </script>
+
+    <style>
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</body>
+</html>

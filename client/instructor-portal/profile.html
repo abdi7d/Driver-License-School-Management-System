@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - DLSM Ethiopia</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/dark-mode.css">
+    <link rel="stylesheet" href="../assets/css/i18n.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/i18n.js"></script>
+    <script src="../assets/js/auth-guard.js"></script>
+</head>
+<body class="dashboard-body">
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <img src="../assets/images/logo-DLSM.jpg" alt="DLSM Logo" class="logo-icon" style="height: 32px; width: auto; border-radius: 6px;">
+                <span class="logo-text">DLSM</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item" data-i18n="instructor.dashboard">
+                <span class="nav-icon">📊</span>
+                <span class="nav-text">Dashboard</span>
+            </a>
+            <a href="profile.html" class="nav-item active" data-i18n="instructor.profile">
+                <span class="nav-icon">👤</span>
+                <span class="nav-text">Profile</span>
+            </a>
+            <a href="my-students.html" class="nav-item" data-i18n="instructor.myStudents">
+                <span class="nav-icon">👥</span>
+                <span class="nav-text">My Students</span>
+            </a>
+            <a href="sessions.html" class="nav-item" data-i18n="instructor.sessions">
+                <span class="nav-icon">🚗</span>
+                <span class="nav-text">Sessions</span>
+            </a>
+            <a href="schedule.html" class="nav-item" data-i18n="instructor.schedule">
+                <span class="nav-icon">📅</span>
+                <span class="nav-text">Schedule</span>
+            </a>
+            <a href="attendance.html" class="nav-item" data-i18n="instructor.attendance">
+                <span class="nav-icon">✅</span>
+                <span class="nav-text">Attendance</span>
+            </a>
+            <a href="evaluations.html" class="nav-item" data-i18n="instructor.evaluations">
+                <span class="nav-icon">📝</span>
+                <span class="nav-text">Evaluations</span>
+            </a>
+            <a href="feedback.html" class="nav-item" data-i18n="instructor.feedback">
+                <span class="nav-icon">💬</span>
+                <span class="nav-text">Feedback</span>
+            </a>
+            <a href="progress.html" class="nav-item" data-i18n="instructor.progress">
+                <span class="nav-icon">📈</span>
+                <span class="nav-text">Progress</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <button class="btn-logout" id="logoutBtn" data-i18n="common.logout">
+                <span class="nav-icon">🚪</span>
+                <span class="nav-text">Logout</span>
+            </button>
+        </div>
+    </aside>
+
+    
+    <main class="main-content">
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+                <div>
+                    <h1 class="page-title" data-i18n="instructor.profile">My Profile</h1>
+                    <p class="page-subtitle" data-i18n="instructor.profileSubtitle">Manage your account information and settings</p>
+                </div>
+            </div>
+            <div class="topbar-right">
+                <div class="language-switcher">
+                    <span class="language-icon">🌍</span>
+                    <select id="languageSelect" onchange="i18n.changeLanguage(this.value)">
+                        <option value="en">English</option>
+                        <option value="am">አማርኛ</option>
+                        <option value="or">Afaan Oromo</option>
+                    </select>
+                </div>
+                <div class="user-profile">
+                    <div class="user-avatar" id="topbarAvatar">👤</div>
+                    <div class="user-info">
+                        <span class="user-name" id="userName">Instructor</span>
+                        <span class="user-role">Instructor</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="dashboard-container">
+            <div class="profile-layout">
+                
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <div class="profile-avatar-large">
+                            <span class="avatar-icon">👤</span>
+                        </div>
+                        <input type="file" id="photoInput" accept="image/*" style="display: none;">
+                        <button class="btn-secondary btn-small" id="changePhotoBtn">Change Photo</button>
+                    </div>
+                    <div class="profile-info-center">
+                        <h2>John Doe</h2>
+                        <p class="profile-email">instructor@dlsm.et</p>
+                        <span class="status-badge active">Active</span>
+                    </div>
+                    <div class="profile-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">24</span>
+                            <span class="stat-label">Students</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">156</span>
+                            <span class="stat-label">Sessions</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">94%</span>
+                            <span class="stat-label">Pass Rate</span>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3 class="card-title">Personal Information</h3>
+                        <button class="btn-primary btn-small" id="editBtn">Edit Profile</button>
+                    </div>
+                    
+                    <form id="profileForm" class="profile-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">First Name</label>
+                                <input type="text" id="firstName" class="form-input" value="John" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Last Name</label>
+                                <input type="text" id="lastName" class="form-input" value="Doe" disabled>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Email Address</label>
+                                <input type="email" id="email" class="form-input" value="instructor@dlsm.et" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Phone Number</label>
+                                <input type="tel" id="phone" class="form-input" value="+251 911 234 567" disabled>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Date of Birth</label>
+                                <input type="date" id="dateOfBirth" class="form-input" value="1985-05-15" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Instructor ID</label>
+                                <input type="text" id="instructorId" class="form-input" value="INS-2024-001" disabled>
+                            </div>
+                        </div>
+
+                        <div class="form-actions" id="formActions" style="display: none;">
+                            <button type="button" class="btn-secondary" id="cancelBtn">Cancel</button>
+                            <button type="submit" class="btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+
+                
+                <div class="dashboard-card">
+                    <h3 class="card-title">Professional Information</h3>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <label>License Number</label>
+                            <span>DL-ETH-123456</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Specialization</label>
+                            <span>Category B, C, D</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Years of Experience</label>
+                            <span>8 years</span>
+                        </div>
+                        <div class="info-item">
+                            <label>Join Date</label>
+                            <span>January 15, 2020</span>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="dashboard-card">
+                    <h3 class="card-title">Performance Statistics</h3>
+                    <div class="stats-grid" style="grid-template-columns: repeat(3, 1fr);">
+                        <div style="text-align: center; padding: 16px; background: #f8fafc; border-radius: 8px;">
+                            <div style="font-size: 28px; font-weight: 800; color: #10b981; margin-bottom: 4px;">92%</div>
+                            <div style="font-size: 13px; color: #64748b;">Pass Rate</div>
+                        </div>
+                        <div style="text-align: center; padding: 16px; background: #f8fafc; border-radius: 8px;">
+                            <div style="font-size: 28px; font-weight: 800; color: #3b82f6; margin-bottom: 4px;">4.8</div>
+                            <div style="font-size: 13px; color: #64748b;">Avg Rating</div>
+                        </div>
+                        <div style="text-align: center; padding: 16px; background: #f8fafc; border-radius: 8px;">
+                            <div style="font-size: 28px; font-weight: 800; color: #f59e0b; margin-bottom: 4px;">156</div>
+                            <div style="font-size: 13px; color: #64748b;">Total Sessions</div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="dashboard-card">
+                    <h3 class="card-title">Change Password</h3>
+                    <form id="passwordForm" class="profile-form">
+                        <div class="form-group">
+                            <label class="form-label">Current Password</label>
+                            <input type="password" id="currentPassword" class="form-input" placeholder="Enter current password">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">New Password</label>
+                            <input type="password" id="newPassword" class="form-input" placeholder="Enter new password">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Confirm New Password</label>
+                            <input type="password" id="confirmPassword" class="form-input" placeholder="Confirm new password">
+                        </div>
+                        <button type="submit" class="btn-primary">Update Password</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/dashboard.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+            const user = auth.getCurrentUser();
+            if (!user) {
+                window.location.href = '../login.html';
+                return;
+            }
+            document.getElementById('userName').textContent = user.name || 'Instructor';
+
+            // Load instructor profile from API
+            await loadInstructorProfileFromAPI(user);
+
+            // Load saved profile photo if exists
+            loadSavedProfilePhoto(user.id);
+
+            // Change photo button handler
+            document.getElementById('changePhotoBtn').addEventListener('click', function() {
+                document.getElementById('photoInput').click();
+            });
+
+            // Photo input change handler
+            document.getElementById('photoInput').addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    if (file.size > 5 * 1024 * 1024) { // 5MB limit
+                        if (typeof utils !== 'undefined') {
+                            utils.showNotification('Photo size must be less than 5MB', 'error');
+                        } else {
+                            alert('Photo size must be less than 5MB');
+                        }
+                        return;
+                    }
+                    
+                    if (!file.type.startsWith('image/')) {
+                        if (typeof utils !== 'undefined') {
+                            utils.showNotification('Please select a valid image file', 'error');
+                        } else {
+                            alert('Please select a valid image file');
+                        }
+                        return;
+                    }
+                    
+                    // Read and display the image
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        const imageData = event.target.result;
+                        
+                        // Update profile avatar
+                        const avatarIcon = document.querySelector('.profile-avatar-large .avatar-icon');
+                        avatarIcon.innerHTML = `<img src="${imageData}" alt="Profile Photo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
+                        
+                        // Update topbar avatar
+                        const topbarAvatar = document.querySelector('.user-avatar');
+                        topbarAvatar.innerHTML = `<img src="${imageData}" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
+                        
+                        // Save to localStorage
+                        localStorage.setItem(`instructorPhoto_${user.id}`, imageData);
+                        
+                        console.log('Photo uploaded:', file.name);
+                        if (typeof utils !== 'undefined') {
+                            utils.showNotification('Photo uploaded successfully!', 'success');
+                        } else {
+                            alert('Photo uploaded successfully!');
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Edit button handler
+            document.getElementById('editBtn').addEventListener('click', function() {
+                const fields = ['firstName', 'lastName', 'phone'];
+                fields.forEach(field => {
+                    document.getElementById(field).disabled = false;
+                });
+                document.getElementById('formActions').style.display = 'flex';
+                this.style.display = 'none';
+            });
+
+            // Cancel button handler
+            document.getElementById('cancelBtn').addEventListener('click', function() {
+                const fields = ['firstName', 'lastName', 'phone'];
+                fields.forEach(field => {
+                    document.getElementById(field).disabled = true;
+                });
+                document.getElementById('formActions').style.display = 'none';
+                document.getElementById('editBtn').style.display = 'block';
+            });
+
+            // Profile form submit
+            document.getElementById('profileForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Profile updated successfully!');
+                document.getElementById('cancelBtn').click();
+            });
+
+            // Password form submit
+            document.getElementById('passwordForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const newPassword = document.getElementById('newPassword').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                
+                if (newPassword !== confirmPassword) {
+                    alert('Passwords do not match');
+                    return;
+                }
+                
+                if (newPassword.length < 6) {
+                    alert('Password must be at least 6 characters');
+                    return;
+                }
+                
+                alert('Password changed successfully!');
+                this.reset();
+            });
+        });
+
+        // Load instructor profile from API
+        async function loadInstructorProfileFromAPI(user) {
+            try {
+                const response = await api.get('/instructors/profile.php');
+                if (response.success && response.data) {
+                    const profile = response.data;
+                    
+                    // Update profile card
+                    const profileHeading = document.querySelector('.profile-info-center h2');
+                    if (profileHeading) profileHeading.textContent = `${profile.first_name} ${profile.last_name}`;
+                    
+                    const profileEmail = document.querySelector('.profile-email');
+                    if (profileEmail) profileEmail.textContent = profile.email;
+                    
+                    const statusBadge = document.querySelector('.status-badge');
+                    if (statusBadge) {
+                        statusBadge.textContent = profile.status.charAt(0).toUpperCase() + profile.status.slice(1);
+                        statusBadge.className = `status-badge ${profile.status}`;
+                    }
+
+                    // Update stats
+                    const statNumbers = document.querySelectorAll('.stat-number');
+                    if (statNumbers.length >= 3) {
+                        statNumbers[0].textContent = profile.total_students || '0';
+                        statNumbers[1].textContent = profile.total_sessions || '0';
+                        statNumbers[2].textContent = (profile.avg_score ? Math.round(profile.avg_score) : 0) + '%';
+                    }
+
+                    // Performance Stats Grid
+                    const perfStats = document.querySelectorAll('.dashboard-card .stats-grid div div:first-child');
+                    if (perfStats.length >= 3) {
+                        perfStats[0].textContent = (profile.avg_score ? Math.round(profile.avg_score) : 0) + '%';
+                        perfStats[2].textContent = profile.total_sessions || '0';
+                    }
+
+                    // Update form fields
+                    document.getElementById('firstName').value = profile.first_name || '';
+                    document.getElementById('lastName').value = profile.last_name || '';
+                    document.getElementById('email').value = profile.email || '';
+                    document.getElementById('phone').value = profile.phone || '';
+                    document.getElementById('instructorId').value = `INS-${profile.id.toString().padStart(4, '0')}`;
+
+                    // Professional Info
+                    const infoSpans = document.querySelectorAll('.info-grid .info-item span');
+                    if (infoSpans.length >= 4) {
+                        infoSpans[0].textContent = profile.license_number || 'N/A';
+                        infoSpans[1].textContent = profile.specialization || 'N/A';
+                        infoSpans[2].textContent = (profile.experience_years || '0') + ' years';
+                        infoSpans[3].textContent = new Date(profile.join_date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+                    }
+                    
+                    console.log('Instructor profile loaded:', profile);
+                }
+            } catch (error) {
+                console.error('Error loading instructor profile:', error);
+            }
+        }
+
+        // Handle profile form submission
+        document.getElementById('profileForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const btn = this.querySelector('button[type="submit"]');
+            const originalText = btn.textContent;
+            
+            try {
+                btn.textContent = 'Saving...';
+                btn.disabled = true;
+                
+                const response = await api.post('/instructors/profile.php', {
+                    first_name: document.getElementById('firstName').value,
+                    last_name: document.getElementById('lastName').value,
+                    phone: document.getElementById('phone').value,
+                    // Note: Professional info update could be added here too if needed
+                });
+
+                if (response.success) {
+                    utils.showNotification(response.message, 'success');
+                    document.getElementById('cancelBtn').click();
+                    loadInstructorProfileFromAPI();
+                } else {
+                    utils.showNotification(response.message, 'error');
+                }
+            } catch (error) {
+                console.error('Error updating profile:', error);
+                utils.showNotification('Failed to update profile', 'error');
+            } finally {
+                btn.textContent = originalText;
+                btn.disabled = false;
+            }
+        });
+
+        // Function to load saved profile photo
+        function loadSavedProfilePhoto(userId) {
+            const savedPhoto = localStorage.getItem(`instructorPhoto_${userId}`);
+            if (savedPhoto) {
+                // Update profile avatar
+                const avatarIcon = document.querySelector('.profile-avatar-large .avatar-icon');
+                if (avatarIcon) {
+                    avatarIcon.innerHTML = `<img src="${savedPhoto}" alt="Profile Photo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
+                }
+                
+                // Update topbar avatar
+                const topbarAvatar = document.querySelector('.user-avatar');
+                if (topbarAvatar) {
+                    topbarAvatar.innerHTML = `<img src="${savedPhoto}" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
+                }
+            }
+        }
+    </script>
+</body>
+</html>
