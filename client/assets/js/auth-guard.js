@@ -18,8 +18,7 @@
             const currentPath = window.location.pathname;
             const requiredRole = getRequiredRole(currentPath);
             
-            if (requiredRole && userData.role !== requiredRole) {
-                alert('Access Denied: You do not have permission to access this page.');
+            if (requiredRole && !isRoleAllowed(userData.role, requiredRole)) {
                 redirectToCorrectDashboard(userData.role);
                 return false;
             }
@@ -38,6 +37,18 @@
         if (path.includes('supervisor-portal')) return 'supervisor';
         if (path.includes('instructor-portal')) return 'instructor';
         return null;
+    }
+
+    function isRoleAllowed(userRole, requiredRole) {
+        if (!userRole || !requiredRole) return false;
+
+        userRole = String(userRole).toLowerCase();
+        requiredRole = String(requiredRole).toLowerCase();
+
+        if (userRole === requiredRole) return true;
+        if (userRole === 'admin' && requiredRole === 'manager') return true;
+
+        return false;
     }
     
     function redirectToLogin() {
@@ -71,6 +82,7 @@
         const dashboards = {
             'student': '../student-portal/dashboard.html',
             'manager': '../manager-portal/dashboard.html',
+            'admin': '../manager-portal/dashboard.html',
             'supervisor': '../supervisor-portal/dashboard.html',
             'instructor': '../instructor-portal/dashboard.html'
         };
@@ -79,6 +91,8 @@
         if (dashboard) {
             window.location.href = dashboard;
         } else {
+            localStorage.clear();
+            sessionStorage.clear();
             redirectToLogin();
         }
     }

@@ -1,402 +1,466 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Reports - DLSM Ethiopia</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/responsive.css">
-    <link rel="stylesheet" href="../assets/css/dark-mode.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link rel="stylesheet" href="../assets/css/responsive.css" />
+    <link rel="stylesheet" href="../assets/css/dark-mode.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <script src="../assets/js/theme.js"></script>
     <script src="../assets/js/auth-guard.js"></script>
-</head>
-<body class="dashboard-body">
+  </head>
+  <body class="dashboard-body">
     <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
-    
     <aside class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <div class="sidebar-logo">
-                <img src="../assets/images/logo-DLSM.jpg" alt="DLSM Logo" class="logo-icon" style="height: 32px; width: auto; border-radius: 6px;">
-                <span class="logo-text">DLSM</span>
-            </div>
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <img
+            src="../assets/images/logo-DLSM.jpg"
+            alt="DLSM Logo"
+            class="logo-icon"
+            style="height: 32px; width: auto; border-radius: 6px"
+          />
+          <span class="logo-text">DLSM</span>
         </div>
-        <nav class="sidebar-nav">
-            <a href="dashboard.html" class="nav-item"><span class="nav-icon">📊</span><span class="nav-text">Dashboard</span></a>
-            <a href="users.html" class="nav-item"><span class="nav-icon">👥</span><span class="nav-text">Users</span></a>
-            <a href="programs.html" class="nav-item"><span class="nav-icon">📚</span><span class="nav-text">Programs</span></a>
-            <a href="enrollments.html" class="nav-item"><span class="nav-icon">📋</span><span class="nav-text">Enrollments</span></a>
-            <a href="approvals.html" class="nav-item"><span class="nav-icon">✅</span><span class="nav-text">Approvals</span></a>
-            <a href="exams.html" class="nav-item"><span class="nav-icon">📝</span><span class="nav-text">Exams</span></a>
-            <a href="certificates.html" class="nav-item"><span class="nav-icon">🎓</span><span class="nav-text">Certificates</span></a>
-            <a href="reports.html" class="nav-item active"><span class="nav-icon">📈</span><span class="nav-text">Reports</span></a>
-            <a href="notifications.html" class="nav-item"><span class="nav-icon">🔔</span><span class="nav-text">Notifications</span></a>
-            <a href="profile.html" class="nav-item"><span class="nav-icon">👤</span><span class="nav-text">My Profile</span></a>
-        </nav>
-        <div class="sidebar-footer">
-            <button class="btn-logout" id="logoutBtn"><span class="nav-icon">🚪</span><span class="nav-text">Logout</span></button>
-        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-item"
+          ><span class="nav-icon">📊</span
+          ><span class="nav-text">Dashboard</span></a
+        >
+        <a href="users.html" class="nav-item"
+          ><span class="nav-icon">👥</span
+          ><span class="nav-text">Users</span></a
+        >
+        <a href="programs.html" class="nav-item"
+          ><span class="nav-icon">📚</span
+          ><span class="nav-text">Programs</span></a
+        >
+        <a href="enrollments.html" class="nav-item"
+          ><span class="nav-icon">📋</span
+          ><span class="nav-text">Enrollments</span></a
+        >
+        <a href="approvals.html" class="nav-item"
+          ><span class="nav-icon">✅</span
+          ><span class="nav-text">Approvals</span></a
+        >
+        <a href="exams.html" class="nav-item"
+          ><span class="nav-icon">📝</span
+          ><span class="nav-text">Exams</span></a
+        >
+        <a href="certificates.html" class="nav-item"
+          ><span class="nav-icon">🎓</span
+          ><span class="nav-text">Certificates</span></a
+        >
+        <a href="reports.html" class="nav-item active"
+          ><span class="nav-icon">📈</span
+          ><span class="nav-text">Reports</span></a
+        >
+        <a href="notifications.html" class="nav-item"
+          ><span class="nav-icon">🔔</span
+          ><span class="nav-text">Notifications</span></a
+        >
+        <a href="profile.html" class="nav-item"
+          ><span class="nav-icon">👤</span
+          ><span class="nav-text">My Profile</span></a
+        >
+      </nav>
+      <div class="sidebar-footer">
+        <button class="btn-logout" id="logoutBtn">
+          <span class="nav-icon">🚪</span><span class="nav-text">Logout</span>
+        </button>
+      </div>
     </aside>
 
-    
     <main class="main-content">
-        <header class="topbar">
-            <div class="topbar-left">
-                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
-                <div>
-                    <h1 class="page-title">Reports</h1>
-                    <p class="page-subtitle">Analytics and performance reports</p>
-                </div>
-            </div>
-            <div class="topbar-right">
-                <div class="user-profile">
-                    <div class="user-avatar">👤</div>
-                    <div class="user-info">
-                        <span class="user-name" id="userName">Manager</span>
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <div class="dashboard-container">
-
-            
-            <div class="stats-grid">
-                <div class="stat-card blue">
-                    <div class="stat-icon">🎓</div>
-                    <div class="stat-info">
-                        <p class="stat-label">Total Students</p>
-                        <h3 class="stat-value">87</h3>
-                    </div>
-                </div>
-                <div class="stat-card green">
-                    <div class="stat-icon">✅</div>
-                    <div class="stat-info">
-                        <p class="stat-label">Pass Rate</p>
-                        <h3 class="stat-value">80%</h3>
-                    </div>
-                </div>
-                <div class="stat-card orange">
-                    <div class="stat-icon">🧑‍🏫</div>
-                    <div class="stat-info">
-                        <p class="stat-label">Active Instructors</p>
-                        <h3 class="stat-value">4</h3>
-                    </div>
-                </div>
-                <div class="stat-card purple">
-                    <div class="stat-icon">💰</div>
-                    <div class="stat-info">
-                        <p class="stat-label">Total Revenue</p>
-                        <h3 class="stat-value">ETB 342K</h3>
-                    </div>
-                </div>
-            </div>
-
-            
-            <div class="tabs tabs-mt">
-                <button class="tab-btn active" data-tab="enrollment">Enrollment Report</button>
-                <button class="tab-btn" data-tab="passfail">Pass/Fail Report</button>
-                <button class="tab-btn" data-tab="instructor">Instructor Performance</button>
-                <button class="tab-btn" data-tab="revenue">Revenue</button>
-            </div>
-
-            
-            <div class="tab-panel active" id="tab-enrollment">
-                <div class="approvals-table-wrap">
-                    <div class="table-header">
-                        <h3>Enrollment Report</h3>
-                        <button class="btn-view" onclick="alert('Export feature coming soon')">⬇ Export</button>
-                    </div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Program</th>
-                                <th>Enrolled</th>
-                                <th>Active</th>
-                                <th>Completed</th>
-                                <th>Dropped</th>
-                                <th>Enrollment Rate</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>Motorcycle (A)</strong></td>
-                                <td>14</td>
-                                <td>10</td>
-                                <td>3</td>
-                                <td>1</td>
-                                <td>
-                                    <div class="report-bar-wrap">
-                                        <div class="prog-bar report-bar"><div class="prog-fill fill-blue fill-w70"></div></div>
-                                        <span class="report-bar-pct">70%</span>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>Private Car (B)</strong></td>
-                                <td>32</td>
-                                <td>22</td>
-                                <td>8</td>
-                                <td>2</td>
-                                <td>
-                                    <div class="report-bar-wrap">
-                                        <div class="prog-bar report-bar"><div class="prog-fill fill-green fill-w88"></div></div>
-                                        <span class="report-bar-pct">88%</span>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>Heavy Truck (C)</strong></td>
-                                <td>18</td>
-                                <td>14</td>
-                                <td>3</td>
-                                <td>1</td>
-                                <td>
-                                    <div class="report-bar-wrap">
-                                        <div class="prog-bar report-bar"><div class="prog-fill fill-orange fill-w78"></div></div>
-                                        <span class="report-bar-pct">78%</span>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>Bus (D)</strong></td>
-                                <td>15</td>
-                                <td>11</td>
-                                <td>3</td>
-                                <td>1</td>
-                                <td>
-                                    <div class="report-bar-wrap">
-                                        <div class="prog-bar report-bar"><div class="prog-fill fill-purple fill-w73"></div></div>
-                                        <span class="report-bar-pct">73%</span>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>Transport (E)</strong></td>
-                                <td>8</td>
-                                <td>5</td>
-                                <td>2</td>
-                                <td>1</td>
-                                <td>
-                                    <div class="report-bar-wrap">
-                                        <div class="prog-bar report-bar"><div class="prog-fill fill-blue fill-w63"></div></div>
-                                        <span class="report-bar-pct">63%</span>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            
-            <div class="tab-panel" id="tab-passfail">
-                <div class="approvals-table-wrap">
-                    <div class="table-header">
-                        <h3>Pass/Fail Report</h3>
-                        <button class="btn-view" onclick="alert('Export feature coming soon')">⬇ Export</button>
-                    </div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Program</th>
-                                <th>Total Exams</th>
-                                <th>Passed</th>
-                                <th>Failed</th>
-                                <th>Pass Rate</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>Motorcycle (A)</strong></td>
-                                <td>12</td>
-                                <td><strong class="score-pass">10</strong></td>
-                                <td><strong class="score-fail">2</strong></td>
-                                <td><span class="badge badge-approved">83%</span></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Private Car (B)</strong></td>
-                                <td>28</td>
-                                <td><strong class="score-pass">24</strong></td>
-                                <td><strong class="score-fail">4</strong></td>
-                                <td><span class="badge badge-approved">86%</span></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Heavy Truck (C)</strong></td>
-                                <td>15</td>
-                                <td><strong class="score-pass">11</strong></td>
-                                <td><strong class="score-fail">4</strong></td>
-                                <td><span class="badge badge-pending">73%</span></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Bus (D)</strong></td>
-                                <td>13</td>
-                                <td><strong class="score-pass">10</strong></td>
-                                <td><strong class="score-fail">3</strong></td>
-                                <td><span class="badge badge-pending">77%</span></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Transport (E)</strong></td>
-                                <td>7</td>
-                                <td><strong class="score-pass">4</strong></td>
-                                <td><strong class="score-fail">3</strong></td>
-                                <td><span class="badge badge-rejected">57%</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            
-            <div class="tab-panel" id="tab-instructor">
-                <div class="approvals-table-wrap">
-                    <div class="table-header">
-                        <h3>Instructor Performance</h3>
-                        <button class="btn-view" onclick="alert('Export feature coming soon')">⬇ Export</button>
-                    </div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Instructor</th>
-                                <th>Assigned Students</th>
-                                <th>Sessions Completed</th>
-                                <th>Avg Rating</th>
-                                <th>Pass Rate</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>Instructor Yonas</strong></td>
-                                <td>22</td>
-                                <td>48</td>
-                                <td>
-                                    <div class="report-rating">
-                                        <span class="report-stars">★★★★★</span>
-                                        <span class="td-sub">4.8</span>
-                                    </div>
-                                </td>
-                                <td><span class="badge badge-approved">88%</span></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Instructor Liya</strong></td>
-                                <td>18</td>
-                                <td>36</td>
-                                <td>
-                                    <div class="report-rating">
-                                        <span class="report-stars">★★★★☆</span>
-                                        <span class="td-sub">4.5</span>
-                                    </div>
-                                </td>
-                                <td><span class="badge badge-approved">83%</span></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Instructor Bekele</strong></td>
-                                <td>20</td>
-                                <td>42</td>
-                                <td>
-                                    <div class="report-rating">
-                                        <span class="report-stars">★★★★☆</span>
-                                        <span class="td-sub">4.3</span>
-                                    </div>
-                                </td>
-                                <td><span class="badge badge-pending">75%</span></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Instructor Tesfaye</strong></td>
-                                <td>12</td>
-                                <td>24</td>
-                                <td>
-                                    <div class="report-rating">
-                                        <span class="report-stars">★★★★★</span>
-                                        <span class="td-sub">4.7</span>
-                                    </div>
-                                </td>
-                                <td><span class="badge badge-approved">82%</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            
-            <div class="tab-panel" id="tab-revenue">
-                <div class="approvals-table-wrap">
-                    <div class="table-header">
-                        <h3>Revenue Report</h3>
-                        <button class="btn-view" onclick="alert('Export feature coming soon')">⬇ Export</button>
-                    </div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Program</th>
-                                <th>Enrolled Students</th>
-                                <th>Price per Student (ETB)</th>
-                                <th>Total Revenue (ETB)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>Motorcycle (A)</strong></td>
-                                <td>14</td>
-                                <td>2,500</td>
-                                <td><strong>35,000</strong></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Private Car (B)</strong></td>
-                                <td>32</td>
-                                <td>3,500</td>
-                                <td><strong>112,000</strong></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Heavy Truck (C)</strong></td>
-                                <td>18</td>
-                                <td>5,500</td>
-                                <td><strong>99,000</strong></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Bus (D)</strong></td>
-                                <td>15</td>
-                                <td>5,000</td>
-                                <td><strong>75,000</strong></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Transport (E)</strong></td>
-                                <td>8</td>
-                                <td>4,500</td>
-                                <td><strong>36,000</strong></td>
-                            </tr>
-                            <tr class="revenue-total-row">
-                                <td><strong>Grand Total</strong></td>
-                                <td><strong>87</strong></td>
-                                <td>—</td>
-                                <td><strong class="score-pass">357,000</strong></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- NEW: Charts Section -->
-            <div class="charts-section">
-                <h2 class="section-title">📊 Visual Analytics</h2>
-                
-                <div class="charts-grid">
-                    <!-- Bar Chart: Enrollment by Program -->
-                    <div class="chart-card">
-                        <h3 class="chart-title">Enrollment by Program</h3>
-                        <canvas id="enrollmentChart" width="600" height="400"></canvas>
-                    </div>
-                    
-                    <!-- Pie Chart: Revenue Distribution -->
-                    <div class="chart-card">
-                        <h3 class="chart-title">Revenue Distribution</h3>
-                        <canvas id="revenueChart" width="400" height="450"></canvas>
-                    </div>
-                </div>
-            </div>
-
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+          <div>
+            <h1 class="page-title">Reports</h1>
+            <p class="page-subtitle">Analytics and performance reports</p>
+          </div>
         </div>
+        <div class="topbar-right">
+          <div class="user-profile">
+            <div class="user-avatar">👤</div>
+            <div class="user-info">
+              <span class="user-name" id="userName">Manager</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="dashboard-container">
+        <div class="stats-grid">
+          <div class="stat-card blue">
+            <div class="stat-icon">🎓</div>
+            <div class="stat-info">
+              <p class="stat-label">Total Students</p>
+              <h3 class="stat-value">87</h3>
+            </div>
+          </div>
+          <div class="stat-card green">
+            <div class="stat-icon">✅</div>
+            <div class="stat-info">
+              <p class="stat-label">Pass Rate</p>
+              <h3 class="stat-value">80%</h3>
+            </div>
+          </div>
+          <div class="stat-card orange">
+            <div class="stat-icon">🧑‍🏫</div>
+            <div class="stat-info">
+              <p class="stat-label">Active Instructors</p>
+              <h3 class="stat-value">4</h3>
+            </div>
+          </div>
+          <div class="stat-card purple">
+            <div class="stat-icon">💰</div>
+            <div class="stat-info">
+              <p class="stat-label">Total Revenue</p>
+              <h3 class="stat-value">ETB 342K</h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="tabs tabs-mt">
+          <button class="tab-btn active" data-tab="enrollment">
+            Enrollment Report
+          </button>
+          <button class="tab-btn" data-tab="passfail">Pass/Fail Report</button>
+          <button class="tab-btn" data-tab="instructor">
+            Instructor Performance
+          </button>
+          <button class="tab-btn" data-tab="revenue">Revenue</button>
+        </div>
+
+        <div class="tab-panel active" id="tab-enrollment">
+          <div class="approvals-table-wrap">
+            <div class="table-header">
+              <h3>Enrollment Report</h3>
+              <button
+                class="btn-view"
+                onclick="alert('Export feature coming soon')"
+              >
+                ⬇ Export
+              </button>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Program</th>
+                  <th>Enrolled</th>
+                  <th>Active</th>
+                  <th>Completed</th>
+                  <th>Dropped</th>
+                  <th>Enrollment Rate</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Motorcycle (A)</strong></td>
+                  <td>14</td>
+                  <td>10</td>
+                  <td>3</td>
+                  <td>1</td>
+                  <td>
+                    <div class="report-bar-wrap">
+                      <div class="prog-bar report-bar">
+                        <div class="prog-fill fill-blue fill-w70"></div>
+                      </div>
+                      <span class="report-bar-pct">70%</span>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Private Car (B)</strong></td>
+                  <td>32</td>
+                  <td>22</td>
+                  <td>8</td>
+                  <td>2</td>
+                  <td>
+                    <div class="report-bar-wrap">
+                      <div class="prog-bar report-bar">
+                        <div class="prog-fill fill-green fill-w88"></div>
+                      </div>
+                      <span class="report-bar-pct">88%</span>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Heavy Truck (C)</strong></td>
+                  <td>18</td>
+                  <td>14</td>
+                  <td>3</td>
+                  <td>1</td>
+                  <td>
+                    <div class="report-bar-wrap">
+                      <div class="prog-bar report-bar">
+                        <div class="prog-fill fill-orange fill-w78"></div>
+                      </div>
+                      <span class="report-bar-pct">78%</span>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Bus (D)</strong></td>
+                  <td>15</td>
+                  <td>11</td>
+                  <td>3</td>
+                  <td>1</td>
+                  <td>
+                    <div class="report-bar-wrap">
+                      <div class="prog-bar report-bar">
+                        <div class="prog-fill fill-purple fill-w73"></div>
+                      </div>
+                      <span class="report-bar-pct">73%</span>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Transport (E)</strong></td>
+                  <td>8</td>
+                  <td>5</td>
+                  <td>2</td>
+                  <td>1</td>
+                  <td>
+                    <div class="report-bar-wrap">
+                      <div class="prog-bar report-bar">
+                        <div class="prog-fill fill-blue fill-w63"></div>
+                      </div>
+                      <span class="report-bar-pct">63%</span>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="tab-panel" id="tab-passfail">
+          <div class="approvals-table-wrap">
+            <div class="table-header">
+              <h3>Pass/Fail Report</h3>
+              <button
+                class="btn-view"
+                onclick="alert('Export feature coming soon')"
+              >
+                ⬇ Export
+              </button>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Program</th>
+                  <th>Total Exams</th>
+                  <th>Passed</th>
+                  <th>Failed</th>
+                  <th>Pass Rate</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Motorcycle (A)</strong></td>
+                  <td>12</td>
+                  <td><strong class="score-pass">10</strong></td>
+                  <td><strong class="score-fail">2</strong></td>
+                  <td><span class="badge badge-approved">83%</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Private Car (B)</strong></td>
+                  <td>28</td>
+                  <td><strong class="score-pass">24</strong></td>
+                  <td><strong class="score-fail">4</strong></td>
+                  <td><span class="badge badge-approved">86%</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Heavy Truck (C)</strong></td>
+                  <td>15</td>
+                  <td><strong class="score-pass">11</strong></td>
+                  <td><strong class="score-fail">4</strong></td>
+                  <td><span class="badge badge-pending">73%</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Bus (D)</strong></td>
+                  <td>13</td>
+                  <td><strong class="score-pass">10</strong></td>
+                  <td><strong class="score-fail">3</strong></td>
+                  <td><span class="badge badge-pending">77%</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Transport (E)</strong></td>
+                  <td>7</td>
+                  <td><strong class="score-pass">4</strong></td>
+                  <td><strong class="score-fail">3</strong></td>
+                  <td><span class="badge badge-rejected">57%</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="tab-panel" id="tab-instructor">
+          <div class="approvals-table-wrap">
+            <div class="table-header">
+              <h3>Instructor Performance</h3>
+              <button
+                class="btn-view"
+                onclick="alert('Export feature coming soon')"
+              >
+                ⬇ Export
+              </button>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Instructor</th>
+                  <th>Assigned Students</th>
+                  <th>Sessions Completed</th>
+                  <th>Avg Rating</th>
+                  <th>Pass Rate</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Instructor Yonas</strong></td>
+                  <td>22</td>
+                  <td>48</td>
+                  <td>
+                    <div class="report-rating">
+                      <span class="report-stars">★★★★★</span>
+                      <span class="td-sub">4.8</span>
+                    </div>
+                  </td>
+                  <td><span class="badge badge-approved">88%</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Instructor Liya</strong></td>
+                  <td>18</td>
+                  <td>36</td>
+                  <td>
+                    <div class="report-rating">
+                      <span class="report-stars">★★★★☆</span>
+                      <span class="td-sub">4.5</span>
+                    </div>
+                  </td>
+                  <td><span class="badge badge-approved">83%</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Instructor Bekele</strong></td>
+                  <td>20</td>
+                  <td>42</td>
+                  <td>
+                    <div class="report-rating">
+                      <span class="report-stars">★★★★☆</span>
+                      <span class="td-sub">4.3</span>
+                    </div>
+                  </td>
+                  <td><span class="badge badge-pending">75%</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Instructor Tesfaye</strong></td>
+                  <td>12</td>
+                  <td>24</td>
+                  <td>
+                    <div class="report-rating">
+                      <span class="report-stars">★★★★★</span>
+                      <span class="td-sub">4.7</span>
+                    </div>
+                  </td>
+                  <td><span class="badge badge-approved">82%</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="tab-panel" id="tab-revenue">
+          <div class="approvals-table-wrap">
+            <div class="table-header">
+              <h3>Revenue Report</h3>
+              <button
+                class="btn-view"
+                onclick="alert('Export feature coming soon')"
+              >
+                ⬇ Export
+              </button>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Program</th>
+                  <th>Enrolled Students</th>
+                  <th>Price per Student (ETB)</th>
+                  <th>Total Revenue (ETB)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Motorcycle (A)</strong></td>
+                  <td>14</td>
+                  <td>2,500</td>
+                  <td><strong>35,000</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>Private Car (B)</strong></td>
+                  <td>32</td>
+                  <td>3,500</td>
+                  <td><strong>112,000</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>Heavy Truck (C)</strong></td>
+                  <td>18</td>
+                  <td>5,500</td>
+                  <td><strong>99,000</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>Bus (D)</strong></td>
+                  <td>15</td>
+                  <td>5,000</td>
+                  <td><strong>75,000</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>Transport (E)</strong></td>
+                  <td>8</td>
+                  <td>4,500</td>
+                  <td><strong>36,000</strong></td>
+                </tr>
+                <tr class="revenue-total-row">
+                  <td><strong>Grand Total</strong></td>
+                  <td><strong>87</strong></td>
+                  <td>—</td>
+                  <td><strong class="score-pass">357,000</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- NEW: Charts Section -->
+        <div class="charts-section">
+          <h2 class="section-title">📊 Visual Analytics</h2>
+
+          <div class="charts-grid">
+            <!-- Bar Chart: Enrollment by Program -->
+            <div class="chart-card">
+              <h3 class="chart-title">Enrollment by Program</h3>
+              <canvas id="enrollmentChart" width="600" height="400"></canvas>
+            </div>
+
+            <!-- Pie Chart: Revenue Distribution -->
+            <div class="chart-card">
+              <h3 class="chart-title">Revenue Distribution</h3>
+              <canvas id="revenueChart" width="400" height="450"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
 
     <script src="../assets/js/utils.js"></script>
@@ -405,52 +469,75 @@
     <script src="../assets/js/modal.js"></script>
     <script src="../assets/js/chart-utils.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', async function () {
-            const user = auth.getCurrentUser();
-            if (!user) { window.location.href = '../login.html'; return; }
-            document.getElementById('userName').textContent = user.name || 'Manager';
+      document.addEventListener("DOMContentLoaded", async function () {
+        const user = auth.getCurrentUser();
+        if (!user) {
+          window.location.href = "../login.html";
+          return;
+        }
+        document.getElementById("userName").textContent =
+          user.name || "Manager";
 
-            // Load reports data from API and render charts
-            await loadReportsAndCharts();
+        // Load reports data from API and render charts
+        await loadReportsAndCharts();
 
-            document.getElementById('logoutBtn').addEventListener('click', function () {
-                if (confirm('Are you sure you want to logout?')) auth.logout();
-            });
+        document
+          .getElementById("logoutBtn")
+          .addEventListener("click", () => auth.logout());
 
-            // Mobile menu is auto-initialized by dashboard.js
+        // Mobile menu is auto-initialized by dashboard.js
 
-            // Tabs
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.addEventListener('click', function () {
-                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-                    this.classList.add('active');
-                    document.getElementById('tab-' + this.dataset.tab).classList.add('active');
-                });
-            });
+        // Tabs
+        document.querySelectorAll(".tab-btn").forEach((btn) => {
+          btn.addEventListener("click", function () {
+            document
+              .querySelectorAll(".tab-btn")
+              .forEach((b) => b.classList.remove("active"));
+            document
+              .querySelectorAll(".tab-panel")
+              .forEach((p) => p.classList.remove("active"));
+            this.classList.add("active");
+            document
+              .getElementById("tab-" + this.dataset.tab)
+              .classList.add("active");
+          });
         });
+      });
 
-        /**
-         * Load reports data from API and render charts
-         */
-        async function loadReportsAndCharts() {
-            try {
-                const response = await api.request('/manager/reports/index.php');
-                if (response.success && response.data) {
-                    const data = response.data;
-                    
-                    // Update stats cards
-                    document.querySelector('.stat-card.blue .stat-value').textContent = data.stats.total_students;
-                    document.querySelector('.stat-card.green .stat-value').textContent = data.stats.pass_rate + '%';
-                    document.querySelector('.stat-card.orange .stat-value').textContent = data.stats.active_instructors;
-                    document.querySelector('.stat-card.purple .stat-value').textContent = 'ETB ' + (data.stats.total_revenue / 1000).toFixed(1) + 'K';
+      /**
+       * Load reports data from API and render charts
+       */
+      async function loadReportsAndCharts() {
+        try {
+          const response = await api.request("/manager/reports/index.php");
+          if (response.success && response.data) {
+            const data = response.data;
 
-                    // Populate Enrollment Table
-                    const enrollmentBody = document.querySelector('#tab-enrollment tbody');
-                    if (enrollmentBody && data.programs) {
-                        enrollmentBody.innerHTML = data.programs.map(p => {
-                            const rate = p.enrolled > 0 ? Math.round((p.active / p.enrolled) * 100) : 0;
-                            return `
+            // Update stats cards
+            document.querySelector(".stat-card.blue .stat-value").textContent =
+              data.stats.total_students;
+            document.querySelector(".stat-card.green .stat-value").textContent =
+              data.stats.pass_rate + "%";
+            document.querySelector(
+              ".stat-card.orange .stat-value",
+            ).textContent = data.stats.active_instructors;
+            document.querySelector(
+              ".stat-card.purple .stat-value",
+            ).textContent =
+              "ETB " + (data.stats.total_revenue / 1000).toFixed(1) + "K";
+
+            // Populate Enrollment Table
+            const enrollmentBody = document.querySelector(
+              "#tab-enrollment tbody",
+            );
+            if (enrollmentBody && data.programs) {
+              enrollmentBody.innerHTML = data.programs
+                .map((p) => {
+                  const rate =
+                    p.enrolled > 0
+                      ? Math.round((p.active / p.enrolled) * 100)
+                      : 0;
+                  return `
                                 <tr>
                                     <td><strong>${p.name} (${p.category})</strong></td>
                                     <td>${p.enrolled}</td>
@@ -465,22 +552,27 @@
                                     </td>
                                 </tr>
                             `;
-                        }).join('');
-                    }
+                })
+                .join("");
+            }
 
-                    // Populate Revenue Table
-                    const revenueBody = document.querySelector('#tab-revenue tbody');
-                    if (revenueBody && data.programs) {
-                        let rows = data.programs.map(p => `
+            // Populate Revenue Table
+            const revenueBody = document.querySelector("#tab-revenue tbody");
+            if (revenueBody && data.programs) {
+              let rows = data.programs
+                .map(
+                  (p) => `
                             <tr>
                                 <td><strong>${p.name} (${p.category})</strong></td>
                                 <td>${p.enrolled}</td>
                                 <td>${parseFloat(p.price).toLocaleString()}</td>
                                 <td><strong>${parseFloat(p.revenue).toLocaleString()}</strong></td>
                             </tr>
-                        `).join('');
-                        
-                        rows += `
+                        `,
+                )
+                .join("");
+
+              rows += `
                             <tr class="revenue-total-row">
                                 <td><strong>Grand Total</strong></td>
                                 <td><strong>${data.stats.total_students}</strong></td>
@@ -488,39 +580,47 @@
                                 <td><strong class="score-pass">${parseFloat(data.stats.total_revenue).toLocaleString()}</strong></td>
                             </tr>
                         `;
-                        revenueBody.innerHTML = rows;
-                    }
-
-                    // Render Charts
-                    const barChartCanvas = document.getElementById('enrollmentChart');
-                    if (barChartCanvas && data.programs) {
-                        const barData = {
-                            labels: data.programs.map(p => p.name),
-                            datasets: [{
-                                label: 'Enrolled',
-                                data: data.programs.map(p => p.enrolled),
-                                color: '#3b82f6'
-                            }]
-                        };
-                        const barChart = new BarChart(barChartCanvas, barData, { title: 'Enrollment by Program' });
-                        barChart.draw();
-                    }
-
-                    const pieChartCanvas = document.getElementById('revenueChart');
-                    if (pieChartCanvas && data.programs) {
-                        const pieData = data.programs.map((p, i) => ({
-                            label: p.category,
-                            value: parseFloat(p.revenue),
-                            color: ['#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#ef4444'][i % 5]
-                        }));
-                        const pieChart = new PieChart(pieChartCanvas, pieData, { title: 'Revenue Distribution' });
-                        pieChart.draw();
-                    }
-                }
-            } catch (error) {
-                console.error('Error loading reports:', error);
+              revenueBody.innerHTML = rows;
             }
+
+            // Render Charts
+            const barChartCanvas = document.getElementById("enrollmentChart");
+            if (barChartCanvas && data.programs) {
+              const barData = {
+                labels: data.programs.map((p) => p.name),
+                datasets: [
+                  {
+                    label: "Enrolled",
+                    data: data.programs.map((p) => p.enrolled),
+                    color: "#3b82f6",
+                  },
+                ],
+              };
+              const barChart = new BarChart(barChartCanvas, barData, {
+                title: "Enrollment by Program",
+              });
+              barChart.draw();
+            }
+
+            const pieChartCanvas = document.getElementById("revenueChart");
+            if (pieChartCanvas && data.programs) {
+              const pieData = data.programs.map((p, i) => ({
+                label: p.category,
+                value: parseFloat(p.revenue),
+                color: ["#3b82f6", "#10b981", "#f59e0b", "#8b5cf6", "#ef4444"][
+                  i % 5
+                ],
+              }));
+              const pieChart = new PieChart(pieChartCanvas, pieData, {
+                title: "Revenue Distribution",
+              });
+              pieChart.draw();
+            }
+          }
+        } catch (error) {
+          console.error("Error loading reports:", error);
         }
+      }
     </script>
-</body>
+  </body>
 </html>

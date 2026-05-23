@@ -9,7 +9,7 @@ const dashboard = {
         
         if (options.requiredRole) {
             if (!auth.hasRole(options.requiredRole)) {
-                alert('Access denied. You do not have permission to view this page.');
+                // User not authorized for this page — redirect to their dashboard
                 auth.redirectToDashboard(user);
                 return;
             }

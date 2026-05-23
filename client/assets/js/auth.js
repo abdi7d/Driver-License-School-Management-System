@@ -172,10 +172,8 @@ const auth = {
     },
 
     logout() {
-        localStorage.removeItem('token');
-        localStorage.removeItem('role');
-        localStorage.removeItem('user');
-        localStorage.removeItem('userPhoto');
+        localStorage.clear();
+        sessionStorage.clear();
         
         const path = window.location.pathname;
         if (path.includes('-portal/')) {
@@ -192,11 +190,19 @@ const auth = {
     hasRole(allowedRoles) {
         const role = localStorage.getItem('role');
         if (!role) return false;
+
+        const normalizedRole = role.toLowerCase();
+        const roleMatches = (expectedRole) => {
+            const normalizedExpectedRole = String(expectedRole).toLowerCase();
+            return normalizedRole === normalizedExpectedRole || (
+                normalizedRole === 'admin' && normalizedExpectedRole === 'manager'
+            );
+        };
         
         if (Array.isArray(allowedRoles)) {
-            return allowedRoles.includes(role);
+            return allowedRoles.some(roleMatches);
         }
-        return role === allowedRoles;
+        return roleMatches(allowedRoles);
     },
     
     redirectToDashboard(role) {
@@ -211,15 +217,18 @@ const auth = {
         }
 
         role = role.toLowerCase();
-        let dashboard = "";
-        if (role === "manager") {
-            dashboard = "manager-portal/dashboard.html";
-        } else if (role === "instructor") {
-            dashboard = "instructor-portal/dashboard.html";
-        } else if (role === "supervisor") {
-            dashboard = "supervisor-portal/dashboard.html";
-        } else {
-            dashboard = "student-portal/dashboard.html";
+        const dashboards = {
+            manager: "manager-portal/dashboard.html",
+            admin: "manager-portal/dashboard.html",
+            instructor: "instructor-portal/dashboard.html",
+            supervisor: "supervisor-portal/dashboard.html",
+            student: "student-portal/dashboard.html"
+        };
+
+        const dashboard = dashboards[role];
+        if (!dashboard) {
+            window.location.href = 'login.html';
+            return;
         }
         
         const currentPath = window.location.pathname;

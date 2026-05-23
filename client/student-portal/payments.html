@@ -1,673 +1,755 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Payments - DLSM Ethiopia</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/responsive.css">
-    <link rel="stylesheet" href="../assets/css/dark-mode.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link rel="stylesheet" href="../assets/css/responsive.css" />
+    <link rel="stylesheet" href="../assets/css/dark-mode.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <script src="../assets/js/theme.js"></script>
     <script src="../assets/js/auth-guard.js"></script>
     <style>
+      .payment-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        margin-bottom: 32px;
+      }
+
+      .payment-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 24px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .payment-card h3 {
+        margin: 0 0 16px 0;
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+
+      .payment-status {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+        padding: 12px;
+        background: var(--bg-secondary);
+        border-radius: 8px;
+      }
+
+      .status-label {
+        font-size: 14px;
+        color: var(--text-secondary);
+      }
+
+      .status-value {
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+
+      .amount-display {
+        font-size: 32px;
+        font-weight: 700;
+        color: var(--primary-color);
+        margin: 16px 0;
+      }
+
+      .payment-plan {
+        margin-top: 20px;
+      }
+
+      .plan-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px;
+        margin-bottom: 8px;
+        background: var(--bg-secondary);
+        border-radius: 8px;
+        border-left: 4px solid var(--primary-color);
+      }
+
+      .plan-item.paid {
+        border-left-color: #10b981;
+        opacity: 0.7;
+      }
+
+      .plan-item.pending {
+        border-left-color: #f59e0b;
+      }
+
+      .plan-info {
+        flex: 1;
+      }
+
+      .plan-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+
+      .plan-date {
+        font-size: 12px;
+        color: var(--text-secondary);
+        margin-top: 4px;
+      }
+
+      .plan-amount {
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-right: 12px;
+      }
+
+      .plan-status-badge {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      .plan-status-badge.paid {
+        background: #d1fae5;
+        color: #065f46;
+      }
+
+      .plan-status-badge.pending {
+        background: #fef3c7;
+        color: #92400e;
+      }
+
+      .payment-methods {
+        margin-top: 20px;
+      }
+
+      .method-group {
+        margin-bottom: 12px;
+      }
+
+      .method-label {
+        display: flex;
+        align-items: center;
+        padding: 12px;
+        background: var(--bg-secondary);
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .method-label:hover {
+        background: var(--bg-tertiary);
+      }
+
+      .method-label input[type="radio"] {
+        margin-right: 12px;
+        cursor: pointer;
+      }
+
+      .method-name {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+
+      .btn-pay {
+        width: 100%;
+        padding: 12px;
+        margin-top: 16px;
+        background: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .btn-pay:hover {
+        background: var(--primary-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+      }
+
+      .btn-pay:disabled {
+        background: var(--text-secondary);
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .payment-history {
+        margin-top: 32px;
+      }
+
+      .history-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 16px;
+      }
+
+      .history-table thead {
+        background: var(--bg-secondary);
+      }
+
+      .history-table th {
+        padding: 12px;
+        text-align: left;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .history-table td {
+        padding: 12px;
+        border-bottom: 1px solid var(--border-color);
+        font-size: 14px;
+        color: var(--text-primary);
+      }
+
+      .history-table tbody tr:hover {
+        background: var(--bg-secondary);
+      }
+
+      .receipt-link {
+        color: var(--primary-color);
+        text-decoration: none;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      .receipt-link:hover {
+        text-decoration: underline;
+      }
+
+      .status-badge {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      .status-badge.completed {
+        background: #d1fae5;
+        color: #065f46;
+      }
+
+      .status-badge.pending {
+        background: #fef3c7;
+        color: #92400e;
+      }
+
+      .status-badge.failed {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 40px 20px;
+        color: var(--text-secondary);
+      }
+
+      .empty-state-icon {
+        font-size: 48px;
+        margin-bottom: 16px;
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .modal.active {
+        display: flex;
+      }
+
+      .modal-content {
+        background: var(--card-bg);
+        border-radius: 12px;
+        padding: 32px;
+        max-width: 500px;
+        width: 90%;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      }
+
+      .modal-header {
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 24px;
+        color: var(--text-primary);
+      }
+
+      .modal-body {
+        margin-bottom: 24px;
+      }
+
+      .receipt-detail {
+        display: flex;
+        justify-content: space-between;
+        padding: 12px 0;
+        border-bottom: 1px solid var(--border-color);
+        font-size: 14px;
+      }
+
+      .receipt-detail-label {
+        color: var(--text-secondary);
+        font-weight: 500;
+      }
+
+      .receipt-detail-value {
+        color: var(--text-primary);
+        font-weight: 600;
+      }
+
+      .modal-footer {
+        display: flex;
+        gap: 12px;
+      }
+
+      .btn-secondary {
+        flex: 1;
+        padding: 12px;
+        background: var(--bg-secondary);
+        color: var(--text-primary);
+        border: none;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .btn-secondary:hover {
+        background: var(--bg-tertiary);
+      }
+
+      .btn-primary-modal {
+        flex: 1;
+        padding: 12px;
+        background: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .btn-primary-modal:hover {
+        background: var(--primary-dark);
+      }
+
+      .alert {
+        padding: 12px 16px;
+        border-radius: 8px;
+        margin-bottom: 16px;
+        font-size: 14px;
+      }
+
+      .alert-success {
+        background: #d1fae5;
+        color: #065f46;
+        border-left: 4px solid #10b981;
+      }
+
+      .alert-warning {
+        background: #fef3c7;
+        color: #92400e;
+        border-left: 4px solid #f59e0b;
+      }
+
+      .alert-error {
+        background: #fee2e2;
+        color: #991b1b;
+        border-left: 4px solid #ef4444;
+      }
+
+      @media (max-width: 768px) {
         .payment-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-            margin-bottom: 32px;
-        }
-
-        .payment-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 24px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .payment-card h3 {
-            margin: 0 0 16px 0;
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .payment-status {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-            padding: 12px;
-            background: var(--bg-secondary);
-            border-radius: 8px;
-        }
-
-        .status-label {
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
-
-        .status-value {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .amount-display {
-            font-size: 32px;
-            font-weight: 700;
-            color: var(--primary-color);
-            margin: 16px 0;
-        }
-
-        .payment-plan {
-            margin-top: 20px;
-        }
-
-        .plan-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px;
-            margin-bottom: 8px;
-            background: var(--bg-secondary);
-            border-radius: 8px;
-            border-left: 4px solid var(--primary-color);
-        }
-
-        .plan-item.paid {
-            border-left-color: #10b981;
-            opacity: 0.7;
-        }
-
-        .plan-item.pending {
-            border-left-color: #f59e0b;
-        }
-
-        .plan-info {
-            flex: 1;
-        }
-
-        .plan-title {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .plan-date {
-            font-size: 12px;
-            color: var(--text-secondary);
-            margin-top: 4px;
-        }
-
-        .plan-amount {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-right: 12px;
-        }
-
-        .plan-status-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .plan-status-badge.paid {
-            background: #d1fae5;
-            color: #065f46;
-        }
-
-        .plan-status-badge.pending {
-            background: #fef3c7;
-            color: #92400e;
-        }
-
-        .payment-methods {
-            margin-top: 20px;
-        }
-
-        .method-group {
-            margin-bottom: 12px;
-        }
-
-        .method-label {
-            display: flex;
-            align-items: center;
-            padding: 12px;
-            background: var(--bg-secondary);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .method-label:hover {
-            background: var(--bg-tertiary);
-        }
-
-        .method-label input[type="radio"] {
-            margin-right: 12px;
-            cursor: pointer;
-        }
-
-        .method-name {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .btn-pay {
-            width: 100%;
-            padding: 12px;
-            margin-top: 16px;
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .btn-pay:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-        }
-
-        .btn-pay:disabled {
-            background: var(--text-secondary);
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .payment-history {
-            margin-top: 32px;
+          grid-template-columns: 1fr;
         }
 
         .history-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 16px;
+          font-size: 12px;
         }
 
-        .history-table thead {
-            background: var(--bg-secondary);
-        }
-
-        .history-table th {
-            padding: 12px;
-            text-align: left;
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
+        .history-table th,
         .history-table td {
-            padding: 12px;
-            border-bottom: 1px solid var(--border-color);
-            font-size: 14px;
-            color: var(--text-primary);
-        }
-
-        .history-table tbody tr:hover {
-            background: var(--bg-secondary);
-        }
-
-        .receipt-link {
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .receipt-link:hover {
-            text-decoration: underline;
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .status-badge.completed {
-            background: #d1fae5;
-            color: #065f46;
-        }
-
-        .status-badge.pending {
-            background: #fef3c7;
-            color: #92400e;
-        }
-
-        .status-badge.failed {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 40px 20px;
-            color: var(--text-secondary);
-        }
-
-        .empty-state-icon {
-            font-size: 48px;
-            margin-bottom: 16px;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal.active {
-            display: flex;
+          padding: 8px;
         }
 
         .modal-content {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 32px;
-            max-width: 500px;
-            width: 90%;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+          padding: 24px;
         }
-
-        .modal-header {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 24px;
-            color: var(--text-primary);
-        }
-
-        .modal-body {
-            margin-bottom: 24px;
-        }
-
-        .receipt-detail {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid var(--border-color);
-            font-size: 14px;
-        }
-
-        .receipt-detail-label {
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
-
-        .receipt-detail-value {
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-
-        .modal-footer {
-            display: flex;
-            gap: 12px;
-        }
-
-        .btn-secondary {
-            flex: 1;
-            padding: 12px;
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            border: none;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .btn-secondary:hover {
-            background: var(--bg-tertiary);
-        }
-
-        .btn-primary-modal {
-            flex: 1;
-            padding: 12px;
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .btn-primary-modal:hover {
-            background: var(--primary-dark);
-        }
-
-        .alert {
-            padding: 12px 16px;
-            border-radius: 8px;
-            margin-bottom: 16px;
-            font-size: 14px;
-        }
-
-        .alert-success {
-            background: #d1fae5;
-            color: #065f46;
-            border-left: 4px solid #10b981;
-        }
-
-        .alert-warning {
-            background: #fef3c7;
-            color: #92400e;
-            border-left: 4px solid #f59e0b;
-        }
-
-        .alert-error {
-            background: #fee2e2;
-            color: #991b1b;
-            border-left: 4px solid #ef4444;
-        }
-
-        @media (max-width: 768px) {
-            .payment-container {
-                grid-template-columns: 1fr;
-            }
-
-            .history-table {
-                font-size: 12px;
-            }
-
-            .history-table th,
-            .history-table td {
-                padding: 8px;
-            }
-
-            .modal-content {
-                padding: 24px;
-            }
-        }
+      }
     </style>
-</head>
-<body class="dashboard-body">
+  </head>
+  <body class="dashboard-body">
     <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
     <aside class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <div class="sidebar-logo">
-                <img src="../assets/images/logo-DLSM.jpg" alt="DLSM Logo" class="logo-icon" style="height: 32px; width: auto; border-radius: 6px;">
-                <span class="logo-text">DLSM</span>
-            </div>
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <img
+            src="../assets/images/logo-DLSM.jpg"
+            alt="DLSM Logo"
+            class="logo-icon"
+            style="height: 32px; width: auto; border-radius: 6px"
+          />
+          <span class="logo-text">DLSM</span>
         </div>
+      </div>
 
-        <nav class="sidebar-nav">
-            <a href="dashboard.html" class="nav-item">
-                <span class="nav-icon">📊</span>
-                <span class="nav-text">Dashboard</span>
-            </a>
-            <a href="profile.html" class="nav-item">
-                <span class="nav-icon">👤</span>
-                <span class="nav-text">My Profile</span>
-            </a>
-            <a href="schedule.html" class="nav-item">
-                <span class="nav-icon">📅</span>
-                <span class="nav-text">Schedule</span>
-            </a>
-            <a href="progress.html" class="nav-item">
-                <span class="nav-icon">📈</span>
-                <span class="nav-text">My Progress</span>
-            </a>
-            <a href="exams.html" class="nav-item">
-                <span class="nav-icon">📝</span>
-                <span class="nav-text">Exams</span>
-            </a>
-            <a href="certificate.html" class="nav-item">
-                <span class="nav-icon">🎓</span>
-                <span class="nav-text">Certificate</span>
-            </a>
-            <a href="payments.html" class="nav-item active">
-                <span class="nav-icon">💳</span>
-                <span class="nav-text">Payments</span>
-            </a>
-        </nav>
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-item">
+          <span class="nav-icon">📊</span>
+          <span class="nav-text">Dashboard</span>
+        </a>
+        <a href="profile.html" class="nav-item">
+          <span class="nav-icon">👤</span>
+          <span class="nav-text">My Profile</span>
+        </a>
+        <a href="schedule.html" class="nav-item">
+          <span class="nav-icon">📅</span>
+          <span class="nav-text">Schedule</span>
+        </a>
+        <a href="progress.html" class="nav-item">
+          <span class="nav-icon">📈</span>
+          <span class="nav-text">My Progress</span>
+        </a>
+        <a href="exams.html" class="nav-item">
+          <span class="nav-icon">📝</span>
+          <span class="nav-text">Exams</span>
+        </a>
+        <a href="certificate.html" class="nav-item">
+          <span class="nav-icon">🎓</span>
+          <span class="nav-text">Certificate</span>
+        </a>
+        <a href="payments.html" class="nav-item active">
+          <span class="nav-icon">💳</span>
+          <span class="nav-text">Payments</span>
+        </a>
+      </nav>
 
-        <div class="sidebar-footer">
-            <button class="btn-logout" id="logoutBtn">
-                <span class="nav-icon">🚪</span>
-                <span class="nav-text">Logout</span>
-            </button>
-        </div>
+      <div class="sidebar-footer">
+        <button class="btn-logout" id="logoutBtn">
+          <span class="nav-icon">🚪</span>
+          <span class="nav-text">Logout</span>
+        </button>
+      </div>
     </aside>
 
     <main class="main-content">
-        <header class="topbar">
-            <div class="topbar-left">
-                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
-                <div>
-                    <h1 class="page-title">Payments & Billing</h1>
-                    <p class="page-subtitle">Manage your program fees and payment history</p>
-                </div>
-            </div>
-            <div class="topbar-right">
-                <div class="user-profile">
-                    <div class="user-avatar" id="topbarAvatar">👤</div>
-                    <div class="user-info">
-                        <span class="user-name" id="userName">Loading...</span>
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <div class="dashboard-container">
-            <div id="alertContainer"></div>
-
-            <div class="payment-container">
-                <!-- Pending Payment Card -->
-                <div class="payment-card">
-                    <h3>💰 Pending Payment</h3>
-                    <div class="payment-status">
-                        <span class="status-label">Status</span>
-                        <span class="status-value" id="pendingStatus">Loading...</span>
-                    </div>
-                    <div class="payment-status">
-                        <span class="status-label">Program</span>
-                        <span class="status-value" id="programName">Loading...</span>
-                    </div>
-                    <div class="amount-display" id="pendingAmount">ETB 0</div>
-                    <div class="payment-status">
-                        <span class="status-label">Due Date</span>
-                        <span class="status-value" id="dueDate">Loading...</span>
-                    </div>
-                    <div class="payment-status">
-                        <span class="status-label">Total Program Fee</span>
-                        <span class="status-value" id="totalFee">ETB 0</span>
-                    </div>
-                    <div class="payment-status">
-                        <span class="status-label">Already Paid</span>
-                        <span class="status-value" id="paidAmount">ETB 0</span>
-                    </div>
-
-                    <div class="payment-methods">
-                        <h4 style="margin: 16px 0 12px 0; font-size: 14px; font-weight: 600;">Payment Method</h4>
-                        <div class="method-group">
-                            <label class="method-label">
-                                <input type="radio" name="paymentMethod" value="bank" checked>
-                                <span class="method-name">🏦 Bank Transfer</span>
-                            </label>
-                        </div>
-                        <div class="method-group">
-                            <label class="method-label">
-                                <input type="radio" name="paymentMethod" value="mobile">
-                                <span class="method-name">📱 Mobile Money (Telebirr)</span>
-                            </label>
-                        </div>
-                        <div class="method-group">
-                            <label class="method-label">
-                                <input type="radio" name="paymentMethod" value="cash">
-                                <span class="method-name">💵 Cash Payment</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div style="margin-top: 20px; padding: 16px; background: var(--bg-secondary); border-radius: 8px; border-left: 4px solid var(--primary-color);">
-                        <p style="font-size: 12px; color: var(--text-secondary); margin: 0;">
-                            <strong>📝 Note:</strong> After payment, you'll need to upload a screenshot or receipt as proof. Our finance team will verify it within 24 hours.
-                        </p>
-                    </div>
-                    <button class="btn-pay" id="makePaymentBtn">Make Payment</button>
-                </div>
-
-                <!-- Payment Plan Card -->
-                <div class="payment-card">
-                    <h3>📋 Payment Plan</h3>
-                    <div class="payment-plan" id="paymentPlanContainer">
-                        <p style="text-align: center; color: var(--text-secondary);">Loading payment plan...</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Payment History Section -->
-            <div class="payment-card">
-                <h3>📜 Payment History</h3>
-                <div id="paymentHistoryContainer">
-                    <p style="text-align: center; color: var(--text-secondary);">Loading payment history...</p>
-                </div>
-            </div>
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+          <div>
+            <h1 class="page-title">Payments & Billing</h1>
+            <p class="page-subtitle">
+              Manage your program fees and payment history
+            </p>
+          </div>
         </div>
+        <div class="topbar-right">
+          <div class="user-profile">
+            <div class="user-avatar" id="topbarAvatar">👤</div>
+            <div class="user-info">
+              <span class="user-name" id="userName">Loading...</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="dashboard-container">
+        <div id="alertContainer"></div>
+
+        <div class="payment-container">
+          <!-- Pending Payment Card -->
+          <div class="payment-card">
+            <h3>💰 Pending Payment</h3>
+            <div class="payment-status">
+              <span class="status-label">Status</span>
+              <span class="status-value" id="pendingStatus">Loading...</span>
+            </div>
+            <div class="payment-status">
+              <span class="status-label">Program</span>
+              <span class="status-value" id="programName">Loading...</span>
+            </div>
+            <div class="amount-display" id="pendingAmount">ETB 0</div>
+            <div class="payment-status">
+              <span class="status-label">Due Date</span>
+              <span class="status-value" id="dueDate">Loading...</span>
+            </div>
+            <div class="payment-status">
+              <span class="status-label">Total Program Fee</span>
+              <span class="status-value" id="totalFee">ETB 0</span>
+            </div>
+            <div class="payment-status">
+              <span class="status-label">Already Paid</span>
+              <span class="status-value" id="paidAmount">ETB 0</span>
+            </div>
+
+            <div class="payment-methods">
+              <h4
+                style="margin: 16px 0 12px 0; font-size: 14px; font-weight: 600"
+              >
+                Payment Method
+              </h4>
+              <div class="method-group">
+                <label class="method-label">
+                  <input
+                    type="radio"
+                    name="paymentMethod"
+                    value="bank"
+                    checked
+                  />
+                  <span class="method-name">🏦 Bank Transfer</span>
+                </label>
+              </div>
+              <div class="method-group">
+                <label class="method-label">
+                  <input type="radio" name="paymentMethod" value="mobile" />
+                  <span class="method-name">📱 Mobile Money (Telebirr)</span>
+                </label>
+              </div>
+              <div class="method-group">
+                <label class="method-label">
+                  <input type="radio" name="paymentMethod" value="cash" />
+                  <span class="method-name">💵 Cash Payment</span>
+                </label>
+              </div>
+            </div>
+
+            <div
+              style="
+                margin-top: 20px;
+                padding: 16px;
+                background: var(--bg-secondary);
+                border-radius: 8px;
+                border-left: 4px solid var(--primary-color);
+              "
+            >
+              <p
+                style="font-size: 12px; color: var(--text-secondary); margin: 0"
+              >
+                <strong>📝 Note:</strong> After payment, you'll need to upload a
+                screenshot or receipt as proof. Our finance team will verify it
+                within 24 hours.
+              </p>
+            </div>
+            <button class="btn-pay" id="makePaymentBtn">Make Payment</button>
+          </div>
+
+          <!-- Payment Plan Card -->
+          <div class="payment-card">
+            <h3>📋 Payment Plan</h3>
+            <div class="payment-plan" id="paymentPlanContainer">
+              <p style="text-align: center; color: var(--text-secondary)">
+                Loading payment plan...
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Payment History Section -->
+        <div class="payment-card">
+          <h3>📜 Payment History</h3>
+          <div id="paymentHistoryContainer">
+            <p style="text-align: center; color: var(--text-secondary)">
+              Loading payment history...
+            </p>
+          </div>
+        </div>
+      </div>
     </main>
 
     <!-- Receipt Modal -->
     <div class="modal" id="receiptModal">
-        <div class="modal-content">
-            <div class="modal-header">📄 Payment Receipt</div>
-            <div class="modal-body" id="receiptContent">
-                <!-- Receipt details will be loaded here -->
-            </div>
-            <div class="modal-footer">
-                <button class="btn-secondary" onclick="closeReceiptModal()">Close</button>
-                <button class="btn-primary-modal" onclick="printReceipt()">Print Receipt</button>
-            </div>
+      <div class="modal-content">
+        <div class="modal-header">📄 Payment Receipt</div>
+        <div class="modal-body" id="receiptContent">
+          <!-- Receipt details will be loaded here -->
         </div>
+        <div class="modal-footer">
+          <button class="btn-secondary" onclick="closeReceiptModal()">
+            Close
+          </button>
+          <button class="btn-primary-modal" onclick="printReceipt()">
+            Print Receipt
+          </button>
+        </div>
+      </div>
     </div>
 
     <!-- Payment Modal -->
     <div class="modal" id="paymentModal">
-        <div class="modal-content">
-            <div class="modal-header">💳 Confirm Payment</div>
-            <div class="modal-body">
-                <div class="payment-status">
-                    <span class="status-label">Amount</span>
-                    <span class="status-value" id="confirmAmount">ETB 0</span>
-                </div>
-                <div class="payment-status">
-                    <span class="status-label">Method</span>
-                    <span class="status-value" id="confirmMethod">Bank Transfer</span>
-                </div>
-                <div class="payment-status">
-                    <span class="status-label">Program</span>
-                    <span class="status-value" id="confirmProgram">Loading...</span>
-                </div>
-                <div style="margin-top: 20px;">
-                    <label style="display: block; margin-bottom: 8px; font-weight: 600;">📸 Upload Payment Proof</label>
-                    <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 12px;">Upload a screenshot or receipt showing the transaction. This helps us verify your payment quickly.</p>
-                    <input type="file" id="proofFile" accept="image/*" style="display: block; margin-bottom: 12px; padding: 8px; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; width: 100%;">
-                    <div id="proofPreview" style="margin-bottom: 12px;"></div>
-                </div>
-                <div style="margin-top: 20px; padding: 12px; background: var(--bg-secondary); border-radius: 8px; font-size: 12px; color: var(--text-secondary);">
-                    <strong>ℹ️ Important:</strong> Make sure the proof clearly shows:
-                    <ul style="margin: 8px 0; padding-left: 20px;">
-                        <li>Transaction amount (ETB)</li>
-                        <li>School account name or reference</li>
-                        <li>Transaction date and time</li>
-                        <li>Transaction ID (if available)</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn-secondary" onclick="closePaymentModal()">Cancel</button>
-                <button class="btn-primary-modal" onclick="processPayment()">Submit Payment</button>
-            </div>
+      <div class="modal-content">
+        <div class="modal-header">💳 Confirm Payment</div>
+        <div class="modal-body">
+          <div class="payment-status">
+            <span class="status-label">Amount</span>
+            <span class="status-value" id="confirmAmount">ETB 0</span>
+          </div>
+          <div class="payment-status">
+            <span class="status-label">Method</span>
+            <span class="status-value" id="confirmMethod">Bank Transfer</span>
+          </div>
+          <div class="payment-status">
+            <span class="status-label">Program</span>
+            <span class="status-value" id="confirmProgram">Loading...</span>
+          </div>
+          <div style="margin-top: 20px">
+            <label style="display: block; margin-bottom: 8px; font-weight: 600"
+              >📸 Upload Payment Proof</label
+            >
+            <p
+              style="
+                font-size: 12px;
+                color: var(--text-secondary);
+                margin-bottom: 12px;
+              "
+            >
+              Upload a screenshot or receipt showing the transaction. This helps
+              us verify your payment quickly.
+            </p>
+            <input
+              type="file"
+              id="proofFile"
+              accept="image/*"
+              style="
+                display: block;
+                margin-bottom: 12px;
+                padding: 8px;
+                background: var(--bg-secondary);
+                border: 1px solid var(--border-color);
+                border-radius: 8px;
+                width: 100%;
+              "
+            />
+            <div id="proofPreview" style="margin-bottom: 12px"></div>
+          </div>
+          <div
+            style="
+              margin-top: 20px;
+              padding: 12px;
+              background: var(--bg-secondary);
+              border-radius: 8px;
+              font-size: 12px;
+              color: var(--text-secondary);
+            "
+          >
+            <strong>ℹ️ Important:</strong> Make sure the proof clearly shows:
+            <ul style="margin: 8px 0; padding-left: 20px">
+              <li>Transaction amount (ETB)</li>
+              <li>School account name or reference</li>
+              <li>Transaction date and time</li>
+              <li>Transaction ID (if available)</li>
+            </ul>
+          </div>
         </div>
+        <div class="modal-footer">
+          <button class="btn-secondary" onclick="closePaymentModal()">
+            Cancel
+          </button>
+          <button class="btn-primary-modal" onclick="processPayment()">
+            Submit Payment
+          </button>
+        </div>
+      </div>
     </div>
 
     <script src="../assets/js/auth.js"></script>
     <script src="../assets/js/api.js"></script>
     <script src="../assets/js/utils.js"></script>
     <script>
-        let currentPendingPayment = null;
-        let currentPaymentMethod = 'bank';
+      let currentPendingPayment = null;
+      let currentPaymentMethod = "bank";
 
-        // Initialize page
-        async function initPage() {
-            try {
-                // Load user info
-                const user = auth.getCurrentUser();
-                document.getElementById('userName').textContent = user.name || 'Student';
+      // Initialize page
+      async function initPage() {
+        try {
+          // Load user info
+          const user = auth.getCurrentUser();
+          document.getElementById("userName").textContent =
+            user.name || "Student";
 
-                // Load pending payment
-                await loadPendingPayment();
+          // Load pending payment
+          await loadPendingPayment();
 
-                // Load payment history
-                await loadPaymentHistory();
+          // Load payment history
+          await loadPaymentHistory();
 
-                // Setup event listeners
-                setupEventListeners();
-            } catch (error) {
-                console.error('Error initializing page:', error);
-                showAlert('Error loading page data', 'error');
-            }
+          // Setup event listeners
+          setupEventListeners();
+        } catch (error) {
+          console.error("Error initializing page:", error);
+          showAlert("Error loading page data", "error");
+        }
+      }
+
+      async function loadPendingPayment() {
+        try {
+          const response = await api.get("/student/payments/pending");
+          if (response.success && response.data) {
+            currentPendingPayment = response.data;
+
+            // Update pending payment card
+            document.getElementById("pendingStatus").textContent =
+              currentPendingPayment.remaining_amount > 0 ? "Pending" : "Paid";
+            document.getElementById("programName").textContent =
+              currentPendingPayment.program;
+            document.getElementById("pendingAmount").textContent =
+              `ETB ${currentPendingPayment.remaining_amount.toLocaleString()}`;
+            document.getElementById("dueDate").textContent =
+              currentPendingPayment.due_date;
+            document.getElementById("totalFee").textContent =
+              `ETB ${currentPendingPayment.program_fee.toLocaleString()}`;
+            document.getElementById("paidAmount").textContent =
+              `ETB ${currentPendingPayment.paid_amount.toLocaleString()}`;
+
+            // Update payment plan
+            updatePaymentPlan(currentPendingPayment.payment_plan);
+          }
+        } catch (error) {
+          console.error("Error loading pending payment:", error);
+          showAlert("Error loading payment information", "error");
+        }
+      }
+
+      function updatePaymentPlan(plan) {
+        const container = document.getElementById("paymentPlanContainer");
+        if (!plan || plan.length === 0) {
+          container.innerHTML =
+            '<p style="text-align: center; color: var(--text-secondary);">No payment plan available</p>';
+          return;
         }
 
-        async function loadPendingPayment() {
-            try {
-                const response = await api.get('/student/payments/pending');
-                if (response.success && response.data) {
-                    currentPendingPayment = response.data;
-                    
-                    // Update pending payment card
-                    document.getElementById('pendingStatus').textContent = 
-                        currentPendingPayment.remaining_amount > 0 ? 'Pending' : 'Paid';
-                    document.getElementById('programName').textContent = currentPendingPayment.program;
-                    document.getElementById('pendingAmount').textContent = 
-                        `ETB ${currentPendingPayment.remaining_amount.toLocaleString()}`;
-                    document.getElementById('dueDate').textContent = currentPendingPayment.due_date;
-                    document.getElementById('totalFee').textContent = 
-                        `ETB ${currentPendingPayment.program_fee.toLocaleString()}`;
-                    document.getElementById('paidAmount').textContent = 
-                        `ETB ${currentPendingPayment.paid_amount.toLocaleString()}`;
-
-                    // Update payment plan
-                    updatePaymentPlan(currentPendingPayment.payment_plan);
-                }
-            } catch (error) {
-                console.error('Error loading pending payment:', error);
-                showAlert('Error loading payment information', 'error');
-            }
-        }
-
-        function updatePaymentPlan(plan) {
-            const container = document.getElementById('paymentPlanContainer');
-            if (!plan || plan.length === 0) {
-                container.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">No payment plan available</p>';
-                return;
-            }
-
-            container.innerHTML = plan.map(item => `
+        container.innerHTML = plan
+          .map(
+            (item) => `
                 <div class="plan-item ${item.status}">
                     <div class="plan-info">
                         <div class="plan-title">Installment ${item.installment}</div>
@@ -676,34 +758,36 @@
                     <div class="plan-amount">ETB ${item.amount.toLocaleString()}</div>
                     <span class="plan-status-badge ${item.status}">${item.status.charAt(0).toUpperCase() + item.status.slice(1)}</span>
                 </div>
-            `).join('');
-        }
+            `,
+          )
+          .join("");
+      }
 
-        async function loadPaymentHistory() {
-            try {
-                const response = await api.get('/student/payments/history');
-                if (response.success && response.data) {
-                    updatePaymentHistory(response.data);
-                }
-            } catch (error) {
-                console.error('Error loading payment history:', error);
-                showAlert('Error loading payment history', 'error');
-            }
+      async function loadPaymentHistory() {
+        try {
+          const response = await api.get("/student/payments/history");
+          if (response.success && response.data) {
+            updatePaymentHistory(response.data);
+          }
+        } catch (error) {
+          console.error("Error loading payment history:", error);
+          showAlert("Error loading payment history", "error");
         }
+      }
 
-        function updatePaymentHistory(history) {
-            const container = document.getElementById('paymentHistoryContainer');
-            if (!history || history.length === 0) {
-                container.innerHTML = `
+      function updatePaymentHistory(history) {
+        const container = document.getElementById("paymentHistoryContainer");
+        if (!history || history.length === 0) {
+          container.innerHTML = `
                     <div class="empty-state">
                         <div class="empty-state-icon">📭</div>
                         <p>No payment history yet</p>
                     </div>
                 `;
-                return;
-            }
+          return;
+        }
 
-            container.innerHTML = `
+        container.innerHTML = `
                 <table class="history-table">
                     <thead>
                         <tr>
@@ -715,7 +799,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        ${history.map(item => `
+                        ${history
+                          .map(
+                            (item) => `
                             <tr>
                                 <td>${item.date}</td>
                                 <td>ETB ${item.amount.toLocaleString()}</td>
@@ -723,124 +809,146 @@
                                 <td><span class="status-badge ${item.status}">${item.status.charAt(0).toUpperCase() + item.status.slice(1)}</span></td>
                                 <td><a class="receipt-link" onclick="viewReceipt('${item.receipt}')">View</a></td>
                             </tr>
-                        `).join('')}
+                        `,
+                          )
+                          .join("")}
                     </tbody>
                 </table>
             `;
-        }
+      }
 
-        function setupEventListeners() {
-            // Payment method selection
-            document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
-                radio.addEventListener('change', (e) => {
-                    currentPaymentMethod = e.target.value;
-                });
+      function setupEventListeners() {
+        // Payment method selection
+        document
+          .querySelectorAll('input[name="paymentMethod"]')
+          .forEach((radio) => {
+            radio.addEventListener("change", (e) => {
+              currentPaymentMethod = e.target.value;
             });
+          });
 
-            // File preview
-            document.getElementById('proofFile').addEventListener('change', (e) => {
-                const file = e.target.files[0];
-                const preview = document.getElementById('proofPreview');
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = (event) => {
-                        preview.innerHTML = `<img src="${event.target.result}" style="max-width: 100%; max-height: 200px; border-radius: 8px;">`;
-                    };
-                    reader.readAsDataURL(file);
-                } else {
-                    preview.innerHTML = '';
-                }
-            });
-
-            // Make payment button
-            document.getElementById('makePaymentBtn').addEventListener('click', () => {
-                if (currentPendingPayment && currentPendingPayment.remaining_amount > 0) {
-                    openPaymentModal();
-                } else {
-                    showAlert('No pending payment', 'warning');
-                }
-            });
-
-            // Mobile menu
-            document.getElementById('mobileMenuBtn').addEventListener('click', toggleSidebar);
-            document.getElementById('sidebarBackdrop').addEventListener('click', closeSidebar);
-
-            // Logout
-            document.getElementById('logoutBtn').addEventListener('click', logout);
-        }
-
-        function openPaymentModal() {
-            const methodNames = {
-                'bank': 'Bank Transfer',
-                'mobile': 'Mobile Money (Telebirr)',
-                'cash': 'Cash Payment'
+        // File preview
+        document.getElementById("proofFile").addEventListener("change", (e) => {
+          const file = e.target.files[0];
+          const preview = document.getElementById("proofPreview");
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+              preview.innerHTML = `<img src="${event.target.result}" style="max-width: 100%; max-height: 200px; border-radius: 8px;">`;
             };
+            reader.readAsDataURL(file);
+          } else {
+            preview.innerHTML = "";
+          }
+        });
 
-            document.getElementById('confirmAmount').textContent = 
-                `ETB ${currentPendingPayment.remaining_amount.toLocaleString()}`;
-            document.getElementById('confirmMethod').textContent = methodNames[currentPaymentMethod];
-            document.getElementById('confirmProgram').textContent = currentPendingPayment.program;
-            document.getElementById('paymentModal').classList.add('active');
-        }
-
-        function closePaymentModal() {
-            document.getElementById('paymentModal').classList.remove('active');
-        }
-
-        async function processPayment() {
-            try {
-                const proofFile = document.getElementById('proofFile').files[0];
-                if (!proofFile) {
-                    showAlert('Please upload payment proof', 'warning');
-                    return;
-                }
-
-                const formData = new FormData();
-                formData.append('amount', currentPendingPayment.remaining_amount);
-                formData.append('method', currentPaymentMethod);
-                formData.append('program', currentPendingPayment.program);
-                formData.append('proof', proofFile);
-
-                const response = await api.post('/student/payments/make-payment', {
-                    amount: currentPendingPayment.remaining_amount,
-                    method: currentPaymentMethod,
-                    program: currentPendingPayment.program,
-                    proof_filename: proofFile.name
-                });
-
-                if (response.success) {
-                    closePaymentModal();
-                    showAlert('✅ Payment submitted! Transaction ID: ' + response.data.transaction_id + '. Our finance team will verify within 24 hours.', 'success');
-                    
-                    setTimeout(() => {
-                        loadPendingPayment();
-                        loadPaymentHistory();
-                    }, 1000);
-                } else {
-                    showAlert('Payment failed: ' + response.message, 'error');
-                }
-            } catch (error) {
-                console.error('Error processing payment:', error);
-                showAlert('Error processing payment', 'error');
+        // Make payment button
+        document
+          .getElementById("makePaymentBtn")
+          .addEventListener("click", () => {
+            if (
+              currentPendingPayment &&
+              currentPendingPayment.remaining_amount > 0
+            ) {
+              openPaymentModal();
+            } else {
+              showAlert("No pending payment", "warning");
             }
-        }
+          });
 
-        async function viewReceipt(receiptId) {
-            try {
-                const response = await api.get(`/student/payments/receipt/${receiptId}`);
-                if (response.success && response.data) {
-                    displayReceipt(response.data);
-                    document.getElementById('receiptModal').classList.add('active');
-                }
-            } catch (error) {
-                console.error('Error loading receipt:', error);
-                showAlert('Error loading receipt', 'error');
-            }
-        }
+        // Mobile menu
+        document
+          .getElementById("mobileMenuBtn")
+          .addEventListener("click", toggleSidebar);
+        document
+          .getElementById("sidebarBackdrop")
+          .addEventListener("click", closeSidebar);
 
-        function displayReceipt(receipt) {
-            const content = document.getElementById('receiptContent');
-            content.innerHTML = `
+        // Logout
+        document.getElementById("logoutBtn").addEventListener("click", logout);
+      }
+
+      function openPaymentModal() {
+        const methodNames = {
+          bank: "Bank Transfer",
+          mobile: "Mobile Money (Telebirr)",
+          cash: "Cash Payment",
+        };
+
+        document.getElementById("confirmAmount").textContent =
+          `ETB ${currentPendingPayment.remaining_amount.toLocaleString()}`;
+        document.getElementById("confirmMethod").textContent =
+          methodNames[currentPaymentMethod];
+        document.getElementById("confirmProgram").textContent =
+          currentPendingPayment.program;
+        document.getElementById("paymentModal").classList.add("active");
+      }
+
+      function closePaymentModal() {
+        document.getElementById("paymentModal").classList.remove("active");
+      }
+
+      async function processPayment() {
+        try {
+          const proofFile = document.getElementById("proofFile").files[0];
+          if (!proofFile) {
+            showAlert("Please upload payment proof", "warning");
+            return;
+          }
+
+          const formData = new FormData();
+          formData.append("amount", currentPendingPayment.remaining_amount);
+          formData.append("method", currentPaymentMethod);
+          formData.append("program", currentPendingPayment.program);
+          formData.append("proof", proofFile);
+
+          const response = await api.post("/student/payments/make-payment", {
+            amount: currentPendingPayment.remaining_amount,
+            method: currentPaymentMethod,
+            program: currentPendingPayment.program,
+            proof_filename: proofFile.name,
+          });
+
+          if (response.success) {
+            closePaymentModal();
+            showAlert(
+              "✅ Payment submitted! Transaction ID: " +
+                response.data.transaction_id +
+                ". Our finance team will verify within 24 hours.",
+              "success",
+            );
+
+            setTimeout(() => {
+              loadPendingPayment();
+              loadPaymentHistory();
+            }, 1000);
+          } else {
+            showAlert("Payment failed: " + response.message, "error");
+          }
+        } catch (error) {
+          console.error("Error processing payment:", error);
+          showAlert("Error processing payment", "error");
+        }
+      }
+
+      async function viewReceipt(receiptId) {
+        try {
+          const response = await api.get(
+            `/student/payments/receipt/${receiptId}`,
+          );
+          if (response.success && response.data) {
+            displayReceipt(response.data);
+            document.getElementById("receiptModal").classList.add("active");
+          }
+        } catch (error) {
+          console.error("Error loading receipt:", error);
+          showAlert("Error loading receipt", "error");
+        }
+      }
+
+      function displayReceipt(receipt) {
+        const content = document.getElementById("receiptContent");
+        content.innerHTML = `
                 <div class="receipt-detail">
                     <span class="receipt-detail-label">Receipt Number</span>
                     <span class="receipt-detail-value">${receipt.receipt_number}</span>
@@ -878,45 +986,44 @@
                     <span class="receipt-detail-value">${receipt.issued_by}</span>
                 </div>
             `;
-        }
+      }
 
-        function closeReceiptModal() {
-            document.getElementById('receiptModal').classList.remove('active');
-        }
+      function closeReceiptModal() {
+        document.getElementById("receiptModal").classList.remove("active");
+      }
 
-        function printReceipt() {
-            window.print();
-        }
+      function printReceipt() {
+        window.print();
+      }
 
-        function showAlert(message, type = 'info') {
-            const container = document.getElementById('alertContainer');
-            const alert = document.createElement('div');
-            alert.className = `alert alert-${type}`;
-            alert.textContent = message;
-            container.appendChild(alert);
+      function showAlert(message, type = "info") {
+        const container = document.getElementById("alertContainer");
+        const alert = document.createElement("div");
+        alert.className = `alert alert-${type}`;
+        alert.textContent = message;
+        container.appendChild(alert);
 
-            setTimeout(() => {
-                alert.remove();
-            }, 5000);
-        }
+        setTimeout(() => {
+          alert.remove();
+        }, 5000);
+      }
 
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('active');
-            document.getElementById('sidebarBackdrop').classList.toggle('active');
-        }
+      function toggleSidebar() {
+        document.getElementById("sidebar").classList.toggle("active");
+        document.getElementById("sidebarBackdrop").classList.toggle("active");
+      }
 
-        function closeSidebar() {
-            document.getElementById('sidebar').classList.remove('active');
-            document.getElementById('sidebarBackdrop').classList.remove('active');
-        }
+      function closeSidebar() {
+        document.getElementById("sidebar").classList.remove("active");
+        document.getElementById("sidebarBackdrop").classList.remove("active");
+      }
 
-        function logout() {
-            auth.logout();
-            window.location.href = '../login.html';
-        }
+      function logout() {
+        auth.logout();
+      }
 
-        // Initialize on page load
-        document.addEventListener('DOMContentLoaded', initPage);
+      // Initialize on page load
+      document.addEventListener("DOMContentLoaded", initPage);
     </script>
-</body>
+  </body>
 </html>
