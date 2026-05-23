@@ -42,6 +42,17 @@
     
     function redirectToLogin() {
         const currentPath = window.location.pathname;
+
+        if (window.location.protocol === 'file:' || window.location.origin === 'null') {
+            const pathname = currentPath.replace(/\\/g, '/');
+            const clientIndex = pathname.indexOf('/client/');
+
+            if (clientIndex !== -1) {
+                const relativePath = pathname.substring(clientIndex + '/client/'.length);
+                window.location.href = `http://localhost/Driver-License-School/client/login.html`;
+                return;
+            }
+        }
         
         if (currentPath.includes('login.html') || currentPath.includes('register.html') || currentPath.includes('index.html')) {
             return;

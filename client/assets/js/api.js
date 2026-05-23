@@ -2,7 +2,16 @@ const api = {
     DEMO_MODE: localStorage.getItem('DEMO_MODE') === 'true',
     baseUrl: (() => {
         const path = window.location.pathname;
-        const projectRoot = path.substring(0, path.lastIndexOf('/client'));
+        const isFileProtocol = window.location.protocol === 'file:' || window.location.origin === 'null';
+
+        if (isFileProtocol) {
+            return 'http://localhost:8000/api';
+        }
+
+        const projectRoot = path.includes('/client/')
+            ? path.substring(0, path.lastIndexOf('/client'))
+            : '';
+
         return `${window.location.origin}${projectRoot}/server/api`;
     })(),
 

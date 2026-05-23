@@ -1,8 +1,31 @@
+if (window.location.protocol === 'file:' || window.location.origin === 'null') {
+    const pathname = window.location.pathname.replace(/\\/g, '/');
+    const clientIndex = pathname.indexOf('/client/');
+
+    if (clientIndex !== -1) {
+        const relativePath = pathname.substring(clientIndex + '/client/'.length);
+        const targetUrl = `http://localhost/Driver-License-School/client/${relativePath}${window.location.search}${window.location.hash}`;
+
+        if (window.location.href !== targetUrl) {
+            window.location.replace(targetUrl);
+        }
+    }
+}
+
 const auth = {
     DEMO_MODE: localStorage.getItem('DEMO_MODE') === 'true',
     API_BASE_URL: (() => {
         const path = window.location.pathname;
-        const projectRoot = path.substring(0, path.lastIndexOf('/client'));
+        const isFileProtocol = window.location.protocol === 'file:' || window.location.origin === 'null';
+
+        if (isFileProtocol) {
+            return 'http://localhost:8000/api/auth';
+        }
+
+        const projectRoot = path.includes('/client/')
+            ? path.substring(0, path.lastIndexOf('/client'))
+            : '';
+
         return `${window.location.origin}${projectRoot}/server/api/auth`;
     })(),
     
@@ -177,6 +200,10 @@ const auth = {
     },
     
     redirectToDashboard(role) {
+        if (role && typeof role === 'object') {
+            role = role.role || role.user?.role || localStorage.getItem('role');
+        }
+
         if (!role) role = localStorage.getItem('role');
         if (!role) {
             window.location.href = 'login.html';

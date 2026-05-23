@@ -161,7 +161,7 @@ For XAMPP and phpMyAdmin on Windows, do this instead:
 4. Create a new database named `driver_license_school` with collation `utf8mb4_unicode_ci`.
 5. Open the `driver_license_school` database.
 6. Click **Import**.
-7. Choose [server/database/schema.sql](server/database/schema.sql).
+7. In the file picker, select `C:\xampp\htdocs\Driver-License-School\server\database\schema.sql` from your computer.
 8. Click **Import** to load the tables and seed data.
 
 Note: `schema.sql` already contains `CREATE DATABASE IF NOT EXISTS driver_license_school`, so if you import it directly in phpMyAdmin it can create the database for you as well.

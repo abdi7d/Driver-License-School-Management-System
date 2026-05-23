@@ -1,523 +1,558 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Register - DLSM Ethiopia</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/dark-mode.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/dark-mode.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <script src="assets/js/theme.js"></script>
     <style>
-        .modern-auth-page {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #e8eef3;
-            padding: 40px 20px;
+      .modern-auth-page {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #e8eef3;
+        padding: 40px 20px;
+      }
+
+      .modern-auth-card {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 550px;
+        padding: 50px 50px 40px;
+        animation: slideUp 0.5s ease;
+      }
+
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
         }
-        
-        .modern-auth-card {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 550px;
-            padding: 50px 50px 40px;
-            animation: slideUp 0.5s ease;
+        to {
+          opacity: 1;
+          transform: translateY(0);
         }
-        
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+      }
+
+      .auth-logo {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .auth-logo img {
+        height: 80px;
+        width: auto;
+      }
+
+      .auth-title {
+        font-size: 28px;
+        font-weight: 700;
+        color: #1a1a1a;
+        text-align: center;
+        margin-bottom: 8px;
+        letter-spacing: -0.5px;
+      }
+
+      .auth-subtitle {
+        font-size: 15px;
+        color: #4b5563;
+        text-align: center;
+        margin-bottom: 35px;
+        font-weight: 500;
+      }
+
+      .step-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: #1a1a1a;
+        margin-bottom: 8px;
+      }
+
+      .step-description {
+        font-size: 14px;
+        color: #6b7280;
+        margin-bottom: 25px;
+        font-weight: 500;
+      }
+
+      .modern-form-group {
+        margin-bottom: 20px;
+      }
+
+      .modern-label {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+        color: #1f2937;
+        margin-bottom: 8px;
+      }
+
+      .modern-input {
+        width: 100%;
+        padding: 12px 16px;
+        border: 1.5px solid #d1d5db;
+        border-radius: 6px;
+        font-size: 14px;
+        transition: all 0.3s;
+        font-family: "Inter", sans-serif;
+        background: #ffffff;
+        color: #1a1a1a;
+      }
+
+      .modern-input:focus {
+        outline: none;
+        border-color: #1e40af;
+        background: #ffffff;
+        box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+      }
+
+      .modern-btn {
+        width: 100%;
+        padding: 13px;
+        background: #0d6efd;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 15px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      .modern-btn:hover {
+        background: #0b5ed7;
+      }
+
+      .form-step {
+        display: none;
+      }
+
+      .form-step.active {
+        display: block;
+        animation: fadeIn 0.3s;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
         }
-        
-        .auth-logo {
-            text-align: center;
-            margin-bottom: 20px;
+        to {
+          opacity: 1;
+          transform: translateY(0);
         }
-        
-        .auth-logo img {
-            height: 80px;
-            width: auto;
-        }
-        
-        .auth-title {
-            font-size: 28px;
-            font-weight: 700;
-            color: #1a1a1a;
-            text-align: center;
-            margin-bottom: 8px;
-            letter-spacing: -0.5px;
-        }
-        
-        .auth-subtitle {
-            font-size: 15px;
-            color: #4b5563;
-            text-align: center;
-            margin-bottom: 35px;
-            font-weight: 500;
-        }
-        
-        .step-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: #1a1a1a;
-            margin-bottom: 8px;
-        }
-        
-        .step-description {
-            font-size: 14px;
-            color: #6b7280;
-            margin-bottom: 25px;
-            font-weight: 500;
-        }
-        
-        .modern-form-group {
-            margin-bottom: 20px;
-        }
-        
-        .modern-label {
-            display: block;
-            font-size: 14px;
-            font-weight: 600;
-            color: #1f2937;
-            margin-bottom: 8px;
-        }
-        
-        .modern-input {
-            width: 100%;
-            padding: 12px 16px;
-            border: 1.5px solid #d1d5db;
-            border-radius: 6px;
-            font-size: 14px;
-            transition: all 0.3s;
-            font-family: 'Inter', sans-serif;
-            background: #ffffff;
-            color: #1a1a1a;
-        }
-        
-        .modern-input:focus {
-            outline: none;
-            border-color: #1e40af;
-            background: #ffffff;
-            box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
-        }
-        
-        .modern-btn {
-            width: 100%;
-            padding: 13px;
-            background: #0d6efd;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 15px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        
-        .modern-btn:hover {
-            background: #0b5ed7;
-        }
-        
-        .form-step {
-            display: none;
-        }
-        
-        .form-step.active {
-            display: block;
-            animation: fadeIn 0.3s;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .step-buttons {
-            display: flex;
-            gap: 12px;
-            margin-top: 25px;
-        }
-        
-        .btn-secondary {
-            background: #6c757d;
-            color: white;
-            border: none;
-            padding: 13px 24px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 15px;
-            font-weight: 500;
-            transition: all 0.3s;
-        }
-        
-        .btn-secondary:hover {
-            background: #5a6268;
-        }
-        
-        .auth-footer-link {
-            text-align: center;
-            font-size: 14px;
-            color: #374151;
-            margin-top: 25px;
-            font-weight: 500;
-        }
-        
-        .auth-footer-link a {
-            color: #1e40af;
-            text-decoration: none;
-            font-weight: 600;
-        }
-        
-        .auth-footer-link a:hover {
-            text-decoration: underline;
-        }
-        
-        .step-indicator {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 30px;
-            padding-top: 25px;
-            border-top: 1px solid #e8eef3;
-        }
-        
-        .step {
-            text-align: center;
-        }
-        
-        .step-circle {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: #e8eef3;
-            color: #8a9ba8;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 8px;
-            font-weight: 600;
-            font-size: 16px;
-            transition: all 0.3s;
-        }
-        
-        .step.active .step-circle {
-            background: #0d6efd;
-            color: white;
-        }
-        
-        .step.completed .step-circle {
-            background: #20c997;
-            color: white;
-        }
-        
-        .step-label {
-            font-size: 12px;
-            color: #6b7280;
-            font-weight: 600;
-        }
-        
-        .step.active .step-label {
-            color: #1e40af;
-            font-weight: 700;
-        }
-        
-        .error-message {
-            color: #dc3545;
-            font-size: 12px;
-            margin-top: 5px;
-        }
-        
-        .modern-checkbox-group {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 20px;
-        }
-        
-        .modern-checkbox-group input {
-            width: 16px;
-            height: 16px;
-            cursor: pointer;
-        }
-        
-        .modern-checkbox-group label {
-            font-size: 13px;
-            color: #374151;
-            cursor: pointer;
-            font-weight: 500;
-        }
-        
-        .modern-checkbox-group a {
-            color: #1e40af;
-            text-decoration: none;
-            font-weight: 600;
-        }
+      }
+
+      .step-buttons {
+        display: flex;
+        gap: 12px;
+        margin-top: 25px;
+      }
+
+      .btn-secondary {
+        background: #6c757d;
+        color: white;
+        border: none;
+        padding: 13px 24px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: 500;
+        transition: all 0.3s;
+      }
+
+      .btn-secondary:hover {
+        background: #5a6268;
+      }
+
+      .auth-footer-link {
+        text-align: center;
+        font-size: 14px;
+        color: #374151;
+        margin-top: 25px;
+        font-weight: 500;
+      }
+
+      .auth-footer-link a {
+        color: #1e40af;
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      .auth-footer-link a:hover {
+        text-decoration: underline;
+      }
+
+      .step-indicator {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 30px;
+        padding-top: 25px;
+        border-top: 1px solid #e8eef3;
+      }
+
+      .step {
+        text-align: center;
+      }
+
+      .step-circle {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        background: #e8eef3;
+        color: #8a9ba8;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 8px;
+        font-weight: 600;
+        font-size: 16px;
+        transition: all 0.3s;
+      }
+
+      .step.active .step-circle {
+        background: #0d6efd;
+        color: white;
+      }
+
+      .step.completed .step-circle {
+        background: #20c997;
+        color: white;
+      }
+
+      .step-label {
+        font-size: 12px;
+        color: #6b7280;
+        font-weight: 600;
+      }
+
+      .step.active .step-label {
+        color: #1e40af;
+        font-weight: 700;
+      }
+
+      .error-message {
+        color: #dc3545;
+        font-size: 12px;
+        margin-top: 5px;
+      }
+
+      .modern-checkbox-group {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 20px;
+      }
+
+      .modern-checkbox-group input {
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+      }
+
+      .modern-checkbox-group label {
+        font-size: 13px;
+        color: #374151;
+        cursor: pointer;
+        font-weight: 500;
+      }
+
+      .modern-checkbox-group a {
+        color: #1e40af;
+        text-decoration: none;
+        font-weight: 600;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="modern-auth-page">
-        <div class="modern-auth-card">
-            <div class="auth-logo">
-                <img src="assets/images/logo-DLSM.jpg" alt="DLSM Ethiopia">
-            </div>
-            
-            <h1 class="auth-title">Create Account</h1>
-            <p class="auth-subtitle">Join Ethiopia's leading driving school</p>
-            
-            <form id="registerForm">
-                
-                <div class="form-step active" data-step="1">
-                    <h3 class="step-title">Personal Information</h3>
-                    <p class="step-description">Let's start with your basic details</p>
-
-                    <div class="modern-form-group">
-                        <label for="firstName" class="modern-label">First Name</label>
-                        <input 
-                            type="text" 
-                            id="firstName" 
-                            class="modern-input" 
-                            placeholder="Enter your first name"
-                            required
-                        >
-                        <span class="error-message" id="firstNameError"></span>
-                    </div>
-
-                    <div class="modern-form-group">
-                        <label for="lastName" class="modern-label">Last Name</label>
-                        <input 
-                            type="text" 
-                            id="lastName" 
-                            class="modern-input" 
-                            placeholder="Enter your last name"
-                            required
-                        >
-                        <span class="error-message" id="lastNameError"></span>
-                    </div>
-
-                    <div class="modern-form-group">
-                        <label for="nationalId" class="modern-label">National ID</label>
-                        <input 
-                            type="text" 
-                            id="nationalId" 
-                            class="modern-input" 
-                            placeholder="Enter your national ID number"
-                            required
-                        >
-                        <span class="error-message" id="nationalIdError"></span>
-                    </div>
-
-                    <div class="modern-form-group">
-                        <label for="dateOfBirth" class="modern-label">Date of Birth</label>
-                        <input 
-                            type="date" 
-                            id="dateOfBirth" 
-                            class="modern-input"
-                            placeholder="mm/dd/yyyy"
-                            required
-                        >
-                        <span class="error-message" id="dateOfBirthError"></span>
-                    </div>
-
-                    <div class="step-buttons">
-                        <button type="button" class="modern-btn" onclick="nextStep()">
-                            Next →
-                        </button>
-                    </div>
-                </div>
-
-                
-                <div class="form-step" data-step="2">
-                    <h3 class="step-title">Contact</h3>
-                    <p class="step-description">How can we reach you?</p>
-
-                    <div class="modern-form-group">
-                        <label for="email" class="modern-label">Email Address</label>
-                        <input 
-                            type="email" 
-                            id="email" 
-                            class="modern-input" 
-                            placeholder="your.email@example.com"
-                            required
-                        >
-                        <span class="error-message" id="emailError"></span>
-                    </div>
-
-                    <div class="modern-form-group">
-                        <label for="phone" class="modern-label">Phone Number</label>
-                        <input 
-                            type="tel" 
-                            id="phone" 
-                            class="modern-input" 
-                            placeholder="+251 9XX XXX XXX"
-                            required
-                        >
-                        <span class="error-message" id="phoneError"></span>
-                    </div>
-
-                    <div class="modern-form-group">
-                        <label for="region" class="modern-label">Region</label>
-                        <select id="region" class="modern-input" required>
-                            <option value="">Select Region</option>
-                            <option value="Addis Ababa">Addis Ababa</option>
-                            <option value="Afar">Afar</option>
-                            <option value="Amhara">Amhara</option>
-                            <option value="Benishangul-Gumuz">Benishangul-Gumuz</option>
-                            <option value="Dire Dawa">Dire Dawa</option>
-                            <option value="Gambela">Gambela</option>
-                            <option value="Harari">Harari</option>
-                            <option value="Oromia">Oromia</option>
-                            <option value="Sidama">Sidama</option>
-                            <option value="Somali">Somali</option>
-                            <option value="Southern Nations">Southern Nations</option>
-                            <option value="Tigray">Tigray</option>
-                        </select>
-                        <span class="error-message" id="regionError"></span>
-                    </div>
-
-                    <div class="modern-form-group">
-                        <label for="city" class="modern-label">City</label>
-                        <input 
-                            type="text" 
-                            id="city" 
-                            class="modern-input" 
-                            placeholder="Enter your city"
-                            required
-                        >
-                        <span class="error-message" id="cityError"></span>
-                    </div>
-
-                    <div class="step-buttons">
-                        <button type="button" class="btn-secondary" onclick="prevStep()">
-                            ← Previous
-                        </button>
-                        <button type="button" class="modern-btn" style="flex: 1;" onclick="nextStep()">
-                            Next →
-                        </button>
-                    </div>
-                </div>
-
-                
-                <div class="form-step" data-step="3">
-                    <h3 class="step-title">License</h3>
-                    <p class="step-description">Choose your training program</p>
-
-                    <div class="modern-form-group">
-                        <label for="licenseClass" class="modern-label">What do you want to learn?</label>
-                        <select id="licenseClass" class="modern-input" required>
-                            <option value="">Select License Type</option>
-                            <option value="1">Motorcycle (Level 1)</option>
-                            <option value="2">Private Car (Level 2)</option>
-                            <option value="3">Heavy Truck (Level 3)</option>
-                            <option value="4">People Transportation (Level 4)</option>
-                            <option value="5">Bus Driver (Level 5)</option>
-                        </select>
-                        <span class="error-message" id="licenseClassError"></span>
-                    </div>
-
-                    <div class="modern-form-group">
-                        <label for="experience" class="modern-label">Your Driving Experience</label>
-                        <select id="experience" class="modern-input" required>
-                            <option value="beginner">Beginner (Never driven before)</option>
-                            <option value="some">Some experience (Driven before)</option>
-                            <option value="experienced">Experienced (Upgrading license)</option>
-                        </select>
-                    </div>
-
-                    <div class="step-buttons">
-                        <button type="button" class="btn-secondary" onclick="prevStep()">
-                            ← Previous
-                        </button>
-                        <button type="button" class="modern-btn" style="flex: 1;" onclick="nextStep()">
-                            Next →
-                        </button>
-                    </div>
-                </div>
-
-                
-                <div class="form-step" data-step="4">
-                    <h3 class="step-title">Security</h3>
-                    <p class="step-description">Create a secure password</p>
-
-                    <div class="modern-form-group">
-                        <label for="password" class="modern-label">Password</label>
-                        <input 
-                            type="password" 
-                            id="password" 
-                            class="modern-input" 
-                            placeholder="Minimum 8 characters"
-                            required
-                        >
-                        <span class="error-message" id="passwordError"></span>
-                    </div>
-
-                    <div class="modern-form-group">
-                        <label for="confirmPassword" class="modern-label">Confirm Password</label>
-                        <input 
-                            type="password" 
-                            id="confirmPassword" 
-                            class="modern-input" 
-                            placeholder="Re-enter your password"
-                            required
-                        >
-                        <span class="error-message" id="confirmPasswordError"></span>
-                    </div>
-
-                    <div class="modern-checkbox-group">
-                        <input type="checkbox" id="terms" required>
-                        <label for="terms">
-                            I agree to the <a href="#">Terms and Conditions</a>
-                        </label>
-                    </div>
-
-                    <div class="step-buttons">
-                        <button type="button" class="btn-secondary" onclick="prevStep()">
-                            ← Previous
-                        </button>
-                        <button type="submit" class="modern-btn" style="flex: 1;" id="registerBtn">
-                            Create Account
-                        </button>
-                    </div>
-                </div>
-
-                <input type="hidden" id="role" value="student">
-
-                <div class="auth-footer-link">
-                    Already have an account? <a href="login.html">Sign In</a>
-                </div>
-            </form>
-
-            
-            <div class="step-indicator">
-                <div class="step active" data-step="1">
-                    <div class="step-circle">1</div>
-                    <div class="step-label">Personal<br>Info</div>
-                </div>
-                <div class="step" data-step="2">
-                    <div class="step-circle">2</div>
-                    <div class="step-label">Contact</div>
-                </div>
-                <div class="step" data-step="3">
-                    <div class="step-circle">3</div>
-                    <div class="step-label">License</div>
-                </div>
-                <div class="step" data-step="4">
-                    <div class="step-circle">4</div>
-                    <div class="step-label">Security</div>
-                </div>
-            </div>
+      <div class="modern-auth-card">
+        <div class="auth-logo">
+          <img src="assets/images/logo-DLSM.jpg" alt="DLSM Ethiopia" />
         </div>
+
+        <h1 class="auth-title">Create Account</h1>
+        <p class="auth-subtitle">Join Ethiopia's leading driving school</p>
+
+        <form id="registerForm">
+          <div class="form-step active" data-step="1">
+            <h3 class="step-title">Personal Information</h3>
+            <p class="step-description">Let's start with your basic details</p>
+
+            <div class="modern-form-group">
+              <label for="firstName" class="modern-label">First Name</label>
+              <input
+                type="text"
+                id="firstName"
+                class="modern-input"
+                placeholder="Enter your first name"
+                required
+              />
+              <span class="error-message" id="firstNameError"></span>
+            </div>
+
+            <div class="modern-form-group">
+              <label for="lastName" class="modern-label">Last Name</label>
+              <input
+                type="text"
+                id="lastName"
+                class="modern-input"
+                placeholder="Enter your last name"
+                required
+              />
+              <span class="error-message" id="lastNameError"></span>
+            </div>
+
+            <div class="modern-form-group">
+              <label for="nationalId" class="modern-label">National ID</label>
+              <input
+                type="text"
+                id="nationalId"
+                class="modern-input"
+                placeholder="Enter your national ID number"
+                required
+              />
+              <span class="error-message" id="nationalIdError"></span>
+            </div>
+
+            <div class="modern-form-group">
+              <label for="dateOfBirth" class="modern-label"
+                >Date of Birth</label
+              >
+              <input
+                type="date"
+                id="dateOfBirth"
+                class="modern-input"
+                placeholder="mm/dd/yyyy"
+                required
+              />
+              <span class="error-message" id="dateOfBirthError"></span>
+            </div>
+
+            <div class="step-buttons">
+              <button type="button" class="modern-btn" onclick="nextStep()">
+                Next →
+              </button>
+            </div>
+          </div>
+
+          <div class="form-step" data-step="2">
+            <h3 class="step-title">Contact</h3>
+            <p class="step-description">How can we reach you?</p>
+
+            <div class="modern-form-group">
+              <label for="email" class="modern-label">Email Address</label>
+              <input
+                type="email"
+                id="email"
+                class="modern-input"
+                placeholder="your.email@example.com"
+                required
+              />
+              <span class="error-message" id="emailError"></span>
+            </div>
+
+            <div class="modern-form-group">
+              <label for="phone" class="modern-label">Phone Number</label>
+              <input
+                type="tel"
+                id="phone"
+                class="modern-input"
+                placeholder="+251 9XX XXX XXX"
+                required
+              />
+              <span class="error-message" id="phoneError"></span>
+            </div>
+
+            <div class="modern-form-group">
+              <label for="region" class="modern-label">Region</label>
+              <select id="region" class="modern-input" required>
+                <option value="">Select Region</option>
+                <option value="Addis Ababa">Addis Ababa</option>
+                <option value="Afar">Afar</option>
+                <option value="Amhara">Amhara</option>
+                <option value="Benishangul-Gumuz">Benishangul-Gumuz</option>
+                <option value="Dire Dawa">Dire Dawa</option>
+                <option value="Gambela">Gambela</option>
+                <option value="Harari">Harari</option>
+                <option value="Oromia">Oromia</option>
+                <option value="Sidama">Sidama</option>
+                <option value="Somali">Somali</option>
+                <option value="Southern Nations">Southern Nations</option>
+                <option value="Tigray">Tigray</option>
+              </select>
+              <span class="error-message" id="regionError"></span>
+            </div>
+
+            <div class="modern-form-group">
+              <label for="city" class="modern-label">City</label>
+              <input
+                type="text"
+                id="city"
+                class="modern-input"
+                placeholder="Enter your city"
+                required
+              />
+              <span class="error-message" id="cityError"></span>
+            </div>
+
+            <div class="step-buttons">
+              <button type="button" class="btn-secondary" onclick="prevStep()">
+                ← Previous
+              </button>
+              <button
+                type="button"
+                class="modern-btn"
+                style="flex: 1"
+                onclick="nextStep()"
+              >
+                Next →
+              </button>
+            </div>
+          </div>
+
+          <div class="form-step" data-step="3">
+            <h3 class="step-title">License</h3>
+            <p class="step-description">Choose your training program</p>
+
+            <div class="modern-form-group">
+              <label for="licenseClass" class="modern-label"
+                >What do you want to learn?</label
+              >
+              <select id="licenseClass" class="modern-input" required>
+                <option value="">Select License Type</option>
+                <option value="1">Motorcycle (Level 1)</option>
+                <option value="2">Private Car (Level 2)</option>
+                <option value="3">Heavy Truck (Level 3)</option>
+                <option value="4">People Transportation (Level 4)</option>
+                <option value="5">Bus Driver (Level 5)</option>
+              </select>
+              <span class="error-message" id="licenseClassError"></span>
+            </div>
+
+            <div class="modern-form-group">
+              <label for="experience" class="modern-label"
+                >Your Driving Experience</label
+              >
+              <select id="experience" class="modern-input" required>
+                <option value="beginner">Beginner (Never driven before)</option>
+                <option value="some">Some experience (Driven before)</option>
+                <option value="experienced">
+                  Experienced (Upgrading license)
+                </option>
+              </select>
+            </div>
+
+            <div class="step-buttons">
+              <button type="button" class="btn-secondary" onclick="prevStep()">
+                ← Previous
+              </button>
+              <button
+                type="button"
+                class="modern-btn"
+                style="flex: 1"
+                onclick="nextStep()"
+              >
+                Next →
+              </button>
+            </div>
+          </div>
+
+          <div class="form-step" data-step="4">
+            <h3 class="step-title">Security</h3>
+            <p class="step-description">Create a secure password</p>
+
+            <div class="modern-form-group">
+              <label for="password" class="modern-label">Password</label>
+              <input
+                type="password"
+                id="password"
+                class="modern-input"
+                placeholder="Minimum 8 characters"
+                required
+              />
+              <span class="error-message" id="passwordError"></span>
+            </div>
+
+            <div class="modern-form-group">
+              <label for="confirmPassword" class="modern-label"
+                >Confirm Password</label
+              >
+              <input
+                type="password"
+                id="confirmPassword"
+                class="modern-input"
+                placeholder="Re-enter your password"
+                required
+              />
+              <span class="error-message" id="confirmPasswordError"></span>
+            </div>
+
+            <div class="modern-checkbox-group">
+              <input type="checkbox" id="terms" required />
+              <label for="terms">
+                I agree to the <a href="#">Terms and Conditions</a>
+              </label>
+            </div>
+
+            <div class="step-buttons">
+              <button type="button" class="btn-secondary" onclick="prevStep()">
+                ← Previous
+              </button>
+              <button
+                type="submit"
+                class="modern-btn"
+                style="flex: 1"
+                id="registerBtn"
+              >
+                Create Account
+              </button>
+            </div>
+          </div>
+
+          <input type="hidden" id="role" value="student" />
+
+          <div class="auth-footer-link">
+            Already have an account? <a href="login.html">Sign In</a>
+          </div>
+        </form>
+
+        <div class="step-indicator">
+          <div class="step active" data-step="1">
+            <div class="step-circle">1</div>
+            <div class="step-label">Personal<br />Info</div>
+          </div>
+          <div class="step" data-step="2">
+            <div class="step-circle">2</div>
+            <div class="step-label">Contact</div>
+          </div>
+          <div class="step" data-step="3">
+            <div class="step-circle">3</div>
+            <div class="step-label">License</div>
+          </div>
+          <div class="step" data-step="4">
+            <div class="step-circle">4</div>
+            <div class="step-label">Security</div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
-        <div class="loading-spinner"></div>
+    <div id="loadingOverlay" class="loading-overlay" style="display: none">
+      <div class="loading-spinner"></div>
     </div>
 
     <div id="toast" class="toast"></div>
@@ -526,216 +561,247 @@
     <script src="assets/js/auth.js"></script>
     <script src="assets/js/api.js"></script>
     <script>
-        let currentStep = 1;
-        const totalSteps = 4;
+      let currentStep = 1;
+      const totalSteps = 4;
 
-        function updateStepIndicator() {
-            document.querySelectorAll('.step').forEach((step, index) => {
-                const stepNum = index + 1;
-                if (stepNum < currentStep) {
-                    step.classList.add('completed');
-                    step.classList.remove('active');
-                } else if (stepNum === currentStep) {
-                    step.classList.add('active');
-                    step.classList.remove('completed');
-                } else {
-                    step.classList.remove('active', 'completed');
-                }
-            });
-
-            document.querySelectorAll('.form-step').forEach((step, index) => {
-                if (index + 1 === currentStep) {
-                    step.classList.add('active');
-                } else {
-                    step.classList.remove('active');
-                }
-            });
-        }
-
-        function validateStep(step) {
-            let isValid = true;
-            const stepElement = document.querySelector(`.form-step[data-step="${step}"]`);
-            const inputs = stepElement.querySelectorAll('input[required], select[required]');
-
-            inputs.forEach(input => {
-                if (!input.value.trim()) {
-                    isValid = false;
-                    const errorId = input.id + 'Error';
-                    const errorElement = document.getElementById(errorId);
-                    if (errorElement) {
-                        errorElement.textContent = 'This field is required';
-                    }
-                } else {
-                    const errorId = input.id + 'Error';
-                    const errorElement = document.getElementById(errorId);
-                    if (errorElement) {
-                        errorElement.textContent = '';
-                    }
-                }
-            });
-
-            if (step === 1) {
-                const firstName = document.getElementById('firstName').value.trim();
-                const lastName = document.getElementById('lastName').value.trim();
-                const nationalId = document.getElementById('nationalId').value.trim();
-                const dateOfBirth = document.getElementById('dateOfBirth').value;
-
-                if (firstName.length < 2) {
-                    document.getElementById('firstNameError').textContent = 'First name is too short';
-                    isValid = false;
-                }
-
-                if (lastName.length < 2) {
-                    document.getElementById('lastNameError').textContent = 'Last name is too short';
-                    isValid = false;
-                }
-
-                if (nationalId.length < 5) {
-                    document.getElementById('nationalIdError').textContent = 'National ID is required';
-                    isValid = false;
-                }
-
-                if (dateOfBirth) {
-                    const today = new Date();
-                    const birthDate = new Date(dateOfBirth);
-                    let age = today.getFullYear() - birthDate.getFullYear();
-                    const monthDiff = today.getMonth() - birthDate.getMonth();
-                    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-                        age--;
-                    }
-                    if (age < 18) {
-                        document.getElementById('dateOfBirthError').textContent = 'You must be at least 18 years old';
-                        isValid = false;
-                    }
-                }
-            }
-
-            if (step === 2) {
-                const email = document.getElementById('email').value.trim();
-                const phone = document.getElementById('phone').value.trim();
-
-                if (!utils.isValidEmail(email)) {
-                    document.getElementById('emailError').textContent = 'Invalid email format';
-                    isValid = false;
-                }
-
-                if (phone.length < 10) {
-                    document.getElementById('phoneError').textContent = 'Invalid phone number';
-                    isValid = false;
-                }
-            }
-
-            if (step === 4) {
-                const password = document.getElementById('password').value;
-                const confirmPassword = document.getElementById('confirmPassword').value;
-
-                if (password.length < 8) {
-                    document.getElementById('passwordError').textContent = 'Password must be at least 8 characters';
-                    isValid = false;
-                }
-
-                if (password !== confirmPassword) {
-                    document.getElementById('confirmPasswordError').textContent = 'Passwords do not match';
-                    isValid = false;
-                }
-            }
-
-            return isValid;
-        }
-
-        function nextStep() {
-            if (validateStep(currentStep)) {
-                if (currentStep < totalSteps) {
-                    currentStep++;
-                    updateStepIndicator();
-                    window.scrollTo(0, 0);
-                }
-            }
-        }
-
-        function prevStep() {
-            if (currentStep > 1) {
-                currentStep--;
-                updateStepIndicator();
-                window.scrollTo(0, 0);
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            // Redirect if already logged in
-            if (auth.isAuthenticated()) {
-                const user = auth.getCurrentUser();
-                auth.redirectToDashboard(user);
-                return;
-            }
-            
-            const form = document.getElementById('registerForm');
-
-            form.addEventListener('submit', async (e) => {
-                e.preventDefault();
-
-                if (!validateStep(4)) {
-                    return;
-                }
-
-                const terms = document.getElementById('terms').checked;
-                if (!terms) {
-                    utils.showNotification('Please accept the terms and conditions', 'error');
-                    return;
-                }
-
-                const firstName = document.getElementById('firstName').value.trim();
-                const lastName = document.getElementById('lastName').value.trim();
-                const email = document.getElementById('email').value.trim();
-                const phone = document.getElementById('phone').value.trim();
-                const nationalId = document.getElementById('nationalId').value.trim();
-                const dateOfBirth = document.getElementById('dateOfBirth').value;
-                const region = document.getElementById('region').value;
-                const city = document.getElementById('city').value.trim();
-                const password = document.getElementById('password').value;
-                const licenseClass = document.getElementById('licenseClass').value;
-                const experience = document.getElementById('experience').value;
-
-                document.getElementById('loadingOverlay').style.display = 'flex';
-                document.getElementById('registerBtn').disabled = true;
-                document.getElementById('registerBtn').textContent = 'Creating Account...';
-
-                try {
-                    const response = await auth.register({
-                        first_name: firstName,
-                        last_name: lastName,
-                        email: email,
-                        phone: phone,
-                        national_id: nationalId,
-                        date_of_birth: dateOfBirth,
-                        region: region,
-                        city: city,
-                        password: password,
-                        role: 'student',
-                        license_class: licenseClass,
-                        experience: experience
-                    });
-
-                    if (response.success) {
-                        utils.showNotification('Account created! Pending admin approval. Redirecting to login...', 'success');
-                        setTimeout(() => {
-                            window.location.href = 'login.html';
-                        }, 1500);
-                    } else {
-                        utils.showNotification(response.message || 'Registration failed', 'error');
-                        document.getElementById('registerBtn').disabled = false;
-                        document.getElementById('registerBtn').textContent = 'Create Account';
-                    }
-                } catch (error) {
-                    console.error('Registration error:', error);
-                    utils.showNotification('An error occurred. Please try again.', 'error');
-                    document.getElementById('registerBtn').disabled = false;
-                    document.getElementById('registerBtn').textContent = 'Create Account';
-                } finally {
-                    document.getElementById('loadingOverlay').style.display = 'none';
-                }
-            });
+      function updateStepIndicator() {
+        document.querySelectorAll(".step").forEach((step, index) => {
+          const stepNum = index + 1;
+          if (stepNum < currentStep) {
+            step.classList.add("completed");
+            step.classList.remove("active");
+          } else if (stepNum === currentStep) {
+            step.classList.add("active");
+            step.classList.remove("completed");
+          } else {
+            step.classList.remove("active", "completed");
+          }
         });
+
+        document.querySelectorAll(".form-step").forEach((step, index) => {
+          if (index + 1 === currentStep) {
+            step.classList.add("active");
+          } else {
+            step.classList.remove("active");
+          }
+        });
+      }
+
+      function validateStep(step) {
+        let isValid = true;
+        const stepElement = document.querySelector(
+          `.form-step[data-step="${step}"]`,
+        );
+        const inputs = stepElement.querySelectorAll(
+          "input[required], select[required]",
+        );
+
+        inputs.forEach((input) => {
+          if (!input.value.trim()) {
+            isValid = false;
+            const errorId = input.id + "Error";
+            const errorElement = document.getElementById(errorId);
+            if (errorElement) {
+              errorElement.textContent = "This field is required";
+            }
+          } else {
+            const errorId = input.id + "Error";
+            const errorElement = document.getElementById(errorId);
+            if (errorElement) {
+              errorElement.textContent = "";
+            }
+          }
+        });
+
+        if (step === 1) {
+          const firstName = document.getElementById("firstName").value.trim();
+          const lastName = document.getElementById("lastName").value.trim();
+          const nationalId = document.getElementById("nationalId").value.trim();
+          const dateOfBirth = document.getElementById("dateOfBirth").value;
+
+          if (firstName.length < 2) {
+            document.getElementById("firstNameError").textContent =
+              "First name is too short";
+            isValid = false;
+          }
+
+          if (lastName.length < 2) {
+            document.getElementById("lastNameError").textContent =
+              "Last name is too short";
+            isValid = false;
+          }
+
+          if (nationalId.length < 5) {
+            document.getElementById("nationalIdError").textContent =
+              "National ID is required";
+            isValid = false;
+          }
+
+          if (dateOfBirth) {
+            const today = new Date();
+            const birthDate = new Date(dateOfBirth);
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const monthDiff = today.getMonth() - birthDate.getMonth();
+            if (
+              monthDiff < 0 ||
+              (monthDiff === 0 && today.getDate() < birthDate.getDate())
+            ) {
+              age--;
+            }
+            if (age < 18) {
+              document.getElementById("dateOfBirthError").textContent =
+                "You must be at least 18 years old";
+              isValid = false;
+            }
+          }
+        }
+
+        if (step === 2) {
+          const email = document.getElementById("email").value.trim();
+          const phone = document.getElementById("phone").value.trim();
+
+          if (!utils.isValidEmail(email)) {
+            document.getElementById("emailError").textContent =
+              "Invalid email format";
+            isValid = false;
+          }
+
+          if (phone.length < 10) {
+            document.getElementById("phoneError").textContent =
+              "Invalid phone number";
+            isValid = false;
+          }
+        }
+
+        if (step === 4) {
+          const password = document.getElementById("password").value;
+          const confirmPassword =
+            document.getElementById("confirmPassword").value;
+
+          if (password.length < 8) {
+            document.getElementById("passwordError").textContent =
+              "Password must be at least 8 characters";
+            isValid = false;
+          }
+
+          if (password !== confirmPassword) {
+            document.getElementById("confirmPasswordError").textContent =
+              "Passwords do not match";
+            isValid = false;
+          }
+        }
+
+        return isValid;
+      }
+
+      function nextStep() {
+        if (validateStep(currentStep)) {
+          if (currentStep < totalSteps) {
+            currentStep++;
+            updateStepIndicator();
+            window.scrollTo(0, 0);
+          }
+        }
+      }
+
+      function prevStep() {
+        if (currentStep > 1) {
+          currentStep--;
+          updateStepIndicator();
+          window.scrollTo(0, 0);
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        // Redirect if already logged in
+        if (auth.isAuthenticated()) {
+          const user = auth.getCurrentUser();
+          auth.redirectToDashboard(user?.role || user);
+          return;
+        }
+
+        const form = document.getElementById("registerForm");
+
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          if (!validateStep(4)) {
+            return;
+          }
+
+          const terms = document.getElementById("terms").checked;
+          if (!terms) {
+            utils.showNotification(
+              "Please accept the terms and conditions",
+              "error",
+            );
+            return;
+          }
+
+          const firstName = document.getElementById("firstName").value.trim();
+          const lastName = document.getElementById("lastName").value.trim();
+          const email = document.getElementById("email").value.trim();
+          const phone = document.getElementById("phone").value.trim();
+          const nationalId = document.getElementById("nationalId").value.trim();
+          const dateOfBirth = document.getElementById("dateOfBirth").value;
+          const region = document.getElementById("region").value;
+          const city = document.getElementById("city").value.trim();
+          const password = document.getElementById("password").value;
+          const licenseClass = document.getElementById("licenseClass").value;
+          const experience = document.getElementById("experience").value;
+
+          document.getElementById("loadingOverlay").style.display = "flex";
+          document.getElementById("registerBtn").disabled = true;
+          document.getElementById("registerBtn").textContent =
+            "Creating Account...";
+
+          try {
+            const response = await auth.register({
+              first_name: firstName,
+              last_name: lastName,
+              email: email,
+              phone: phone,
+              national_id: nationalId,
+              date_of_birth: dateOfBirth,
+              region: region,
+              city: city,
+              password: password,
+              role: "student",
+              license_class: licenseClass,
+              experience: experience,
+            });
+
+            if (response.success) {
+              utils.showNotification(
+                "Account created! Pending admin approval. Redirecting to login...",
+                "success",
+              );
+              setTimeout(() => {
+                window.location.href = "login.html";
+              }, 1500);
+            } else {
+              utils.showNotification(
+                response.message || "Registration failed",
+                "error",
+              );
+              document.getElementById("registerBtn").disabled = false;
+              document.getElementById("registerBtn").textContent =
+                "Create Account";
+            }
+          } catch (error) {
+            console.error("Registration error:", error);
+            utils.showNotification(
+              "An error occurred. Please try again.",
+              "error",
+            );
+            document.getElementById("registerBtn").disabled = false;
+            document.getElementById("registerBtn").textContent =
+              "Create Account";
+          } finally {
+            document.getElementById("loadingOverlay").style.display = "none";
+          }
+        });
+      });
     </script>
-</body>
+  </body>
 </html>
