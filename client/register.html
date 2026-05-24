@@ -773,11 +773,12 @@
 
             if (response.success) {
               utils.showNotification(
-                "Account created! Pending admin approval. Redirecting to login...",
+                "Account created! Pending admin approval. Redirecting...",
                 "success",
               );
               setTimeout(() => {
-                window.location.href = "login.html";
+                window.location.href =
+                  response.data?.redirect_to || "registration-pending.html";
               }, 1500);
             } else {
               utils.showNotification(

@@ -14,11 +14,12 @@ if (!$user || $user['role'] !== 'student') {
 $user_id = $user['user_id'];
 
 $query = "
-    SELECT l.id, l.lesson_date, l.lesson_type, l.duration, u.full_name as instructor_name
+    SELECT l.id, l.session_date, l.lesson_type, (l.duration_minutes / 60.0) as duration, u.full_name as instructor_name
     FROM lessons l
     JOIN users u ON l.instructor_id = u.id
-    WHERE l.student_id = ?
-    ORDER BY l.lesson_date ASC
+    JOIN enrollments e ON l.enrollment_id = e.id
+    WHERE e.student_user_id = ?
+    ORDER BY l.session_date ASC
 ";
 
 $stmt = $conn->prepare($query);

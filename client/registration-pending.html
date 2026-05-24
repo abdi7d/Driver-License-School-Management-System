@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registration Pending - DLSM Ethiopia</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/dark-mode.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Inter", sans-serif;
+        background:
+          radial-gradient(
+            circle at top left,
+            rgba(13, 110, 253, 0.14),
+            transparent 35%
+          ),
+          linear-gradient(180deg, #eef3f9 0%, #e8eef3 100%);
+        color: #0f172a;
+      }
+
+      .pending-shell {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+      }
+
+      .pending-card {
+        width: min(760px, 100%);
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(148, 163, 184, 0.22);
+        border-radius: 24px;
+        box-shadow: 0 24px 80px rgba(15, 23, 42, 0.14);
+        padding: 40px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+
+      .brand img {
+        width: 72px;
+        height: 72px;
+        border-radius: 18px;
+        object-fit: cover;
+      }
+
+      .eyebrow {
+        text-transform: uppercase;
+        letter-spacing: 0.16em;
+        font-size: 12px;
+        font-weight: 700;
+        color: #0d6efd;
+      }
+
+      h1 {
+        margin: 6px 0 12px;
+        font-size: clamp(2rem, 4vw, 3.4rem);
+        line-height: 1.05;
+      }
+
+      .lead {
+        font-size: 1.05rem;
+        line-height: 1.7;
+        color: #334155;
+        max-width: 60ch;
+      }
+
+      .status-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 16px;
+        margin: 30px 0;
+      }
+
+      .status-item {
+        background: #f8fbff;
+        border: 1px solid #dce7f5;
+        border-radius: 18px;
+        padding: 18px;
+      }
+
+      .status-label {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: #64748b;
+        margin-bottom: 10px;
+        font-weight: 700;
+      }
+
+      .status-value {
+        font-size: 18px;
+        font-weight: 700;
+        color: #0f172a;
+      }
+
+      .workflow {
+        display: grid;
+        gap: 14px;
+        margin: 24px 0 32px;
+      }
+
+      .workflow-step {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 16px 18px;
+        border-radius: 14px;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+      }
+
+      .step-badge {
+        width: 34px;
+        height: 34px;
+        border-radius: 999px;
+        display: grid;
+        place-items: center;
+        background: #0d6efd;
+        color: #fff;
+        font-weight: 800;
+        flex: 0 0 auto;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 14px 20px;
+        border-radius: 12px;
+        font-weight: 700;
+        text-decoration: none;
+        transition:
+          transform 0.15s ease,
+          box-shadow 0.15s ease;
+      }
+
+      .btn:hover {
+        transform: translateY(-1px);
+      }
+
+      .btn-primary {
+        background: #0d6efd;
+        color: #fff;
+        box-shadow: 0 10px 24px rgba(13, 110, 253, 0.24);
+      }
+
+      .btn-secondary {
+        background: #fff;
+        color: #0f172a;
+        border: 1px solid #cbd5e1;
+      }
+
+      .note {
+        margin-top: 18px;
+        font-size: 0.95rem;
+        color: #475569;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="pending-shell">
+      <section class="pending-card">
+        <div class="brand">
+          <img src="assets/images/logo-DLSM.jpg" alt="DLSM Ethiopia" />
+          <div>
+            <div class="eyebrow">Application submitted</div>
+            <div style="font-weight: 700; color: #475569">
+              Driver License School Management System
+            </div>
+          </div>
+        </div>
+
+        <h1>Your registration is pending approval</h1>
+        <p class="lead">
+          Your student account has been created and is waiting for manager
+          review. Once approved, you can sign in and continue into the training
+          workflow.
+        </p>
+
+        <div class="status-grid">
+          <div class="status-item">
+            <div class="status-label">Current status</div>
+            <div class="status-value">Pending review</div>
+          </div>
+          <div class="status-item">
+            <div class="status-label">Next step</div>
+            <div class="status-value">Manager approval</div>
+          </div>
+          <div class="status-item">
+            <div class="status-label">After approval</div>
+            <div class="status-value">Dashboard access</div>
+          </div>
+        </div>
+
+        <div class="workflow">
+          <div class="workflow-step">
+            <div class="step-badge">1</div>
+            <div>Registration submitted</div>
+          </div>
+          <div class="workflow-step">
+            <div class="step-badge">2</div>
+            <div>Account verification by management</div>
+          </div>
+          <div class="workflow-step">
+            <div class="step-badge">3</div>
+            <div>Instructor assignment and training begin</div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <a class="btn btn-primary" href="login.html">Go to Login</a>
+          <a class="btn btn-secondary" href="index.html">Back to Home</a>
+        </div>
+
+        <p class="note">
+          If you need help, contact the school administration with the email
+          address you used during registration.
+        </p>
+      </section>
+    </main>
+  </body>
+</html>

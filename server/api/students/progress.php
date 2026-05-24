@@ -16,7 +16,7 @@ $user_id = $user['user_id'];
 // Get enrollment and program info
 $query = "
     SELECT e.id, e.program_id, tp.name as program_name, e.status, e.progress_percentage as progress,
-           tp.duration_weeks, tp.id as tp_id
+           4 as duration_weeks, tp.id as tp_id
     FROM enrollments e
     JOIN training_programs tp ON e.program_id = tp.id
     WHERE e.student_user_id = ?

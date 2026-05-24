@@ -12,14 +12,38 @@ if (window.location.protocol === 'file:' || window.location.origin === 'null') {
     }
 }
 
+function getProjectRoot() {
+    const path = window.location.pathname.replace(/\\/g, '/');
+
+    if (window.location.protocol === 'file:' || window.location.origin === 'null') {
+        return 'http://localhost/Driver-License-School';
+    }
+
+    if (path.includes('/client/')) {
+        return path.substring(0, path.lastIndexOf('/client'));
+    }
+
+    return '';
+}
+
+function buildClientUrl(relativePath) {
+    const projectRoot = getProjectRoot();
+    const cleanPath = String(relativePath || '').replace(/^\/+/, '');
+
+    if (window.location.protocol === 'file:' || window.location.origin === 'null') {
+        return `${projectRoot}/client/${cleanPath}`;
+    }
+
+    return `${window.location.origin}${projectRoot}/client/${cleanPath}`;
+}
+
 const auth = {
-    DEMO_MODE: localStorage.getItem('DEMO_MODE') === 'true',
     API_BASE_URL: (() => {
-        const path = window.location.pathname;
+        const path = window.location.pathname.replace(/\\/g, '/');
         const isFileProtocol = window.location.protocol === 'file:' || window.location.origin === 'null';
 
         if (isFileProtocol) {
-            return 'http://localhost:8000/api/auth';
+            return 'http://localhost/Driver-License-School/server/api/auth';
         }
 
         const projectRoot = path.includes('/client/')
@@ -29,74 +53,55 @@ const auth = {
         return `${window.location.origin}${projectRoot}/server/api/auth`;
     })(),
     
-    DEMO_USERS: [
-        { email: 'manager@dlsm.et', password: 'password', name: 'Manager Demo', role: 'manager', status: 'active', id: 1 },
-        { email: 'student@dlsm.et', password: 'password', name: 'Student Demo', role: 'student', status: 'active', id: 2 },
-        { email: 'supervisor@dlsm.et', password: 'password', name: 'Supervisor Demo', role: 'supervisor', status: 'active', id: 3 },
-        { email: 'instructor@dlsm.et', password: 'password', name: 'Instructor Demo', role: 'instructor', status: 'active', id: 4 }
-    ],
-
     isAuthenticated() {
-        return localStorage.getItem('token') !== null;
+        return Boolean(localStorage.getItem('token') && localStorage.getItem('user'));
     },
 
     getCurrentUser() {
         const user = localStorage.getItem('user');
-        return user ? JSON.parse(user) : null;
+        if (!user) {
+            return null;
+        }
+
+        try {
+            return JSON.parse(user);
+        } catch (error) {
+            console.error('Failed to parse user session:', error);
+            return null;
+        }
+    },
+
+    getLoginUrl() {
+        return buildClientUrl('login.html');
+    },
+
+    getHomeUrl() {
+        return buildClientUrl('index.html');
+    },
+
+    getDashboardUrl(role) {
+        const normalizedRole = String(role || '').toLowerCase();
+        const dashboards = {
+            manager: 'manager-portal/dashboard.html',
+            admin: 'manager-portal/dashboard.html',
+            instructor: 'instructor-portal/dashboard.html',
+            supervisor: 'supervisor-portal/dashboard.html',
+            student: 'student-portal/dashboard.html',
+            finance: 'finance-portal/dashboard.html'
+        };
+
+        return dashboards[normalizedRole] || null;
     },
 
     requireAuth() {
         if (!this.isAuthenticated()) {
-            const currentPath = window.location.pathname;
-            if (currentPath.includes('-portal/')) {
-                window.location.href = '../login.html';
-            } else {
-                window.location.href = 'login.html';
-            }
+            window.location.href = this.getLoginUrl();
             return false;
         }
         return true;
     },
 
     async login(email, password) {
-        if (this.DEMO_MODE) {
-            return new Promise((resolve) => {
-                setTimeout(() => {
-                    const user = this.DEMO_USERS.find(u => u.email === email && u.password === password);
-                    
-                    if (!user) {
-                        resolve({ success: false, message: 'Invalid email or password' });
-                        return;
-                    }
-                    
-                    if (user.status === 'pending') {
-                        resolve({ 
-                            success: false, 
-                            message: 'Your account is pending approval. Please wait for admin to approve your registration.' 
-                        });
-                        return;
-                    }
-                    
-                    if (user.status === 'inactive') {
-                        resolve({ 
-                            success: false, 
-                            message: 'Your account has been deactivated. Please contact administration.' 
-                        });
-                        return;
-                    }
-                    
-                    const token = 'demo_token_' + Date.now();
-                    const userData = { id: user.id, name: user.name, email: user.email, role: user.role, status: user.status };
-                    
-                    localStorage.setItem('token', token);
-                    localStorage.setItem('role', user.role);
-                    localStorage.setItem('user', JSON.stringify(userData));
-                    
-                    resolve({ success: true, user: userData });
-                }, 500);
-            });
-        }
-
         try {
             const response = await fetch(`${this.API_BASE_URL}/login.php`, {
                 method: 'POST',
@@ -105,19 +110,24 @@ const auth = {
             });
             
             const data = await response.json();
-            
-            if (response.ok && !data.error) {
+            if (response.ok && data.success !== false && data.token) {
+                const user = data.user || {
+                    id: data.id,
+                    name: data.name,
+                    email: data.email || email,
+                    role: data.role,
+                    status: data.status
+                };
+
                 localStorage.setItem('token', data.token);
-                localStorage.setItem('role', data.role);
-                localStorage.setItem('user', JSON.stringify({ 
-                    id: data.id, 
-                    name: data.name, 
-                    email: email, 
-                    role: data.role 
-                }));
-                return { success: true, role: data.role };
+                localStorage.setItem('role', user.role || data.role || 'student');
+                localStorage.setItem('user', JSON.stringify(user));
+                sessionStorage.removeItem('redirectAfterLogin');
+
+                return { success: true, role: user.role || data.role, user };
             }
-            return { success: false, message: data.error || data.message || 'Login failed' };
+
+            return { success: false, message: data.message || data.error || 'Login failed' };
         } catch (error) {
             console.error('Login error:', error);
             return { success: false, message: 'Connection error. Please check if the server is running.' };
@@ -125,34 +135,6 @@ const auth = {
     },
 
     async register(userData) {
-        if (this.DEMO_MODE) {
-            return new Promise((resolve) => {
-                setTimeout(() => {
-                    const exists = this.DEMO_USERS.find(u => u.email === userData.email);
-                    
-                    if (exists) {
-                        resolve({ success: false, message: 'Email already registered' });
-                    } else {
-                        const newUser = {
-                            id: this.DEMO_USERS.length + 1,
-                            email: userData.email,
-                            password: userData.password,
-                            name: userData.first_name + ' ' + userData.last_name,
-                            role: userData.role || 'student',
-                            status: 'pending'
-                        };
-                        this.DEMO_USERS.push(newUser);
-                        
-                        resolve({ 
-                            success: true, 
-                            message: 'Registration successful. Please redirecting to login...',
-                            needsApproval: true 
-                        });
-                    }
-                }, 500);
-            });
-        }
-
         try {
             const response = await fetch(`${this.API_BASE_URL}/register.php`, {
                 method: 'POST',
@@ -161,10 +143,11 @@ const auth = {
             });
             
             const data = await response.json();
-            if (response.ok && !data.error) {
-                return { success: true, message: data.message };
+            if (response.ok && data.success !== false) {
+                return { success: true, message: data.message, data };
             }
-            return { success: false, message: data.error || data.message || 'Registration failed' };
+
+            return { success: false, message: data.message || data.error || 'Registration failed', data };
         } catch (error) {
             console.error('Registration error:', error);
             return { success: false, message: 'Connection error. Please check if the server is running.' };
@@ -174,13 +157,8 @@ const auth = {
     logout() {
         localStorage.clear();
         sessionStorage.clear();
-        
-        const path = window.location.pathname;
-        if (path.includes('-portal/')) {
-            window.location.href = '../login.html';
-        } else {
-            window.location.href = 'login.html';
-        }
+
+        window.location.href = this.getHomeUrl();
     },
 
     getToken() {
@@ -212,31 +190,17 @@ const auth = {
 
         if (!role) role = localStorage.getItem('role');
         if (!role) {
-            window.location.href = 'login.html';
+            window.location.href = this.getLoginUrl();
             return;
         }
 
-        role = role.toLowerCase();
-        const dashboards = {
-            manager: "manager-portal/dashboard.html",
-            admin: "manager-portal/dashboard.html",
-            instructor: "instructor-portal/dashboard.html",
-            supervisor: "supervisor-portal/dashboard.html",
-            student: "student-portal/dashboard.html"
-        };
-
-        const dashboard = dashboards[role];
+        const dashboard = this.getDashboardUrl(role);
         if (!dashboard) {
-            window.location.href = 'login.html';
+            window.location.href = this.getLoginUrl();
             return;
         }
-        
-        const currentPath = window.location.pathname;
-        if (currentPath.includes('-portal/')) {
-            window.location.href = '../' + dashboard;
-        } else {
-            window.location.href = dashboard;
-        }
+
+        window.location.href = buildClientUrl(dashboard);
     }
 };
 

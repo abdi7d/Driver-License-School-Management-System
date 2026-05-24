@@ -14,10 +14,10 @@ if (!$user || $user['role'] !== 'student') {
 $user_id = $user['user_id'];
 
 $query = "
-    SELECT id, exam_type, exam_date, score, status, notes
+    SELECT id, exam_type, scheduled_date as exam_date, score, status
     FROM exams
-    WHERE student_id = ?
-    ORDER BY exam_date DESC
+    WHERE student_user_id = ?
+    ORDER BY scheduled_date DESC
 ";
 
 $stmt = $conn->prepare($query);

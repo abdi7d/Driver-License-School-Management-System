@@ -81,7 +81,7 @@ if ($method === "POST" || $method === "PUT") {
     $enrollmentId = $_GET["enrollment_id"] ?? 0;
 
     if ($lessonId != 0) {
-        $query = "SELECT l.*, u.first_name, u.last_name, sd.national_id, tp.name as program_name, tp.license_category
+        $query = "SELECT l.*, u.first_name, u.last_name, sd.national_id, tp.name as program_name, sd.license_class as license_category
                   FROM lessons l 
                   JOIN enrollments e ON l.enrollment_id = e.id 
                   JOIN users u ON e.student_user_id = u.id 

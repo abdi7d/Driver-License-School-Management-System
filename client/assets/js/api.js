@@ -1,11 +1,11 @@
 const api = {
-    DEMO_MODE: localStorage.getItem('DEMO_MODE') === 'true',
+    DEMO_MODE: false,
     baseUrl: (() => {
         const path = window.location.pathname;
         const isFileProtocol = window.location.protocol === 'file:' || window.location.origin === 'null';
 
         if (isFileProtocol) {
-            return 'http://localhost:8000/api';
+            return 'http://localhost/Driver-License-School/server/api';
         }
 
         const projectRoot = path.includes('/client/')
@@ -894,18 +894,6 @@ const api = {
 
     // File upload method
     async upload(endpoint, formData) {
-        if (this.DEMO_MODE) {
-            return new Promise(resolve => {
-                setTimeout(() => {
-                    resolve({
-                        success: true,
-                        message: 'File uploaded successfully (demo mode)',
-                        data: { url: 'demo-file-url.jpg' }
-                    });
-                }, 1000);
-            });
-        }
-
         try {
             const token = auth.getToken();
             const headers = {};

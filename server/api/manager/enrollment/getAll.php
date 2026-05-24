@@ -17,7 +17,7 @@ $sql = "
         CONCAT(u.first_name, ' ', u.last_name) as student_name,
         u.email as student_email,
         tp.name as program_name,
-        tp.license_category as program_category,
+        SUBSTRING_INDEX(tp.name, ' - ', 1) as program_category,
         CONCAT(i.first_name, ' ', i.last_name) as instructor_name,
         e.enrollment_date,
         e.progress_percentage as progress,

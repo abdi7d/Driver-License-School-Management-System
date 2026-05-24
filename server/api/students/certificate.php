@@ -14,13 +14,13 @@ if (!$user || $user['role'] !== 'student') {
 $user_id = $user['user_id'];
 
 $query = "
-    SELECT c.id, c.certificate_number, c.issue_date, c.file_path,
-           p.name as program_name, lc.name as license_category
+    SELECT c.id, c.certificate_number, c.issue_date,
+           p.name as program_name, sd.license_class as license_category
     FROM certificates c
-    JOIN enrollments e ON c.student_id = e.student_id
-    JOIN programs p ON e.program_id = p.id
-    JOIN license_categories lc ON p.license_category_id = lc.id
-    WHERE c.student_id = ?
+    JOIN enrollments e ON c.student_user_id = e.student_user_id AND c.program_id = e.program_id
+    JOIN training_programs p ON e.program_id = p.id
+    LEFT JOIN student_details sd ON c.student_user_id = sd.user_id
+    WHERE c.student_user_id = ?
     ORDER BY c.issue_date DESC
 ";
 

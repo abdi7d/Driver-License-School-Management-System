@@ -316,14 +316,15 @@
                 console.log('Loading dashboard stats from API...');
                 const response = await api.request('/students/progress.php');
                 
-                if (response && response.completed_hours !== undefined) {
-                    const total = response.total_required_hours || 40;
-                    const completed = response.completed_hours || 0;
-                    const progress = response.progress_percentage || 0;
+                if (response && response.success && response.data) {
+                    const data = response.data;
+                    const total = data.total_hours || 40;
+                    const completed = data.completed_hours || 0;
+                    const progress = data.progress_percentage || 0;
                     
                     document.getElementById('totalHours').textContent = total;
                     document.getElementById('completedHours').textContent = completed;
-                    document.getElementById('remainingHours').textContent = total - completed;
+                    document.getElementById('remainingHours').textContent = Math.max(0, total - completed);
                     document.getElementById('progressPercent').textContent = progress + '%';
                     
                     const progressBar = document.querySelector('.progress-fill');
@@ -354,7 +355,7 @@
                         const day = date.getDate();
                         const month = date.toLocaleString('default', { month: 'short' });
                         const time = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                        const instructor = `${s.instructor_fname} ${s.instructor_lname}`;
+                        const instructor = s.instructor_name || 'Assigned Instructor';
                         
                         return `
                             <div class="session-item">

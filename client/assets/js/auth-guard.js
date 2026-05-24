@@ -1,6 +1,55 @@
 
 (function() {
     'use strict';
+
+    function getLoginUrl() {
+        if (window.auth && typeof window.auth.getLoginUrl === 'function') {
+            return window.auth.getLoginUrl();
+        }
+
+        const path = window.location.pathname.replace(/\\/g, '/');
+        const projectRoot = path.includes('/client/')
+            ? path.substring(0, path.lastIndexOf('/client'))
+            : '';
+
+        if (window.location.protocol === 'file:' || window.location.origin === 'null') {
+            return `http://localhost/Driver-License-School/client/login.html`;
+        }
+
+        return `${window.location.origin}${projectRoot}/client/login.html`;
+    }
+
+    function redirectToDashboard(role) {
+        if (window.auth && typeof window.auth.redirectToDashboard === 'function') {
+            window.auth.redirectToDashboard(role);
+            return;
+        }
+
+        const dashboards = {
+            student: 'student-portal/dashboard.html',
+            manager: 'manager-portal/dashboard.html',
+            admin: 'manager-portal/dashboard.html',
+            supervisor: 'supervisor-portal/dashboard.html',
+            instructor: 'instructor-portal/dashboard.html'
+        };
+
+        const target = dashboards[String(role || '').toLowerCase()];
+        if (target) {
+            const path = window.location.pathname.replace(/\\/g, '/');
+            const projectRoot = path.includes('/client/')
+                ? path.substring(0, path.lastIndexOf('/client'))
+                : '';
+            if (window.location.protocol === 'file:' || window.location.origin === 'null') {
+                window.location.href = `http://localhost/Driver-License-School/client/${target}`;
+                return;
+            }
+
+            window.location.href = `${window.location.origin}${projectRoot}/client/${target}`;
+            return;
+        }
+
+        window.location.href = getLoginUrl();
+    }
     
     function checkAuth() {
         const token = localStorage.getItem('token');
@@ -54,47 +103,17 @@
     function redirectToLogin() {
         const currentPath = window.location.pathname;
 
-        if (window.location.protocol === 'file:' || window.location.origin === 'null') {
-            const pathname = currentPath.replace(/\\/g, '/');
-            const clientIndex = pathname.indexOf('/client/');
-
-            if (clientIndex !== -1) {
-                const relativePath = pathname.substring(clientIndex + '/client/'.length);
-                window.location.href = `http://localhost/Driver-License-School/client/login.html`;
-                return;
-            }
-        }
-        
         if (currentPath.includes('login.html') || currentPath.includes('register.html') || currentPath.includes('index.html')) {
             return;
         }
         
         sessionStorage.setItem('redirectAfterLogin', window.location.href);
-        
-        if (currentPath.includes('-portal/')) {
-            window.location.href = '../login.html';
-        } else {
-            window.location.href = 'login.html';
-        }
+
+        window.location.href = getLoginUrl();
     }
     
     function redirectToCorrectDashboard(role) {
-        const dashboards = {
-            'student': '../student-portal/dashboard.html',
-            'manager': '../manager-portal/dashboard.html',
-            'admin': '../manager-portal/dashboard.html',
-            'supervisor': '../supervisor-portal/dashboard.html',
-            'instructor': '../instructor-portal/dashboard.html'
-        };
-        
-        const dashboard = dashboards[role];
-        if (dashboard) {
-            window.location.href = dashboard;
-        } else {
-            localStorage.clear();
-            sessionStorage.clear();
-            redirectToLogin();
-        }
+        redirectToDashboard(role);
     }
     
     checkAuth();
