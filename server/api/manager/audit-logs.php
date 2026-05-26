@@ -1,7 +1,7 @@
 <?php
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: GET, OPTIONS");
+header("Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'OPTIONS') {
@@ -83,5 +83,58 @@ while ($row = $res->fetch_assoc()) {
 }
 
 echo json_encode(['success' => true, 'data' => $logs]);
+
+// allow delete via query ?id= and purge via POST { action: 'purge', before: 'YYYY-MM-DD' }
+if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'DELETE') {
+    $id = $_GET['id'] ?? null;
+    if (!$id) {
+        http_response_code(400);
+        echo json_encode(['success' => false, 'message' => 'Log id required']);
+        exit;
+    }
+
+    $del = $conn->prepare('DELETE FROM audit_logs WHERE id = ?');
+    $del->bind_param('i', $id);
+    if ($del->execute()) {
+        echo json_encode(['success' => true, 'message' => 'Log deleted']);
+    } else {
+        http_response_code(500);
+        echo json_encode(['success' => false, 'message' => 'Failed to delete log']);
+    }
+    exit;
+}
+
+if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
+    // Purge old logs (manager only)
+    if ($user['role'] !== 'manager') {
+        http_response_code(403);
+        echo json_encode(['success' => false, 'message' => 'Unauthorized']);
+        exit;
+    }
+
+    $data = json_decode(file_get_contents('php://input'), true);
+    if (!is_array($data) || empty($data['action'])) {
+        http_response_code(400);
+        echo json_encode(['success' => false, 'message' => 'Invalid request']);
+        exit;
+    }
+
+    if ($data['action'] === 'purge' && !empty($data['before'])) {
+        $before = $data['before'];
+        $stmt = $conn->prepare('DELETE FROM audit_logs WHERE created_at < ?');
+        $stmt->bind_param('s', $before);
+        if ($stmt->execute()) {
+            echo json_encode(['success' => true, 'message' => 'Old logs purged', 'deleted' => $conn->affected_rows]);
+        } else {
+            http_response_code(500);
+            echo json_encode(['success' => false, 'message' => 'Failed to purge logs']);
+        }
+        exit;
+    }
+
+    http_response_code(400);
+    echo json_encode(['success' => false, 'message' => 'Unknown action']);
+    exit;
+}
 
 ?>
