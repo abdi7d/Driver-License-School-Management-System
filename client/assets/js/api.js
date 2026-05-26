@@ -1,3 +1,36 @@
+// Ensure a minimal global `api` exists immediately so pages can call `api.request`
+if (!window.api) {
+    window.api = {
+        baseUrl: (function(){
+            try {
+                const path = window.location.pathname;
+                const projectRoot = path.includes('/client/') ? path.substring(0, path.lastIndexOf('/client')) : '';
+                return `${window.location.origin}${projectRoot}/server/api`;
+            } catch (e) {
+                return 'http://localhost/Driver-License-School/server/api';
+            }
+        })(),
+        async request(endpoint, options = {}) {
+            try {
+                const token = (window.auth && window.auth.getToken) ? window.auth.getToken() : null;
+                const headers = { ...(options.headers || {}) };
+                if (!(options.body instanceof FormData) && options.body && typeof options.body !== 'string') {
+                    headers['Content-Type'] = 'application/json';
+                    options.body = JSON.stringify(options.body);
+                }
+                if (token) headers['Authorization'] = `Bearer ${token}`;
+                const resp = await fetch(`${this.baseUrl}${endpoint}`, { ...options, headers });
+                if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+                return await resp.json();
+            } catch (err) {
+                console.error('[api fallback] request error', err);
+                return { success: false, message: err.message };
+            }
+        }
+    };
+}
+
+try {
 const api = {
     // DEMO_MODE removed for production
     baseUrl: (() => {
@@ -17,7 +50,7 @@ const api = {
 
     async request(endpoint, options = {}) {
         try {
-            const token = auth.getToken();
+            const token = (typeof auth !== 'undefined' && auth.getToken) ? auth.getToken() : localStorage.getItem('token');
             const headers = {
                 ...options.headers
             };
@@ -31,16 +64,23 @@ const api = {
                 headers['Authorization'] = `Bearer ${token}`;
             }
 
-            const response = await fetch(`${this.baseUrl}${endpoint}`, {
+            const url = endpoint.startsWith('http') ? endpoint : `${this.baseUrl}${endpoint}`;
+            const response = await fetch(url, {
                 ...options,
                 headers
             });
-            
-            if (!response.ok) {
-                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            let data;
+            try {
+                data = await response.json();
+            } catch (parseErr) {
+                throw new Error(`Invalid JSON response (HTTP ${response.status})`);
             }
-            
-            const data = await response.json();
+
+            if (!response.ok) {
+                // Normalize error payload
+                const message = data && (data.message || data.error) ? (data.message || data.error) : `${response.status} ${response.statusText}`;
+                return { success: false, message };
+            }
             
             // Standardize response if it only contains an error field
             if (data && data.error && data.success === undefined) {
@@ -51,10 +91,10 @@ const api = {
             return data;
         } catch (error) {
             console.error('API Error:', error);
-            return { 
-                success: false, 
+            return {
+                success: false,
                 message: error.message || 'Network error. Please check if the server is running.',
-                error: error.name
+                error: error.name || 'Error'
             };
         }
     },
@@ -594,3 +634,43 @@ const api = {
 
 // Global API instance for backward compatibility
 window.api = api;
+} catch (error) {
+    console.error('[API] Error creating api object:', error);
+    // Provide a minimal fallback API so pages don't break if api.js initialization fails
+    const fallbackBase = (function(){
+        try {
+            const path = window.location.pathname;
+            const projectRoot = path.includes('/client/') ? path.substring(0, path.lastIndexOf('/client')) : '';
+            return `${window.location.origin}${projectRoot}/server/api`;
+        } catch (e) {
+            return 'http://localhost/Driver-License-School/server/api';
+        }
+    })();
+
+    const fallbackApi = {
+        baseUrl: fallbackBase,
+        async request(endpoint, options = {}) {
+            try {
+                const url = `${this.baseUrl}${endpoint}`;
+                const opts = { ...options };
+                if (opts.body && !(opts.body instanceof FormData) && typeof opts.body !== 'string') {
+                    opts.body = JSON.stringify(opts.body);
+                    opts.headers = { ...(opts.headers||{}), 'Content-Type': 'application/json' };
+                }
+                const resp = await fetch(url, opts);
+                if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+                return await resp.json();
+            } catch (err) {
+                console.error('[API fallback] request error', err);
+                return { success: false, message: err.message };
+            }
+        },
+        get(endpoint, opts) { return this.request(endpoint, { ...(opts||{}), method: 'GET' }); },
+        post(endpoint, body, opts) { return this.request(endpoint, { ...(opts||{}), method: 'POST', body }); },
+        put(endpoint, body, opts) { return this.request(endpoint, { ...(opts||{}), method: 'PUT', body }); },
+        delete(endpoint, opts) { return this.request(endpoint, { ...(opts||{}), method: 'DELETE' }); },
+        upload(endpoint, formData) { return this.request(endpoint, { method: 'POST', body: formData }); }
+    };
+
+    window.api = fallbackApi;
+}

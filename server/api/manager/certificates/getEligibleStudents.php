@@ -5,12 +5,12 @@ include "../../../includes/auth.php";
 header('Content-Type: application/json');
 
 $user = auth();
-if ($user["role"] !== "manager") {
+if (!in_array($user["role"], ["manager", "admin"])) {
     echo json_encode(["success" => false, "message" => "Access denied"]);
     exit;
 }
 
-// Students who passed both exams for a program and don't have a certificate
+// Students who passed both exams and don't have a certificate yet
 $sql = "
     SELECT 
         u.id as student_id,
@@ -18,27 +18,33 @@ $sql = "
         u.email as student_email,
         tp.id as program_id,
         tp.name as program_name,
-        e1.score as theory_score,
-        e2.score as practical_score,
-        (e1.score + e2.score) / 2 as final_score,
-        e2.result_date as completion_date
+        COALESCE(e1.score, 0) as theory_score,
+        COALESCE(e2.score, 0) as practical_score,
+        (COALESCE(e1.score, 0) + COALESCE(e2.score, 0)) / 2 as final_score,
+        COALESCE(e2.result_date, e1.result_date) as completion_date
     FROM users u
-    JOIN enrollments en ON u.id = en.student_user_id
+    JOIN enrollments en ON u.id = en.student_user_id AND en.status IN ('active', 'graduated')
     JOIN training_programs tp ON en.program_id = tp.id
-    JOIN exams e1 ON u.id = e1.student_user_id AND e1.exam_type = 'theory' AND e1.passed = 1
-    JOIN exams e2 ON u.id = e2.student_user_id AND e2.exam_type = 'practical' AND e2.passed = 1
+    LEFT JOIN exams e1 ON u.id = e1.student_user_id AND e1.exam_type = 'theory' AND e1.status = 'passed'
+    LEFT JOIN exams e2 ON u.id = e2.student_user_id AND e2.exam_type = 'practical' AND e2.status = 'passed'
     LEFT JOIN certificates c ON u.id = c.student_user_id AND tp.id = c.program_id
     WHERE c.id IS NULL
+      AND u.role = 'student'
+      AND (e1.id IS NOT NULL OR e2.id IS NOT NULL)
+    GROUP BY u.id, tp.id
+    ORDER BY completion_date DESC
 ";
 
-$res = $conn->query($sql);
+$res  = $conn->query($sql);
 $data = [];
-while ($row = $res->fetch_assoc()) {
-    $data[] = $row;
+if ($res) {
+    while ($row = $res->fetch_assoc()) {
+        $data[] = $row;
+    }
 }
 
 echo json_encode([
     "success" => true,
-    "data" => $data
+    "data"    => $data
 ]);
 ?>

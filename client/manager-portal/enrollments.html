@@ -1,228 +1,263 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Enrollments - DLSM Ethiopia</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/responsive.css">
-    <link rel="stylesheet" href="../assets/css/dark-mode.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link rel="stylesheet" href="../assets/css/responsive.css" />
+    <link rel="stylesheet" href="../assets/css/dark-mode.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <script src="../assets/js/theme.js"></script>
     <script src="../assets/js/auth-guard.js"></script>
-</head>
-<body class="dashboard-body">
+  </head>
+  <body class="dashboard-body">
     <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
     <aside class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <div class="sidebar-logo">
-                <img src="../assets/images/logo-DLSM.jpg" alt="DLSM Logo" class="logo-icon" style="height: 32px; width: auto; border-radius: 6px;">
-                <span class="logo-text">DLSM</span>
-            </div>
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <img
+            src="../assets/images/logo-DLSM.jpg"
+            alt="DLSM Logo"
+            class="logo-icon"
+            style="height: 32px; width: auto; border-radius: 6px"
+          />
+          <span class="logo-text">DLSM</span>
         </div>
-        <nav class="sidebar-nav">
-            <a href="dashboard.html" class="nav-item">
-                <span class="nav-icon">📊</span>
-                <span class="nav-text">Dashboard</span>
-            </a>
-            <a href="users.html" class="nav-item">
-                <span class="nav-icon">👥</span>
-                <span class="nav-text">Users</span>
-            </a>
-            <a href="programs.html" class="nav-item">
-                <span class="nav-icon">📚</span>
-                <span class="nav-text">Programs</span>
-            </a>
-            <a href="enrollments.html" class="nav-item active">
-                <span class="nav-icon">📋</span>
-                <span class="nav-text">Enrollments</span>
-            </a>
-            <a href="approvals.html" class="nav-item">
-                <span class="nav-icon">✅</span>
-                <span class="nav-text">Approvals</span>
-            </a>
-            <a href="exams.html" class="nav-item">
-                <span class="nav-icon">📝</span>
-                <span class="nav-text">Exams</span>
-            </a>
-            <a href="certificates.html" class="nav-item">
-                <span class="nav-icon">🎓</span>
-                <span class="nav-text">Certificates</span>
-            </a>
-            <a href="reports.html" class="nav-item">
-                <span class="nav-icon">📈</span>
-                <span class="nav-text">Reports</span>
-            </a>
-            <a href="audit-logs.html" class="nav-item">
-                <span class="nav-icon">📜</span>
-                <span class="nav-text">Audit Logs</span>
-            </a>
-            <a href="notifications.html" class="nav-item">
-                <span class="nav-icon">🔔</span>
-                <span class="nav-text">Notifications</span>
-            </a>
-            <a href="profile.html" class="nav-item">
-                <span class="nav-icon">👤</span>
-                <span class="nav-text">My Profile</span>
-            </a>
-        </nav>
-        <div class="sidebar-footer">
-            <button class="btn-logout" id="logoutBtn">
-                <span class="nav-icon">🚪</span>
-                <span class="nav-text">Logout</span>
-            </button>
-        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-item">
+          <span class="nav-icon">📊</span>
+          <span class="nav-text">Dashboard</span>
+        </a>
+        <a href="users.html" class="nav-item">
+          <span class="nav-icon">👥</span>
+          <span class="nav-text">Users</span>
+        </a>
+        <a href="programs.html" class="nav-item">
+          <span class="nav-icon">📚</span>
+          <span class="nav-text">Programs</span>
+        </a>
+        <a href="enrollments.html" class="nav-item active">
+          <span class="nav-icon">📋</span>
+          <span class="nav-text">Enrollments</span>
+        </a>
+        <a href="approvals.html" class="nav-item">
+          <span class="nav-icon">✅</span>
+          <span class="nav-text">Approvals</span>
+        </a>
+        <a href="exams.html" class="nav-item">
+          <span class="nav-icon">📝</span>
+          <span class="nav-text">Exams</span>
+        </a>
+        <a href="certificates.html" class="nav-item">
+          <span class="nav-icon">🎓</span>
+          <span class="nav-text">Certificates</span>
+        </a>
+        <a href="reports.html" class="nav-item">
+          <span class="nav-icon">📈</span>
+          <span class="nav-text">Reports</span>
+        </a>
+        <a href="audit-logs.html" class="nav-item">
+          <span class="nav-icon">📜</span>
+          <span class="nav-text">Audit Logs</span>
+        </a>
+        <a href="notifications.html" class="nav-item">
+          <span class="nav-icon">🔔</span>
+          <span class="nav-text">Notifications</span>
+        </a>
+        <a href="profile.html" class="nav-item">
+          <span class="nav-icon">👤</span>
+          <span class="nav-text">My Profile</span>
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <button class="btn-logout" id="logoutBtn">
+          <span class="nav-icon">🚪</span>
+          <span class="nav-text">Logout</span>
+        </button>
+      </div>
     </aside>
 
     <main class="main-content">
-        <header class="topbar">
-            <div class="topbar-left">
-                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
-                <div>
-                    <h1 class="page-title">Enrollments</h1>
-                    <p class="page-subtitle">Manage student program enrollments</p>
-                </div>
-            </div>
-            <div class="topbar-right">
-                <button class="btn-primary topbar-action-btn" id="enrollBtn">+ Enroll Student</button>
-                <div class="user-profile">
-                    <div class="user-avatar">👤</div>
-                    <div class="user-info">
-                        <span class="user-name" id="userName">Manager</span>
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <div class="dashboard-container">
-
-            <div class="stats-grid" style="margin-bottom:24px;">
-                <div class="stat-card blue">
-                    <div class="stat-icon">📋</div>
-                    <div class="stat-info">
-                        <p class="stat-label">Total Enrollments</p>
-                        <h3 class="stat-value">124</h3>
-                    </div>
-                </div>
-                <div class="stat-card green">
-                    <div class="stat-icon">✅</div>
-                    <div class="stat-info">
-                        <p class="stat-label">Active</p>
-                        <h3 class="stat-value">87</h3>
-                    </div>
-                </div>
-                <div class="stat-card orange">
-                    <div class="stat-icon">⏳</div>
-                    <div class="stat-info">
-                        <p class="stat-label">Pending</p>
-                        <h3 class="stat-value">12</h3>
-                    </div>
-                </div>
-                <div class="stat-card purple">
-                    <div class="stat-icon">🎓</div>
-                    <div class="stat-info">
-                        <p class="stat-label">Completed</p>
-                        <h3 class="stat-value">25</h3>
-                    </div>
-                </div>
-            </div>
-
-            <div class="approvals-table-wrap">
-                <div class="table-header">
-                    <h3>All Enrollments</h3>
-                    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
-                        <select id="filterProgram" class="search-input" style="width:160px;">
-                            <option value="">All Programs</option>
-                            <option value="Private Car (B)">Private Car (B)</option>
-                            <option value="Motorcycle (A)">Motorcycle (A)</option>
-                            <option value="Heavy Truck (C)">Heavy Truck (C)</option>
-                            <option value="Bus (D)">Bus (D)</option>
-                            <option value="Transport (E)">Transport (E)</option>
-                        </select>
-                        <select id="filterStatus" class="search-input" style="width:130px;">
-                            <option value="">All Status</option>
-                            <option value="active">Active</option>
-                            <option value="pending">Pending</option>
-                            <option value="completed">Completed</option>
-                            <option value="dropped">Dropped</option>
-                        </select>
-                        <input type="text" class="search-input" id="searchEnrollment" placeholder="🔍 Search student...">
-                    </div>
-                </div>
-
-                <table id="enrollmentTable">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Student</th>
-                            <th>Program</th>
-                            <th>Instructor</th>
-                            <th>Enrolled Date</th>
-                            <th>Progress</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="enrollmentBody">
-                    </tbody>
-                </table>
-            </div>
-
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+          <div>
+            <h1 class="page-title">Enrollments</h1>
+            <p class="page-subtitle">Manage student program enrollments</p>
+          </div>
         </div>
+        <div class="topbar-right">
+          <button class="btn-primary topbar-action-btn" id="enrollBtn">
+            + Enroll Student
+          </button>
+          <div class="user-profile">
+            <div class="user-avatar">👤</div>
+            <div class="user-info">
+              <span class="user-name" id="userName">Manager</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="dashboard-container">
+        <div class="stats-grid" style="margin-bottom: 24px">
+          <div class="stat-card blue">
+            <div class="stat-icon">📋</div>
+            <div class="stat-info">
+              <p class="stat-label">Total Enrollments</p>
+              <h3 class="stat-value">124</h3>
+            </div>
+          </div>
+          <div class="stat-card green">
+            <div class="stat-icon">✅</div>
+            <div class="stat-info">
+              <p class="stat-label">Active</p>
+              <h3 class="stat-value">87</h3>
+            </div>
+          </div>
+          <div class="stat-card orange">
+            <div class="stat-icon">⏳</div>
+            <div class="stat-info">
+              <p class="stat-label">Pending</p>
+              <h3 class="stat-value">12</h3>
+            </div>
+          </div>
+          <div class="stat-card purple">
+            <div class="stat-icon">🎓</div>
+            <div class="stat-info">
+              <p class="stat-label">Completed</p>
+              <h3 class="stat-value">25</h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="approvals-table-wrap">
+          <div class="table-header">
+            <h3>All Enrollments</h3>
+            <div
+              style="
+                display: flex;
+                gap: 10px;
+                align-items: center;
+                flex-wrap: wrap;
+              "
+            >
+              <select
+                id="filterProgram"
+                class="search-input"
+                style="width: 160px"
+              >
+                <option value="">All Programs</option>
+                <option value="Private Car (B)">Private Car (B)</option>
+                <option value="Motorcycle (A)">Motorcycle (A)</option>
+                <option value="Heavy Truck (C)">Heavy Truck (C)</option>
+                <option value="Bus (D)">Bus (D)</option>
+                <option value="Transport (E)">Transport (E)</option>
+              </select>
+              <select
+                id="filterStatus"
+                class="search-input"
+                style="width: 130px"
+              >
+                <option value="">All Status</option>
+                <option value="active">Active</option>
+                <option value="pending">Pending</option>
+                <option value="completed">Completed</option>
+                <option value="dropped">Dropped</option>
+              </select>
+              <input
+                type="text"
+                class="search-input"
+                id="searchEnrollment"
+                placeholder="🔍 Search student..."
+              />
+            </div>
+          </div>
+
+          <table id="enrollmentTable">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Student</th>
+                <th>Program</th>
+                <th>Instructor</th>
+                <th>Enrolled Date</th>
+                <th>Progress</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="enrollmentBody"></tbody>
+          </table>
+        </div>
+      </div>
     </main>
 
-    <div class="modal-overlay" id="enrollModal">
-        <div class="modal">
-            <h3>Enroll Student</h3>
-            <form id="enrollForm">
-                <div class="form-group" style="margin-bottom:16px;">
-                    <label class="form-label">Student</label>
-                    <select class="form-input" id="selectStudent">
-                        <option value="">Select a student...</option>
-                        <option value="Abebe Kebede">Abebe Kebede</option>
-                        <option value="Tigist Haile">Tigist Haile</option>
-                        <option value="Dawit Tesfaye">Dawit Tesfaye</option>
-                        <option value="Meron Alemu">Meron Alemu</option>
-                    </select>
-                </div>
-                <div class="form-group" style="margin-bottom:16px;">
-                    <label class="form-label">Program</label>
-                    <select class="form-input" id="selectProgram">
-                        <option value="">Select a program...</option>
-                        <option value="Private Car (B)">Private Car (B)</option>
-                        <option value="Motorcycle (A)">Motorcycle (A)</option>
-                        <option value="Heavy Truck (C)">Heavy Truck (C)</option>
-                        <option value="Bus (D)">Bus (D)</option>
-                        <option value="Transport (E)">Transport (E)</option>
-                    </select>
-                </div>
-                <div class="form-group" style="margin-bottom:16px;">
-                    <label class="form-label">Instructor</label>
-                    <select class="form-input" id="selectInstructor">
-                        <option value="">Select an instructor...</option>
-                        <option value="Instructor Yonas">Instructor Yonas</option>
-                        <option value="Instructor Liya">Instructor Liya</option>
-                        <option value="Instructor Bekele">Instructor Bekele</option>
-                    </select>
-                </div>
-                <div class="modal-actions">
-                    <button type="button" class="btn-close-modal" onclick="closeEnrollModal()">Cancel</button>
-                    <button type="submit" class="btn-approve">Enroll</button>
-                </div>
-            </form>
-        </div>
+    <div class="modal-overlay hidden" id="enrollModal">
+      <div class="modal modal-content">
+        <h3>Enroll Student</h3>
+        <form id="enrollForm">
+          <div class="form-group" style="margin-bottom: 16px">
+            <label class="form-label">Student</label>
+            <select class="form-input" id="selectStudent">
+              <option value="">Select a student...</option>
+              <option value="Abebe Kebede">Abebe Kebede</option>
+              <option value="Tigist Haile">Tigist Haile</option>
+              <option value="Dawit Tesfaye">Dawit Tesfaye</option>
+              <option value="Meron Alemu">Meron Alemu</option>
+            </select>
+          </div>
+          <div class="form-group" style="margin-bottom: 16px">
+            <label class="form-label">Program</label>
+            <select class="form-input" id="selectProgram">
+              <option value="">Select a program...</option>
+              <option value="Private Car (B)">Private Car (B)</option>
+              <option value="Motorcycle (A)">Motorcycle (A)</option>
+              <option value="Heavy Truck (C)">Heavy Truck (C)</option>
+              <option value="Bus (D)">Bus (D)</option>
+              <option value="Transport (E)">Transport (E)</option>
+            </select>
+          </div>
+          <div class="form-group" style="margin-bottom: 16px">
+            <label class="form-label">Instructor</label>
+            <select class="form-input" id="selectInstructor">
+              <option value="">Select an instructor...</option>
+              <option value="Instructor Yonas">Instructor Yonas</option>
+              <option value="Instructor Liya">Instructor Liya</option>
+              <option value="Instructor Bekele">Instructor Bekele</option>
+            </select>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn-secondary"
+              onclick="Modal.close('enrollModal')"
+            >
+              Cancel
+            </button>
+            <button type="submit" class="btn-approve">Enroll</button>
+          </div>
+        </form>
+      </div>
     </div>
 
-    <div class="modal-overlay" id="editModal">
-        <div class="modal">
-            <h3>Edit Enrollment</h3>
-            <div id="editModalContent"></div>
-            <div class="modal-actions">
-                <button class="btn-close-modal" onclick="closeEditModal()">Cancel</button>
-                <button class="btn-approve" onclick="saveEdit()">Save</button>
-            </div>
+    <div class="modal-overlay hidden" id="editModal">
+      <div class="modal modal-content">
+        <h3>Edit Enrollment</h3>
+        <div id="editModalContent"></div>
+        <div class="modal-footer">
+          <button class="btn-secondary" onclick="Modal.close('editModal')">
+            Cancel
+          </button>
+          <button class="btn-approve" onclick="saveEdit()">Save</button>
         </div>
+      </div>
     </div>
 
     <script src="../assets/js/utils.js"></script>
@@ -231,66 +266,184 @@
     <script src="../assets/js/dashboard.js"></script>
     <script src="../assets/js/modal.js"></script>
     <script>
-        let enrollments = [];
-        
-        async function loadEnrollmentsFromAPI() {
-            try {
-                const response = await api.request('/manager/enrollment/getAll.php');
-                if (response.success && response.data) {
-                    enrollments = response.data;
-                    renderTable(enrollments);
-                    updateStats();
-                }
-            } catch (error) {
-                console.error('Error loading enrollments:', error);
-            }
-        }
+      let enrollments = [];
+      let dropdownData = { students: [], instructors: [], programs: [] };
+      let selectedEnrollmentId = null;
 
-        async function loadDropdownData() {
-            try {
-                const response = await api.request('/manager/enrollment/getDropdownData.php');
-                if (response.success && response.data) {
-                    const { students, instructors, programs } = response.data;
-                    
-                    const studentSelect = document.getElementById('selectStudent');
-                    studentSelect.innerHTML = '<option value="">Select a student...</option>' + 
-                        students.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
-                        
-                    const instructorSelect = document.getElementById('selectInstructor');
-                    instructorSelect.innerHTML = '<option value="">Select an instructor...</option>' + 
-                        instructors.map(i => `<option value="${i.id}">${i.name}</option>`).join('');
-                        
-                    const programSelect = document.getElementById('selectProgram');
-                    programSelect.innerHTML = '<option value="">Select a program...</option>' + 
-                        programs.map(p => `<option value="${p.id}">${p.name} (${p.license_category})</option>`).join('');
-                }
-            } catch (error) {
-                console.error('Error loading dropdown data:', error);
-            }
+      async function loadEnrollmentsFromAPI() {
+        try {
+          const response = await api.request("/manager/enrollment/getAll.php");
+          if (response.success && response.data) {
+            enrollments = response.data;
+            renderTable(enrollments);
+            updateStats();
+          }
+        } catch (error) {
+          console.error("Error loading enrollments:", error);
         }
+      }
 
-        function updateStats() {
-            const total = enrollments.length;
-            const active = enrollments.filter(e => e.status === 'active').length;
-            const pending = enrollments.filter(e => e.status === 'pending').length;
-            const completed = enrollments.filter(e => e.status === 'graduated').length;
-            
-            const stats = document.querySelectorAll('.stat-card .stat-value');
-            if (stats.length >= 4) {
-                stats[0].textContent = total;
-                stats[1].textContent = active;
-                stats[2].textContent = pending;
-                stats[3].textContent = completed;
-            }
+      async function loadDropdownData() {
+        try {
+          const response = await api.request(
+            "/manager/enrollment/getDropdownData.php",
+          );
+          if (response.success && response.data) {
+            const { students, instructors, programs } = response.data;
+            dropdownData = { students, instructors, programs };
+
+            const studentSelect = document.getElementById("selectStudent");
+            studentSelect.innerHTML =
+              '<option value="">Select a student...</option>' +
+              students
+                .map((s) => `<option value="${s.id}">${s.name}</option>`)
+                .join("");
+
+            const instructorSelect =
+              document.getElementById("selectInstructor");
+            instructorSelect.innerHTML =
+              '<option value="">Select an instructor...</option>' +
+              instructors
+                .map((i) => `<option value="${i.id}">${i.name}</option>`)
+                .join("");
+
+            const programSelect = document.getElementById("selectProgram");
+            programSelect.innerHTML =
+              '<option value="">Select a program...</option>' +
+              programs
+                .map(
+                  (p) =>
+                    `<option value="${p.id}">${p.name} (${p.license_category})</option>`,
+                )
+                .join("");
+          }
+        } catch (error) {
+          console.error("Error loading dropdown data:", error);
         }
+      }
 
-        function renderTable(data) {
-            const tbody = document.getElementById('enrollmentBody');
-            if (!data || data.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:40px;color:#94a3b8;">No enrollments found</td></tr>`;
-                return;
-            }
-            tbody.innerHTML = data.map((e, i) => `
+      function editEnrollment(id) {
+        selectedEnrollmentId = Number(id);
+        const enrollment = enrollments.find(
+          (item) => Number(item.id) === selectedEnrollmentId,
+        );
+        if (!enrollment) return;
+
+        document.getElementById("editModalContent").innerHTML = `
+                <div class="form-group">
+                    <label class="form-label">Student</label>
+                    <input class="form-input" value="${enrollment.student_name}" disabled>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Program</label>
+                    <input class="form-input" value="${enrollment.program_name}" disabled>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Instructor</label>
+                    <select class="form-input" id="editInstructor">
+                        <option value="">Select an instructor...</option>
+                        ${dropdownData.instructors.map((i) => `<option value="${i.id}" ${enrollment.assigned_instructor_id == i.id ? "selected" : ""}>${i.name}</option>`).join("")}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Status</label>
+                    <select class="form-input" id="editStatus">
+                        <option value="pending" ${enrollment.status === "pending" ? "selected" : ""}>Pending</option>
+                        <option value="active" ${enrollment.status === "active" ? "selected" : ""}>Active</option>
+                        <option value="graduated" ${enrollment.status === "graduated" ? "selected" : ""}>Graduated</option>
+                        <option value="cancelled" ${enrollment.status === "cancelled" ? "selected" : ""}>Cancelled</option>
+                        <option value="dropped" ${enrollment.status === "dropped" ? "selected" : ""}>Dropped</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Progress (%)</label>
+                    <input type="number" class="form-input" id="editProgress" min="0" max="100" value="${Math.round(enrollment.progress || 0)}">
+                </div>
+            `;
+        document.getElementById("editModal").classList.add("open");
+      }
+
+      async function saveEdit() {
+        if (selectedEnrollmentId === null) return;
+        const instructorId =
+          document.getElementById("editInstructor").value || null;
+        const status = document.getElementById("editStatus").value;
+        const progress = document.getElementById("editProgress").value;
+
+        try {
+          const response = await api.request("/manager/enrollment/update.php", {
+            method: "POST",
+            body: JSON.stringify({
+              id: selectedEnrollmentId,
+              assigned_instructor_id: instructorId
+                ? Number(instructorId)
+                : null,
+              status,
+              progress_percentage: Number(progress),
+            }),
+          });
+
+          if (response.success) {
+            utils.showNotification(
+              "Enrollment updated successfully",
+              "success",
+            );
+            closeEditModal();
+            await loadEnrollmentsFromAPI();
+          } else {
+            utils.showNotification(response.message, "error");
+          }
+        } catch (error) {
+          utils.showNotification("Error updating enrollment", "error");
+        }
+      }
+
+      async function dropEnrollment(id) {
+        if (!confirm("Mark this enrollment as dropped?")) return;
+        try {
+          const response = await api.request("/manager/enrollment/update.php", {
+            method: "POST",
+            body: JSON.stringify({ id, status: "dropped" }),
+          });
+          if (response.success) {
+            utils.showNotification("Enrollment marked as dropped", "success");
+            await loadEnrollmentsFromAPI();
+          } else {
+            utils.showNotification(response.message, "error");
+          }
+        } catch (error) {
+          utils.showNotification("Error dropping enrollment", "error");
+        }
+      }
+
+      function updateStats() {
+        const total = enrollments.length;
+        const active = enrollments.filter((e) => e.status === "active").length;
+        const pending = enrollments.filter(
+          (e) => e.status === "pending",
+        ).length;
+        const completed = enrollments.filter(
+          (e) => e.status === "graduated",
+        ).length;
+
+        const stats = document.querySelectorAll(".stat-card .stat-value");
+        if (stats.length >= 4) {
+          stats[0].textContent = total;
+          stats[1].textContent = active;
+          stats[2].textContent = pending;
+          stats[3].textContent = completed;
+        }
+      }
+
+      function renderTable(data) {
+        const tbody = document.getElementById("enrollmentBody");
+        if (!data || data.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:40px;color:#94a3b8;">No enrollments found</td></tr>`;
+          return;
+        }
+        tbody.innerHTML = data
+          .map(
+            (e, i) => `
                 <tr>
                     <td>${i + 1}</td>
                     <td>
@@ -314,89 +467,140 @@
                         </div>
                     </td>
                 </tr>
-            `).join('');
+            `,
+          )
+          .join("");
+      }
+
+      function getStatusClass(status) {
+        switch (status) {
+          case "active":
+            return "approved";
+          case "pending":
+            return "pending";
+          case "graduated":
+            return "approved";
+          case "cancelled":
+          case "dropped":
+            return "rejected";
+          default:
+            return "pending";
         }
+      }
 
-        function getStatusClass(status) {
-            switch(status) {
-                case 'active': return 'approved';
-                case 'pending': return 'pending';
-                case 'graduated': return 'approved';
-                case 'cancelled':
-                case 'dropped': return 'rejected';
-                default: return 'pending';
-            }
+      function applyFilters() {
+        const search = document
+          .getElementById("searchEnrollment")
+          .value.toLowerCase();
+        const program = document.getElementById("filterProgram").value;
+        const status = document.getElementById("filterStatus").value;
+
+        const filtered = enrollments.filter(
+          (e) =>
+            (!search || e.student_name.toLowerCase().includes(search)) &&
+            (!program || e.program_name.includes(program)) &&
+            (!status || e.status === status),
+        );
+        renderTable(filtered);
+      }
+
+      document.addEventListener("DOMContentLoaded", async function () {
+        const user = auth.getCurrentUser();
+        if (!user) {
+          window.location.href = "../login.html";
+          return;
         }
+        document.getElementById("userName").textContent =
+          user.name || "Manager";
 
-        function applyFilters() {
-            const search = document.getElementById('searchEnrollment').value.toLowerCase();
-            const program = document.getElementById('filterProgram').value;
-            const status = document.getElementById('filterStatus').value;
-            
-            const filtered = enrollments.filter(e =>
-                (!search || e.student_name.toLowerCase().includes(search)) &&
-                (!program || e.program_name.includes(program)) &&
-                (!status || e.status === status)
-            );
-            renderTable(filtered);
-        }
+        await loadEnrollmentsFromAPI();
+        await loadDropdownData();
 
-        document.addEventListener('DOMContentLoaded', async function () {
-            const user = auth.getCurrentUser();
-            if (!user) { window.location.href = '../login.html'; return; }
-            document.getElementById('userName').textContent = user.name || 'Manager';
+        document
+          .getElementById("logoutBtn")
+          .addEventListener("click", () => auth.logout());
 
-            await loadEnrollmentsFromAPI();
-            await loadDropdownData();
+        document
+          .getElementById("searchEnrollment")
+          .addEventListener("input", applyFilters);
+        document
+          .getElementById("filterProgram")
+          .addEventListener("change", applyFilters);
+        document
+          .getElementById("filterStatus")
+          .addEventListener("change", applyFilters);
 
-            document.getElementById('logoutBtn').addEventListener('click', () => auth.logout());
-
-            document.getElementById('searchEnrollment').addEventListener('input', applyFilters);
-            document.getElementById('filterProgram').addEventListener('change', applyFilters);
-            document.getElementById('filterStatus').addEventListener('change', applyFilters);
-
-            document.getElementById('enrollBtn').addEventListener('click', () => {
-                document.getElementById('enrollModal').classList.add('open');
-            });
-
-            document.getElementById('enrollForm').addEventListener('submit', async function (e) {
-                e.preventDefault();
-                const data = {
-                    student_id: document.getElementById('selectStudent').value,
-                    program_id: document.getElementById('selectProgram').value,
-                    instructor_id: document.getElementById('selectInstructor').value
-                };
-                
-                if (!data.student_id || !data.program_id) {
-                    utils.showNotification('Student and Program are required', 'error');
-                    return;
-                }
-
-                try {
-                    const response = await api.request('/manager/enrollment/assign.php', {
-                        method: 'POST',
-                        body: JSON.stringify(data)
-                    });
-                    if (response.success) {
-                        utils.showNotification(response.message, 'success');
-                        closeEnrollModal();
-                        this.reset();
-                        await loadEnrollmentsFromAPI();
-                    } else {
-                        utils.showNotification(response.message, 'error');
-                    }
-                } catch (error) {
-                    utils.showNotification('Error assigning enrollment', 'error');
-                }
-            });
+        document.getElementById("enrollBtn").addEventListener("click", () => {
+          Modal.open("enrollModal");
         });
 
-        function closeEnrollModal() { document.getElementById('enrollModal').classList.remove('open'); }
-        function closeEditModal()   { document.getElementById('editModal').classList.remove('open'); }
-        function capitalize(s) { if(!s) return ''; return s.charAt(0).toUpperCase() + s.slice(1); }
+        document
+          .getElementById("enrollForm")
+          .addEventListener("submit", async function (e) {
+            e.preventDefault();
+            const data = {
+              student_id: Number(
+                document.getElementById("selectStudent").value,
+              ),
+              program_id: Number(
+                document.getElementById("selectProgram").value,
+              ),
+              instructor_id: document.getElementById("selectInstructor").value
+                ? Number(document.getElementById("selectInstructor").value)
+                : null,
+            };
 
-        document.getElementById('enrollModal').addEventListener('click', function(e) { if(e.target===this) closeEnrollModal(); });
-        document.getElementById('editModal').addEventListener('click', function(e) { if(e.target===this) closeEditModal(); });
+            if (!data.student_id || !data.program_id) {
+              utils.showNotification(
+                "Student and Program are required",
+                "error",
+              );
+              return;
+            }
+
+            try {
+              const response = await api.request(
+                "/manager/enrollment/assign.php",
+                {
+                  method: "POST",
+                  body: JSON.stringify(data),
+                },
+              );
+              if (response.success) {
+                utils.showNotification(response.message, "success");
+                closeEnrollModal();
+                this.reset();
+                await loadEnrollmentsFromAPI();
+              } else {
+                utils.showNotification(response.message, "error");
+              }
+            } catch (error) {
+              utils.showNotification("Error assigning enrollment", "error");
+            }
+          });
+      });
+
+      function closeEnrollModal() {
+        Modal.close("enrollModal");
+      }
+      function closeEditModal() {
+        Modal.close("editModal");
+      }
+      function capitalize(s) {
+        if (!s) return "";
+        return s.charAt(0).toUpperCase() + s.slice(1);
+      }
+
+      document
+        .getElementById("enrollModal")
+        .addEventListener("click", function (e) {
+          if (e.target === this) closeEnrollModal();
+        });
+      document
+        .getElementById("editModal")
+        .addEventListener("click", function (e) {
+          if (e.target === this) closeEditModal();
+        });
     </script>
-</body>
+  </body>
 </html>

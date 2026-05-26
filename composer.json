@@ -1,0 +1,21 @@
+{
+  "name": "mycompany/driver-license-school",
+  "description": "Driver License School Management System",
+  "type": "project",
+  "require": {
+    "php": ">=8.1",
+    "vlucas/phpdotenv": "^5.5",
+    "firebase/php-jwt": "^5.5",
+    "illuminate/database": "^10.0",
+    "symfony/http-foundation": "^6.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "server/models/",
+      "App\\Controllers\\": "server/api/"
+    }
+  },
+  "scripts": {
+    "post-install-cmd": "php server/migrate.php"
+  }
+}

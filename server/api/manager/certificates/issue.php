@@ -1,6 +1,7 @@
 <?php
 include "../../../config/db.php";
 include "../../../includes/auth.php";
+include "../../../includes/notifications.php";
 
 header('Content-Type: application/json');
 
@@ -31,6 +32,7 @@ if ($stmt->execute()) {
     $update = $conn->prepare("UPDATE student_details SET enrollment_status = 'graduated' WHERE user_id = ?");
     $update->bind_param("i", $student_id);
     $update->execute();
+    notifyUser($conn, $student_id, 'Certificate issued', 'Your certificate has been issued successfully. Please download it from the certificates page.');
     
     echo json_encode(["success" => true, "message" => "Certificate issued successfully", "certificate_number" => $certificate_number]);
 } else {

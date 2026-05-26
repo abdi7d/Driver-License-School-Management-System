@@ -1,25 +1,33 @@
 <?php
-include "../../config/db.php";
-include "../../includes/auth.php";
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json; charset=UTF-8");
+header("Access-Control-Allow-Methods: GET, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
-header("Content-Type: application/json");
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') { http_response_code(204); exit; }
+
+include_once '../../config/db.php';
+include_once '../../includes/auth.php';
 
 $user = auth();
 if (!$user || $user['role'] !== 'student') {
     http_response_code(403);
-    echo json_encode(["error" => "Access denied"]);
+    echo json_encode(["success" => false, "message" => "Access denied"]);
     exit;
 }
 
-$user_id = $user['user_id'];
+$user_id = (int)$user['user_id'];
 
+// Get all certificates for this student
 $query = "
     SELECT c.id, c.certificate_number, c.issue_date,
-           p.name as program_name, sd.license_class as license_category
+           tp.name as program_name,
+           sd.license_class,
+           ub.full_name as issued_by_name
     FROM certificates c
-    JOIN enrollments e ON c.student_user_id = e.student_user_id AND c.program_id = e.program_id
-    JOIN training_programs p ON e.program_id = p.id
+    LEFT JOIN training_programs tp ON c.program_id = tp.id
     LEFT JOIN student_details sd ON c.student_user_id = sd.user_id
+    LEFT JOIN users ub ON c.issued_by = ub.id
     WHERE c.student_user_id = ?
     ORDER BY c.issue_date DESC
 ";
@@ -34,5 +42,5 @@ while ($row = $result->fetch_assoc()) {
     $certificates[] = $row;
 }
 
-echo json_encode($certificates);
+echo json_encode(["success" => true, "data" => $certificates]);
 ?>

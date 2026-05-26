@@ -144,10 +144,7 @@
           <div class="approvals-table-wrap">
             <div class="table-header">
               <h3>Enrollment Report</h3>
-              <button
-                class="btn-view"
-                onclick="alert('Export feature coming soon')"
-              >
+              <button class="btn-view" onclick="exportReport('enrollment')">
                 ⬇ Export
               </button>
             </div>
@@ -162,83 +159,7 @@
                   <th>Enrollment Rate</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td><strong>Motorcycle (A)</strong></td>
-                  <td>14</td>
-                  <td>10</td>
-                  <td>3</td>
-                  <td>1</td>
-                  <td>
-                    <div class="report-bar-wrap">
-                      <div class="prog-bar report-bar">
-                        <div class="prog-fill fill-blue fill-w70"></div>
-                      </div>
-                      <span class="report-bar-pct">70%</span>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td><strong>Private Car (B)</strong></td>
-                  <td>32</td>
-                  <td>22</td>
-                  <td>8</td>
-                  <td>2</td>
-                  <td>
-                    <div class="report-bar-wrap">
-                      <div class="prog-bar report-bar">
-                        <div class="prog-fill fill-green fill-w88"></div>
-                      </div>
-                      <span class="report-bar-pct">88%</span>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td><strong>Heavy Truck (C)</strong></td>
-                  <td>18</td>
-                  <td>14</td>
-                  <td>3</td>
-                  <td>1</td>
-                  <td>
-                    <div class="report-bar-wrap">
-                      <div class="prog-bar report-bar">
-                        <div class="prog-fill fill-orange fill-w78"></div>
-                      </div>
-                      <span class="report-bar-pct">78%</span>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td><strong>Bus (D)</strong></td>
-                  <td>15</td>
-                  <td>11</td>
-                  <td>3</td>
-                  <td>1</td>
-                  <td>
-                    <div class="report-bar-wrap">
-                      <div class="prog-bar report-bar">
-                        <div class="prog-fill fill-purple fill-w73"></div>
-                      </div>
-                      <span class="report-bar-pct">73%</span>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td><strong>Transport (E)</strong></td>
-                  <td>8</td>
-                  <td>5</td>
-                  <td>2</td>
-                  <td>1</td>
-                  <td>
-                    <div class="report-bar-wrap">
-                      <div class="prog-bar report-bar">
-                        <div class="prog-fill fill-blue fill-w63"></div>
-                      </div>
-                      <span class="report-bar-pct">63%</span>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
+              <tbody></tbody>
             </table>
           </div>
         </div>
@@ -247,10 +168,7 @@
           <div class="approvals-table-wrap">
             <div class="table-header">
               <h3>Pass/Fail Report</h3>
-              <button
-                class="btn-view"
-                onclick="alert('Export feature coming soon')"
-              >
+              <button class="btn-view" onclick="exportReport('passfail')">
                 ⬇ Export
               </button>
             </div>
@@ -264,43 +182,7 @@
                   <th>Pass Rate</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td><strong>Motorcycle (A)</strong></td>
-                  <td>12</td>
-                  <td><strong class="score-pass">10</strong></td>
-                  <td><strong class="score-fail">2</strong></td>
-                  <td><span class="badge badge-approved">83%</span></td>
-                </tr>
-                <tr>
-                  <td><strong>Private Car (B)</strong></td>
-                  <td>28</td>
-                  <td><strong class="score-pass">24</strong></td>
-                  <td><strong class="score-fail">4</strong></td>
-                  <td><span class="badge badge-approved">86%</span></td>
-                </tr>
-                <tr>
-                  <td><strong>Heavy Truck (C)</strong></td>
-                  <td>15</td>
-                  <td><strong class="score-pass">11</strong></td>
-                  <td><strong class="score-fail">4</strong></td>
-                  <td><span class="badge badge-pending">73%</span></td>
-                </tr>
-                <tr>
-                  <td><strong>Bus (D)</strong></td>
-                  <td>13</td>
-                  <td><strong class="score-pass">10</strong></td>
-                  <td><strong class="score-fail">3</strong></td>
-                  <td><span class="badge badge-pending">77%</span></td>
-                </tr>
-                <tr>
-                  <td><strong>Transport (E)</strong></td>
-                  <td>7</td>
-                  <td><strong class="score-pass">4</strong></td>
-                  <td><strong class="score-fail">3</strong></td>
-                  <td><span class="badge badge-rejected">57%</span></td>
-                </tr>
-              </tbody>
+              <tbody></tbody>
             </table>
           </div>
         </div>
@@ -309,10 +191,7 @@
           <div class="approvals-table-wrap">
             <div class="table-header">
               <h3>Instructor Performance</h3>
-              <button
-                class="btn-view"
-                onclick="alert('Export feature coming soon')"
-              >
+              <button class="btn-view" onclick="exportReport('instructor')">
                 ⬇ Export
               </button>
             </div>
@@ -322,60 +201,11 @@
                   <th>Instructor</th>
                   <th>Assigned Students</th>
                   <th>Sessions Completed</th>
-                  <th>Avg Rating</th>
+                  <th>Avg Score</th>
                   <th>Pass Rate</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td><strong>Instructor Yonas</strong></td>
-                  <td>22</td>
-                  <td>48</td>
-                  <td>
-                    <div class="report-rating">
-                      <span class="report-stars">★★★★★</span>
-                      <span class="td-sub">4.8</span>
-                    </div>
-                  </td>
-                  <td><span class="badge badge-approved">88%</span></td>
-                </tr>
-                <tr>
-                  <td><strong>Instructor Liya</strong></td>
-                  <td>18</td>
-                  <td>36</td>
-                  <td>
-                    <div class="report-rating">
-                      <span class="report-stars">★★★★☆</span>
-                      <span class="td-sub">4.5</span>
-                    </div>
-                  </td>
-                  <td><span class="badge badge-approved">83%</span></td>
-                </tr>
-                <tr>
-                  <td><strong>Instructor Bekele</strong></td>
-                  <td>20</td>
-                  <td>42</td>
-                  <td>
-                    <div class="report-rating">
-                      <span class="report-stars">★★★★☆</span>
-                      <span class="td-sub">4.3</span>
-                    </div>
-                  </td>
-                  <td><span class="badge badge-pending">75%</span></td>
-                </tr>
-                <tr>
-                  <td><strong>Instructor Tesfaye</strong></td>
-                  <td>12</td>
-                  <td>24</td>
-                  <td>
-                    <div class="report-rating">
-                      <span class="report-stars">★★★★★</span>
-                      <span class="td-sub">4.7</span>
-                    </div>
-                  </td>
-                  <td><span class="badge badge-approved">82%</span></td>
-                </tr>
-              </tbody>
+              <tbody id="instructorBody"></tbody>
             </table>
           </div>
         </div>
@@ -384,10 +214,7 @@
           <div class="approvals-table-wrap">
             <div class="table-header">
               <h3>Revenue Report</h3>
-              <button
-                class="btn-view"
-                onclick="alert('Export feature coming soon')"
-              >
+              <button class="btn-view" onclick="exportReport('revenue')">
                 ⬇ Export
               </button>
             </div>
@@ -400,44 +227,7 @@
                   <th>Total Revenue (ETB)</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td><strong>Motorcycle (A)</strong></td>
-                  <td>14</td>
-                  <td>2,500</td>
-                  <td><strong>35,000</strong></td>
-                </tr>
-                <tr>
-                  <td><strong>Private Car (B)</strong></td>
-                  <td>32</td>
-                  <td>3,500</td>
-                  <td><strong>112,000</strong></td>
-                </tr>
-                <tr>
-                  <td><strong>Heavy Truck (C)</strong></td>
-                  <td>18</td>
-                  <td>5,500</td>
-                  <td><strong>99,000</strong></td>
-                </tr>
-                <tr>
-                  <td><strong>Bus (D)</strong></td>
-                  <td>15</td>
-                  <td>5,000</td>
-                  <td><strong>75,000</strong></td>
-                </tr>
-                <tr>
-                  <td><strong>Transport (E)</strong></td>
-                  <td>8</td>
-                  <td>4,500</td>
-                  <td><strong>36,000</strong></td>
-                </tr>
-                <tr class="revenue-total-row">
-                  <td><strong>Grand Total</strong></td>
-                  <td><strong>87</strong></td>
-                  <td>—</td>
-                  <td><strong class="score-pass">357,000</strong></td>
-                </tr>
-              </tbody>
+              <tbody id="revenueBody"></tbody>
             </table>
           </div>
         </div>
@@ -463,12 +253,70 @@
       </div>
     </main>
 
-    <script src="../assets/js/utils.js"></script>
-    <script src="../assets/js/api.js"></script>
     <script src="../assets/js/auth.js"></script>
-    <script src="../assets/js/modal.js"></script>
+    <script src="../assets/js/api.js?v=5"></script>
+    <script src="../assets/js/utils.js?v=2"></script>
+    <script src="../assets/js/modal.js?v=2"></script>
+    <script src="../assets/js/dashboard.js?v=2"></script>
+    <!-- Fallback inline API if external file fails to load -->
+    <script>
+      if (!window.api) {
+        window.api = {
+          baseUrl: "/Driver-License-School/server/api",
+          async request(endpoint, options = {}) {
+            try {
+              const token = auth?.getToken?.();
+              const headers = { ...options.headers };
+              if (!(options.body instanceof FormData)) {
+                headers["Content-Type"] = "application/json";
+              }
+              if (token) {
+                headers["Authorization"] = `Bearer ${token}`;
+              }
+              const response = await fetch(`${this.baseUrl}${endpoint}`, {
+                ...options,
+                headers,
+              });
+              if (!response.ok) {
+                throw new Error(
+                  `HTTP ${response.status}: ${response.statusText}`,
+                );
+              }
+              return await response.json();
+            } catch (error) {
+              console.error("API Error:", error);
+              return {
+                success: false,
+                message: error.message || "Network error",
+              };
+            }
+          },
+          async get(endpoint, options) {
+            return this.request(endpoint, { ...options, method: "GET" });
+          },
+          async post(endpoint, body, options) {
+            return this.request(endpoint, {
+              ...options,
+              method: "POST",
+              body: body instanceof FormData ? body : JSON.stringify(body),
+            });
+          },
+          async put(endpoint, body, options) {
+            return this.request(endpoint, {
+              ...options,
+              method: "PUT",
+              body: body instanceof FormData ? body : JSON.stringify(body),
+            });
+          },
+          async delete(endpoint, options) {
+            return this.request(endpoint, { ...options, method: "DELETE" });
+          },
+        };
+      }
+    </script>
     <script src="../assets/js/chart-utils.js"></script>
     <script>
+      let reportsData = null;
       document.addEventListener("DOMContentLoaded", async function () {
         const user = auth.getCurrentUser();
         if (!user) {
@@ -512,6 +360,7 @@
           const response = await api.request("/manager/reports/index.php");
           if (response.success && response.data) {
             const data = response.data;
+            reportsData = data;
 
             // Update stats cards
             document.querySelector(".stat-card.blue .stat-value").textContent =
@@ -620,6 +469,105 @@
         } catch (error) {
           console.error("Error loading reports:", error);
         }
+      }
+
+      function exportReport(type) {
+        if (!reportsData) {
+          utils.showNotification("Report data is not loaded yet", "error");
+          return;
+        }
+
+        let headers = [];
+        let rows = [];
+        let filename = "report.csv";
+
+        if (type === "enrollment") {
+          headers = [
+            "Program",
+            "Category",
+            "Enrolled",
+            "Active",
+            "Completed",
+            "Dropped",
+            "Enrollment Rate",
+          ];
+          rows = reportsData.programs.map((p) => [
+            `${p.name}`,
+            `${p.category}`,
+            `${p.enrolled}`,
+            `${p.active}`,
+            `${p.completed}`,
+            `${p.dropped}`,
+            `${p.enrolled > 0 ? Math.round((p.active / p.enrolled) * 100) : 0}%`,
+          ]);
+          filename = "enrollment-report.csv";
+        } else if (type === "passfail") {
+          headers = [
+            "Program",
+            "Enrolled",
+            "Active",
+            "Completed",
+            "Dropped",
+            "Pass Rate",
+          ];
+          rows = reportsData.programs.map((p) => [
+            `${p.name}`,
+            `${p.enrolled}`,
+            `${p.active}`,
+            `${p.completed}`,
+            `${p.dropped}`,
+            `${p.enrolled > 0 ? Math.round((p.active / p.enrolled) * 100) : 0}%`,
+          ]);
+          filename = "passfail-report.csv";
+        } else if (type === "instructor") {
+          headers = [
+            "Instructor",
+            "Assigned Students",
+            "Sessions Completed",
+            "Performance Score",
+          ];
+          rows = reportsData.instructors.map((i) => [
+            `${i.name}`,
+            `${i.assigned_students}`,
+            `${i.sessions_completed}`,
+            `${i.performance_score ?? "N/A"}`,
+          ]);
+          filename = "instructor-report.csv";
+        } else if (type === "revenue") {
+          headers = ["Program", "Category", "Enrolled", "Price", "Revenue"];
+          rows = reportsData.programs.map((p) => [
+            `${p.name}`,
+            `${p.category}`,
+            `${p.enrolled}`,
+            `${parseFloat(p.price).toLocaleString()}`,
+            `${parseFloat(p.revenue).toLocaleString()}`,
+          ]);
+          filename = "revenue-report.csv";
+        }
+
+        downloadCSV(filename, headers, rows);
+      }
+
+      function downloadCSV(filename, headers, rows) {
+        const csvContent = [
+          headers.join(","),
+          ...rows.map((r) =>
+            r
+              .map((value) => `"${String(value).replace(/"/g, '""')}"`)
+              .join(","),
+          ),
+        ].join("\n");
+        const blob = new Blob([csvContent], {
+          type: "text/csv;charset=utf-8;",
+        });
+        const link = document.createElement("a");
+        const url = URL.createObjectURL(blob);
+        link.setAttribute("href", url);
+        link.setAttribute("download", filename);
+        link.style.visibility = "hidden";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
       }
     </script>
   </body>

@@ -1,1202 +1,1375 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Profile - DLSM Ethiopia</title>
-    <meta name="description" content="Manage your personal profile, upload documents, and update security settings at DLSM Ethiopia Driver License School.">
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/responsive.css">
-    <link rel="stylesheet" href="../assets/css/dark-mode.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta
+      name="description"
+      content="Manage your personal profile, upload documents, and update security settings at DLSM Ethiopia Driver License School."
+    />
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link rel="stylesheet" href="../assets/css/responsive.css" />
+    <link rel="stylesheet" href="../assets/css/dark-mode.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <script src="../assets/js/theme.js"></script>
     <script src="../assets/js/auth-guard.js"></script>
     <style>
-        /* ========================================
+      /* ========================================
            PROFILE PAGE — PREMIUM SCOPED STYLES
            ======================================== */
 
-        /* Profile Hero Banner */
+      /* Profile Hero Banner */
+      .profile-hero-banner {
+        position: relative;
+        height: 200px;
+        background: linear-gradient(
+          135deg,
+          #1e40af 0%,
+          #3b82f6 40%,
+          #6366f1 100%
+        );
+        border-radius: 16px;
+        overflow: hidden;
+        margin-bottom: -60px;
+        z-index: 1;
+      }
+
+      .profile-hero-banner::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(
+            circle at 20% 50%,
+            rgba(255, 255, 255, 0.08) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 20%,
+            rgba(255, 255, 255, 0.06) 0%,
+            transparent 40%
+          );
+      }
+
+      .profile-hero-banner::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 80px;
+        background: linear-gradient(
+          to top,
+          rgba(248, 250, 252, 0.9),
+          transparent
+        );
+      }
+
+      .banner-pattern {
+        position: absolute;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        animation: patternDrift 30s linear infinite;
+      }
+
+      @keyframes patternDrift {
+        0% {
+          transform: translateX(0) translateY(0);
+        }
+        100% {
+          transform: translateX(60px) translateY(60px);
+        }
+      }
+
+      /* Profile Identity Card */
+      .profile-identity {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        align-items: flex-end;
+        gap: 24px;
+        padding: 0 32px;
+        margin-bottom: 32px;
+      }
+
+      .profile-avatar-wrapper {
+        position: relative;
+        flex-shrink: 0;
+      }
+
+      .profile-avatar-xl {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #1e40af, #6366f1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 42px;
+        font-weight: 700;
+        color: white;
+        border: 4px solid white;
+        box-shadow: 0 8px 32px rgba(30, 64, 175, 0.25);
+        overflow: hidden;
+        transition: transform 0.3s ease;
+        cursor: pointer;
+      }
+
+      .profile-avatar-xl:hover {
+        transform: scale(1.05);
+      }
+
+      .profile-avatar-xl img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .avatar-camera-btn {
+        position: absolute;
+        bottom: 4px;
+        right: 4px;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: #1e40af;
+        color: white;
+        border: 3px solid white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        cursor: pointer;
+        transition: all 0.2s;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      }
+
+      .avatar-camera-btn:hover {
+        background: #1e3a8a;
+        transform: scale(1.1);
+      }
+
+      .profile-identity-info {
+        flex: 1;
+        padding-bottom: 8px;
+      }
+
+      .profile-identity-info h1 {
+        font-size: 26px;
+        font-weight: 800;
+        color: #0f172a;
+        margin-bottom: 4px;
+        letter-spacing: -0.5px;
+      }
+
+      .profile-identity-info .profile-role-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 14px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-right: 8px;
+      }
+
+      .role-badge-student {
+        background: #dbeafe;
+        color: #1e40af;
+      }
+
+      .role-badge-instructor {
+        background: #dcfce7;
+        color: #15803d;
+      }
+
+      .role-badge-manager,
+      .role-badge-admin {
+        background: #fef3c7;
+        color: #b45309;
+      }
+
+      .role-badge-supervisor {
+        background: #ede9fe;
+        color: #7c3aed;
+      }
+
+      .role-badge-finance {
+        background: #fce7f3;
+        color: #be185d;
+      }
+
+      .profile-identity-meta {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-top: 8px;
+        flex-wrap: wrap;
+      }
+
+      .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 13px;
+        color: #64748b;
+      }
+
+      .meta-item .meta-icon {
+        font-size: 14px;
+      }
+
+      /* Profile Completion Bar */
+      .profile-completion-card {
+        background: white;
+        border-radius: 14px;
+        padding: 20px 24px;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+        margin-bottom: 24px;
+        border: 1px solid #e2e8f0;
+      }
+
+      .completion-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+      }
+
+      .completion-header h3 {
+        font-size: 15px;
+        font-weight: 700;
+        color: #1e293b;
+      }
+
+      .completion-percent {
+        font-size: 14px;
+        font-weight: 700;
+        color: #1e40af;
+      }
+
+      .completion-bar-track {
+        width: 100%;
+        height: 8px;
+        background: #e2e8f0;
+        border-radius: 99px;
+        overflow: hidden;
+        margin-bottom: 12px;
+      }
+
+      .completion-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #1e40af, #6366f1);
+        border-radius: 99px;
+        transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .completion-checklist {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .completion-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 12px;
+        font-weight: 500;
+        color: #94a3b8;
+        padding: 4px 10px;
+        border-radius: 6px;
+        background: #f8fafc;
+      }
+
+      .completion-item.done {
+        color: #15803d;
+        background: #f0fdf4;
+      }
+
+      .completion-item .check-icon {
+        font-size: 13px;
+      }
+
+      /* Tabs Navigation */
+      .profile-tabs-nav {
+        display: flex;
+        gap: 4px;
+        background: white;
+        padding: 6px;
+        border-radius: 14px;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+        margin-bottom: 24px;
+        border: 1px solid #e2e8f0;
+        overflow-x: auto;
+      }
+
+      .profile-tab-btn {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #64748b;
+        background: transparent;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        white-space: nowrap;
+      }
+
+      .profile-tab-btn:hover {
+        color: #1e293b;
+        background: #f1f5f9;
+      }
+
+      .profile-tab-btn.active {
+        background: #1e40af;
+        color: white;
+        box-shadow: 0 2px 8px rgba(30, 64, 175, 0.25);
+      }
+
+      .profile-tab-btn .tab-icon {
+        font-size: 16px;
+      }
+
+      .profile-tab-btn .tab-badge {
+        background: rgba(255, 255, 255, 0.25);
+        padding: 1px 7px;
+        border-radius: 10px;
+        font-size: 11px;
+        font-weight: 700;
+      }
+
+      .profile-tab-btn:not(.active) .tab-badge {
+        background: #fee2e2;
+        color: #dc2626;
+      }
+
+      /* Tab Content Panels */
+      .profile-tab-panel {
+        display: none;
+        animation: tabFadeIn 0.35s ease;
+      }
+
+      .profile-tab-panel.active {
+        display: block;
+      }
+
+      @keyframes tabFadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Info Cards */
+      .profile-info-card {
+        background: white;
+        border-radius: 14px;
+        padding: 28px;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+        border: 1px solid #e2e8f0;
+        margin-bottom: 24px;
+      }
+
+      .info-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid #f1f5f9;
+      }
+
+      .info-card-header h3 {
+        font-size: 17px;
+        font-weight: 700;
+        color: #0f172a;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .info-card-header h3 .header-icon {
+        font-size: 20px;
+      }
+
+      .btn-edit-profile {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 18px;
+        background: #eff6ff;
+        color: #1e40af;
+        border: 1.5px solid #bfdbfe;
+        border-radius: 10px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .btn-edit-profile:hover {
+        background: #1e40af;
+        color: white;
+        border-color: #1e40af;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(30, 64, 175, 0.2);
+      }
+
+      .btn-edit-profile.editing {
+        background: #fef3c7;
+        color: #b45309;
+        border-color: #fcd34d;
+      }
+
+      /* Info Grid */
+      .info-display-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+      }
+
+      .info-field {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .info-field-label {
+        font-size: 12px;
+        font-weight: 600;
+        color: #94a3b8;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .info-field-value {
+        font-size: 15px;
+        font-weight: 600;
+        color: #1e293b;
+        padding: 10px 14px;
+        background: #f8fafc;
+        border-radius: 8px;
+        border: 1.5px solid #e2e8f0;
+        min-height: 42px;
+        display: flex;
+        align-items: center;
+        transition: all 0.2s;
+      }
+
+      .info-field-value.editable {
+        background: white;
+        border-color: #93c5fd;
+        cursor: text;
+      }
+
+      .info-field input.profile-edit-input {
+        width: 100%;
+        padding: 10px 14px;
+        border: 1.5px solid #93c5fd;
+        border-radius: 8px;
+        font-size: 15px;
+        font-weight: 600;
+        color: #1e293b;
+        background: white;
+        outline: none;
+        transition: all 0.2s;
+        font-family: "Inter", sans-serif;
+        display: none;
+      }
+
+      .info-field input.profile-edit-input:focus {
+        border-color: #1e40af;
+        box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+      }
+
+      .info-field input.profile-edit-input.visible {
+        display: block;
+      }
+
+      /* Edit Mode Actions */
+      .edit-mode-actions {
+        display: none;
+        gap: 12px;
+        justify-content: flex-end;
+        padding-top: 20px;
+        margin-top: 20px;
+        border-top: 1px solid #f1f5f9;
+      }
+
+      .edit-mode-actions.visible {
+        display: flex;
+      }
+
+      .btn-save-profile {
+        padding: 10px 28px;
+        background: linear-gradient(135deg, #1e40af, #3b82f6);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        box-shadow: 0 2px 8px rgba(30, 64, 175, 0.2);
+      }
+
+      .btn-save-profile:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 16px rgba(30, 64, 175, 0.3);
+      }
+
+      .btn-save-profile:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .btn-cancel-edit {
+        padding: 10px 28px;
+        background: white;
+        color: #64748b;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .btn-cancel-edit:hover {
+        background: #f8fafc;
+        color: #1e293b;
+        border-color: #cbd5e1;
+      }
+
+      /* Documents Tab */
+      .docs-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 20px;
+      }
+
+      .doc-upload-card {
+        position: relative;
+        background: #fafbfd;
+        border: 2px dashed #d1d5db;
+        border-radius: 14px;
+        padding: 28px 20px;
+        text-align: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+
+      .doc-upload-card:hover {
+        border-color: #1e40af;
+        background: #eff6ff;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(30, 64, 175, 0.08);
+      }
+
+      .doc-upload-card.uploaded {
+        border-style: solid;
+        border-color: #86efac;
+        background: #f0fdf4;
+      }
+
+      .doc-icon-wrap {
+        width: 56px;
+        height: 56px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        margin: 0 auto 14px;
+        background: white;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      }
+
+      .doc-upload-card h4 {
+        font-size: 15px;
+        font-weight: 700;
+        color: #1e293b;
+        margin-bottom: 6px;
+      }
+
+      .doc-status-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        margin-bottom: 14px;
+      }
+
+      .doc-status-chip.pending {
+        background: #fef3c7;
+        color: #d97706;
+      }
+
+      .doc-status-chip.uploaded {
+        background: #dcfce7;
+        color: #15803d;
+      }
+
+      .doc-status-chip.rejected {
+        background: #fee2e2;
+        color: #dc2626;
+      }
+
+      .doc-upload-card input[type="file"] {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        cursor: pointer;
+        z-index: 2;
+      }
+
+      .doc-upload-hint {
+        font-size: 12px;
+        color: #94a3b8;
+        margin-top: 4px;
+      }
+
+      .doc-upload-btn-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 16px;
+        border-radius: 8px;
+        background: #1e40af;
+        color: white;
+        font-size: 12px;
+        font-weight: 600;
+        margin-top: 10px;
+        position: relative;
+        z-index: 1;
+        pointer-events: none;
+      }
+
+      .doc-upload-card.uploaded .doc-upload-btn-label {
+        background: #15803d;
+      }
+
+      /* Security Tab */
+      .security-section {
+        margin-bottom: 28px;
+      }
+
+      .security-section:last-child {
+        margin-bottom: 0;
+      }
+
+      .security-section h4 {
+        font-size: 15px;
+        font-weight: 700;
+        color: #1e293b;
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .password-form-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        max-width: 480px;
+      }
+
+      .password-field-group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .password-field-group label {
+        font-size: 13px;
+        font-weight: 600;
+        color: #475569;
+      }
+
+      .password-input-wrap {
+        position: relative;
+      }
+
+      .password-input-wrap input {
+        width: 100%;
+        padding: 10px 44px 10px 14px;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 8px;
+        font-size: 14px;
+        color: #1e293b;
+        font-family: "Inter", sans-serif;
+        transition: all 0.2s;
+        background: white;
+      }
+
+      .password-input-wrap input:focus {
+        outline: none;
+        border-color: #1e40af;
+        box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+      }
+
+      .password-toggle-btn {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        font-size: 18px;
+        cursor: pointer;
+        color: #94a3b8;
+        padding: 4px;
+        transition: color 0.2s;
+      }
+
+      .password-toggle-btn:hover {
+        color: #1e293b;
+      }
+
+      /* Password Strength */
+      .password-strength {
+        display: flex;
+        gap: 4px;
+        margin-top: 8px;
+      }
+
+      .strength-bar {
+        flex: 1;
+        height: 4px;
+        border-radius: 99px;
+        background: #e2e8f0;
+        transition: background 0.3s;
+      }
+
+      .strength-bar.active.weak {
+        background: #ef4444;
+      }
+      .strength-bar.active.medium {
+        background: #f59e0b;
+      }
+      .strength-bar.active.strong {
+        background: #22c55e;
+      }
+      .strength-bar.active.very-strong {
+        background: #15803d;
+      }
+
+      .strength-label {
+        font-size: 12px;
+        font-weight: 600;
+        margin-top: 4px;
+      }
+
+      .strength-label.weak {
+        color: #ef4444;
+      }
+      .strength-label.medium {
+        color: #f59e0b;
+      }
+      .strength-label.strong {
+        color: #22c55e;
+      }
+      .strength-label.very-strong {
+        color: #15803d;
+      }
+
+      /* Account Info Section */
+      .account-info-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+
+      .account-info-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 16px;
+        background: #f8fafc;
+        border-radius: 10px;
+        border: 1px solid #f1f5f9;
+      }
+
+      .account-info-item .aii-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        background: white;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+        flex-shrink: 0;
+      }
+
+      .account-info-item .aii-text {
+        flex: 1;
+      }
+
+      .account-info-item .aii-text .aii-label {
+        font-size: 11px;
+        font-weight: 600;
+        color: #94a3b8;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+      }
+
+      .account-info-item .aii-text .aii-value {
+        font-size: 14px;
+        font-weight: 600;
+        color: #1e293b;
+      }
+
+      /* Stats Cards Row */
+      .profile-stats-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+
+      .profile-stat-card {
+        background: white;
+        border-radius: 14px;
+        padding: 20px;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+        border: 1px solid #e2e8f0;
+        text-align: center;
+        transition: all 0.2s;
+      }
+
+      .profile-stat-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+      }
+
+      .profile-stat-card .psc-value {
+        font-size: 28px;
+        font-weight: 800;
+        background: linear-gradient(135deg, #1e40af, #6366f1);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 4px;
+      }
+
+      .profile-stat-card .psc-label {
+        font-size: 13px;
+        color: #64748b;
+        font-weight: 500;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
         .profile-hero-banner {
-            position: relative;
-            height: 200px;
-            background: linear-gradient(135deg, #1E40AF 0%, #3B82F6 40%, #6366f1 100%);
-            border-radius: 16px;
-            overflow: hidden;
-            margin-bottom: -60px;
-            z-index: 1;
+          height: 140px;
+          border-radius: 12px;
         }
 
-        .profile-hero-banner::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background:
-                radial-gradient(circle at 20% 50%, rgba(255,255,255,0.08) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(255,255,255,0.06) 0%, transparent 40%);
-        }
-
-        .profile-hero-banner::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 80px;
-            background: linear-gradient(to top, rgba(248,250,252,0.9), transparent);
-        }
-
-        .banner-pattern {
-            position: absolute;
-            inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            animation: patternDrift 30s linear infinite;
-        }
-
-        @keyframes patternDrift {
-            0% { transform: translateX(0) translateY(0); }
-            100% { transform: translateX(60px) translateY(60px); }
-        }
-
-        /* Profile Identity Card */
         .profile-identity {
-            position: relative;
-            z-index: 2;
-            display: flex;
-            align-items: flex-end;
-            gap: 24px;
-            padding: 0 32px;
-            margin-bottom: 32px;
-        }
-
-        .profile-avatar-wrapper {
-            position: relative;
-            flex-shrink: 0;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          padding: 0 16px;
         }
 
         .profile-avatar-xl {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #1E40AF, #6366f1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 42px;
-            font-weight: 700;
-            color: white;
-            border: 4px solid white;
-            box-shadow: 0 8px 32px rgba(30, 64, 175, 0.25);
-            overflow: hidden;
-            transition: transform 0.3s ease;
-            cursor: pointer;
-        }
-
-        .profile-avatar-xl:hover {
-            transform: scale(1.05);
-        }
-
-        .profile-avatar-xl img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .avatar-camera-btn {
-            position: absolute;
-            bottom: 4px;
-            right: 4px;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: #1E40AF;
-            color: white;
-            border: 3px solid white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-        }
-
-        .avatar-camera-btn:hover {
-            background: #1e3a8a;
-            transform: scale(1.1);
-        }
-
-        .profile-identity-info {
-            flex: 1;
-            padding-bottom: 8px;
-        }
-
-        .profile-identity-info h1 {
-            font-size: 26px;
-            font-weight: 800;
-            color: #0f172a;
-            margin-bottom: 4px;
-            letter-spacing: -0.5px;
-        }
-
-        .profile-identity-info .profile-role-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 4px 14px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-right: 8px;
-        }
-
-        .role-badge-student {
-            background: #dbeafe;
-            color: #1e40af;
-        }
-
-        .role-badge-instructor {
-            background: #dcfce7;
-            color: #15803d;
-        }
-
-        .role-badge-manager, .role-badge-admin {
-            background: #fef3c7;
-            color: #b45309;
-        }
-
-        .role-badge-supervisor {
-            background: #ede9fe;
-            color: #7c3aed;
-        }
-
-        .role-badge-finance {
-            background: #fce7f3;
-            color: #be185d;
+          width: 100px;
+          height: 100px;
+          font-size: 36px;
         }
 
         .profile-identity-meta {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin-top: 8px;
-            flex-wrap: wrap;
+          justify-content: center;
         }
 
-        .meta-item {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 13px;
-            color: #64748b;
+        .info-display-grid {
+          grid-template-columns: 1fr;
         }
 
-        .meta-item .meta-icon {
-            font-size: 14px;
-        }
-
-        /* Profile Completion Bar */
-        .profile-completion-card {
-            background: white;
-            border-radius: 14px;
-            padding: 20px 24px;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-            margin-bottom: 24px;
-            border: 1px solid #e2e8f0;
-        }
-
-        .completion-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-
-        .completion-header h3 {
-            font-size: 15px;
-            font-weight: 700;
-            color: #1e293b;
-        }
-
-        .completion-percent {
-            font-size: 14px;
-            font-weight: 700;
-            color: #1E40AF;
-        }
-
-        .completion-bar-track {
-            width: 100%;
-            height: 8px;
-            background: #e2e8f0;
-            border-radius: 99px;
-            overflow: hidden;
-            margin-bottom: 12px;
-        }
-
-        .completion-bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #1E40AF, #6366f1);
-            border-radius: 99px;
-            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .completion-checklist {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .completion-item {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 12px;
-            font-weight: 500;
-            color: #94a3b8;
-            padding: 4px 10px;
-            border-radius: 6px;
-            background: #f8fafc;
-        }
-
-        .completion-item.done {
-            color: #15803d;
-            background: #f0fdf4;
-        }
-
-        .completion-item .check-icon {
-            font-size: 13px;
-        }
-
-        /* Tabs Navigation */
         .profile-tabs-nav {
-            display: flex;
-            gap: 4px;
-            background: white;
-            padding: 6px;
-            border-radius: 14px;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-            margin-bottom: 24px;
-            border: 1px solid #e2e8f0;
-            overflow-x: auto;
+          gap: 2px;
+          padding: 4px;
         }
 
         .profile-tab-btn {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: 600;
-            color: #64748b;
-            background: transparent;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            white-space: nowrap;
+          padding: 10px 12px;
+          font-size: 13px;
         }
 
-        .profile-tab-btn:hover {
-            color: #1e293b;
-            background: #f1f5f9;
-        }
-
-        .profile-tab-btn.active {
-            background: #1E40AF;
-            color: white;
-            box-shadow: 0 2px 8px rgba(30, 64, 175, 0.25);
+        .profile-tab-btn .tab-text {
+          display: none;
         }
 
         .profile-tab-btn .tab-icon {
-            font-size: 16px;
+          font-size: 18px;
         }
 
-        .profile-tab-btn .tab-badge {
-            background: rgba(255,255,255,0.25);
-            padding: 1px 7px;
-            border-radius: 10px;
-            font-size: 11px;
-            font-weight: 700;
-        }
-
-        .profile-tab-btn:not(.active) .tab-badge {
-            background: #fee2e2;
-            color: #dc2626;
-        }
-
-        /* Tab Content Panels */
-        .profile-tab-panel {
-            display: none;
-            animation: tabFadeIn 0.35s ease;
-        }
-
-        .profile-tab-panel.active {
-            display: block;
-        }
-
-        @keyframes tabFadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Info Cards */
-        .profile-info-card {
-            background: white;
-            border-radius: 14px;
-            padding: 28px;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-            border: 1px solid #e2e8f0;
-            margin-bottom: 24px;
-        }
-
-        .info-card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid #f1f5f9;
-        }
-
-        .info-card-header h3 {
-            font-size: 17px;
-            font-weight: 700;
-            color: #0f172a;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .info-card-header h3 .header-icon {
-            font-size: 20px;
-        }
-
-        .btn-edit-profile {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 8px 18px;
-            background: #eff6ff;
-            color: #1E40AF;
-            border: 1.5px solid #bfdbfe;
-            border-radius: 10px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .btn-edit-profile:hover {
-            background: #1E40AF;
-            color: white;
-            border-color: #1E40AF;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(30, 64, 175, 0.2);
-        }
-
-        .btn-edit-profile.editing {
-            background: #fef3c7;
-            color: #b45309;
-            border-color: #fcd34d;
-        }
-
-        /* Info Grid */
-        .info-display-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-        }
-
-        .info-field {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .info-field-label {
-            font-size: 12px;
-            font-weight: 600;
-            color: #94a3b8;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .info-field-value {
-            font-size: 15px;
-            font-weight: 600;
-            color: #1e293b;
-            padding: 10px 14px;
-            background: #f8fafc;
-            border-radius: 8px;
-            border: 1.5px solid #e2e8f0;
-            min-height: 42px;
-            display: flex;
-            align-items: center;
-            transition: all 0.2s;
-        }
-
-        .info-field-value.editable {
-            background: white;
-            border-color: #93c5fd;
-            cursor: text;
-        }
-
-        .info-field input.profile-edit-input {
-            width: 100%;
-            padding: 10px 14px;
-            border: 1.5px solid #93c5fd;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: 600;
-            color: #1e293b;
-            background: white;
-            outline: none;
-            transition: all 0.2s;
-            font-family: 'Inter', sans-serif;
-            display: none;
-        }
-
-        .info-field input.profile-edit-input:focus {
-            border-color: #1E40AF;
-            box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
-        }
-
-        .info-field input.profile-edit-input.visible {
-            display: block;
-        }
-
-        /* Edit Mode Actions */
-        .edit-mode-actions {
-            display: none;
-            gap: 12px;
-            justify-content: flex-end;
-            padding-top: 20px;
-            margin-top: 20px;
-            border-top: 1px solid #f1f5f9;
-        }
-
-        .edit-mode-actions.visible {
-            display: flex;
-        }
-
-        .btn-save-profile {
-            padding: 10px 28px;
-            background: linear-gradient(135deg, #1E40AF, #3B82F6);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: 0 2px 8px rgba(30, 64, 175, 0.2);
-        }
-
-        .btn-save-profile:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 16px rgba(30, 64, 175, 0.3);
-        }
-
-        .btn-save-profile:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .btn-cancel-edit {
-            padding: 10px 28px;
-            background: white;
-            color: #64748b;
-            border: 1.5px solid #e2e8f0;
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .btn-cancel-edit:hover {
-            background: #f8fafc;
-            color: #1e293b;
-            border-color: #cbd5e1;
-        }
-
-        /* Documents Tab */
-        .docs-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 20px;
-        }
-
-        .doc-upload-card {
-            position: relative;
-            background: #fafbfd;
-            border: 2px dashed #d1d5db;
-            border-radius: 14px;
-            padding: 28px 20px;
-            text-align: center;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .doc-upload-card:hover {
-            border-color: #1E40AF;
-            background: #eff6ff;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(30, 64, 175, 0.08);
-        }
-
-        .doc-upload-card.uploaded {
-            border-style: solid;
-            border-color: #86efac;
-            background: #f0fdf4;
-        }
-
-        .doc-icon-wrap {
-            width: 56px;
-            height: 56px;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            margin: 0 auto 14px;
-            background: white;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-        }
-
-        .doc-upload-card h4 {
-            font-size: 15px;
-            font-weight: 700;
-            color: #1e293b;
-            margin-bottom: 6px;
-        }
-
-        .doc-status-chip {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            margin-bottom: 14px;
-        }
-
-        .doc-status-chip.pending {
-            background: #fef3c7;
-            color: #d97706;
-        }
-
-        .doc-status-chip.uploaded {
-            background: #dcfce7;
-            color: #15803d;
-        }
-
-        .doc-status-chip.rejected {
-            background: #fee2e2;
-            color: #dc2626;
-        }
-
-        .doc-upload-card input[type="file"] {
-            position: absolute;
-            inset: 0;
-            opacity: 0;
-            cursor: pointer;
-            z-index: 2;
-        }
-
-        .doc-upload-hint {
-            font-size: 12px;
-            color: #94a3b8;
-            margin-top: 4px;
-        }
-
-        .doc-upload-btn-label {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 8px 16px;
-            border-radius: 8px;
-            background: #1E40AF;
-            color: white;
-            font-size: 12px;
-            font-weight: 600;
-            margin-top: 10px;
-            position: relative;
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        .doc-upload-card.uploaded .doc-upload-btn-label {
-            background: #15803d;
-        }
-
-        /* Security Tab */
-        .security-section {
-            margin-bottom: 28px;
-        }
-
-        .security-section:last-child {
-            margin-bottom: 0;
-        }
-
-        .security-section h4 {
-            font-size: 15px;
-            font-weight: 700;
-            color: #1e293b;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .password-form-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            max-width: 480px;
-        }
-
-        .password-field-group {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .password-field-group label {
-            font-size: 13px;
-            font-weight: 600;
-            color: #475569;
-        }
-
-        .password-input-wrap {
-            position: relative;
-        }
-
-        .password-input-wrap input {
-            width: 100%;
-            padding: 10px 44px 10px 14px;
-            border: 1.5px solid #e2e8f0;
-            border-radius: 8px;
-            font-size: 14px;
-            color: #1e293b;
-            font-family: 'Inter', sans-serif;
-            transition: all 0.2s;
-            background: white;
-        }
-
-        .password-input-wrap input:focus {
-            outline: none;
-            border-color: #1E40AF;
-            box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
-        }
-
-        .password-toggle-btn {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            font-size: 18px;
-            cursor: pointer;
-            color: #94a3b8;
-            padding: 4px;
-            transition: color 0.2s;
-        }
-
-        .password-toggle-btn:hover {
-            color: #1e293b;
-        }
-
-        /* Password Strength */
-        .password-strength {
-            display: flex;
-            gap: 4px;
-            margin-top: 8px;
-        }
-
-        .strength-bar {
-            flex: 1;
-            height: 4px;
-            border-radius: 99px;
-            background: #e2e8f0;
-            transition: background 0.3s;
-        }
-
-        .strength-bar.active.weak { background: #ef4444; }
-        .strength-bar.active.medium { background: #f59e0b; }
-        .strength-bar.active.strong { background: #22c55e; }
-        .strength-bar.active.very-strong { background: #15803d; }
-
-        .strength-label {
-            font-size: 12px;
-            font-weight: 600;
-            margin-top: 4px;
-        }
-
-        .strength-label.weak { color: #ef4444; }
-        .strength-label.medium { color: #f59e0b; }
-        .strength-label.strong { color: #22c55e; }
-        .strength-label.very-strong { color: #15803d; }
-
-        /* Account Info Section */
-        .account-info-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-        }
-
-        .account-info-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 14px 16px;
-            background: #f8fafc;
-            border-radius: 10px;
-            border: 1px solid #f1f5f9;
-        }
-
-        .account-info-item .aii-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            background: white;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-            flex-shrink: 0;
-        }
-
-        .account-info-item .aii-text {
-            flex: 1;
-        }
-
-        .account-info-item .aii-text .aii-label {
-            font-size: 11px;
-            font-weight: 600;
-            color: #94a3b8;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-        }
-
-        .account-info-item .aii-text .aii-value {
-            font-size: 14px;
-            font-weight: 600;
-            color: #1e293b;
-        }
-
-        /* Stats Cards Row */
         .profile-stats-row {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-            margin-bottom: 24px;
+          grid-template-columns: 1fr;
         }
 
-        .profile-stat-card {
-            background: white;
-            border-radius: 14px;
-            padding: 20px;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-            border: 1px solid #e2e8f0;
-            text-align: center;
-            transition: all 0.2s;
+        .docs-grid {
+          grid-template-columns: 1fr;
         }
 
-        .profile-stat-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+        .account-info-grid {
+          grid-template-columns: 1fr;
         }
 
-        .profile-stat-card .psc-value {
-            font-size: 28px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #1E40AF, #6366f1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 4px;
+        .profile-identity-info h1 {
+          font-size: 22px;
         }
-
-        .profile-stat-card .psc-label {
-            font-size: 13px;
-            color: #64748b;
-            font-weight: 500;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .profile-hero-banner {
-                height: 140px;
-                border-radius: 12px;
-            }
-
-            .profile-identity {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-                padding: 0 16px;
-            }
-
-            .profile-avatar-xl {
-                width: 100px;
-                height: 100px;
-                font-size: 36px;
-            }
-
-            .profile-identity-meta {
-                justify-content: center;
-            }
-
-            .info-display-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .profile-tabs-nav {
-                gap: 2px;
-                padding: 4px;
-            }
-
-            .profile-tab-btn {
-                padding: 10px 12px;
-                font-size: 13px;
-            }
-
-            .profile-tab-btn .tab-text {
-                display: none;
-            }
-
-            .profile-tab-btn .tab-icon {
-                font-size: 18px;
-            }
-
-            .profile-stats-row {
-                grid-template-columns: 1fr;
-            }
-
-            .docs-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .account-info-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .profile-identity-info h1 {
-                font-size: 22px;
-            }
-        }
+      }
     </style>
-</head>
-<body class="dashboard-body" id="profilePageBody">
-
+  </head>
+  <body class="dashboard-body" id="profilePageBody">
     <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
     <!-- Sidebar — dynamically populated based on user role -->
     <aside class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <div class="sidebar-logo">
-                <img src="../assets/images/logo-DLSM.jpg" alt="DLSM Logo" class="logo-icon" style="height: 32px; width: auto; border-radius: 6px;">
-                <span class="logo-text">DLSM</span>
-            </div>
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <img
+            src="../assets/images/logo-DLSM.jpg"
+            alt="DLSM Logo"
+            class="logo-icon"
+            style="height: 32px; width: auto; border-radius: 6px"
+          />
+          <span class="logo-text">DLSM</span>
         </div>
+      </div>
 
-        <nav class="sidebar-nav" id="sidebarNav">
-            <!-- Populated dynamically by JS based on role -->
-        </nav>
+      <nav class="sidebar-nav" id="sidebarNav">
+        <!-- Populated dynamically by JS based on role -->
+      </nav>
 
-        <div class="sidebar-footer">
-            <button class="btn-logout" id="logoutBtn">
-                <span class="nav-icon">🚪</span>
-                <span class="nav-text">Logout</span>
-            </button>
-        </div>
+      <div class="sidebar-footer">
+        <button class="btn-logout" id="logoutBtn">
+          <span class="nav-icon">🚪</span>
+          <span class="nav-text">Logout</span>
+        </button>
+      </div>
     </aside>
 
     <main class="main-content">
-        <!-- Topbar -->
-        <header class="topbar">
-            <div class="topbar-left">
-                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
-                <div>
-                    <h1 class="page-title">My Profile</h1>
-                    <p class="page-subtitle">Manage your account settings</p>
-                </div>
+      <!-- Topbar -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+          <div>
+            <h1 class="page-title">My Profile</h1>
+            <p class="page-subtitle">Manage your account settings</p>
+          </div>
+        </div>
+        <div class="topbar-right">
+          <div class="user-profile">
+            <div class="user-avatar" id="topbarAvatar">👤</div>
+            <div class="user-info">
+              <span class="user-name" id="userName">Loading...</span>
             </div>
-            <div class="topbar-right">
-                <div class="user-profile">
-                    <div class="user-avatar" id="topbarAvatar">👤</div>
-                    <div class="user-info">
-                        <span class="user-name" id="userName">Loading...</span>
-                    </div>
-                </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="dashboard-container">
+        <!-- Hero Banner -->
+        <div class="profile-hero-banner">
+          <div class="banner-pattern"></div>
+        </div>
+
+        <!-- Identity Section -->
+        <div class="profile-identity">
+          <div class="profile-avatar-wrapper">
+            <div class="profile-avatar-xl" id="profileAvatar">
+              <!-- Initials or image inserted by JS -->
             </div>
-        </header>
-
-        <div class="dashboard-container">
-
-            <!-- Hero Banner -->
-            <div class="profile-hero-banner">
-                <div class="banner-pattern"></div>
+            <button
+              class="avatar-camera-btn"
+              id="changeAvatarBtn"
+              title="Change photo"
+            >
+              📷
+            </button>
+            <input
+              type="file"
+              id="avatarFileInput"
+              accept="image/*"
+              style="display: none"
+            />
+          </div>
+          <div class="profile-identity-info">
+            <h1 id="profileFullName">Loading...</h1>
+            <div>
+              <span class="profile-role-badge" id="profileRoleBadge"
+                >Student</span
+              >
+              <span class="status-badge active" id="profileStatusBadge"
+                >Active</span
+              >
             </div>
-
-            <!-- Identity Section -->
-            <div class="profile-identity">
-                <div class="profile-avatar-wrapper">
-                    <div class="profile-avatar-xl" id="profileAvatar">
-                        <!-- Initials or image inserted by JS -->
-                    </div>
-                    <button class="avatar-camera-btn" id="changeAvatarBtn" title="Change photo">📷</button>
-                    <input type="file" id="avatarFileInput" accept="image/*" style="display: none;">
-                </div>
-                <div class="profile-identity-info">
-                    <h1 id="profileFullName">Loading...</h1>
-                    <div>
-                        <span class="profile-role-badge" id="profileRoleBadge">Student</span>
-                        <span class="status-badge active" id="profileStatusBadge">Active</span>
-                    </div>
-                    <div class="profile-identity-meta">
-                        <span class="meta-item"><span class="meta-icon">📧</span> <span id="profileMetaEmail">—</span></span>
-                        <span class="meta-item"><span class="meta-icon">📞</span> <span id="profileMetaPhone">—</span></span>
-                        <span class="meta-item"><span class="meta-icon">📅</span> <span id="profileMetaJoined">—</span></span>
-                    </div>
-                </div>
+            <div class="profile-identity-meta">
+              <span class="meta-item"
+                ><span class="meta-icon">📧</span>
+                <span id="profileMetaEmail">—</span></span
+              >
+              <span class="meta-item"
+                ><span class="meta-icon">📞</span>
+                <span id="profileMetaPhone">—</span></span
+              >
+              <span class="meta-item"
+                ><span class="meta-icon">📅</span>
+                <span id="profileMetaJoined">—</span></span
+              >
             </div>
+          </div>
+        </div>
 
-            <!-- Profile Completion -->
-            <div class="profile-completion-card" id="completionCard">
-                <div class="completion-header">
-                    <h3>Profile Completion</h3>
-                    <span class="completion-percent" id="completionPercent">0%</span>
-                </div>
-                <div class="completion-bar-track">
-                    <div class="completion-bar-fill" id="completionBarFill" style="width: 0%"></div>
-                </div>
-                <div class="completion-checklist" id="completionChecklist">
-                    <!-- Populated by JS -->
-                </div>
+        <!-- Profile Completion -->
+        <div class="profile-completion-card" id="completionCard">
+          <div class="completion-header">
+            <h3>Profile Completion</h3>
+            <span class="completion-percent" id="completionPercent">0%</span>
+          </div>
+          <div class="completion-bar-track">
+            <div
+              class="completion-bar-fill"
+              id="completionBarFill"
+              style="width: 0%"
+            ></div>
+          </div>
+          <div class="completion-checklist" id="completionChecklist">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <!-- Stats Row (visible for students) -->
+        <div
+          class="profile-stats-row"
+          id="profileStatsRow"
+          style="display: none"
+        >
+          <div class="profile-stat-card">
+            <div class="psc-value" id="statHoursCompleted">0</div>
+            <div class="psc-label">Hours Completed</div>
+          </div>
+          <div class="profile-stat-card">
+            <div class="psc-value" id="statHoursRemaining">0</div>
+            <div class="psc-label">Hours Remaining</div>
+          </div>
+          <div class="profile-stat-card">
+            <div class="psc-value" id="statProgress">0%</div>
+            <div class="psc-label">Overall Progress</div>
+          </div>
+        </div>
+
+        <!-- Tabs Navigation -->
+        <div class="profile-tabs-nav" id="profileTabsNav">
+          <button class="profile-tab-btn active" data-tab="personal">
+            <span class="tab-icon">👤</span>
+            <span class="tab-text">Personal Info</span>
+          </button>
+          <button class="profile-tab-btn" data-tab="documents" id="docsTabBtn">
+            <span class="tab-icon">📄</span>
+            <span class="tab-text">Documents</span>
+          </button>
+          <button class="profile-tab-btn" data-tab="security">
+            <span class="tab-icon">🔒</span>
+            <span class="tab-text">Security</span>
+          </button>
+        </div>
+
+        <!-- ====== TAB: Personal Information ====== -->
+        <div class="profile-tab-panel active" id="tab-personal">
+          <div class="profile-info-card">
+            <div class="info-card-header">
+              <h3><span class="header-icon">📋</span> Personal Information</h3>
+              <button class="btn-edit-profile" id="editPersonalBtn">
+                ✏️ Edit
+              </button>
             </div>
-
-            <!-- Stats Row (visible for students) -->
-            <div class="profile-stats-row" id="profileStatsRow" style="display: none;">
-                <div class="profile-stat-card">
-                    <div class="psc-value" id="statHoursCompleted">0</div>
-                    <div class="psc-label">Hours Completed</div>
-                </div>
-                <div class="profile-stat-card">
-                    <div class="psc-value" id="statHoursRemaining">0</div>
-                    <div class="psc-label">Hours Remaining</div>
-                </div>
-                <div class="profile-stat-card">
-                    <div class="psc-value" id="statProgress">0%</div>
-                    <div class="psc-label">Overall Progress</div>
-                </div>
+            <div class="info-display-grid" id="personalInfoGrid">
+              <div class="info-field">
+                <span class="info-field-label">Full Name</span>
+                <div class="info-field-value" id="fieldFullName">—</div>
+                <input
+                  class="profile-edit-input"
+                  id="editFullName"
+                  type="text"
+                  data-field="fullName"
+                />
+              </div>
+              <div class="info-field">
+                <span class="info-field-label">Email Address</span>
+                <div class="info-field-value" id="fieldEmail">—</div>
+              </div>
+              <div class="info-field">
+                <span class="info-field-label">Phone Number</span>
+                <div class="info-field-value" id="fieldPhone">—</div>
+                <input
+                  class="profile-edit-input"
+                  id="editPhone"
+                  type="tel"
+                  data-field="phone"
+                />
+              </div>
+              <div class="info-field">
+                <span class="info-field-label">National ID</span>
+                <div class="info-field-value" id="fieldNationalId">—</div>
+              </div>
+              <div class="info-field">
+                <span class="info-field-label">Date of Birth</span>
+                <div class="info-field-value" id="fieldDob">—</div>
+              </div>
+              <div class="info-field">
+                <span class="info-field-label">Region</span>
+                <div class="info-field-value" id="fieldRegion">—</div>
+              </div>
+              <div class="info-field">
+                <span class="info-field-label">City</span>
+                <div class="info-field-value" id="fieldCity">—</div>
+                <input
+                  class="profile-edit-input"
+                  id="editCity"
+                  type="text"
+                  data-field="city"
+                />
+              </div>
+              <div class="info-field" id="fieldLicenseWrap">
+                <span class="info-field-label">License Type</span>
+                <div class="info-field-value" id="fieldLicense">—</div>
+              </div>
+              <div class="info-field" id="fieldExperienceWrap">
+                <span class="info-field-label">Experience Level</span>
+                <div class="info-field-value" id="fieldExperience">—</div>
+              </div>
+              <div class="info-field">
+                <span class="info-field-label">Member Since</span>
+                <div class="info-field-value" id="fieldMemberSince">—</div>
+              </div>
             </div>
-
-            <!-- Tabs Navigation -->
-            <div class="profile-tabs-nav" id="profileTabsNav">
-                <button class="profile-tab-btn active" data-tab="personal">
-                    <span class="tab-icon">👤</span>
-                    <span class="tab-text">Personal Info</span>
-                </button>
-                <button class="profile-tab-btn" data-tab="documents" id="docsTabBtn">
-                    <span class="tab-icon">📄</span>
-                    <span class="tab-text">Documents</span>
-                </button>
-                <button class="profile-tab-btn" data-tab="security">
-                    <span class="tab-icon">🔒</span>
-                    <span class="tab-text">Security</span>
-                </button>
+            <div class="edit-mode-actions" id="editActions">
+              <button class="btn-cancel-edit" id="cancelEditBtn">Cancel</button>
+              <button class="btn-save-profile" id="saveProfileBtn">
+                💾 Save Changes
+              </button>
             </div>
+          </div>
+        </div>
 
-            <!-- ====== TAB: Personal Information ====== -->
-            <div class="profile-tab-panel active" id="tab-personal">
-                <div class="profile-info-card">
-                    <div class="info-card-header">
-                        <h3><span class="header-icon">📋</span> Personal Information</h3>
-                        <button class="btn-edit-profile" id="editPersonalBtn">✏️ Edit</button>
-                    </div>
-                    <div class="info-display-grid" id="personalInfoGrid">
-                        <div class="info-field">
-                            <span class="info-field-label">Full Name</span>
-                            <div class="info-field-value" id="fieldFullName">—</div>
-                            <input class="profile-edit-input" id="editFullName" type="text" data-field="fullName">
-                        </div>
-                        <div class="info-field">
-                            <span class="info-field-label">Email Address</span>
-                            <div class="info-field-value" id="fieldEmail">—</div>
-                        </div>
-                        <div class="info-field">
-                            <span class="info-field-label">Phone Number</span>
-                            <div class="info-field-value" id="fieldPhone">—</div>
-                            <input class="profile-edit-input" id="editPhone" type="tel" data-field="phone">
-                        </div>
-                        <div class="info-field">
-                            <span class="info-field-label">National ID</span>
-                            <div class="info-field-value" id="fieldNationalId">—</div>
-                        </div>
-                        <div class="info-field">
-                            <span class="info-field-label">Date of Birth</span>
-                            <div class="info-field-value" id="fieldDob">—</div>
-                        </div>
-                        <div class="info-field">
-                            <span class="info-field-label">Region</span>
-                            <div class="info-field-value" id="fieldRegion">—</div>
-                        </div>
-                        <div class="info-field">
-                            <span class="info-field-label">City</span>
-                            <div class="info-field-value" id="fieldCity">—</div>
-                            <input class="profile-edit-input" id="editCity" type="text" data-field="city">
-                        </div>
-                        <div class="info-field" id="fieldLicenseWrap">
-                            <span class="info-field-label">License Type</span>
-                            <div class="info-field-value" id="fieldLicense">—</div>
-                        </div>
-                        <div class="info-field" id="fieldExperienceWrap">
-                            <span class="info-field-label">Experience Level</span>
-                            <div class="info-field-value" id="fieldExperience">—</div>
-                        </div>
-                        <div class="info-field">
-                            <span class="info-field-label">Member Since</span>
-                            <div class="info-field-value" id="fieldMemberSince">—</div>
-                        </div>
-                    </div>
-                    <div class="edit-mode-actions" id="editActions">
-                        <button class="btn-cancel-edit" id="cancelEditBtn">Cancel</button>
-                        <button class="btn-save-profile" id="saveProfileBtn">💾 Save Changes</button>
-                    </div>
-                </div>
+        <!-- ====== TAB: Documents ====== -->
+        <div class="profile-tab-panel" id="tab-documents">
+          <div class="profile-info-card">
+            <div class="info-card-header">
+              <h3><span class="header-icon">📂</span> Required Documents</h3>
             </div>
-
-            <!-- ====== TAB: Documents ====== -->
-            <div class="profile-tab-panel" id="tab-documents">
-                <div class="profile-info-card">
-                    <div class="info-card-header">
-                        <h3><span class="header-icon">📂</span> Required Documents</h3>
-                    </div>
-                    <p style="color: #64748b; font-size: 14px; margin-bottom: 20px;">Upload the required documents for account verification. Accepted formats: Images (JPG, PNG) and PDF.</p>
-                    <div class="docs-grid" id="docsGrid">
-                        <div class="doc-upload-card" id="docNationalId">
-                            <div class="doc-icon-wrap">🆔</div>
-                            <h4>National ID</h4>
-                            <div class="doc-status-chip pending" id="docNationalIdStatus">⏳ Not Uploaded</div>
-                            <div class="doc-upload-btn-label">📤 Choose File</div>
-                            <div class="doc-upload-hint">Image or PDF, max 5MB</div>
-                            <input type="file" accept="image/*,.pdf" data-doc-type="nationalId" data-doc-name="National ID">
-                        </div>
-                        <div class="doc-upload-card" id="docPhoto">
-                            <div class="doc-icon-wrap">📷</div>
-                            <h4>Passport Photo</h4>
-                            <div class="doc-status-chip pending" id="docPhotoStatus">⏳ Not Uploaded</div>
-                            <div class="doc-upload-btn-label">📤 Choose File</div>
-                            <div class="doc-upload-hint">Image only, max 5MB</div>
-                            <input type="file" accept="image/*" data-doc-type="photo" data-doc-name="Passport Photo">
-                        </div>
-                        <div class="doc-upload-card" id="docMedical">
-                            <div class="doc-icon-wrap">🏥</div>
-                            <h4>Medical Certificate</h4>
-                            <div class="doc-status-chip pending" id="docMedicalStatus">⏳ Not Uploaded</div>
-                            <div class="doc-upload-btn-label">📤 Choose File</div>
-                            <div class="doc-upload-hint">Image or PDF, max 5MB</div>
-                            <input type="file" accept="image/*,.pdf" data-doc-type="medical" data-doc-name="Medical Certificate">
-                        </div>
-                    </div>
+            <p style="color: #64748b; font-size: 14px; margin-bottom: 20px">
+              Upload the required documents for account verification. Accepted
+              formats: Images (JPG, PNG) and PDF.
+            </p>
+            <div class="docs-grid" id="docsGrid">
+              <div class="doc-upload-card" id="docNationalId">
+                <div class="doc-icon-wrap">🆔</div>
+                <h4>National ID</h4>
+                <div class="doc-status-chip pending" id="docNationalIdStatus">
+                  ⏳ Not Uploaded
                 </div>
+                <div class="doc-upload-btn-label">📤 Choose File</div>
+                <div class="doc-upload-hint">Image or PDF, max 5MB</div>
+                <input
+                  type="file"
+                  accept="image/*,.pdf"
+                  data-doc-type="nationalId"
+                  data-doc-name="National ID"
+                />
+              </div>
+              <div class="doc-upload-card" id="docPhoto">
+                <div class="doc-icon-wrap">📷</div>
+                <h4>Passport Photo</h4>
+                <div class="doc-status-chip pending" id="docPhotoStatus">
+                  ⏳ Not Uploaded
+                </div>
+                <div class="doc-upload-btn-label">📤 Choose File</div>
+                <div class="doc-upload-hint">Image only, max 5MB</div>
+                <input
+                  type="file"
+                  accept="image/*"
+                  data-doc-type="photo"
+                  data-doc-name="Passport Photo"
+                />
+              </div>
+              <div class="doc-upload-card" id="docMedical">
+                <div class="doc-icon-wrap">🏥</div>
+                <h4>Medical Certificate</h4>
+                <div class="doc-status-chip pending" id="docMedicalStatus">
+                  ⏳ Not Uploaded
+                </div>
+                <div class="doc-upload-btn-label">📤 Choose File</div>
+                <div class="doc-upload-hint">Image or PDF, max 5MB</div>
+                <input
+                  type="file"
+                  accept="image/*,.pdf"
+                  data-doc-type="medical"
+                  data-doc-name="Medical Certificate"
+                />
+              </div>
             </div>
+          </div>
+        </div>
 
-            <!-- ====== TAB: Security ====== -->
-            <div class="profile-tab-panel" id="tab-security">
-                <div class="profile-info-card">
-                    <div class="info-card-header">
-                        <h3><span class="header-icon">🔐</span> Security Settings</h3>
-                    </div>
-
-                    <!-- Change Password -->
-                    <div class="security-section">
-                        <h4>🔑 Change Password</h4>
-                        <form class="password-form-grid" id="passwordForm">
-                            <div class="password-field-group">
-                                <label for="currentPassword">Current Password</label>
-                                <div class="password-input-wrap">
-                                    <input type="password" id="currentPassword" placeholder="Enter current password" autocomplete="current-password">
-                                    <button type="button" class="password-toggle-btn" data-target="currentPassword">👁️</button>
-                                </div>
-                            </div>
-                            <div class="password-field-group">
-                                <label for="newPassword">New Password</label>
-                                <div class="password-input-wrap">
-                                    <input type="password" id="newPassword" placeholder="Enter new password" autocomplete="new-password">
-                                    <button type="button" class="password-toggle-btn" data-target="newPassword">👁️</button>
-                                </div>
-                                <div class="password-strength" id="passwordStrengthBars">
-                                    <div class="strength-bar"></div>
-                                    <div class="strength-bar"></div>
-                                    <div class="strength-bar"></div>
-                                    <div class="strength-bar"></div>
-                                </div>
-                                <span class="strength-label" id="strengthLabel"></span>
-                            </div>
-                            <div class="password-field-group">
-                                <label for="confirmPassword">Confirm New Password</label>
-                                <div class="password-input-wrap">
-                                    <input type="password" id="confirmPassword" placeholder="Confirm new password" autocomplete="new-password">
-                                    <button type="button" class="password-toggle-btn" data-target="confirmPassword">👁️</button>
-                                </div>
-                            </div>
-                            <div style="padding-top: 4px;">
-                                <button type="submit" class="btn-save-profile" id="changePasswordBtn">🔒 Update Password</button>
-                            </div>
-                        </form>
-                    </div>
-
-                    <hr style="border: none; border-top: 1px solid #f1f5f9; margin: 28px 0;">
-
-                    <!-- Account Information -->
-                    <div class="security-section">
-                        <h4>ℹ️ Account Information</h4>
-                        <div class="account-info-grid" id="accountInfoGrid">
-                            <div class="account-info-item">
-                                <div class="aii-icon">🆔</div>
-                                <div class="aii-text">
-                                    <div class="aii-label">User ID</div>
-                                    <div class="aii-value" id="acctUserId">—</div>
-                                </div>
-                            </div>
-                            <div class="account-info-item">
-                                <div class="aii-icon">👤</div>
-                                <div class="aii-text">
-                                    <div class="aii-label">Account Role</div>
-                                    <div class="aii-value" id="acctRole">—</div>
-                                </div>
-                            </div>
-                            <div class="account-info-item">
-                                <div class="aii-icon">📅</div>
-                                <div class="aii-text">
-                                    <div class="aii-label">Created</div>
-                                    <div class="aii-value" id="acctCreated">—</div>
-                                </div>
-                            </div>
-                            <div class="account-info-item">
-                                <div class="aii-icon">🟢</div>
-                                <div class="aii-text">
-                                    <div class="aii-label">Status</div>
-                                    <div class="aii-value" id="acctStatus">—</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <!-- ====== TAB: Security ====== -->
+        <div class="profile-tab-panel" id="tab-security">
+          <div class="profile-info-card">
+            <div class="info-card-header">
+              <h3><span class="header-icon">🔐</span> Security Settings</h3>
             </div>
 
-        </div><!-- /dashboard-container -->
+            <!-- Change Password -->
+            <div class="security-section">
+              <h4>🔑 Change Password</h4>
+              <form class="password-form-grid" id="passwordForm">
+                <div class="password-field-group">
+                  <label for="currentPassword">Current Password</label>
+                  <div class="password-input-wrap">
+                    <input
+                      type="password"
+                      id="currentPassword"
+                      placeholder="Enter current password"
+                      autocomplete="current-password"
+                    />
+                    <button
+                      type="button"
+                      class="password-toggle-btn"
+                      data-target="currentPassword"
+                    >
+                      👁️
+                    </button>
+                  </div>
+                </div>
+                <div class="password-field-group">
+                  <label for="newPassword">New Password</label>
+                  <div class="password-input-wrap">
+                    <input
+                      type="password"
+                      id="newPassword"
+                      placeholder="Enter new password"
+                      autocomplete="new-password"
+                    />
+                    <button
+                      type="button"
+                      class="password-toggle-btn"
+                      data-target="newPassword"
+                    >
+                      👁️
+                    </button>
+                  </div>
+                  <div class="password-strength" id="passwordStrengthBars">
+                    <div class="strength-bar"></div>
+                    <div class="strength-bar"></div>
+                    <div class="strength-bar"></div>
+                    <div class="strength-bar"></div>
+                  </div>
+                  <span class="strength-label" id="strengthLabel"></span>
+                </div>
+                <div class="password-field-group">
+                  <label for="confirmPassword">Confirm New Password</label>
+                  <div class="password-input-wrap">
+                    <input
+                      type="password"
+                      id="confirmPassword"
+                      placeholder="Confirm new password"
+                      autocomplete="new-password"
+                    />
+                    <button
+                      type="button"
+                      class="password-toggle-btn"
+                      data-target="confirmPassword"
+                    >
+                      👁️
+                    </button>
+                  </div>
+                </div>
+                <div style="padding-top: 4px">
+                  <button
+                    type="submit"
+                    class="btn-save-profile"
+                    id="changePasswordBtn"
+                  >
+                    🔒 Update Password
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <hr
+              style="
+                border: none;
+                border-top: 1px solid #f1f5f9;
+                margin: 28px 0;
+              "
+            />
+
+            <!-- Account Information -->
+            <div class="security-section">
+              <h4>ℹ️ Account Information</h4>
+              <div class="account-info-grid" id="accountInfoGrid">
+                <div class="account-info-item">
+                  <div class="aii-icon">🆔</div>
+                  <div class="aii-text">
+                    <div class="aii-label">User ID</div>
+                    <div class="aii-value" id="acctUserId">—</div>
+                  </div>
+                </div>
+                <div class="account-info-item">
+                  <div class="aii-icon">👤</div>
+                  <div class="aii-text">
+                    <div class="aii-label">Account Role</div>
+                    <div class="aii-value" id="acctRole">—</div>
+                  </div>
+                </div>
+                <div class="account-info-item">
+                  <div class="aii-icon">📅</div>
+                  <div class="aii-text">
+                    <div class="aii-label">Created</div>
+                    <div class="aii-value" id="acctCreated">—</div>
+                  </div>
+                </div>
+                <div class="account-info-item">
+                  <div class="aii-icon">🟢</div>
+                  <div class="aii-text">
+                    <div class="aii-label">Status</div>
+                    <div class="aii-value" id="acctStatus">—</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /dashboard-container -->
     </main>
 
     <!-- Toast Notification -->
@@ -1207,59 +1380,168 @@
     <script src="../assets/js/auth.js"></script>
     <script src="../assets/js/dashboard.js"></script>
     <script>
-    (function() {
-        'use strict';
+      (function () {
+        "use strict";
 
         /* ==============================================
            ROLE-BASED SIDEBAR CONFIGURATION
            ============================================== */
         const SIDEBAR_CONFIG = {
-            student: [
-                { href: '../student-portal/dashboard.html', icon: '📊', text: 'Dashboard' },
-                { href: 'profile.html', icon: '👤', text: 'My Profile', active: true },
-                { href: '../student-portal/schedule.html', icon: '📅', text: 'Schedule' },
-                { href: '../student-portal/progress.html', icon: '📈', text: 'My Progress' },
-                { href: '../student-portal/exams.html', icon: '📝', text: 'Exams' },
-                { href: '../student-portal/certificate.html', icon: '🎓', text: 'Certificate' },
-                { href: '../student-portal/payments.html', icon: '💳', text: 'Payments' },
-            ],
-            instructor: [
-                { href: '../instructor-portal/dashboard.html', icon: '📊', text: 'Dashboard' },
-                { href: 'profile.html', icon: '👤', text: 'My Profile', active: true },
-                { href: '../instructor-portal/schedule.html', icon: '📅', text: 'Schedule' },
-                { href: '../instructor-portal/my-students.html', icon: '🎓', text: 'My Students' },
-                { href: '../instructor-portal/attendance.html', icon: '✅', text: 'Attendance' },
-                { href: '../instructor-portal/evaluations.html', icon: '📝', text: 'Evaluations' },
-            ],
-            manager: [
-                { href: '../manager-portal/dashboard.html', icon: '📊', text: 'Dashboard' },
-                { href: 'profile.html', icon: '👤', text: 'My Profile', active: true },
-                { href: '../manager-portal/users.html', icon: '👥', text: 'Users' },
-                { href: '../manager-portal/enrollments.html', icon: '📋', text: 'Enrollments' },
-                { href: '../manager-portal/programs.html', icon: '📚', text: 'Programs' },
-                { href: '../manager-portal/reports.html', icon: '📈', text: 'Reports' },
-            ],
-            supervisor: [
-                { href: '../supervisor-portal/dashboard.html', icon: '📊', text: 'Dashboard' },
-                { href: 'profile.html', icon: '👤', text: 'My Profile', active: true },
-                { href: '../supervisor-portal/monitoring.html', icon: '📡', text: 'Monitoring' },
-                { href: '../supervisor-portal/exam-approvals.html', icon: '✅', text: 'Approvals' },
-                { href: '../supervisor-portal/reports.html', icon: '📈', text: 'Reports' },
-            ],
-            finance: [
-                { href: '../finance-portal/dashboard.html', icon: '📊', text: 'Dashboard' },
-                { href: 'profile.html', icon: '👤', text: 'My Profile', active: true },
-                { href: '../finance-portal/verifications.html', icon: '✅', text: 'Verifications' },
-                { href: '../finance-portal/payments.html', icon: '💳', text: 'Payments' },
-            ]
+          student: [
+            {
+              href: "../student-portal/dashboard.html",
+              icon: "📊",
+              text: "Dashboard",
+            },
+            {
+              href: "profile.html",
+              icon: "👤",
+              text: "My Profile",
+              active: true,
+            },
+            {
+              href: "../student-portal/schedule.html",
+              icon: "📅",
+              text: "Schedule",
+            },
+            {
+              href: "../student-portal/progress.html",
+              icon: "📈",
+              text: "My Progress",
+            },
+            { href: "../student-portal/exams.html", icon: "📝", text: "Exams" },
+            {
+              href: "../student-portal/certificate.html",
+              icon: "🎓",
+              text: "Certificate",
+            },
+            {
+              href: "../student-portal/payments.html",
+              icon: "💳",
+              text: "Payments",
+            },
+          ],
+          instructor: [
+            {
+              href: "../instructor-portal/dashboard.html",
+              icon: "📊",
+              text: "Dashboard",
+            },
+            {
+              href: "profile.html",
+              icon: "👤",
+              text: "My Profile",
+              active: true,
+            },
+            {
+              href: "../instructor-portal/schedule.html",
+              icon: "📅",
+              text: "Schedule",
+            },
+            {
+              href: "../instructor-portal/my-students.html",
+              icon: "🎓",
+              text: "My Students",
+            },
+            {
+              href: "../instructor-portal/attendance.html",
+              icon: "✅",
+              text: "Attendance",
+            },
+            {
+              href: "../instructor-portal/evaluations.html",
+              icon: "📝",
+              text: "Evaluations",
+            },
+          ],
+          manager: [
+            {
+              href: "../manager-portal/dashboard.html",
+              icon: "📊",
+              text: "Dashboard",
+            },
+            {
+              href: "profile.html",
+              icon: "👤",
+              text: "My Profile",
+              active: true,
+            },
+            { href: "../manager-portal/users.html", icon: "👥", text: "Users" },
+            {
+              href: "../manager-portal/enrollments.html",
+              icon: "📋",
+              text: "Enrollments",
+            },
+            {
+              href: "../manager-portal/programs.html",
+              icon: "📚",
+              text: "Programs",
+            },
+            {
+              href: "../manager-portal/reports.html",
+              icon: "📈",
+              text: "Reports",
+            },
+          ],
+          supervisor: [
+            {
+              href: "../supervisor-portal/dashboard.html",
+              icon: "📊",
+              text: "Dashboard",
+            },
+            {
+              href: "profile.html",
+              icon: "👤",
+              text: "My Profile",
+              active: true,
+            },
+            {
+              href: "../supervisor-portal/monitoring.html",
+              icon: "📡",
+              text: "Monitoring",
+            },
+            {
+              href: "../supervisor-portal/exam-approvals.html",
+              icon: "✅",
+              text: "Approvals",
+            },
+            {
+              href: "../supervisor-portal/reports.html",
+              icon: "📈",
+              text: "Reports",
+            },
+          ],
+          finance: [
+            {
+              href: "../finance-portal/dashboard.html",
+              icon: "📊",
+              text: "Dashboard",
+            },
+            {
+              href: "profile.html",
+              icon: "👤",
+              text: "My Profile",
+              active: true,
+            },
+            {
+              href: "../finance-portal/verifications.html",
+              icon: "✅",
+              text: "Verifications",
+            },
+            {
+              href: "../finance-portal/payments.html",
+              icon: "💳",
+              text: "Payments",
+            },
+          ],
         };
 
         const LICENSE_MAP = {
-            'A': 'Motorcycle (Level 1)',
-            'B': 'Private Car (Level 2)',
-            'C': 'Heavy Truck (Level 3)',
-            'D': 'People Transport (Level 4)',
-            'E': 'Bus Driver (Level 5)'
+          A: "Motorcycle (Level 1)",
+          B: "Private Car (Level 2)",
+          C: "Heavy Truck (Level 3)",
+          D: "People Transport (Level 4)",
+          E: "Bus Driver (Level 5)",
         };
 
         let currentUser = null;
@@ -1269,613 +1551,728 @@
         /* ==============================================
            INITIALIZATION
            ============================================== */
-        document.addEventListener('DOMContentLoaded', async function() {
-            currentUser = auth.getCurrentUser();
-            if (!currentUser) {
-                window.location.href = '../login.html';
-                return;
-            }
+        document.addEventListener("DOMContentLoaded", async function () {
+          currentUser = auth.getCurrentUser();
+          if (!currentUser) {
+            window.location.href = "../login.html";
+            return;
+          }
 
-            // Build sidebar based on role
-            buildSidebar(currentUser.role);
+          // Build sidebar based on role
+          buildSidebar(currentUser.role);
 
-            // Set initial display
-            document.getElementById('userName').textContent = currentUser.name || 'User';
-            setAvatarInitials(currentUser.name);
-            loadSavedPhoto();
+          // Set initial display
+          document.getElementById("userName").textContent =
+            currentUser.name || "User";
+          setAvatarInitials(currentUser.name);
+          loadSavedPhoto();
 
-            // Initialize dashboard helpers (mobile menu, etc.)
-            dashboard.setupMobileMenu();
-            dashboard.loadUserPhoto();
+          // Initialize dashboard helpers (mobile menu, etc.)
+          dashboard.setupMobileMenu();
+          dashboard.loadUserPhoto();
 
-            // Load profile data from API
-            await loadProfileData();
+          // Load profile data from API
+          await loadProfileData();
 
-            // Setup event listeners
-            setupTabs();
-            setupEditProfile();
-            setupAvatarUpload();
-            setupDocumentUploads();
-            setupPasswordForm();
-            setupPasswordToggles();
-            setupPasswordStrength();
+          // Setup event listeners
+          setupTabs();
+          setupEditProfile();
+          setupAvatarUpload();
+          setupDocumentUploads();
+          setupPasswordForm();
+          setupPasswordToggles();
+          setupPasswordStrength();
 
-            // Show student-specific stats
-            if (currentUser.role === 'student') {
-                document.getElementById('profileStatsRow').style.display = 'grid';
-                await loadStudentStats();
-            }
+          // Show student-specific stats
+          if (currentUser.role === "student") {
+            document.getElementById("profileStatsRow").style.display = "grid";
+            await loadStudentStats();
+          }
 
-            // Hide documents tab for non-student roles
-            if (currentUser.role !== 'student') {
-                const docsBtn = document.getElementById('docsTabBtn');
-                if (docsBtn) docsBtn.style.display = 'none';
-            }
+          // Hide documents tab for non-student roles
+          if (currentUser.role !== "student") {
+            const docsBtn = document.getElementById("docsTabBtn");
+            if (docsBtn) docsBtn.style.display = "none";
+          }
         });
 
         /* ==============================================
            SIDEBAR BUILDER
            ============================================== */
         function buildSidebar(role) {
-            const nav = document.getElementById('sidebarNav');
-            const normalizedRole = (role || 'student').toLowerCase();
-            const roleKey = normalizedRole === 'admin' ? 'manager' : normalizedRole;
-            const items = SIDEBAR_CONFIG[roleKey] || SIDEBAR_CONFIG.student;
+          const nav = document.getElementById("sidebarNav");
+          const normalizedRole = (role || "student").toLowerCase();
+          const roleKey =
+            normalizedRole === "admin" ? "manager" : normalizedRole;
+          const items = SIDEBAR_CONFIG[roleKey] || SIDEBAR_CONFIG.student;
 
-            nav.innerHTML = items.map(item => `
-                <a href="${item.href}" class="nav-item${item.active ? ' active' : ''}">
+          nav.innerHTML = items
+            .map(
+              (item) => `
+                <a href="${item.href}" class="nav-item${item.active ? " active" : ""}">
                     <span class="nav-icon">${item.icon}</span>
                     <span class="nav-text">${item.text}</span>
                 </a>
-            `).join('');
+            `,
+            )
+            .join("");
         }
 
         /* ==============================================
            AVATAR MANAGEMENT
            ============================================== */
         function setAvatarInitials(name) {
-            const avatar = document.getElementById('profileAvatar');
-            if (!name) { avatar.textContent = '👤'; return; }
-            const parts = name.trim().split(' ').filter(Boolean);
-            const initials = parts.length >= 2
-                ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
-                : parts[0].substring(0, 2).toUpperCase();
-            avatar.textContent = initials;
+          const avatar = document.getElementById("profileAvatar");
+          if (!name) {
+            avatar.textContent = "👤";
+            return;
+          }
+          const parts = name.trim().split(" ").filter(Boolean);
+          const initials =
+            parts.length >= 2
+              ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
+              : parts[0].substring(0, 2).toUpperCase();
+          avatar.textContent = initials;
         }
 
         function setAvatarImage(src) {
-            const avatar = document.getElementById('profileAvatar');
-            avatar.innerHTML = '';
-            const img = document.createElement('img');
-            img.src = src;
-            img.alt = 'Profile Photo';
-            avatar.appendChild(img);
+          const avatar = document.getElementById("profileAvatar");
+          avatar.innerHTML = "";
+          const img = document.createElement("img");
+          img.src = src;
+          img.alt = "Profile Photo";
+          avatar.appendChild(img);
 
-            // Also update topbar avatar
-            const topbar = document.getElementById('topbarAvatar');
-            if (topbar) {
-                topbar.innerHTML = '';
-                const img2 = document.createElement('img');
-                img2.src = src;
-                img2.alt = 'Profile';
-                img2.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:50%';
-                topbar.appendChild(img2);
-            }
+          // Also update topbar avatar
+          const topbar = document.getElementById("topbarAvatar");
+          if (topbar) {
+            topbar.innerHTML = "";
+            const img2 = document.createElement("img");
+            img2.src = src;
+            img2.alt = "Profile";
+            img2.style.cssText =
+              "width:100%;height:100%;object-fit:cover;border-radius:50%";
+            topbar.appendChild(img2);
+          }
         }
 
         function loadSavedPhoto() {
-            if (!currentUser) return;
-            const keys = [
-                `profilePhoto_${currentUser.id}`,
-                'userPhoto',
-                `instructorPhoto_${currentUser.id}`,
-                'managerPhoto',
-                'supervisorPhoto'
-            ];
-            for (const key of keys) {
-                const saved = localStorage.getItem(key);
-                if (saved) { setAvatarImage(saved); return; }
+          if (!currentUser) return;
+          const keys = [
+            `profilePhoto_${currentUser.id}`,
+            "userPhoto",
+            `instructorPhoto_${currentUser.id}`,
+            "managerPhoto",
+            "supervisorPhoto",
+          ];
+          for (const key of keys) {
+            const saved = localStorage.getItem(key);
+            if (saved) {
+              setAvatarImage(saved);
+              return;
             }
+          }
         }
 
         function setupAvatarUpload() {
-            const btn = document.getElementById('changeAvatarBtn');
-            const input = document.getElementById('avatarFileInput');
+          const btn = document.getElementById("changeAvatarBtn");
+          const input = document.getElementById("avatarFileInput");
 
-            btn.addEventListener('click', () => input.click());
-            input.addEventListener('change', function(e) {
-                const file = e.target.files[0];
-                if (!file) return;
-                if (file.size > 5 * 1024 * 1024) {
-                    utils.showNotification('Photo must be under 5MB', 'error');
-                    return;
-                }
-                if (!file.type.startsWith('image/')) {
-                    utils.showNotification('Please select a valid image', 'error');
-                    return;
-                }
+          btn.addEventListener("click", () => input.click());
+          input.addEventListener("change", function (e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            if (file.size > 5 * 1024 * 1024) {
+              utils.showNotification("Photo must be under 5MB", "error");
+              return;
+            }
+            if (!file.type.startsWith("image/")) {
+              utils.showNotification("Please select a valid image", "error");
+              return;
+            }
 
-                const reader = new FileReader();
-                reader.onload = function(ev) {
-                    const data = ev.target.result;
-                    setAvatarImage(data);
-                    localStorage.setItem(`profilePhoto_${currentUser.id}`, data);
-                    utils.showNotification('Photo updated successfully!', 'success');
-                };
-                reader.readAsDataURL(file);
-            });
+            const reader = new FileReader();
+            reader.onload = function (ev) {
+              const data = ev.target.result;
+              setAvatarImage(data);
+              localStorage.setItem(`profilePhoto_${currentUser.id}`, data);
+              utils.showNotification("Photo updated successfully!", "success");
+            };
+            reader.readAsDataURL(file);
+          });
         }
 
         /* ==============================================
            LOAD PROFILE DATA
            ============================================== */
         async function loadProfileData() {
-            try {
-                const response = await api.request('/profile.php');
+          try {
+            const response = await api.request("/profile.php");
 
-                if (response.success && response.data) {
-                    const user = response.data.user;
-                    const details = response.data.details || {};
-                    profileData = { user, details, documents: response.data.documents || {} };
+            if (response.success && response.data) {
+              const user = response.data.user;
+              const details = response.data.details || {};
+              profileData = {
+                user,
+                details,
+                documents: response.data.documents || {},
+              };
 
-                    const fullName = `${user.first_name || ''} ${user.last_name || ''}`.trim() || currentUser.name || 'User';
+              const fullName =
+                `${user.first_name || ""} ${user.last_name || ""}`.trim() ||
+                currentUser.name ||
+                "User";
 
-                    // Identity section
-                    document.getElementById('profileFullName').textContent = fullName;
-                    setAvatarInitials(fullName);
-                    loadSavedPhoto(); // Re-apply saved photo over initials
+              // Identity section
+              document.getElementById("profileFullName").textContent = fullName;
+              setAvatarInitials(fullName);
+              loadSavedPhoto(); // Re-apply saved photo over initials
 
-                    // Role badge
-                    const roleBadge = document.getElementById('profileRoleBadge');
-                    const roleLabel = {
-                        student: 'Student', instructor: 'Instructor',
-                        manager: 'Manager', admin: 'Administrator',
-                        supervisor: 'Supervisor', finance: 'Finance'
-                    }[user.role] || user.role;
-                    roleBadge.textContent = roleLabel;
-                    roleBadge.className = `profile-role-badge role-badge-${user.role}`;
+              // Role badge
+              const roleBadge = document.getElementById("profileRoleBadge");
+              const roleLabel =
+                {
+                  student: "Student",
+                  instructor: "Instructor",
+                  manager: "Manager",
+                  admin: "Administrator",
+                  supervisor: "Supervisor",
+                  finance: "Finance",
+                }[user.role] || user.role;
+              roleBadge.textContent = roleLabel;
+              roleBadge.className = `profile-role-badge role-badge-${user.role}`;
 
-                    // Status badge
-                    const statusBadge = document.getElementById('profileStatusBadge');
-                    const statusMap = {
-                        active: { text: 'Active', cls: 'active' },
-                        pending: { text: 'Pending Approval', cls: 'pending' },
-                        inactive: { text: 'Inactive', cls: 'inactive' }
-                    };
-                    const st = statusMap[user.status] || statusMap.active;
-                    statusBadge.textContent = st.text;
-                    statusBadge.className = `status-badge ${st.cls}`;
+              // Status badge
+              const statusBadge = document.getElementById("profileStatusBadge");
+              const statusMap = {
+                active: { text: "Active", cls: "active" },
+                pending: { text: "Pending Approval", cls: "pending" },
+                inactive: { text: "Inactive", cls: "inactive" },
+              };
+              const st = statusMap[user.status] || statusMap.active;
+              statusBadge.textContent = st.text;
+              statusBadge.className = `status-badge ${st.cls}`;
 
-                    // Meta items
-                    document.getElementById('profileMetaEmail').textContent = user.email || '—';
-                    document.getElementById('profileMetaPhone').textContent = user.phone || '—';
-                    if (user.created_at) {
-                        const d = new Date(user.created_at);
-                        document.getElementById('profileMetaJoined').textContent = 'Joined ' + d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
-                    }
+              // Meta items
+              document.getElementById("profileMetaEmail").textContent =
+                user.email || "—";
+              document.getElementById("profileMetaPhone").textContent =
+                user.phone || "—";
+              if (user.created_at) {
+                const d = new Date(user.created_at);
+                document.getElementById("profileMetaJoined").textContent =
+                  "Joined " +
+                  d.toLocaleDateString("en-US", {
+                    month: "short",
+                    year: "numeric",
+                  });
+              }
 
-                    // Personal info fields
-                    document.getElementById('fieldFullName').textContent = fullName;
-                    document.getElementById('fieldEmail').textContent = user.email || '—';
-                    document.getElementById('fieldPhone').textContent = user.phone || '—';
-                    document.getElementById('fieldNationalId').textContent = details.national_id || '—';
-                    document.getElementById('fieldDob').textContent = details.date_of_birth ? new Date(details.date_of_birth).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '—';
-                    document.getElementById('fieldRegion').textContent = details.region || '—';
-                    document.getElementById('fieldCity').textContent = details.city || '—';
-                    document.getElementById('fieldLicense').textContent = LICENSE_MAP[details.license_class] || details.license_class || '—';
-                    document.getElementById('fieldExperience').textContent = details.experience_level || details.experience || '—';
+              // Personal info fields
+              document.getElementById("fieldFullName").textContent = fullName;
+              document.getElementById("fieldEmail").textContent =
+                user.email || "—";
+              document.getElementById("fieldPhone").textContent =
+                user.phone || "—";
+              document.getElementById("fieldNationalId").textContent =
+                details.national_id || "—";
+              document.getElementById("fieldDob").textContent =
+                details.date_of_birth
+                  ? new Date(details.date_of_birth).toLocaleDateString(
+                      "en-US",
+                      { year: "numeric", month: "long", day: "numeric" },
+                    )
+                  : "—";
+              document.getElementById("fieldRegion").textContent =
+                details.region || "—";
+              document.getElementById("fieldCity").textContent =
+                details.city || "—";
+              document.getElementById("fieldLicense").textContent =
+                LICENSE_MAP[details.license_class] ||
+                details.license_class ||
+                "—";
+              document.getElementById("fieldExperience").textContent =
+                details.experience_level || details.experience || "—";
 
-                    if (user.created_at) {
-                        const cd = new Date(user.created_at);
-                        document.getElementById('fieldMemberSince').textContent = cd.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-                    }
+              if (user.created_at) {
+                const cd = new Date(user.created_at);
+                document.getElementById("fieldMemberSince").textContent =
+                  cd.toLocaleDateString("en-US", {
+                    month: "long",
+                    year: "numeric",
+                  });
+              }
 
-                    // Edit inputs
-                    document.getElementById('editFullName').value = fullName;
-                    document.getElementById('editPhone').value = user.phone || '';
-                    document.getElementById('editCity').value = details.city || '';
+              // Edit inputs
+              document.getElementById("editFullName").value = fullName;
+              document.getElementById("editPhone").value = user.phone || "";
+              document.getElementById("editCity").value = details.city || "";
 
-                    // Account info (security tab)
-                    document.getElementById('acctUserId').textContent = '#' + (user.id || '—');
-                    document.getElementById('acctRole').textContent = roleLabel;
-                    document.getElementById('acctCreated').textContent = user.created_at ? new Date(user.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '—';
-                    document.getElementById('acctStatus').textContent = st.text;
+              // Account info (security tab)
+              document.getElementById("acctUserId").textContent =
+                "#" + (user.id || "—");
+              document.getElementById("acctRole").textContent = roleLabel;
+              document.getElementById("acctCreated").textContent =
+                user.created_at
+                  ? new Date(user.created_at).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })
+                  : "—";
+              document.getElementById("acctStatus").textContent = st.text;
 
-                    // Hide student-specific fields for non-students
-                    if (user.role !== 'student') {
-                        ['fieldLicenseWrap', 'fieldExperienceWrap'].forEach(id => {
-                            const el = document.getElementById(id);
-                            if (el) el.style.display = 'none';
-                        });
-                    }
+              // Hide student-specific fields for non-students
+              if (user.role !== "student") {
+                ["fieldLicenseWrap", "fieldExperienceWrap"].forEach((id) => {
+                  const el = document.getElementById(id);
+                  if (el) el.style.display = "none";
+                });
+              }
 
-                    // Documents status
-                    const docs = response.data.documents || {};
-                    if (docs.nationalId || docs.national_id) updateDocStatus('docNationalId', true);
-                    if (docs.photo) updateDocStatus('docPhoto', true);
-                    if (docs.medical) updateDocStatus('docMedical', true);
+              // Documents status
+              const docs = response.data.documents || {};
+              if (docs.nationalId || docs.national_id)
+                updateDocStatus("docNationalId", true);
+              if (docs.photo) updateDocStatus("docPhoto", true);
+              if (docs.medical) updateDocStatus("docMedical", true);
 
-                    // Update completion
-                    updateCompletion(user, details, docs);
-
-                } else {
-                    // Fallback to localStorage data
-                    const fullName = currentUser.name || 'User';
-                    document.getElementById('profileFullName').textContent = fullName;
-                    document.getElementById('fieldFullName').textContent = fullName;
-                    document.getElementById('fieldEmail').textContent = currentUser.email || '—';
-                    updateCompletion(currentUser, {}, {});
-                    utils.showNotification(response.message || 'Could not load profile from server', 'info');
-                }
-            } catch (err) {
-                console.error('Profile load error:', err);
-                utils.showNotification('Error loading profile data', 'error');
+              // Update completion
+              updateCompletion(user, details, docs);
+            } else {
+              // Fallback to localStorage data
+              const fullName = currentUser.name || "User";
+              document.getElementById("profileFullName").textContent = fullName;
+              document.getElementById("fieldFullName").textContent = fullName;
+              document.getElementById("fieldEmail").textContent =
+                currentUser.email || "—";
+              updateCompletion(currentUser, {}, {});
+              utils.showNotification(
+                response.message || "Could not load profile from server",
+                "info",
+              );
             }
+          } catch (err) {
+            console.error("Profile load error:", err);
+            utils.showNotification("Error loading profile data", "error");
+          }
         }
 
         /* ==============================================
            STUDENT STATS
            ============================================== */
         async function loadStudentStats() {
-            try {
-                const res = await api.request('/students/progress.php');
-                if (res && res.success && res.data) {
-                    const d = res.data;
-                    const total = d.total_hours || 40;
-                    const completed = d.completed_hours || 0;
-                    const progress = d.progress_percentage || 0;
-                    document.getElementById('statHoursCompleted').textContent = completed;
-                    document.getElementById('statHoursRemaining').textContent = Math.max(0, total - completed);
-                    document.getElementById('statProgress').textContent = progress + '%';
-                }
-            } catch (e) {
-                console.error('Stats load error:', e);
+          try {
+            const res = await api.request("/students/progress.php");
+            if (res && res.success && res.data) {
+              const d = res.data;
+              const total = d.total_hours || 40;
+              const completed = d.completed_hours || 0;
+              const progress = d.progress_percentage || 0;
+              document.getElementById("statHoursCompleted").textContent =
+                completed;
+              document.getElementById("statHoursRemaining").textContent =
+                Math.max(0, total - completed);
+              document.getElementById("statProgress").textContent =
+                progress + "%";
             }
+          } catch (e) {
+            console.error("Stats load error:", e);
+          }
         }
 
         /* ==============================================
            PROFILE COMPLETION
            ============================================== */
         function updateCompletion(user, details, docs) {
-            const items = [
-                { label: 'Name', done: !!(user.first_name || user.name) },
-                { label: 'Email', done: !!user.email },
-                { label: 'Phone', done: !!user.phone },
-                { label: 'Photo', done: !!localStorage.getItem(`profilePhoto_${currentUser.id}`) },
-                { label: 'National ID', done: !!details.national_id },
-                { label: 'Documents', done: !!(docs.nationalId || docs.national_id || docs.photo || docs.medical) }
-            ];
+          const items = [
+            { label: "Name", done: !!(user.first_name || user.name) },
+            { label: "Email", done: !!user.email },
+            { label: "Phone", done: !!user.phone },
+            {
+              label: "Photo",
+              done: !!localStorage.getItem(`profilePhoto_${currentUser.id}`),
+            },
+            { label: "National ID", done: !!details.national_id },
+            {
+              label: "Documents",
+              done: !!(
+                docs.nationalId ||
+                docs.national_id ||
+                docs.photo ||
+                docs.medical
+              ),
+            },
+          ];
 
-            const done = items.filter(i => i.done).length;
-            const pct = Math.round((done / items.length) * 100);
+          const done = items.filter((i) => i.done).length;
+          const pct = Math.round((done / items.length) * 100);
 
-            document.getElementById('completionPercent').textContent = pct + '%';
-            document.getElementById('completionBarFill').style.width = pct + '%';
+          document.getElementById("completionPercent").textContent = pct + "%";
+          document.getElementById("completionBarFill").style.width = pct + "%";
 
-            const checklist = document.getElementById('completionChecklist');
-            checklist.innerHTML = items.map(i => `
-                <span class="completion-item ${i.done ? 'done' : ''}">
-                    <span class="check-icon">${i.done ? '✅' : '⬜'}</span>
+          const checklist = document.getElementById("completionChecklist");
+          checklist.innerHTML = items
+            .map(
+              (i) => `
+                <span class="completion-item ${i.done ? "done" : ""}">
+                    <span class="check-icon">${i.done ? "✅" : "⬜"}</span>
                     ${i.label}
                 </span>
-            `).join('');
+            `,
+            )
+            .join("");
         }
 
         /* ==============================================
            TABS
            ============================================== */
         function setupTabs() {
-            document.querySelectorAll('.profile-tab-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const tab = this.dataset.tab;
-                    // Update active button
-                    document.querySelectorAll('.profile-tab-btn').forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    // Show panel
-                    document.querySelectorAll('.profile-tab-panel').forEach(p => p.classList.remove('active'));
-                    const panel = document.getElementById('tab-' + tab);
-                    if (panel) panel.classList.add('active');
-                });
+          document.querySelectorAll(".profile-tab-btn").forEach((btn) => {
+            btn.addEventListener("click", function () {
+              const tab = this.dataset.tab;
+              // Update active button
+              document
+                .querySelectorAll(".profile-tab-btn")
+                .forEach((b) => b.classList.remove("active"));
+              this.classList.add("active");
+              // Show panel
+              document
+                .querySelectorAll(".profile-tab-panel")
+                .forEach((p) => p.classList.remove("active"));
+              const panel = document.getElementById("tab-" + tab);
+              if (panel) panel.classList.add("active");
             });
+          });
         }
 
         /* ==============================================
            EDIT PROFILE
            ============================================== */
         function setupEditProfile() {
-            const editBtn = document.getElementById('editPersonalBtn');
-            const cancelBtn = document.getElementById('cancelEditBtn');
-            const saveBtn = document.getElementById('saveProfileBtn');
+          const editBtn = document.getElementById("editPersonalBtn");
+          const cancelBtn = document.getElementById("cancelEditBtn");
+          const saveBtn = document.getElementById("saveProfileBtn");
 
-            editBtn.addEventListener('click', toggleEditMode);
-            cancelBtn.addEventListener('click', cancelEditMode);
-            saveBtn.addEventListener('click', saveProfile);
+          editBtn.addEventListener("click", toggleEditMode);
+          cancelBtn.addEventListener("click", cancelEditMode);
+          saveBtn.addEventListener("click", saveProfile);
         }
 
         function toggleEditMode() {
-            isEditing = !isEditing;
-            const editBtn = document.getElementById('editPersonalBtn');
-            const actions = document.getElementById('editActions');
+          isEditing = !isEditing;
+          const editBtn = document.getElementById("editPersonalBtn");
+          const actions = document.getElementById("editActions");
 
-            if (isEditing) {
-                editBtn.innerHTML = '✏️ Editing...';
-                editBtn.classList.add('editing');
-                actions.classList.add('visible');
-                // Show editable inputs, hide display values
-                document.querySelectorAll('.profile-edit-input').forEach(input => {
-                    input.classList.add('visible');
-                    const display = input.previousElementSibling;
-                    if (display && display.classList.contains('info-field-value')) {
-                        display.style.display = 'none';
-                    }
-                });
-            } else {
-                cancelEditMode();
-            }
+          if (isEditing) {
+            editBtn.innerHTML = "✏️ Editing...";
+            editBtn.classList.add("editing");
+            actions.classList.add("visible");
+            // Show editable inputs, hide display values
+            document
+              .querySelectorAll(".profile-edit-input")
+              .forEach((input) => {
+                input.classList.add("visible");
+                const display = input.previousElementSibling;
+                if (display && display.classList.contains("info-field-value")) {
+                  display.style.display = "none";
+                }
+              });
+          } else {
+            cancelEditMode();
+          }
         }
 
         function cancelEditMode() {
-            isEditing = false;
-            const editBtn = document.getElementById('editPersonalBtn');
-            const actions = document.getElementById('editActions');
+          isEditing = false;
+          const editBtn = document.getElementById("editPersonalBtn");
+          const actions = document.getElementById("editActions");
 
-            editBtn.innerHTML = '✏️ Edit';
-            editBtn.classList.remove('editing');
-            actions.classList.remove('visible');
+          editBtn.innerHTML = "✏️ Edit";
+          editBtn.classList.remove("editing");
+          actions.classList.remove("visible");
 
-            document.querySelectorAll('.profile-edit-input').forEach(input => {
-                input.classList.remove('visible');
-                const display = input.previousElementSibling;
-                if (display && display.classList.contains('info-field-value')) {
-                    display.style.display = 'flex';
-                }
-            });
-
-            // Reset values from loaded profile
-            if (profileData) {
-                const u = profileData.user;
-                const d = profileData.details || {};
-                document.getElementById('editFullName').value = `${u.first_name || ''} ${u.last_name || ''}`.trim();
-                document.getElementById('editPhone').value = u.phone || '';
-                document.getElementById('editCity').value = d.city || '';
+          document.querySelectorAll(".profile-edit-input").forEach((input) => {
+            input.classList.remove("visible");
+            const display = input.previousElementSibling;
+            if (display && display.classList.contains("info-field-value")) {
+              display.style.display = "flex";
             }
+          });
+
+          // Reset values from loaded profile
+          if (profileData) {
+            const u = profileData.user;
+            const d = profileData.details || {};
+            document.getElementById("editFullName").value =
+              `${u.first_name || ""} ${u.last_name || ""}`.trim();
+            document.getElementById("editPhone").value = u.phone || "";
+            document.getElementById("editCity").value = d.city || "";
+          }
         }
 
         async function saveProfile() {
-            const saveBtn = document.getElementById('saveProfileBtn');
-            const fullName = document.getElementById('editFullName').value.trim();
-            const phone = document.getElementById('editPhone').value.trim();
-            const city = document.getElementById('editCity').value.trim();
+          const saveBtn = document.getElementById("saveProfileBtn");
+          const fullName = document.getElementById("editFullName").value.trim();
+          const phone = document.getElementById("editPhone").value.trim();
+          const city = document.getElementById("editCity").value.trim();
 
-            if (!fullName) {
-                utils.showNotification('Name cannot be empty', 'error');
-                return;
+          if (!fullName) {
+            utils.showNotification("Name cannot be empty", "error");
+            return;
+          }
+
+          const parts = fullName.split(" ");
+          const firstName = parts[0] || "";
+          const lastName = parts.slice(1).join(" ") || "";
+
+          saveBtn.disabled = true;
+          saveBtn.textContent = "⏳ Saving...";
+
+          try {
+            const body = {
+              first_name: firstName,
+              last_name: lastName,
+              phone: phone,
+              details: {
+                city: city,
+                national_id: profileData?.details?.national_id || "",
+                date_of_birth: profileData?.details?.date_of_birth || "",
+                region: profileData?.details?.region || "",
+                experience_level: profileData?.details?.experience_level || "",
+              },
+            };
+
+            const res = await api.request("/profile.php", {
+              method: "POST",
+              body: JSON.stringify(body),
+            });
+
+            if (res.success) {
+              utils.showNotification(
+                "Profile updated successfully!",
+                "success",
+              );
+
+              // Update localStorage
+              currentUser.name = fullName;
+              localStorage.setItem("user", JSON.stringify(currentUser));
+              document.getElementById("userName").textContent = fullName;
+
+              // Reload data and exit edit mode
+              await loadProfileData();
+              cancelEditMode();
+            } else {
+              utils.showNotification(res.message || "Update failed", "error");
             }
-
-            const parts = fullName.split(' ');
-            const firstName = parts[0] || '';
-            const lastName = parts.slice(1).join(' ') || '';
-
-            saveBtn.disabled = true;
-            saveBtn.textContent = '⏳ Saving...';
-
-            try {
-                const body = {
-                    first_name: firstName,
-                    last_name: lastName,
-                    phone: phone,
-                    details: {
-                        city: city,
-                        national_id: profileData?.details?.national_id || '',
-                        date_of_birth: profileData?.details?.date_of_birth || '',
-                        region: profileData?.details?.region || '',
-                        experience_level: profileData?.details?.experience_level || ''
-                    }
-                };
-
-                const res = await api.request('/profile.php', {
-                    method: 'POST',
-                    body: JSON.stringify(body)
-                });
-
-                if (res.success) {
-                    utils.showNotification('Profile updated successfully!', 'success');
-
-                    // Update localStorage
-                    currentUser.name = fullName;
-                    localStorage.setItem('user', JSON.stringify(currentUser));
-                    document.getElementById('userName').textContent = fullName;
-
-                    // Reload data and exit edit mode
-                    await loadProfileData();
-                    cancelEditMode();
-                } else {
-                    utils.showNotification(res.message || 'Update failed', 'error');
-                }
-            } catch (err) {
-                console.error('Save error:', err);
-                utils.showNotification('Failed to save profile', 'error');
-            } finally {
-                saveBtn.disabled = false;
-                saveBtn.textContent = '💾 Save Changes';
-            }
+          } catch (err) {
+            console.error("Save error:", err);
+            utils.showNotification("Failed to save profile", "error");
+          } finally {
+            saveBtn.disabled = false;
+            saveBtn.textContent = "💾 Save Changes";
+          }
         }
 
         /* ==============================================
            DOCUMENT UPLOADS
            ============================================== */
         function setupDocumentUploads() {
-            document.querySelectorAll('.doc-upload-card input[type="file"]').forEach(input => {
-                input.addEventListener('change', async function(e) {
-                    const file = e.target.files[0];
-                    if (!file) return;
+          document
+            .querySelectorAll('.doc-upload-card input[type="file"]')
+            .forEach((input) => {
+              input.addEventListener("change", async function (e) {
+                const file = e.target.files[0];
+                if (!file) return;
 
-                    if (file.size > 5 * 1024 * 1024) {
-                        utils.showNotification('File must be under 5MB', 'error');
-                        return;
-                    }
+                if (file.size > 5 * 1024 * 1024) {
+                  utils.showNotification("File must be under 5MB", "error");
+                  return;
+                }
 
-                    const docType = this.dataset.docType;
-                    const docName = this.dataset.docName;
-                    const card = this.closest('.doc-upload-card');
+                const docType = this.dataset.docType;
+                const docName = this.dataset.docName;
+                const card = this.closest(".doc-upload-card");
 
-                    const formData = new FormData();
-                    formData.append('file', file);
-                    formData.append('type', docType);
+                const formData = new FormData();
+                formData.append("file", file);
+                formData.append("type", docType);
 
-                    try {
-                        utils.showNotification(`Uploading ${docName}...`, 'info');
-                        const res = await api.request('/students/upload.php', {
-                            method: 'POST',
-                            body: formData
-                        });
+                try {
+                  utils.showNotification(`Uploading ${docName}...`, "info");
+                  const res = await api.request("/students/upload.php", {
+                    method: "POST",
+                    body: formData,
+                  });
 
-                        if (res.message || res.success) {
-                            utils.showNotification(`${docName} uploaded successfully!`, 'success');
-                            updateDocStatus(card.id, true, file.name);
-                            updateCompletion(
-                                profileData?.user || currentUser,
-                                profileData?.details || {},
-                                { ...profileData?.documents, [docType]: true }
-                            );
-                        } else {
-                            utils.showNotification(res.error || 'Upload failed', 'error');
-                        }
-                    } catch (err) {
-                        console.error('Upload error:', err);
-                        utils.showNotification('Upload failed', 'error');
-                    }
-                });
+                  if (res.message || res.success) {
+                    utils.showNotification(
+                      `${docName} uploaded successfully!`,
+                      "success",
+                    );
+                    updateDocStatus(card.id, true, file.name);
+                    updateCompletion(
+                      profileData?.user || currentUser,
+                      profileData?.details || {},
+                      { ...profileData?.documents, [docType]: true },
+                    );
+                  } else {
+                    utils.showNotification(
+                      res.error || "Upload failed",
+                      "error",
+                    );
+                  }
+                } catch (err) {
+                  console.error("Upload error:", err);
+                  utils.showNotification("Upload failed", "error");
+                }
+              });
             });
         }
 
         function updateDocStatus(cardId, uploaded, fileName) {
-            const card = document.getElementById(cardId);
-            if (!card) return;
-            const statusChip = card.querySelector('.doc-status-chip');
+          const card = document.getElementById(cardId);
+          if (!card) return;
+          const statusChip = card.querySelector(".doc-status-chip");
 
-            if (uploaded) {
-                card.classList.add('uploaded');
-                if (statusChip) {
-                    statusChip.textContent = '✅ Uploaded' + (fileName ? ` (${fileName})` : '');
-                    statusChip.className = 'doc-status-chip uploaded';
-                }
+          if (uploaded) {
+            card.classList.add("uploaded");
+            if (statusChip) {
+              statusChip.textContent =
+                "✅ Uploaded" + (fileName ? ` (${fileName})` : "");
+              statusChip.className = "doc-status-chip uploaded";
             }
+          }
         }
 
         /* ==============================================
            PASSWORD MANAGEMENT
            ============================================== */
         function setupPasswordForm() {
-            document.getElementById('passwordForm').addEventListener('submit', async function(e) {
-                e.preventDefault();
+          document
+            .getElementById("passwordForm")
+            .addEventListener("submit", async function (e) {
+              e.preventDefault();
 
-                const current = document.getElementById('currentPassword').value;
-                const newPw = document.getElementById('newPassword').value;
-                const confirm = document.getElementById('confirmPassword').value;
+              const current = document.getElementById("currentPassword").value;
+              const newPw = document.getElementById("newPassword").value;
+              const confirm = document.getElementById("confirmPassword").value;
 
-                if (!current || !newPw || !confirm) {
-                    utils.showNotification('Please fill all password fields', 'error');
-                    return;
+              if (!current || !newPw || !confirm) {
+                utils.showNotification(
+                  "Please fill all password fields",
+                  "error",
+                );
+                return;
+              }
+
+              if (newPw.length < 6) {
+                utils.showNotification(
+                  "Password must be at least 6 characters",
+                  "error",
+                );
+                return;
+              }
+
+              if (newPw !== confirm) {
+                utils.showNotification("Passwords do not match", "error");
+                return;
+              }
+
+              const btn = document.getElementById("changePasswordBtn");
+              btn.disabled = true;
+              btn.textContent = "⏳ Updating...";
+
+              try {
+                const res = await api.request("/auth/change-password.php", {
+                  method: "POST",
+                  body: JSON.stringify({
+                    current_password: current,
+                    new_password: newPw,
+                  }),
+                });
+
+                if (res.success) {
+                  utils.showNotification(
+                    "Password updated successfully!",
+                    "success",
+                  );
+                  document.getElementById("passwordForm").reset();
+                  resetPasswordStrength();
+                } else {
+                  utils.showNotification(
+                    res.message || "Password update failed",
+                    "error",
+                  );
                 }
-
-                if (newPw.length < 6) {
-                    utils.showNotification('Password must be at least 6 characters', 'error');
-                    return;
-                }
-
-                if (newPw !== confirm) {
-                    utils.showNotification('Passwords do not match', 'error');
-                    return;
-                }
-
-                const btn = document.getElementById('changePasswordBtn');
-                btn.disabled = true;
-                btn.textContent = '⏳ Updating...';
-
-                try {
-                    const res = await api.request('/profile.php', {
-                        method: 'POST',
-                        body: JSON.stringify({
-                            current_password: current,
-                            new_password: newPw
-                        })
-                    });
-
-                    if (res.success) {
-                        utils.showNotification('Password updated successfully!', 'success');
-                        document.getElementById('passwordForm').reset();
-                        resetPasswordStrength();
-                    } else {
-                        utils.showNotification(res.message || 'Password update failed', 'error');
-                    }
-                } catch (err) {
-                    utils.showNotification('Failed to update password', 'error');
-                } finally {
-                    btn.disabled = false;
-                    btn.textContent = '🔒 Update Password';
-                }
+              } catch (err) {
+                utils.showNotification("Failed to update password", "error");
+              } finally {
+                btn.disabled = false;
+                btn.textContent = "🔒 Update Password";
+              }
             });
         }
 
         function setupPasswordToggles() {
-            document.querySelectorAll('.password-toggle-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const targetId = this.dataset.target;
-                    const input = document.getElementById(targetId);
-                    if (input.type === 'password') {
-                        input.type = 'text';
-                        this.textContent = '🙈';
-                    } else {
-                        input.type = 'password';
-                        this.textContent = '👁️';
-                    }
-                });
+          document.querySelectorAll(".password-toggle-btn").forEach((btn) => {
+            btn.addEventListener("click", function () {
+              const targetId = this.dataset.target;
+              const input = document.getElementById(targetId);
+              if (input.type === "password") {
+                input.type = "text";
+                this.textContent = "🙈";
+              } else {
+                input.type = "password";
+                this.textContent = "👁️";
+              }
             });
+          });
         }
 
         function setupPasswordStrength() {
-            const input = document.getElementById('newPassword');
-            input.addEventListener('input', function() {
-                const val = this.value;
-                const strength = calcPasswordStrength(val);
-                displayPasswordStrength(strength);
-            });
+          const input = document.getElementById("newPassword");
+          input.addEventListener("input", function () {
+            const val = this.value;
+            const strength = calcPasswordStrength(val);
+            displayPasswordStrength(strength);
+          });
         }
 
         function calcPasswordStrength(pw) {
-            if (!pw) return 0;
-            let score = 0;
-            if (pw.length >= 6) score++;
-            if (pw.length >= 10) score++;
-            if (/[A-Z]/.test(pw) && /[a-z]/.test(pw)) score++;
-            if (/\d/.test(pw)) score++;
-            if (/[^A-Za-z0-9]/.test(pw)) score++;
-            return Math.min(score, 4);
+          if (!pw) return 0;
+          let score = 0;
+          if (pw.length >= 6) score++;
+          if (pw.length >= 10) score++;
+          if (/[A-Z]/.test(pw) && /[a-z]/.test(pw)) score++;
+          if (/\d/.test(pw)) score++;
+          if (/[^A-Za-z0-9]/.test(pw)) score++;
+          return Math.min(score, 4);
         }
 
         function displayPasswordStrength(level) {
-            const bars = document.querySelectorAll('#passwordStrengthBars .strength-bar');
-            const label = document.getElementById('strengthLabel');
-            const levels = ['', 'weak', 'medium', 'strong', 'very-strong'];
-            const labels = ['', 'Weak', 'Fair', 'Strong', 'Very Strong'];
+          const bars = document.querySelectorAll(
+            "#passwordStrengthBars .strength-bar",
+          );
+          const label = document.getElementById("strengthLabel");
+          const levels = ["", "weak", "medium", "strong", "very-strong"];
+          const labels = ["", "Weak", "Fair", "Strong", "Very Strong"];
 
-            bars.forEach((bar, i) => {
-                bar.className = 'strength-bar';
-                if (i < level) {
-                    bar.classList.add('active', levels[level]);
-                }
-            });
+          bars.forEach((bar, i) => {
+            bar.className = "strength-bar";
+            if (i < level) {
+              bar.classList.add("active", levels[level]);
+            }
+          });
 
-            label.textContent = labels[level] || '';
-            label.className = 'strength-label ' + (levels[level] || '');
+          label.textContent = labels[level] || "";
+          label.className = "strength-label " + (levels[level] || "");
         }
 
         function resetPasswordStrength() {
-            displayPasswordStrength(0);
+          displayPasswordStrength(0);
         }
-
-    })();
+      })();
     </script>
-</body>
+  </body>
 </html>

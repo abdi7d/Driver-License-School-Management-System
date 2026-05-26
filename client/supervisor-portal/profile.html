@@ -1,188 +1,237 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Profile - Supervisor | DLSM Ethiopia</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/dark-mode.css">
-    <link rel="stylesheet" href="../assets/css/responsive.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link rel="stylesheet" href="../assets/css/dark-mode.css" />
+    <link rel="stylesheet" href="../assets/css/responsive.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <script src="../assets/js/theme.js"></script>
     <script src="../assets/js/auth-guard.js"></script>
-</head>
-<body class="dashboard-body">
+  </head>
+  <body class="dashboard-body">
     <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
-    
     <aside class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <div class="sidebar-logo">
-                <img src="../assets/images/logo-DLSM.jpg" alt="DLSM Logo" class="logo-icon" style="height: 32px; width: auto; border-radius: 6px;">
-                <span class="logo-text">DLSM</span>
-            </div>
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <img
+            src="../assets/images/logo-DLSM.jpg"
+            alt="DLSM Logo"
+            class="logo-icon"
+            style="height: 32px; width: auto; border-radius: 6px"
+          />
+          <span class="logo-text">DLSM</span>
         </div>
-        <nav class="sidebar-nav">
-            <a href="dashboard.html" class="nav-item">
-                <span class="nav-icon">📊</span>
-                <span class="nav-text">Dashboard</span>
-            </a>
-            <a href="profile.html" class="nav-item active">
-                <span class="nav-icon">👤</span>
-                <span class="nav-text">My Profile</span>
-            </a>
-            <a href="assignments.html" class="nav-item">
-                <span class="nav-icon">👥</span>
-                <span class="nav-text">Assignments</span>
-            </a>
-            <a href="monitor.html" class="nav-item">
-                <span class="nav-icon">👁️</span>
-                <span class="nav-text">Monitor</span>
-            </a>
-            <a href="exam-approvals.html" class="nav-item">
-                <span class="nav-icon">✅</span>
-                <span class="nav-text">Exam Approvals</span>
-            </a>
-            <a href="complaints.html" class="nav-item">
-                <span class="nav-icon">📢</span>
-                <span class="nav-text">Complaints</span>
-            </a>
-            <a href="reports.html" class="nav-item">
-                <span class="nav-icon">📈</span>
-                <span class="nav-text">Reports</span>
-            </a>
-        </nav>
-        <div class="sidebar-footer">
-            <button class="btn-logout" id="logoutBtn">
-                <span class="nav-icon">🚪</span>
-                <span class="nav-text">Logout</span>
-            </button>
-        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-item">
+          <span class="nav-icon">📊</span>
+          <span class="nav-text">Dashboard</span>
+        </a>
+        <a href="profile.html" class="nav-item active">
+          <span class="nav-icon">👤</span>
+          <span class="nav-text">My Profile</span>
+        </a>
+        <a href="assignments.html" class="nav-item">
+          <span class="nav-icon">👥</span>
+          <span class="nav-text">Assignments</span>
+        </a>
+        <a href="monitor.html" class="nav-item">
+          <span class="nav-icon">👁️</span>
+          <span class="nav-text">Monitor</span>
+        </a>
+        <a href="exam-approvals.html" class="nav-item">
+          <span class="nav-icon">✅</span>
+          <span class="nav-text">Exam Approvals</span>
+        </a>
+        <a href="complaints.html" class="nav-item">
+          <span class="nav-icon">📢</span>
+          <span class="nav-text">Complaints</span>
+        </a>
+        <a href="reports.html" class="nav-item">
+          <span class="nav-icon">📈</span>
+          <span class="nav-text">Reports</span>
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <button class="btn-logout" id="logoutBtn">
+          <span class="nav-icon">🚪</span>
+          <span class="nav-text">Logout</span>
+        </button>
+      </div>
     </aside>
 
-    
     <main class="main-content">
-        <header class="topbar">
-            <div class="topbar-left">
-                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
-                <div>
-                    <h1 class="page-title">My Profile</h1>
-                    <p class="page-subtitle">View and update your personal information</p>
-                </div>
-            </div>
-            <div class="topbar-right">
-                <div class="user-profile">
-                    <div class="user-avatar" id="topbarAvatar">👤</div>
-                    <div class="user-info">
-                        <span class="user-name" id="userName">Supervisor</span>
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <div class="dashboard-container">
-            <div class="profile-layout">
-
-                
-                <div class="profile-card">
-                    <div class="profile-header">
-                        <div class="profile-avatar-large" id="profileAvatarLarge">
-                            <span class="avatar-icon" id="avatarIcon">👤</span>
-                        </div>
-                        <input type="file" id="photoInput" accept="image/*" style="display: none;">
-                        <button class="btn-secondary btn-small" id="changePhotoBtn">Change Photo</button>
-                    </div>
-                    <div class="profile-info-center">
-                        <h2 id="profileName">...</h2>
-                        <p class="profile-email" id="profileEmail">...</p>
-                        <span class="status-badge active">Active</span>
-                    </div>
-                    <div class="profile-stats">
-                        <div class="stat-item">
-                            <span class="stat-number" id="statAssignments">...</span>
-                            <span class="stat-label">Total Assignments</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-number" id="statExams">...</span>
-                            <span class="stat-label">Exams Approved</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-number" id="statComplaints">...</span>
-                            <span class="stat-label">Complaints Resolved</span>
-                        </div>
-                    </div>
-                </div>
-
-                
-                <div class="dashboard-card">
-                    <div class="card-header">
-                        <h3 class="card-title">Personal Information</h3>
-                        <button class="btn-primary btn-small" id="editBtn">Edit Profile</button>
-                    </div>
-                    
-                    <form id="profileForm" class="profile-form">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="form-label">Full Name</label>
-                                <input type="text" id="fullName" class="form-input" disabled>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Email Address</label>
-                                <input type="email" id="email" class="form-input" disabled>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="form-label">Phone Number</label>
-                                <input type="tel" id="phone" class="form-input" disabled>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Employee ID</label>
-                                <input type="text" id="employeeId" class="form-input" disabled>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="form-label">Department</label>
-                                <input type="text" id="department" class="form-input" disabled>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Member Since</label>
-                                <input type="text" id="memberSince" class="form-input" disabled>
-                            </div>
-                        </div>
-
-                        <div class="form-actions" id="formActions" style="display: none;">
-                            <button type="button" class="btn-secondary" id="cancelBtn">Cancel</button>
-                            <button type="submit" class="btn-primary">Save Changes</button>
-                        </div>
-                    </form>
-                </div>
-
-                
-                <div class="dashboard-card">
-                    <h3 class="card-title">Change Password</h3>
-                    <form id="passwordForm" class="profile-form">
-                        <div class="form-group">
-                            <label class="form-label">Current Password</label>
-                            <input type="password" id="currentPassword" class="form-input" placeholder="Enter current password">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">New Password</label>
-                            <input type="password" id="newPassword" class="form-input" placeholder="Enter new password">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Confirm New Password</label>
-                            <input type="password" id="confirmPassword" class="form-input" placeholder="Confirm new password">
-                        </div>
-                        <button type="submit" class="btn-primary">Update Password</button>
-                    </form>
-                </div>
-
-            </div>
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+          <div>
+            <h1 class="page-title">My Profile</h1>
+            <p class="page-subtitle">
+              View and update your personal information
+            </p>
+          </div>
         </div>
+        <div class="topbar-right">
+          <div class="user-profile">
+            <div class="user-avatar" id="topbarAvatar">👤</div>
+            <div class="user-info">
+              <span class="user-name" id="userName">Supervisor</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="dashboard-container">
+        <div class="profile-layout">
+          <div class="profile-card">
+            <div class="profile-header">
+              <div class="profile-avatar-large" id="profileAvatarLarge">
+                <span class="avatar-icon" id="avatarIcon">👤</span>
+              </div>
+              <input
+                type="file"
+                id="photoInput"
+                accept="image/*"
+                style="display: none"
+              />
+              <button class="btn-secondary btn-small" id="changePhotoBtn">
+                Change Photo
+              </button>
+            </div>
+            <div class="profile-info-center">
+              <h2 id="profileName">...</h2>
+              <p class="profile-email" id="profileEmail">...</p>
+              <span class="status-badge active">Active</span>
+            </div>
+            <div class="profile-stats">
+              <div class="stat-item">
+                <span class="stat-number" id="statAssignments">...</span>
+                <span class="stat-label">Total Assignments</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number" id="statExams">...</span>
+                <span class="stat-label">Exams Approved</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number" id="statComplaints">...</span>
+                <span class="stat-label">Complaints Resolved</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="dashboard-card">
+            <div class="card-header">
+              <h3 class="card-title">Personal Information</h3>
+              <button class="btn-primary btn-small" id="editBtn">
+                Edit Profile
+              </button>
+            </div>
+
+            <form id="profileForm" class="profile-form">
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Full Name</label>
+                  <input
+                    type="text"
+                    id="fullName"
+                    class="form-input"
+                    disabled
+                  />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Email Address</label>
+                  <input type="email" id="email" class="form-input" disabled />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Phone Number</label>
+                  <input type="tel" id="phone" class="form-input" disabled />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Employee ID</label>
+                  <input
+                    type="text"
+                    id="employeeId"
+                    class="form-input"
+                    disabled
+                  />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Department</label>
+                  <input
+                    type="text"
+                    id="department"
+                    class="form-input"
+                    disabled
+                  />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Member Since</label>
+                  <input
+                    type="text"
+                    id="memberSince"
+                    class="form-input"
+                    disabled
+                  />
+                </div>
+              </div>
+
+              <div class="form-actions" id="formActions" style="display: none">
+                <button type="button" class="btn-secondary" id="cancelBtn">
+                  Cancel
+                </button>
+                <button type="submit" class="btn-primary">Save Changes</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="dashboard-card">
+            <h3 class="card-title">Change Password</h3>
+            <form id="passwordForm" class="profile-form">
+              <div class="form-group">
+                <label class="form-label">Current Password</label>
+                <input
+                  type="password"
+                  id="currentPassword"
+                  class="form-input"
+                  placeholder="Enter current password"
+                />
+              </div>
+              <div class="form-group">
+                <label class="form-label">New Password</label>
+                <input
+                  type="password"
+                  id="newPassword"
+                  class="form-input"
+                  placeholder="Enter new password"
+                />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Confirm New Password</label>
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  class="form-input"
+                  placeholder="Confirm new password"
+                />
+              </div>
+              <button type="submit" class="btn-primary">Update Password</button>
+            </form>
+          </div>
+        </div>
+      </div>
     </main>
 
     <div id="toast" class="toast"></div>
@@ -192,207 +241,282 @@
     <script src="../assets/js/auth.js"></script>
     <script src="../assets/js/dashboard.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', async function() {
-            // Force disable demo mode if the user wants real data
-            if (localStorage.getItem('DEMO_MODE') === 'true') {
-                console.log('🔄 Disabling Demo Mode to fetch real profile data...');
-                localStorage.setItem('DEMO_MODE', 'false');
-                window.location.reload();
+      document.addEventListener("DOMContentLoaded", async function () {
+        const user = auth.getCurrentUser();
+        if (!user) {
+          window.location.href = "../login.html";
+          return;
+        }
+
+        // Load supervisor profile from API
+        await loadSupervisorProfile();
+
+        // Load saved photo
+        const savedPhoto = localStorage.getItem("supervisorPhoto");
+        if (savedPhoto) {
+          setPhoto(savedPhoto);
+        }
+
+        // Change photo button
+        document
+          .getElementById("changePhotoBtn")
+          .addEventListener("click", function () {
+            document.getElementById("photoInput").click();
+          });
+
+        // Photo input change
+        document
+          .getElementById("photoInput")
+          .addEventListener("change", function (e) {
+            const file = e.target.files[0];
+            if (file) {
+              if (file.size > 5 * 1024 * 1024) {
+                utils.showNotification(
+                  "Photo size must be less than 5MB",
+                  "error",
+                );
                 return;
+              }
+
+              if (!file.type.startsWith("image/")) {
+                utils.showNotification(
+                  "Please select a valid image file",
+                  "error",
+                );
+                return;
+              }
+
+              const reader = new FileReader();
+              reader.onload = function (event) {
+                const imageData = event.target.result;
+                setPhoto(imageData);
+                localStorage.setItem("supervisorPhoto", imageData);
+                utils.showNotification(
+                  "Photo uploaded successfully!",
+                  "success",
+                );
+              };
+              reader.readAsDataURL(file);
+            }
+          });
+
+        // Edit button
+        document
+          .getElementById("editBtn")
+          .addEventListener("click", enableEdit);
+
+        // Cancel button
+        document
+          .getElementById("cancelBtn")
+          .addEventListener("click", cancelEdit);
+
+        // Profile form submit
+        document
+          .getElementById("profileForm")
+          .addEventListener("submit", saveProfile);
+
+        // Password form submit
+        document
+          .getElementById("passwordForm")
+          .addEventListener("submit", changePassword);
+      });
+
+      async function loadSupervisorProfile() {
+        try {
+          console.log(
+            "🌐 Fetching profile from:",
+            api.baseUrl + "/supervisor/profile.php",
+          );
+          const response = await api.get("/supervisor/profile.php");
+
+          if (response.success && response.data) {
+            const profile = response.data;
+
+            // Update header
+            document.getElementById("userName").textContent = profile.name;
+            document.getElementById("profileName").textContent = profile.name;
+            document.getElementById("profileEmail").textContent = profile.email;
+
+            // Update stats
+            if (profile.stats) {
+              document.getElementById("statAssignments").textContent =
+                profile.stats.total_assignments;
+              document.getElementById("statExams").textContent =
+                profile.stats.exams_approved;
+              document.getElementById("statComplaints").textContent =
+                profile.stats.complaints_resolved;
             }
 
-            const user = auth.getCurrentUser();
-            if (!user) { 
-                window.location.href = '../login.html'; 
-                return; 
-            }
-            
-            // Load supervisor profile from API
-            await loadSupervisorProfile();
-            
-            // Load saved photo
-            const savedPhoto = localStorage.getItem('supervisorPhoto');
-            if (savedPhoto) {
-                setPhoto(savedPhoto);
-            }
+            // Update form fields
+            document.getElementById("fullName").value = profile.name || "";
+            document.getElementById("email").value = profile.email || "";
+            document.getElementById("phone").value = profile.phone || "";
+            document.getElementById("employeeId").value = "SUP-" + profile.id;
+            document.getElementById("department").value =
+              "Training Supervision";
+            document.getElementById("memberSince").value = profile.created_at
+              ? new Date(profile.created_at).toLocaleDateString("en-US", {
+                  month: "long",
+                  year: "numeric",
+                })
+              : "N/A";
 
-            // Change photo button
-            document.getElementById('changePhotoBtn').addEventListener('click', function() {
-                document.getElementById('photoInput').click();
-            });
+            console.log("✅ Supervisor profile loaded successfully");
+          } else {
+            console.error(
+              "❌ Failed to load profile:",
+              response.message || "Unknown error",
+            );
+            utils.showNotification(
+              response.message || "Failed to load profile details",
+              "error",
+            );
 
-            // Photo input change
-            document.getElementById('photoInput').addEventListener('change', function(e) {
-                const file = e.target.files[0];
-                if (file) {
-                    if (file.size > 5 * 1024 * 1024) {
-                        utils.showNotification('Photo size must be less than 5MB', 'error');
-                        return;
-                    }
-                    
-                    if (!file.type.startsWith('image/')) {
-                        utils.showNotification('Please select a valid image file', 'error');
-                        return;
-                    }
-                    
-                    const reader = new FileReader();
-                    reader.onload = function(event) {
-                        const imageData = event.target.result;
-                        setPhoto(imageData);
-                        localStorage.setItem('supervisorPhoto', imageData);
-                        utils.showNotification('Photo uploaded successfully!', 'success');
-                    };
-                    reader.readAsDataURL(file);
-                }
-            });
+            // Set error state on UI
+            document.getElementById("profileName").textContent =
+              "Error Loading Profile";
+            document
+              .querySelectorAll(".stat-number")
+              .forEach((el) => (el.textContent = "!"));
+          }
+        } catch (error) {
+          console.error("❌ Error loading supervisor profile:", error);
+          utils.showNotification(
+            "Network error. Check if the server is running.",
+            "error",
+          );
+        }
+      }
 
-            // Edit button
-            document.getElementById('editBtn').addEventListener('click', enableEdit);
+      function setPhoto(imageData) {
+        const avatarIcon = document.getElementById("avatarIcon");
+        if (avatarIcon) {
+          avatarIcon.innerHTML = `<img src="${imageData}" alt="Profile Photo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
+        }
+        const topbarAvatar = document.getElementById("topbarAvatar");
+        if (topbarAvatar) {
+          topbarAvatar.innerHTML = `<img src="${imageData}" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
+        }
+      }
 
-            // Cancel button
-            document.getElementById('cancelBtn').addEventListener('click', cancelEdit);
-
-            // Profile form submit
-            document.getElementById('profileForm').addEventListener('submit', saveProfile);
-
-            // Password form submit
-            document.getElementById('passwordForm').addEventListener('submit', changePassword);
+      function enableEdit() {
+        const fields = ["fullName", "phone"];
+        fields.forEach((field) => {
+          document.getElementById(field).disabled = false;
         });
+        document.getElementById("formActions").style.display = "flex";
+        document.getElementById("editBtn").style.display = "none";
+      }
 
-        async function loadSupervisorProfile() {
-            try {
-                console.log('🌐 Fetching profile from:', api.baseUrl + '/supervisor/profile.php');
-                const response = await api.get('/supervisor/profile.php');
-                
-                if (response.success && response.data) {
-                    const profile = response.data;
-                    
-                    // Update header
-                    document.getElementById('userName').textContent = profile.name;
-                    document.getElementById('profileName').textContent = profile.name;
-                    document.getElementById('profileEmail').textContent = profile.email;
-                    
-                    // Update stats
-                    if (profile.stats) {
-                        document.getElementById('statAssignments').textContent = profile.stats.total_assignments;
-                        document.getElementById('statExams').textContent = profile.stats.exams_approved;
-                        document.getElementById('statComplaints').textContent = profile.stats.complaints_resolved;
-                    }
-                    
-                    // Update form fields
-                    document.getElementById('fullName').value = profile.name || '';
-                    document.getElementById('email').value = profile.email || '';
-                    document.getElementById('phone').value = profile.phone || '';
-                    document.getElementById('employeeId').value = 'SUP-' + profile.id;
-                    document.getElementById('department').value = 'Training Supervision';
-                    document.getElementById('memberSince').value = profile.created_at ? new Date(profile.created_at).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) : 'N/A';
-                    
-                    console.log('✅ Supervisor profile loaded successfully');
-                } else {
-                    console.error('❌ Failed to load profile:', response.message || 'Unknown error');
-                    utils.showNotification(response.message || 'Failed to load profile details', 'error');
-                    
-                    // Set error state on UI
-                    document.getElementById('profileName').textContent = 'Error Loading Profile';
-                    document.querySelectorAll('.stat-number').forEach(el => el.textContent = '!');
-                }
-            } catch (error) {
-                console.error('❌ Error loading supervisor profile:', error);
-                utils.showNotification('Network error. Check if the server is running.', 'error');
-            }
+      function cancelEdit() {
+        const fields = ["fullName", "phone"];
+        fields.forEach((field) => {
+          document.getElementById(field).disabled = true;
+        });
+        document.getElementById("formActions").style.display = "none";
+        document.getElementById("editBtn").style.display = "block";
+        loadSupervisorProfile(); // Reload original data
+      }
+
+      async function saveProfile(e) {
+        e.preventDefault();
+        const fullName = document.getElementById("fullName").value.trim();
+        const phone = document.getElementById("phone").value.trim();
+
+        if (!fullName || fullName.length < 3) {
+          utils.showNotification("Name must be at least 3 characters", "error");
+          return;
         }
 
-        function setPhoto(imageData) {
-            const avatarIcon = document.getElementById('avatarIcon');
-            if (avatarIcon) {
-                avatarIcon.innerHTML = `<img src="${imageData}" alt="Profile Photo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
-            }
-            const topbarAvatar = document.getElementById('topbarAvatar');
-            if (topbarAvatar) {
-                topbarAvatar.innerHTML = `<img src="${imageData}" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
-            }
+        const nameParts = fullName.split(" ").filter(Boolean);
+        const firstName = nameParts.shift() || fullName;
+        const lastName = nameParts.join(" ") || "";
+
+        const submitBtn = e.target.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Saving...";
+
+        try {
+          const payload = {
+            first_name: firstName,
+            last_name: lastName,
+            phone,
+          };
+
+          const response = await api.post("/profile.php", payload);
+          if (response.success) {
+            utils.showNotification("Profile updated successfully!", "success");
+            // Refresh user data and UI
+            localStorage.setItem(
+              "user",
+              JSON.stringify({
+                ...auth.getCurrentUser(),
+                name: fullName,
+                email: document.getElementById("email").value,
+                phone,
+              }),
+            );
+            cancelEdit();
+          } else {
+            throw new Error(response.message || "Update failed");
+          }
+        } catch (error) {
+          console.error("Error updating profile:", error);
+          utils.showNotification(
+            error.message || "Failed to update profile.",
+            "error",
+          );
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Save Changes";
+        }
+      }
+
+      async function changePassword(e) {
+        e.preventDefault();
+        const currentPassword =
+          document.getElementById("currentPassword").value;
+        const newPassword = document.getElementById("newPassword").value;
+        const confirmPassword =
+          document.getElementById("confirmPassword").value;
+
+        if (!currentPassword || !newPassword || !confirmPassword) {
+          utils.showNotification("Please fill all password fields", "error");
+          return;
         }
 
-        function enableEdit() {
-            const fields = ['fullName', 'phone'];
-            fields.forEach(field => {
-                document.getElementById(field).disabled = false;
-            });
-            document.getElementById('formActions').style.display = 'flex';
-            document.getElementById('editBtn').style.display = 'none';
+        if (newPassword !== confirmPassword) {
+          utils.showNotification("Passwords do not match", "error");
+          return;
         }
 
-        function cancelEdit() {
-            const fields = ['fullName', 'phone'];
-            fields.forEach(field => {
-                document.getElementById(field).disabled = true;
-            });
-            document.getElementById('formActions').style.display = 'none';
-            document.getElementById('editBtn').style.display = 'block';
-            loadSupervisorProfile(); // Reload original data
-        }
+        const submitBtn = e.target.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Updating...";
 
-        async function saveProfile(e) {
-            e.preventDefault();
-            const fullName = document.getElementById('fullName').value.trim();
-            const phone = document.getElementById('phone').value.trim();
-            
-            if (!fullName || fullName.length < 3) {
-                utils.showNotification('Name must be at least 3 characters', 'error');
-                return;
-            }
-            
-            const submitBtn = e.target.querySelector('button[type="submit"]');
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Saving...';
-            
-            try {
-                // In a real app, you'd send this to the API
-                // For now, let's just simulate success
-                await new Promise(resolve => setTimeout(resolve, 1000));
-                utils.showNotification('Profile updated successfully!', 'success');
-                cancelEdit();
-            } catch (error) {
-                console.error('Error updating profile:', error);
-                utils.showNotification('Failed to update profile.', 'error');
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Save Changes';
-            }
-        }
+        try {
+          const response = await api.post("/auth/change-password.php", {
+            current_password: currentPassword,
+            new_password: newPassword,
+          });
 
-        async function changePassword(e) {
-            e.preventDefault();
-            const currentPassword = document.getElementById('currentPassword').value;
-            const newPassword = document.getElementById('newPassword').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-            
-            if (!currentPassword || !newPassword || !confirmPassword) {
-                utils.showNotification('Please fill all password fields', 'error');
-                return;
-            }
-            
-            if (newPassword !== confirmPassword) {
-                utils.showNotification('Passwords do not match', 'error');
-                return;
-            }
-            
-            const submitBtn = e.target.querySelector('button[type="submit"]');
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Updating...';
-            
-            try {
-                await new Promise(resolve => setTimeout(resolve, 1000));
-                utils.showNotification('Password changed successfully!', 'success');
-                document.getElementById('passwordForm').reset();
-            } catch (error) {
-                console.error('Error changing password:', error);
-                utils.showNotification('Failed to change password.', 'error');
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Update Password';
-            }
+          if (response.success) {
+            utils.showNotification("Password changed successfully!", "success");
+            document.getElementById("passwordForm").reset();
+          } else {
+            throw new Error(response.message || "Password update failed");
+          }
+        } catch (error) {
+          console.error("Error changing password:", error);
+          utils.showNotification(
+            error.message || "Failed to change password.",
+            "error",
+          );
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Update Password";
         }
+      }
     </script>
-</body>
+  </body>
 </html>

@@ -1,6 +1,7 @@
 <?php
 include "../../config/db.php";
 include "../../includes/auth.php";
+include "../../includes/notifications.php";
 
 header("Content-Type: application/json");
 
@@ -25,6 +26,7 @@ $stmt = $conn->prepare("UPDATE users SET status='active' WHERE id=?");
 $stmt->bind_param("i", $user_id);
 
 if ($stmt->execute()) {
+    notifyUser($conn, $user_id, 'Registration approved', 'Your registration has been approved by the manager. You can now log in and continue your training.');
     echo json_encode(["message" => "Student approved"]);
 } else {
     echo json_encode(["error" => "Failed"]);

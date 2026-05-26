@@ -37,6 +37,22 @@ function buildClientUrl(relativePath) {
     return `${window.location.origin}${projectRoot}/client/${cleanPath}`;
 }
 
+function parseJwt(token) {
+    if (!token) return null;
+    const parts = token.split('.');
+    if (parts.length !== 3) return null;
+    try {
+        const payload = parts[1].replace(/-/g, '+').replace(/_/g, '/');
+        const json = decodeURIComponent(atob(payload).split('').map((c) => {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+        return JSON.parse(json);
+    } catch (error) {
+        console.error('Failed to parse JWT payload:', error);
+        return null;
+    }
+}
+
 const auth = {
     API_BASE_URL: (() => {
         const path = window.location.pathname.replace(/\\/g, '/');
@@ -54,21 +70,41 @@ const auth = {
     })(),
     
     isAuthenticated() {
-        return Boolean(localStorage.getItem('token') && localStorage.getItem('user'));
+        return Boolean(localStorage.getItem('token'));
     },
 
     getCurrentUser() {
-        const user = localStorage.getItem('user');
-        if (!user) {
-            return null;
+        const userRaw = localStorage.getItem('user');
+        if (userRaw) {
+            try { return JSON.parse(userRaw); } catch (e) { console.error('Failed to parse user session:', e); }
         }
 
+        // Try to recover user from token payload if possible
+        const token = this.getToken();
+        if (!token) return null;
         try {
-            return JSON.parse(user);
-        } catch (error) {
-            console.error('Failed to parse user session:', error);
+            const payload = parseJwt(token);
+            if (payload) {
+                const recovered = {
+                    id: payload.user_id || payload.id || null,
+                    role: payload.role || null,
+                    email: payload.email || null,
+                    name: (payload.first_name || payload.name) ? `${payload.first_name || ''} ${payload.last_name || ''}`.trim() : (payload.name || null)
+                };
+                localStorage.setItem('user', JSON.stringify(recovered));
+                return recovered;
+            }
+        } catch (e) {
             return null;
         }
+        return null;
+    },
+
+    // Parse JWT payload without verifying signature (client-side only)
+    parseTokenPayload() {
+        const token = this.getToken();
+        if (!token) return null;
+        return parseJwt(token);
     },
 
     getLoginUrl() {
@@ -94,10 +130,60 @@ const auth = {
     },
 
     requireAuth() {
-        if (!this.isAuthenticated()) {
+        // Backwards-compatible: accept (allowedRoles) if passed
+        const allowedRoles = arguments.length ? arguments[0] : null;
+        // Dev helper: if running on localhost and URL contains ?mockAuth=1,
+        // populate a fake token and user to ease UI testing without real login.
+        try {
+            const search = window.location.search || '';
+            if (window.location.hostname === 'localhost' && /[?&]mockAuth=1/.test(search)) {
+                if (!localStorage.getItem('token')) {
+                    const header = { alg: 'none', typ: 'JWT' };
+                    const payload = { user_id: 10, role: 'student', email: 'student@example.com', exp: 9999999999 };
+                    const token = btoa(JSON.stringify(header)) + '.' + btoa(JSON.stringify(payload)) + '.devsig';
+                    localStorage.setItem('token', token);
+                    localStorage.setItem('user', JSON.stringify({ id: 10, name: 'Dev Student', email: 'student@example.com', role: 'student' }));
+                    localStorage.setItem('role', 'student');
+                }
+            }
+        } catch (e) {
+            console.warn('mockAuth setup failed:', e);
+        }
+
+        const token = this.getToken();
+        if (!token) {
+            // Save requested path for redirect after login
+            try { sessionStorage.setItem('redirectAfterLogin', window.location.pathname + window.location.search); } catch(e){}
             window.location.href = this.getLoginUrl();
             return false;
         }
+
+        const tokenPayload = this.parseTokenPayload();
+        if (tokenPayload && tokenPayload.exp && Date.now() >= tokenPayload.exp * 1000) {
+            localStorage.clear();
+            try { sessionStorage.setItem('redirectAfterLogin', window.location.pathname + window.location.search); } catch(e){}
+            window.location.href = this.getLoginUrl();
+            return false;
+        }
+
+        // Ensure user object exists
+        const user = this.getCurrentUser();
+        if (!user) {
+            // If token exists but user cannot be recovered, force re-login
+            try { sessionStorage.setItem('redirectAfterLogin', window.location.pathname + window.location.search); } catch(e){}
+            window.location.href = this.getLoginUrl();
+            return false;
+        }
+
+        if (allowedRoles) {
+            if (!this.hasRole(allowedRoles)) {
+                // Unauthorized for this route — redirect to their dashboard
+                utils.showNotification('Access denied for this page. Redirecting to your dashboard.', 'error');
+                this.redirectToDashboard(user.role || user);
+                return false;
+            }
+        }
+
         return true;
     },
 
@@ -158,6 +244,7 @@ const auth = {
         localStorage.clear();
         sessionStorage.clear();
 
+        // Redirect to landing page after clearing session
         window.location.href = this.getHomeUrl();
     },
 
@@ -221,3 +308,5 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+window.auth = auth;

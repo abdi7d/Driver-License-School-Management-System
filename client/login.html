@@ -329,6 +329,12 @@
         // Redirect if already logged in
         if (auth.isAuthenticated()) {
           const user = auth.getCurrentUser();
+          const redirectTarget = sessionStorage.getItem("redirectAfterLogin");
+          if (redirectTarget) {
+            sessionStorage.removeItem("redirectAfterLogin");
+            window.location.href = redirectTarget;
+            return;
+          }
           auth.redirectToDashboard(user?.role || user);
           return;
         }
@@ -387,6 +393,13 @@
               );
 
               setTimeout(() => {
+                const redirectTarget =
+                  sessionStorage.getItem("redirectAfterLogin");
+                if (redirectTarget) {
+                  sessionStorage.removeItem("redirectAfterLogin");
+                  window.location.href = redirectTarget;
+                  return;
+                }
                 auth.redirectToDashboard(result.role);
               }, 1000);
             } else {
