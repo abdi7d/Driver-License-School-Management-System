@@ -1,11 +1,29 @@
 <?php
-function log_audit($conn, $userId, $action, $details = null, $ip = null) {
-    if (!$conn || !$userId || !$action) return false;
-    $ip = $ip ?? ($_SERVER['REMOTE_ADDR'] ?? null);
-    $stmt = $conn->prepare("INSERT INTO audit_logs (user_id, action, details, ip_address) VALUES (?, ?, ?, ?)");
-    if (!$stmt) return false;
-    $stmt->bind_param('isss', $userId, $action, $details, $ip);
-    return $stmt->execute();
+function log_audit($db, $userId, $action, $details = null, $ip = null) {
+    if (!$db || !$userId || !$action) return false;
+    $ip = $ip ?? get_client_ip();
+
+    // mysqli
+    if (is_object($db) && get_class($db) === 'mysqli') {
+        $stmt = $db->prepare("INSERT INTO audit_logs (user_id, action, details, ip_address) VALUES (?, ?, ?, ?)");
+        if (!$stmt) return false;
+        $stmt->bind_param('isss', $userId, $action, $details, $ip);
+        return $stmt->execute();
+    }
+
+    // PDO
+    if (is_object($db) && ($db instanceof PDO)) {
+        $sql = "INSERT INTO audit_logs (user_id, action, details, ip_address) VALUES (:user_id, :action, :details, :ip)";
+        $stmt = $db->prepare($sql);
+        return $stmt->execute([
+            ':user_id' => $userId,
+            ':action' => $action,
+            ':details' => $details,
+            ':ip' => $ip
+        ]);
+    }
+
+    return false;
 }
 
 function get_client_ip() {

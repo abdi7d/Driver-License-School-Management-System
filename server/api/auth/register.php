@@ -10,6 +10,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'OPTIONS') {
 }
 
 require_once __DIR__ . '/../../config/database.php'; // returns PDO instance as $pdo
+include_once __DIR__ . '/../../includes/audit.php';
 
 if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
     http_response_code(405);
@@ -92,6 +93,12 @@ try {
         'role' => $role,
         'status' => $status
     ]);
+    // Audit log (PDO)
+    try {
+        log_audit($pdo, (int)$userId, 'register', 'New user registered: ' . $email);
+    } catch (Exception $e) {
+        // ignore audit failures
+    }
 } catch (Exception $e) {
     $pdo->rollBack();
     http_response_code(500);

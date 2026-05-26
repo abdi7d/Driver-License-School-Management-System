@@ -11,6 +11,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'OPTIONS') {
 
 include_once __DIR__ . '/../../config/db.php';
 include_once __DIR__ . '/../../includes/jwt.php';
+include_once __DIR__ . '/../../includes/audit.php';
 
 if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
     http_response_code(405);
@@ -74,6 +75,9 @@ $payload = [
 ];
 
 $token = JWT::generate($payload);
+
+// Log successful login
+log_audit($conn, (int)$user['id'], 'login', 'User logged in successfully');
 
 echo json_encode([
     'success' => true,

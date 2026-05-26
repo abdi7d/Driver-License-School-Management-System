@@ -6,6 +6,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 include_once '../config/db.php';
 include_once '../includes/auth.php';
+include_once '../includes/audit.php';
 
 $user = auth();
 $userId = $user["user_id"];
@@ -117,6 +118,8 @@ if ($method === "GET") {
         $certStmt->execute();
         
         $conn->commit();
+        // Audit
+        log_audit($conn, $userId, 'issue_certificate', 'Issued certificate ' . $certNumber . ' to student id ' . $studentId);
         echo json_encode(["success" => true, "message" => "Graduation approved and certificate issued", "certificate_number" => $certNumber]);
         
     } catch (Exception $e) {
