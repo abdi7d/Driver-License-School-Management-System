@@ -1,11 +1,8 @@
 
 document.addEventListener('DOMContentLoaded', async function() {
-    const user = auth.getCurrentUser();
-    if (!user) {
-        window.location.href = '../login.html';
-        return;
-    }
-    
+    const user = dashboard.init({ requiredRole: 'student' });
+    if (!user) return;
+
     // Update topbar name
     const userNameEl = document.getElementById('userName');
     if (userNameEl) userNameEl.textContent = user.name || 'Student';
@@ -18,19 +15,26 @@ async function loadCertificateData() {
     const certLocked = document.getElementById('certLocked');
     
     try {
-        const response = await api.get('/certificates.php');
+        const response = await api.get('/students/certificate.php');
         if (response.success && response.data && response.data.length > 0) {
             const cert = response.data[0]; // Assuming one cert per student for now
             
             // Show earned section
-            certEarned.style.display = 'block';
-            certLocked.style.display = 'none';
+            if (certEarned) certEarned.style.display = 'block';
+            if (certLocked) certLocked.style.display = 'none';
             
             // Populate certificate data
-            document.getElementById('certName').textContent = `${cert.first_name} ${cert.last_name}`;
-            document.getElementById('certNumber').textContent = cert.certificate_number;
-            document.getElementById('certDate').textContent = new Date(cert.issue_date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
-            document.getElementById('certProgram').textContent = cert.program_name;
+            const user = auth.getCurrentUser();
+            document.getElementById('certName').textContent = user ? user.name : 'Student';
+            const certNumberEl = document.getElementById('certNumber');
+            if (certNumberEl) certNumberEl.textContent = cert.certificate_number;
+
+            const certDateEl = document.getElementById('certDate');
+            if (certDateEl) certDateEl.textContent = new Date(cert.issue_date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
+
+            // Some templates use 'certProgram' while others render a badge with id 'certLicense'.
+            const certProgramEl = document.getElementById('certProgram') || document.getElementById('certLicense');
+            if (certProgramEl) certProgramEl.textContent = cert.program_name || (cert.license_class ? 'Class ' + cert.license_class : 'Training Program');
             
             // Add valid until (6 months later)
             const issueDate = new Date(cert.issue_date);
@@ -39,19 +43,21 @@ async function loadCertificateData() {
             document.getElementById('certValidUntil').textContent = validUntil.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
             
             // Instructor/Manager names from API if available
-            if (cert.issuer_fname) {
-                document.getElementById('certManager').textContent = `Manager ${cert.issuer_fname} ${cert.issuer_lname}`;
+            if (cert.issued_by_name) {
+                document.getElementById('certManager').textContent = `Manager ${cert.issued_by_name}`;
             }
 
             // Generate QR Code if library is available
             if (typeof QRCode !== 'undefined') {
                 const qrContainer = document.getElementById('certQRCode');
-                qrContainer.innerHTML = ''; // Clear previous
-                new QRCode(qrContainer, {
-                    text: `https://dlsm.et/verify/${cert.certificate_number}`,
-                    width: 100,
-                    height: 100
-                });
+                if (qrContainer) {
+                    qrContainer.innerHTML = ''; // Clear previous
+                    new QRCode(qrContainer, {
+                        text: `${window.location.origin}/verify.html?cert=${cert.certificate_number}`,
+                        width: 100,
+                        height: 100
+                    });
+                }
             }
 
             // Update steps to all completed
@@ -65,7 +71,7 @@ async function loadCertificateData() {
             if (certEarned) certEarned.style.display = 'none';
             if (certLocked) certLocked.style.display = 'block';
             
-            // Optionally fetch progress for the locked view
+            // Fetch progress for the locked view
             await loadProgressSteps();
         }
     } catch (error) {
@@ -78,16 +84,33 @@ async function loadCertificateData() {
 
 async function loadProgressSteps() {
     try {
-        const response = await api.get('/progress.php');
+        const response = await api.get('/students/progress.php');
         if (response.success && response.data) {
-            const progress = response.data;
+            const progress = response.data.progress_percentage || 0;
             
-            // Update the "Your Progress" table in the locked view
-            const tbody = document.querySelector('.progress-table tbody');
-            if (!tbody) return;
-            
-            // Simplified progress display
-            // (Real implementation would map this to the table rows)
+            // Find the progress element and update it
+            const lockedDiv = document.getElementById('certLocked');
+            if (lockedDiv) {
+                const progressText = lockedDiv.querySelector('.cert-progress');
+                if (progressText) progressText.textContent = `Current Progress: ${progress}%`;
+                
+                let progressBar = lockedDiv.querySelector('.cert-progress-bar');
+                if (!progressBar) {
+                    progressBar = document.createElement('div');
+                    progressBar.className = 'cert-progress-bar';
+                    progressBar.innerHTML = `
+                        <div class="progress-track">
+                            <div class="progress-fill" style="width: ${progress}%"></div>
+                        </div>
+                    `;
+                    if (progressText && progressText.parentNode) {
+                        progressText.parentNode.insertBefore(progressBar, progressText.nextSibling);
+                    }
+                } else {
+                    const fill = progressBar.querySelector('.progress-fill');
+                    if (fill) fill.style.width = progress + '%';
+                }
+            }
         }
     } catch (error) {
         console.error('Error loading progress steps:', error);

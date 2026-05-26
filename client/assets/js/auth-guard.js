@@ -2,9 +2,20 @@
 (function() {
     'use strict';
 
+    function getAuthInstance() {
+        if (typeof window !== 'undefined' && window.auth && typeof window.auth === 'object') {
+            return window.auth;
+        }
+        if (typeof auth !== 'undefined') {
+            return auth;
+        }
+        return null;
+    }
+
     function getLoginUrl() {
-        if (window.auth && typeof window.auth.getLoginUrl === 'function') {
-            return window.auth.getLoginUrl();
+        const authInstance = getAuthInstance();
+        if (authInstance && typeof authInstance.getLoginUrl === 'function') {
+            return authInstance.getLoginUrl();
         }
 
         const path = window.location.pathname.replace(/\\/g, '/');
@@ -20,8 +31,9 @@
     }
 
     function redirectToDashboard(role) {
-        if (window.auth && typeof window.auth.redirectToDashboard === 'function') {
-            window.auth.redirectToDashboard(role);
+        const authInstance = getAuthInstance();
+        if (authInstance && typeof authInstance.redirectToDashboard === 'function') {
+            authInstance.redirectToDashboard(role);
             return;
         }
 
@@ -30,7 +42,8 @@
             manager: 'manager-portal/dashboard.html',
             admin: 'manager-portal/dashboard.html',
             supervisor: 'supervisor-portal/dashboard.html',
-            instructor: 'instructor-portal/dashboard.html'
+            instructor: 'instructor-portal/dashboard.html',
+            finance: 'finance-portal/dashboard.html'
         };
 
         const target = dashboards[String(role || '').toLowerCase()];
@@ -52,12 +65,62 @@
     }
     
     function checkAuth() {
+        // Dev helper: allow ?mockAuth=1 on localhost to populate a fake session
+        try {
+            const search = window.location.search || '';
+            if (window.location.hostname === 'localhost' && /[?&]mockAuth=1/.test(search)) {
+                if (!localStorage.getItem('token') || !localStorage.getItem('user')) {
+                    const header = { alg: 'none', typ: 'JWT' };
+                    const payload = { user_id: 10, role: 'student', email: 'student@example.com', exp: 9999999999 };
+                    const t = btoa(JSON.stringify(header)) + '.' + btoa(JSON.stringify(payload)) + '.devsig';
+                    localStorage.setItem('token', t);
+                    localStorage.setItem('user', JSON.stringify({ id: 10, name: 'Dev Student', email: 'student@example.com', role: 'student' }));
+                    localStorage.setItem('role', 'student');
+                }
+            }
+        } catch (e) {
+            console.warn('mockAuth guard failed:', e);
+        }
+
+        // Dev bypass: if ?bypassAuth=1 present, ensure a minimal session and allow page load
+        try {
+            const search = window.location.search || '';
+            if (window.location.hostname === 'localhost' && /[?&]bypassAuth=1/.test(search)) {
+                if (!localStorage.getItem('token')) {
+                    const header = { alg: 'none', typ: 'JWT' };
+                    const payload = { user_id: 9999, role: 'student', email: 'dev@student.local', exp: 9999999999 };
+                    const t = btoa(JSON.stringify(header)) + '.' + btoa(JSON.stringify(payload)) + '.bypass';
+                    localStorage.setItem('token', t);
+                }
+                if (!localStorage.getItem('user')) {
+                    localStorage.setItem('user', JSON.stringify({ id: 9999, name: 'Bypass Student', email: 'dev@student.local', role: 'student' }));
+                }
+                if (!localStorage.getItem('role')) {
+                    localStorage.setItem('role', 'student');
+                }
+                return true;
+            }
+        } catch (e) {
+            console.warn('bypassAuth guard failed:', e);
+        }
+
         const token = localStorage.getItem('token');
         const user = localStorage.getItem('user');
         
         if (!token || !user) {
             redirectToLogin();
             return false;
+        }
+
+        const authInstance = getAuthInstance();
+        if (authInstance && typeof authInstance.parseTokenPayload === 'function') {
+            const payload = authInstance.parseTokenPayload();
+            if (payload && payload.exp && Date.now() >= payload.exp * 1000) {
+                localStorage.clear();
+                sessionStorage.removeItem('redirectAfterLogin');
+                redirectToLogin();
+                return false;
+            }
         }
         
         try {
@@ -85,6 +148,7 @@
         if (path.includes('manager-portal')) return 'manager';
         if (path.includes('supervisor-portal')) return 'supervisor';
         if (path.includes('instructor-portal')) return 'instructor';
+        if (path.includes('finance-portal')) return 'finance';
         return null;
     }
 

@@ -6,6 +6,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 include_once '../config/db.php';
 include_once '../includes/auth.php';
+include_once '../includes/audit.php';
 
 $user = auth();
 $userId = $user["user_id"];
@@ -104,6 +105,8 @@ if ($method === "GET") {
     $stmt->bind_param("iss", $studentId, $examType, $scheduledDate);
     
     if ($stmt->execute()) {
+        // Audit
+        log_audit($conn, (int)$studentId, 'schedule_exam', 'Scheduled ' . $examType . ' exam for student id: ' . $studentId);
         echo json_encode(["success" => true, "message" => "Exam registered successfully", "id" => $conn->insert_id]);
     } else {
         echo json_encode(["success" => false, "message" => "Failed to register exam"]);
@@ -139,6 +142,12 @@ if ($method === "GET") {
     }
     
     if ($stmt->execute()) {
+        // Audit
+        if ($score !== null) {
+            log_audit($conn, $userId, 'update_exam_score', 'Updated exam id ' . $examId . ' with score ' . $score);
+        } elseif ($approved !== null) {
+            log_audit($conn, $userId, 'approve_exam', 'Set approved=' . $approved . ' for exam id ' . $examId);
+        }
         echo json_encode(["success" => true, "message" => "Exam updated successfully"]);
     } else {
         echo json_encode(["success" => false, "message" => "Failed to update exam"]);

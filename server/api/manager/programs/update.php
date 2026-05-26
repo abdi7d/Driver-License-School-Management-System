@@ -5,30 +5,51 @@ include "../../../includes/auth.php";
 header('Content-Type: application/json');
 
 $user = auth();
-if ($user["role"] !== "manager") {
-    echo json_encode(["error" => "Access denied"]);
+if (!in_array($user["role"], ["manager", "admin"])) {
+    echo json_encode(["success" => false, "message" => "Access denied"]);
     exit;
 }
 
 $data = json_decode(file_get_contents("php://input"), true);
-$id = $data["id"] ?? null;
-$name = $data["name"] ?? null;
-$category = $data["category"] ?? null;
-$theory_hours = $data["theory_hours"] ?? 0;
-$practical_hours = $data["practical_hours"] ?? 0;
-$duration_hours = $data["duration_hours"] ?? 0;
-$min_age = $data["min_age"] ?? 18;
-$fee = $data["fee"] ?? 0;
-$description = $data["description"] ?? "";
-$is_active = isset($data["active"]) ? ($data["active"] ? 1 : 0) : 1;
+$id           = intval($data["id"] ?? 0);
+$name         = trim($data["name"] ?? "");
+$theory_hours   = intval($data["theory_hours"] ?? 0);
+$practical_hours = intval($data["practical_hours"] ?? 0);
+$fee          = floatval($data["fee"] ?? 0);
+$delete_flag  = isset($data["delete"]) && $data["delete"] == true;
 
-if (!$id || !$name) {
-    echo json_encode(["success" => false, "message" => "ID and name are required"]);
+if (!$id) {
+    echo json_encode(["success" => false, "message" => "Program ID is required"]);
     exit;
 }
 
-$stmt = $conn->prepare("UPDATE training_programs SET name = ?, license_category = ?, theory_hours = ?, practical_hours = ?, duration_hours = ?, min_age = ?, fee = ?, description = ?, is_active = ? WHERE id = ?");
-$stmt->bind_param("ssiiiidsii", $name, $category, $theory_hours, $practical_hours, $duration_hours, $min_age, $fee, $description, $is_active, $id);
+if ($delete_flag) {
+    // Soft delete: check if any active enrollments exist
+    $check = $conn->prepare("SELECT COUNT(*) as cnt FROM enrollments WHERE program_id = ? AND status = 'active'");
+    $check->bind_param("i", $id);
+    $check->execute();
+    $cnt = $check->get_result()->fetch_assoc()["cnt"];
+    if ($cnt > 0) {
+        echo json_encode(["success" => false, "message" => "Cannot delete program with active enrollments ($cnt students enrolled)"]);
+        exit;
+    }
+    $stmt = $conn->prepare("DELETE FROM training_programs WHERE id = ?");
+    $stmt->bind_param("i", $id);
+    if ($stmt->execute()) {
+        echo json_encode(["success" => true, "message" => "Program deleted successfully"]);
+    } else {
+        echo json_encode(["success" => false, "message" => "Failed to delete program: " . $stmt->error]);
+    }
+    exit;
+}
+
+if (!$name) {
+    echo json_encode(["success" => false, "message" => "Program name is required"]);
+    exit;
+}
+
+$stmt = $conn->prepare("UPDATE training_programs SET name = ?, theory_hours = ?, practical_hours = ?, fee = ? WHERE id = ?");
+$stmt->bind_param("siidi", $name, $theory_hours, $practical_hours, $fee, $id);
 
 if ($stmt->execute()) {
     echo json_encode(["success" => true, "message" => "Program updated successfully"]);

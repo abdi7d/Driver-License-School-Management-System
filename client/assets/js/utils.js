@@ -68,3 +68,5 @@ const utils = {
         };
     }
 };
+
+window.utils = utils;

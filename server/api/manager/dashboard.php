@@ -22,7 +22,7 @@ $res = $conn->query("SELECT COUNT(*) as total FROM student_details WHERE enrollm
 $stats['active_enrollments'] = $res->fetch_assoc()['total'];
 
 // Pending Approvals
-$res = $conn->query("SELECT COUNT(*) as total FROM student_details WHERE enrollment_status='pending'");
+$res = $conn->query("SELECT COUNT(*) as total FROM students WHERE enrollment_status='pending'");
 $stats['pending_approvals'] = $res->fetch_assoc()['total'];
 
 // Certificates Issued
@@ -51,9 +51,12 @@ while ($row = $res->fetch_assoc()) {
 $programs = [];
 $res = $conn->query("
     SELECT 
-        name, 
-        (SELECT COUNT(*) FROM student_details sd WHERE sd.license_class = tp.license_category) as students
+        tp.name, 
+        COUNT(e.id) as students
     FROM training_programs tp
+    LEFT JOIN enrollments e ON tp.id = e.program_id
+    GROUP BY tp.id
+    ORDER BY students DESC
     LIMIT 5
 ");
 while ($row = $res->fetch_assoc()) {

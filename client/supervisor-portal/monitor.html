@@ -1,370 +1,783 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Monitor Activities - DLSM Ethiopia</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/dark-mode.css">
-    <link rel="stylesheet" href="../assets/css/responsive.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link rel="stylesheet" href="../assets/css/dark-mode.css" />
+    <link rel="stylesheet" href="../assets/css/responsive.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <script src="../assets/js/theme.js"></script>
     <script src="../assets/js/auth-guard.js"></script>
-</head>
-<body class="dashboard-body">
+  </head>
+  <body class="dashboard-body">
     <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
-    
     <aside class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <div class="sidebar-logo">
-                <img src="../assets/images/logo-DLSM.jpg" alt="DLSM Logo" class="logo-icon" style="height: 32px; width: auto; border-radius: 6px;">
-                <span class="logo-text">DLSM</span>
-            </div>
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <img
+            src="../assets/images/logo-DLSM.jpg"
+            alt="DLSM Logo"
+            class="logo-icon"
+            style="height: 32px; width: auto; border-radius: 6px"
+          />
+          <span class="logo-text">DLSM</span>
         </div>
-        <nav class="sidebar-nav">
-            <a href="dashboard.html" class="nav-item">
-                <span class="nav-icon">📊</span>
-                <span class="nav-text">Dashboard</span>
-            </a>
-            <a href="profile.html" class="nav-item">
-                <span class="nav-icon">👤</span>
-                <span class="nav-text">My Profile</span>
-            </a>
-            <a href="assignments.html" class="nav-item">
-                <span class="nav-icon">👥</span>
-                <span class="nav-text">Assignments</span>
-            </a>
-            <a href="monitor.html" class="nav-item active">
-                <span class="nav-icon">👁️</span>
-                <span class="nav-text">Monitor</span>
-            </a>
-            <a href="exam-approvals.html" class="nav-item">
-                <span class="nav-icon">✅</span>
-                <span class="nav-text">Exam Approvals</span>
-            </a>
-            <a href="complaints.html" class="nav-item">
-                <span class="nav-icon">📢</span>
-                <span class="nav-text">Complaints</span>
-            </a>
-            <a href="reports.html" class="nav-item">
-                <span class="nav-icon">📈</span>
-                <span class="nav-text">Reports</span>
-            </a>
-        </nav>
-        <div class="sidebar-footer">
-            <button class="btn-logout" id="logoutBtn">
-                <span class="nav-icon">🚪</span>
-                <span class="nav-text">Logout</span>
-            </button>
-        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-item">
+          <span class="nav-icon">📊</span>
+          <span class="nav-text">Dashboard</span>
+        </a>
+        <a href="profile.html" class="nav-item">
+          <span class="nav-icon">👤</span>
+          <span class="nav-text">My Profile</span>
+        </a>
+        <a href="assignments.html" class="nav-item">
+          <span class="nav-icon">👥</span>
+          <span class="nav-text">Assignments</span>
+        </a>
+        <a href="monitor.html" class="nav-item active">
+          <span class="nav-icon">👁️</span>
+          <span class="nav-text">Monitor</span>
+        </a>
+        <a href="exam-approvals.html" class="nav-item">
+          <span class="nav-icon">✅</span>
+          <span class="nav-text">Exam Approvals</span>
+        </a>
+        <a href="complaints.html" class="nav-item">
+          <span class="nav-icon">📢</span>
+          <span class="nav-text">Complaints</span>
+        </a>
+        <a href="reports.html" class="nav-item">
+          <span class="nav-icon">📈</span>
+          <span class="nav-text">Reports</span>
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <button class="btn-logout" id="logoutBtn">
+          <span class="nav-icon">🚪</span>
+          <span class="nav-text">Logout</span>
+        </button>
+      </div>
     </aside>
 
-    
     <main class="main-content">
-        <header class="topbar">
-            <div class="topbar-left">
-                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
-                <div>
-                    <h1 class="page-title">Monitor Activities</h1>
-                    <p class="page-subtitle">Real-time monitoring of training sessions and instructor activities</p>
-                </div>
-            </div>
-            <div class="topbar-right">
-                <button class="btn-icon" onclick="refreshData()" title="Refresh">🔄</button>
-            </div>
-        </header>
-
-        <div class="dashboard-container">
-
-            
-            <div class="stats-grid">
-                <div class="stat-card green">
-                    <div class="stat-icon">🟢</div>
-                    <div class="stat-info">
-                        <p class="stat-label">Active Sessions</p>
-                        <h3 class="stat-value">8</h3>
-                        <span class="stat-change">Live now</span>
-                    </div>
-                </div>
-                <div class="stat-card blue">
-                    <div class="stat-icon">👨‍🏫</div>
-                    <div class="stat-info">
-                        <p class="stat-label">Instructors Online</p>
-                        <h3 class="stat-value">12</h3>
-                        <span class="stat-change">Out of 18 total</span>
-                    </div>
-                </div>
-                <div class="stat-card orange">
-                    <div class="stat-icon">📅</div>
-                    <div class="stat-info">
-                        <p class="stat-label">Today's Sessions</p>
-                        <h3 class="stat-value">24</h3>
-                        <span class="stat-change positive">+3 from yesterday</span>
-                    </div>
-                </div>
-                <div class="stat-card purple">
-                    <div class="stat-icon">✅</div>
-                    <div class="stat-info">
-                        <p class="stat-label">Completed Today</p>
-                        <h3 class="stat-value">16</h3>
-                        <span class="stat-change positive">67% completion</span>
-                    </div>
-                </div>
-            </div>
-
-            
-            <div class="card" style="margin-bottom: 24px;">
-                <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
-                    <select class="form-input" style="width: 180px;">
-                        <option>All Instructors</option>
-                        <option>Dawit Tesfaye</option>
-                        <option>Meron Alemu</option>
-                        <option>Yonas Bekele</option>
-                        <option>Hana Tadesse</option>
-                    </select>
-                    <select class="form-input" style="width: 160px;">
-                        <option>All Programs</option>
-                        <option>Private Car (B)</option>
-                        <option>Motorcycle (A)</option>
-                        <option>Heavy Truck (C)</option>
-                        <option>Bus (D)</option>
-                    </select>
-                    <select class="form-input" style="width: 160px;">
-                        <option>All Status</option>
-                        <option>Active</option>
-                        <option>Completed</option>
-                        <option>Scheduled</option>
-                        <option>Cancelled</option>
-                    </select>
-                    <input type="date" class="form-input" style="width: 160px;" value="2024-04-21">
-                </div>
-            </div>
-
-            
-            <div class="card" style="margin-bottom: 32px;">
-                <div class="card-title">
-                    <span>🟢 Active Training Sessions</span>
-                    <span style="font-size: 14px; color: #15803D; font-weight: 600;">8 Live Sessions</span>
-                </div>
-                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px;">
-                    
-                    <div style="border: 2px solid #dcfce7; border-radius: 12px; padding: 20px; background: #f0fdf4;">
-                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
-                            <div>
-                                <div style="font-weight: 700; font-size: 16px; color: #1e293b; margin-bottom: 4px;">Practical Session</div>
-                                <div style="font-size: 13px; color: #64748b;">Private Car (B)</div>
-                            </div>
-                            <span style="background: #15803D; color: white; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700;">LIVE</span>
-                        </div>
-                        <div style="margin-bottom: 12px;">
-                            <div style="font-size: 13px; color: #64748b; margin-bottom: 4px;">👨‍🏫 Instructor</div>
-                            <div style="font-weight: 600; color: #1e293b;">Dawit Tesfaye</div>
-                        </div>
-                        <div style="margin-bottom: 12px;">
-                            <div style="font-size: 13px; color: #64748b; margin-bottom: 4px;">👤 Student</div>
-                            <div style="font-weight: 600; color: #1e293b;">Abebe Kebede</div>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; font-size: 12px; color: #64748b; margin-bottom: 12px;">
-                            <span>⏰ Started: 09:30 AM</span>
-                            <span>⏱️ Duration: 45 min</span>
-                        </div>
-                        <div style="border-top: 1px solid #dcfce7; padding-top: 12px; margin-bottom: 12px;">
-                            <div style="font-size: 12px; font-weight: 600; color: #15803D; margin-bottom: 8px;">✅ Training Standards</div>
-                            <div style="display: flex; flex-direction: column; gap: 6px; font-size: 12px;">
-                                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
-                                    <input type="checkbox" checked style="width: 16px; height: 16px;">
-                                    <span>Safety procedures followed</span>
-                                </label>
-                                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
-                                    <input type="checkbox" checked style="width: 16px; height: 16px;">
-                                    <span>Proper documentation</span>
-                                </label>
-                                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
-                                    <input type="checkbox" checked style="width: 16px; height: 16px;">
-                                    <span>Equipment in good condition</span>
-                                </label>
-                                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
-                                    <input type="checkbox" style="width: 16px; height: 16px;">
-                                    <span>Student wearing seatbelt</span>
-                                </label>
-                            </div>
-                        </div>
-                        <button class="btn-sm" style="width: 100%;" onclick="viewSessionDetails()">View Details</button>
-                    </div>
-
-                    
-                    <div style="border: 2px solid #dbeafe; border-radius: 12px; padding: 20px; background: #eff6ff;">
-                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
-                            <div>
-                                <div style="font-weight: 700; font-size: 16px; color: #1e293b; margin-bottom: 4px;">Theory Class</div>
-                                <div style="font-size: 13px; color: #64748b;">Motorcycle (A)</div>
-                            </div>
-                            <span style="background: #1E40AF; color: white; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700;">LIVE</span>
-                        </div>
-                        <div style="margin-bottom: 12px;">
-                            <div style="font-size: 13px; color: #64748b; margin-bottom: 4px;">👨‍🏫 Instructor</div>
-                            <div style="font-weight: 600; color: #1e293b;">Meron Alemu</div>
-                        </div>
-                        <div style="margin-bottom: 12px;">
-                            <div style="font-size: 13px; color: #64748b; margin-bottom: 4px;">👥 Students</div>
-                            <div style="font-weight: 600; color: #1e293b;">12 Students</div>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; font-size: 12px; color: #64748b; margin-bottom: 12px;">
-                            <span>⏰ Started: 10:00 AM</span>
-                            <span>⏱️ Duration: 60 min</span>
-                        </div>
-                        <div style="border-top: 1px solid #dbeafe; padding-top: 12px; margin-bottom: 12px;">
-                            <div style="font-size: 12px; font-weight: 600; color: #1E40AF; margin-bottom: 8px;">✅ Training Standards</div>
-                            <div style="display: flex; flex-direction: column; gap: 6px; font-size: 12px;">
-                                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
-                                    <input type="checkbox" checked style="width: 16px; height: 16px;">
-                                    <span>Safety procedures followed</span>
-                                </label>
-                                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
-                                    <input type="checkbox" checked style="width: 16px; height: 16px;">
-                                    <span>Proper documentation</span>
-                                </label>
-                                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
-                                    <input type="checkbox" checked style="width: 16px; height: 16px;">
-                                    <span>Equipment in good condition</span>
-                                </label>
-                                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
-                                    <input type="checkbox" checked style="width: 16px; height: 16px;">
-                                    <span>All students present</span>
-                                </label>
-                            </div>
-                        </div>
-                        <button class="btn-sm" style="width: 100%;" onclick="viewSessionDetails()">View Details</button>
-                    </div>
-
-                    
-                    <div style="border: 2px solid #fed7aa; border-radius: 12px; padding: 20px; background: #fff7ed;">
-                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
-                            <div>
-                                <div style="font-weight: 700; font-size: 16px; color: #1e293b; margin-bottom: 4px;">Practical Session</div>
-                                <div style="font-size: 13px; color: #64748b;">Heavy Truck (C)</div>
-                            </div>
-                            <span style="background: #f59e0b; color: white; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700;">LIVE</span>
-                        </div>
-                        <div style="margin-bottom: 12px;">
-                            <div style="font-size: 13px; color: #64748b; margin-bottom: 4px;">👨‍🏫 Instructor</div>
-                            <div style="font-weight: 600; color: #1e293b;">Yonas Bekele</div>
-                        </div>
-                        <div style="margin-bottom: 12px;">
-                            <div style="font-size: 13px; color: #64748b; margin-bottom: 4px;">👤 Student</div>
-                            <div style="font-weight: 600; color: #1e293b;">Samuel Girma</div>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; font-size: 12px; color: #64748b; margin-bottom: 12px;">
-                            <span>⏰ Started: 10:15 AM</span>
-                            <span>⏱️ Duration: 90 min</span>
-                        </div>
-                        <div style="border-top: 1px solid #fed7aa; padding-top: 12px; margin-bottom: 12px;">
-                            <div style="font-size: 12px; font-weight: 600; color: #f59e0b; margin-bottom: 8px;">✅ Training Standards</div>
-                            <div style="display: flex; flex-direction: column; gap: 6px; font-size: 12px;">
-                                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
-                                    <input type="checkbox" checked style="width: 16px; height: 16px;">
-                                    <span>Safety procedures followed</span>
-                                </label>
-                                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
-                                    <input type="checkbox" checked style="width: 16px; height: 16px;">
-                                    <span>Proper documentation</span>
-                                </label>
-                                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
-                                    <input type="checkbox" checked style="width: 16px; height: 16px;">
-                                    <span>Equipment in good condition</span>
-                                </label>
-                                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
-                                    <input type="checkbox" checked style="width: 16px; height: 16px;">
-                                    <span>Student wearing seatbelt</span>
-                                </label>
-                            </div>
-                        </div>
-                        <button class="btn-sm" style="width: 100%;" onclick="viewSessionDetails()">View Details</button>
-                    </div>
-                </div>
-            </div>
-
-            
-            <div class="card">
-                <div class="card-title">
-                    <span>📅 Today's Training Schedule</span>
-                    <span style="font-size: 14px; color: #64748b;">24 sessions scheduled</span>
-                </div>
-                <div style="overflow-x: auto;">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Time</th>
-                                <th>Type</th>
-                                <th>Instructor</th>
-                                <th>Student/Group</th>
-                                <th>Program</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td style="font-weight: 600;">09:00 AM</td>
-                                <td><span class="badge badge-blue">Theory</span></td>
-                                <td>Dawit Tesfaye</td>
-                                <td>Group A (15 students)</td>
-                                <td>Private Car (B)</td>
-                                <td><span class="badge badge-success">Completed</span></td>
-                                <td><button class="btn-sm" onclick="viewLog()">View Log</button></td>
-                            </tr>
-                            <tr style="background: #f0fdf4;">
-                                <td style="font-weight: 600;">09:30 AM</td>
-                                <td><span class="badge badge-green">Practical</span></td>
-                                <td>Dawit Tesfaye</td>
-                                <td>Abebe Kebede</td>
-                                <td>Private Car (B)</td>
-                                <td><span class="badge badge-success">Active</span></td>
-                                <td><button class="btn-sm" onclick="monitorLive()">Monitor</button></td>
-                            </tr>
-                            <tr style="background: #eff6ff;">
-                                <td style="font-weight: 600;">10:00 AM</td>
-                                <td><span class="badge badge-blue">Theory</span></td>
-                                <td>Meron Alemu</td>
-                                <td>Group B (12 students)</td>
-                                <td>Motorcycle (A)</td>
-                                <td><span class="badge badge-success">Active</span></td>
-                                <td><button class="btn-sm" onclick="monitorLive()">Monitor</button></td>
-                            </tr>
-                            <tr style="background: #fff7ed;">
-                                <td style="font-weight: 600;">10:15 AM</td>
-                                <td><span class="badge badge-orange">Practical</span></td>
-                                <td>Yonas Bekele</td>
-                                <td>Samuel Girma</td>
-                                <td>Heavy Truck (C)</td>
-                                <td><span class="badge badge-success">Active</span></td>
-                                <td><button class="btn-sm" onclick="monitorLive()">Monitor</button></td>
-                            </tr>
-                            <tr>
-                                <td style="font-weight: 600;">11:00 AM</td>
-                                <td><span class="badge badge-green">Practical</span></td>
-                                <td>Hana Tadesse</td>
-                                <td>Tigist Haile</td>
-                                <td>Motorcycle (A)</td>
-                                <td><span class="badge badge-warning">Scheduled</span></td>
-                                <td><button class="btn-sm" onclick="viewDetails()">Details</button></td>
-                            </tr>
-                            <tr>
-                                <td style="font-weight: 600;">02:00 PM</td>
-                                <td><span class="badge badge-blue">Theory</span></td>
-                                <td>Dawit Tesfaye</td>
-                                <td>Group C (18 students)</td>
-                                <td>Private Car (B)</td>
-                                <td><span class="badge badge-warning">Scheduled</span></td>
-                                <td><button class="btn-sm" onclick="viewDetails()">Details</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+          <div>
+            <h1 class="page-title">Monitor Activities</h1>
+            <p class="page-subtitle">
+              Real-time monitoring of training sessions and instructor
+              activities
+            </p>
+          </div>
         </div>
+        <div class="topbar-right">
+          <button class="btn-icon" onclick="refreshData()" title="Refresh">
+            🔄
+          </button>
+        </div>
+      </header>
+
+      <div class="dashboard-container">
+        <div class="stats-grid">
+          <div class="stat-card green">
+            <div class="stat-icon">🟢</div>
+            <div class="stat-info">
+              <p class="stat-label">Active Sessions</p>
+              <h3 class="stat-value">8</h3>
+              <span class="stat-change">Live now</span>
+            </div>
+          </div>
+          <div class="stat-card blue">
+            <div class="stat-icon">👨‍🏫</div>
+            <div class="stat-info">
+              <p class="stat-label">Instructors Online</p>
+              <h3 class="stat-value">12</h3>
+              <span class="stat-change">Out of 18 total</span>
+            </div>
+          </div>
+          <div class="stat-card orange">
+            <div class="stat-icon">📅</div>
+            <div class="stat-info">
+              <p class="stat-label">Today's Sessions</p>
+              <h3 class="stat-value">24</h3>
+              <span class="stat-change positive">+3 from yesterday</span>
+            </div>
+          </div>
+          <div class="stat-card purple">
+            <div class="stat-icon">✅</div>
+            <div class="stat-info">
+              <p class="stat-label">Completed Today</p>
+              <h3 class="stat-value">16</h3>
+              <span class="stat-change positive">67% completion</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-bottom: 24px">
+          <div
+            style="
+              display: flex;
+              gap: 12px;
+              flex-wrap: wrap;
+              align-items: center;
+            "
+          >
+            <select class="form-input" style="width: 180px">
+              <option>All Instructors</option>
+              <option>Dawit Tesfaye</option>
+              <option>Meron Alemu</option>
+              <option>Yonas Bekele</option>
+              <option>Hana Tadesse</option>
+            </select>
+            <select class="form-input" style="width: 160px">
+              <option>All Programs</option>
+              <option>Private Car (B)</option>
+              <option>Motorcycle (A)</option>
+              <option>Heavy Truck (C)</option>
+              <option>Bus (D)</option>
+            </select>
+            <select class="form-input" style="width: 160px">
+              <option>All Status</option>
+              <option>Active</option>
+              <option>Completed</option>
+              <option>Scheduled</option>
+              <option>Cancelled</option>
+            </select>
+            <input
+              type="date"
+              class="form-input"
+              style="width: 160px"
+              value="2024-04-21"
+            />
+          </div>
+        </div>
+
+        <div class="card" style="margin-bottom: 32px">
+          <div class="card-title">
+            <span>🟢 Active Training Sessions</span>
+            <span style="font-size: 14px; color: #15803d; font-weight: 600"
+              >8 Live Sessions</span
+            >
+          </div>
+          <div
+            style="
+              display: grid;
+              grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+              gap: 16px;
+            "
+          >
+            <div
+              style="
+                border: 2px solid #dcfce7;
+                border-radius: 12px;
+                padding: 20px;
+                background: #f0fdf4;
+              "
+            >
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: start;
+                  margin-bottom: 12px;
+                "
+              >
+                <div>
+                  <div
+                    style="
+                      font-weight: 700;
+                      font-size: 16px;
+                      color: #1e293b;
+                      margin-bottom: 4px;
+                    "
+                  >
+                    Practical Session
+                  </div>
+                  <div style="font-size: 13px; color: #64748b">
+                    Private Car (B)
+                  </div>
+                </div>
+                <span
+                  style="
+                    background: #15803d;
+                    color: white;
+                    padding: 4px 12px;
+                    border-radius: 20px;
+                    font-size: 11px;
+                    font-weight: 700;
+                  "
+                  >LIVE</span
+                >
+              </div>
+              <div style="margin-bottom: 12px">
+                <div
+                  style="font-size: 13px; color: #64748b; margin-bottom: 4px"
+                >
+                  👨‍🏫 Instructor
+                </div>
+                <div style="font-weight: 600; color: #1e293b">
+                  Dawit Tesfaye
+                </div>
+              </div>
+              <div style="margin-bottom: 12px">
+                <div
+                  style="font-size: 13px; color: #64748b; margin-bottom: 4px"
+                >
+                  👤 Student
+                </div>
+                <div style="font-weight: 600; color: #1e293b">Abebe Kebede</div>
+              </div>
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  font-size: 12px;
+                  color: #64748b;
+                  margin-bottom: 12px;
+                "
+              >
+                <span>⏰ Started: 09:30 AM</span>
+                <span>⏱️ Duration: 45 min</span>
+              </div>
+              <div
+                style="
+                  border-top: 1px solid #dcfce7;
+                  padding-top: 12px;
+                  margin-bottom: 12px;
+                "
+              >
+                <div
+                  style="
+                    font-size: 12px;
+                    font-weight: 600;
+                    color: #15803d;
+                    margin-bottom: 8px;
+                  "
+                >
+                  ✅ Training Standards
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    gap: 6px;
+                    font-size: 12px;
+                  "
+                >
+                  <label
+                    style="
+                      display: flex;
+                      align-items: center;
+                      gap: 6px;
+                      cursor: pointer;
+                    "
+                  >
+                    <input
+                      type="checkbox"
+                      checked
+                      style="width: 16px; height: 16px"
+                    />
+                    <span>Safety procedures followed</span>
+                  </label>
+                  <label
+                    style="
+                      display: flex;
+                      align-items: center;
+                      gap: 6px;
+                      cursor: pointer;
+                    "
+                  >
+                    <input
+                      type="checkbox"
+                      checked
+                      style="width: 16px; height: 16px"
+                    />
+                    <span>Proper documentation</span>
+                  </label>
+                  <label
+                    style="
+                      display: flex;
+                      align-items: center;
+                      gap: 6px;
+                      cursor: pointer;
+                    "
+                  >
+                    <input
+                      type="checkbox"
+                      checked
+                      style="width: 16px; height: 16px"
+                    />
+                    <span>Equipment in good condition</span>
+                  </label>
+                  <label
+                    style="
+                      display: flex;
+                      align-items: center;
+                      gap: 6px;
+                      cursor: pointer;
+                    "
+                  >
+                    <input type="checkbox" style="width: 16px; height: 16px" />
+                    <span>Student wearing seatbelt</span>
+                  </label>
+                </div>
+              </div>
+              <button
+                class="btn-sm"
+                style="width: 100%"
+                onclick="viewSessionDetails()"
+              >
+                View Details
+              </button>
+            </div>
+
+            <div
+              style="
+                border: 2px solid #dbeafe;
+                border-radius: 12px;
+                padding: 20px;
+                background: #eff6ff;
+              "
+            >
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: start;
+                  margin-bottom: 12px;
+                "
+              >
+                <div>
+                  <div
+                    style="
+                      font-weight: 700;
+                      font-size: 16px;
+                      color: #1e293b;
+                      margin-bottom: 4px;
+                    "
+                  >
+                    Theory Class
+                  </div>
+                  <div style="font-size: 13px; color: #64748b">
+                    Motorcycle (A)
+                  </div>
+                </div>
+                <span
+                  style="
+                    background: #1e40af;
+                    color: white;
+                    padding: 4px 12px;
+                    border-radius: 20px;
+                    font-size: 11px;
+                    font-weight: 700;
+                  "
+                  >LIVE</span
+                >
+              </div>
+              <div style="margin-bottom: 12px">
+                <div
+                  style="font-size: 13px; color: #64748b; margin-bottom: 4px"
+                >
+                  👨‍🏫 Instructor
+                </div>
+                <div style="font-weight: 600; color: #1e293b">Meron Alemu</div>
+              </div>
+              <div style="margin-bottom: 12px">
+                <div
+                  style="font-size: 13px; color: #64748b; margin-bottom: 4px"
+                >
+                  👥 Students
+                </div>
+                <div style="font-weight: 600; color: #1e293b">12 Students</div>
+              </div>
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  font-size: 12px;
+                  color: #64748b;
+                  margin-bottom: 12px;
+                "
+              >
+                <span>⏰ Started: 10:00 AM</span>
+                <span>⏱️ Duration: 60 min</span>
+              </div>
+              <div
+                style="
+                  border-top: 1px solid #dbeafe;
+                  padding-top: 12px;
+                  margin-bottom: 12px;
+                "
+              >
+                <div
+                  style="
+                    font-size: 12px;
+                    font-weight: 600;
+                    color: #1e40af;
+                    margin-bottom: 8px;
+                  "
+                >
+                  ✅ Training Standards
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    gap: 6px;
+                    font-size: 12px;
+                  "
+                >
+                  <label
+                    style="
+                      display: flex;
+                      align-items: center;
+                      gap: 6px;
+                      cursor: pointer;
+                    "
+                  >
+                    <input
+                      type="checkbox"
+                      checked
+                      style="width: 16px; height: 16px"
+                    />
+                    <span>Safety procedures followed</span>
+                  </label>
+                  <label
+                    style="
+                      display: flex;
+                      align-items: center;
+                      gap: 6px;
+                      cursor: pointer;
+                    "
+                  >
+                    <input
+                      type="checkbox"
+                      checked
+                      style="width: 16px; height: 16px"
+                    />
+                    <span>Proper documentation</span>
+                  </label>
+                  <label
+                    style="
+                      display: flex;
+                      align-items: center;
+                      gap: 6px;
+                      cursor: pointer;
+                    "
+                  >
+                    <input
+                      type="checkbox"
+                      checked
+                      style="width: 16px; height: 16px"
+                    />
+                    <span>Equipment in good condition</span>
+                  </label>
+                  <label
+                    style="
+                      display: flex;
+                      align-items: center;
+                      gap: 6px;
+                      cursor: pointer;
+                    "
+                  >
+                    <input
+                      type="checkbox"
+                      checked
+                      style="width: 16px; height: 16px"
+                    />
+                    <span>All students present</span>
+                  </label>
+                </div>
+              </div>
+              <button
+                class="btn-sm"
+                style="width: 100%"
+                onclick="viewSessionDetails()"
+              >
+                View Details
+              </button>
+            </div>
+
+            <div
+              style="
+                border: 2px solid #fed7aa;
+                border-radius: 12px;
+                padding: 20px;
+                background: #fff7ed;
+              "
+            >
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: start;
+                  margin-bottom: 12px;
+                "
+              >
+                <div>
+                  <div
+                    style="
+                      font-weight: 700;
+                      font-size: 16px;
+                      color: #1e293b;
+                      margin-bottom: 4px;
+                    "
+                  >
+                    Practical Session
+                  </div>
+                  <div style="font-size: 13px; color: #64748b">
+                    Heavy Truck (C)
+                  </div>
+                </div>
+                <span
+                  style="
+                    background: #f59e0b;
+                    color: white;
+                    padding: 4px 12px;
+                    border-radius: 20px;
+                    font-size: 11px;
+                    font-weight: 700;
+                  "
+                  >LIVE</span
+                >
+              </div>
+              <div style="margin-bottom: 12px">
+                <div
+                  style="font-size: 13px; color: #64748b; margin-bottom: 4px"
+                >
+                  👨‍🏫 Instructor
+                </div>
+                <div style="font-weight: 600; color: #1e293b">Yonas Bekele</div>
+              </div>
+              <div style="margin-bottom: 12px">
+                <div
+                  style="font-size: 13px; color: #64748b; margin-bottom: 4px"
+                >
+                  👤 Student
+                </div>
+                <div style="font-weight: 600; color: #1e293b">Samuel Girma</div>
+              </div>
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  font-size: 12px;
+                  color: #64748b;
+                  margin-bottom: 12px;
+                "
+              >
+                <span>⏰ Started: 10:15 AM</span>
+                <span>⏱️ Duration: 90 min</span>
+              </div>
+              <div
+                style="
+                  border-top: 1px solid #fed7aa;
+                  padding-top: 12px;
+                  margin-bottom: 12px;
+                "
+              >
+                <div
+                  style="
+                    font-size: 12px;
+                    font-weight: 600;
+                    color: #f59e0b;
+                    margin-bottom: 8px;
+                  "
+                >
+                  ✅ Training Standards
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    gap: 6px;
+                    font-size: 12px;
+                  "
+                >
+                  <label
+                    style="
+                      display: flex;
+                      align-items: center;
+                      gap: 6px;
+                      cursor: pointer;
+                    "
+                  >
+                    <input
+                      type="checkbox"
+                      checked
+                      style="width: 16px; height: 16px"
+                    />
+                    <span>Safety procedures followed</span>
+                  </label>
+                  <label
+                    style="
+                      display: flex;
+                      align-items: center;
+                      gap: 6px;
+                      cursor: pointer;
+                    "
+                  >
+                    <input
+                      type="checkbox"
+                      checked
+                      style="width: 16px; height: 16px"
+                    />
+                    <span>Proper documentation</span>
+                  </label>
+                  <label
+                    style="
+                      display: flex;
+                      align-items: center;
+                      gap: 6px;
+                      cursor: pointer;
+                    "
+                  >
+                    <input
+                      type="checkbox"
+                      checked
+                      style="width: 16px; height: 16px"
+                    />
+                    <span>Equipment in good condition</span>
+                  </label>
+                  <label
+                    style="
+                      display: flex;
+                      align-items: center;
+                      gap: 6px;
+                      cursor: pointer;
+                    "
+                  >
+                    <input
+                      type="checkbox"
+                      checked
+                      style="width: 16px; height: 16px"
+                    />
+                    <span>Student wearing seatbelt</span>
+                  </label>
+                </div>
+              </div>
+              <button
+                class="btn-sm"
+                style="width: 100%"
+                onclick="viewSessionDetails()"
+              >
+                View Details
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">
+            <span>📅 Today's Training Schedule</span>
+            <span style="font-size: 14px; color: #64748b"
+              >24 sessions scheduled</span
+            >
+          </div>
+          <div style="overflow-x: auto">
+            <table>
+              <thead>
+                <tr>
+                  <th>Time</th>
+                  <th>Type</th>
+                  <th>Instructor</th>
+                  <th>Student/Group</th>
+                  <th>Program</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="font-weight: 600">09:00 AM</td>
+                  <td><span class="badge badge-blue">Theory</span></td>
+                  <td>Dawit Tesfaye</td>
+                  <td>Group A (15 students)</td>
+                  <td>Private Car (B)</td>
+                  <td><span class="badge badge-success">Completed</span></td>
+                  <td>
+                    <button class="btn-sm" onclick="viewLog()">View Log</button>
+                  </td>
+                </tr>
+                <tr style="background: #f0fdf4">
+                  <td style="font-weight: 600">09:30 AM</td>
+                  <td><span class="badge badge-green">Practical</span></td>
+                  <td>Dawit Tesfaye</td>
+                  <td>Abebe Kebede</td>
+                  <td>Private Car (B)</td>
+                  <td><span class="badge badge-success">Active</span></td>
+                  <td>
+                    <button class="btn-sm" onclick="monitorLive()">
+                      Monitor
+                    </button>
+                  </td>
+                </tr>
+                <tr style="background: #eff6ff">
+                  <td style="font-weight: 600">10:00 AM</td>
+                  <td><span class="badge badge-blue">Theory</span></td>
+                  <td>Meron Alemu</td>
+                  <td>Group B (12 students)</td>
+                  <td>Motorcycle (A)</td>
+                  <td><span class="badge badge-success">Active</span></td>
+                  <td>
+                    <button class="btn-sm" onclick="monitorLive()">
+                      Monitor
+                    </button>
+                  </td>
+                </tr>
+                <tr style="background: #fff7ed">
+                  <td style="font-weight: 600">10:15 AM</td>
+                  <td><span class="badge badge-orange">Practical</span></td>
+                  <td>Yonas Bekele</td>
+                  <td>Samuel Girma</td>
+                  <td>Heavy Truck (C)</td>
+                  <td><span class="badge badge-success">Active</span></td>
+                  <td>
+                    <button class="btn-sm" onclick="monitorLive()">
+                      Monitor
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="font-weight: 600">11:00 AM</td>
+                  <td><span class="badge badge-green">Practical</span></td>
+                  <td>Hana Tadesse</td>
+                  <td>Tigist Haile</td>
+                  <td>Motorcycle (A)</td>
+                  <td><span class="badge badge-warning">Scheduled</span></td>
+                  <td>
+                    <button class="btn-sm" onclick="viewDetails()">
+                      Details
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="font-weight: 600">02:00 PM</td>
+                  <td><span class="badge badge-blue">Theory</span></td>
+                  <td>Dawit Tesfaye</td>
+                  <td>Group C (18 students)</td>
+                  <td>Private Car (B)</td>
+                  <td><span class="badge badge-warning">Scheduled</span></td>
+                  <td>
+                    <button class="btn-sm" onclick="viewDetails()">
+                      Details
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </main>
 
     <script src="../assets/js/utils.js"></script>
@@ -372,106 +785,119 @@
     <script src="../assets/js/auth.js"></script>
     <script src="../assets/js/dashboard.js"></script>
     <script>
-        function refreshData() {
-            if (typeof utils !== 'undefined') {
-                utils.showNotification('Refreshing data...', 'info');
-            }
-            setTimeout(() => {
-                if (typeof utils !== 'undefined') {
-                    utils.showNotification('Data refreshed successfully!', 'success');
-                }
-            }, 1000);
+      function refreshData() {
+        if (typeof utils !== "undefined") {
+          utils.showNotification("Refreshing data...", "info");
+        }
+        setTimeout(() => {
+          if (typeof utils !== "undefined") {
+            utils.showNotification("Data refreshed successfully!", "success");
+          }
+        }, 1000);
+      }
+
+      function viewSessionDetails() {
+        if (typeof utils !== "undefined") {
+          utils.showNotification("Opening session details...", "info");
+        }
+      }
+
+      function monitorLive() {
+        if (typeof utils !== "undefined") {
+          utils.showNotification("Opening live monitoring...", "info");
+        }
+      }
+
+      function viewLog() {
+        if (typeof utils !== "undefined") {
+          utils.showNotification("Opening session log...", "info");
+        }
+      }
+
+      function viewDetails() {
+        if (typeof utils !== "undefined") {
+          utils.showNotification("Opening details...", "info");
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", async function () {
+        const user = auth.getCurrentUser();
+        if (!user) {
+          window.location.href = "../login.html";
+          return;
         }
 
-        function viewSessionDetails() {
-            if (typeof utils !== 'undefined') {
-                utils.showNotification('Opening session details...', 'info');
-            }
+        await loadMonitorData();
+      });
+
+      async function loadMonitorData() {
+        try {
+          console.log(
+            "🌐 Fetching monitoring data from:",
+            api.baseUrl + "/supervisor/monitor.php",
+          );
+          const response = await api.get("/supervisor/monitor.php");
+
+          if (response.success && response.data) {
+            const { sessions, stats } = response.data;
+            renderStats(stats);
+            renderSessions(sessions);
+            console.log("✅ Monitoring data loaded successfully");
+          } else {
+            console.error(
+              "❌ Failed to load monitor data:",
+              response.message || "Unknown error",
+            );
+            if (typeof utils !== "undefined")
+              utils.showNotification(
+                response.message || "Failed to load monitoring data",
+                "error",
+              );
+          }
+        } catch (error) {
+          console.error("❌ Error loading monitor data:", error);
+          if (typeof utils !== "undefined")
+            utils.showNotification(
+              "Network error. Check if the server is running.",
+              "error",
+            );
         }
+      }
 
-        function monitorLive() {
-            if (typeof utils !== 'undefined') {
-                utils.showNotification('Opening live monitoring...', 'info');
-            }
+      function renderStats(stats) {
+        const statCards = document.querySelectorAll(".stat-card .stat-value");
+        if (statCards.length >= 4) {
+          statCards[0].textContent = stats.active_sessions || 0;
+          statCards[1].textContent = stats.instructors_online || 0;
+          statCards[2].textContent = stats.today_sessions || 0;
+          statCards[3].textContent = stats.completed_today || 0;
         }
+      }
 
-        function viewLog() {
-            if (typeof utils !== 'undefined') {
-                utils.showNotification('Opening session log...', 'info');
-            }
-        }
+      function renderSessions(sessions) {
+        const activeContainer = document.querySelector(
+          '.card[style*="margin-bottom: 32px;"] div[style*="display: grid;"]',
+        );
+        const scheduleTableBody = document.querySelector("table tbody");
 
-        function viewDetails() {
-            if (typeof utils !== 'undefined') {
-                utils.showNotification('Opening details...', 'info');
-            }
-        }
+        const active = sessions.filter(
+          (s) => s.status === "active" || s.status === "live",
+        );
 
-        document.addEventListener('DOMContentLoaded', async function() {
-            // Force disable demo mode if the user wants real data
-            if (localStorage.getItem('DEMO_MODE') === 'true') {
-                console.log('🔄 Disabling Demo Mode to fetch real monitoring data...');
-                localStorage.setItem('DEMO_MODE', 'false');
-                window.location.reload();
-                return;
-            }
-
-            const user = auth.getCurrentUser();
-            if (!user) {
-                window.location.href = '../login.html';
-                return;
-            }
-
-            await loadMonitorData();
-        });
-
-        async function loadMonitorData() {
-            try {
-                console.log('🌐 Fetching monitoring data from:', api.baseUrl + '/supervisor/monitor.php');
-                const response = await api.get('/supervisor/monitor.php');
-                
-                if (response.success && response.data) {
-                    const { sessions, stats } = response.data;
-                    renderStats(stats);
-                    renderSessions(sessions);
-                    console.log('✅ Monitoring data loaded successfully');
-                } else {
-                    console.error('❌ Failed to load monitor data:', response.message || 'Unknown error');
-                    if (typeof utils !== 'undefined') utils.showNotification(response.message || 'Failed to load monitoring data', 'error');
-                }
-            } catch (error) {
-                console.error('❌ Error loading monitor data:', error);
-                if (typeof utils !== 'undefined') utils.showNotification('Network error. Check if the server is running.', 'error');
-            }
-        }
-
-        function renderStats(stats) {
-            const statCards = document.querySelectorAll('.stat-card .stat-value');
-            if (statCards.length >= 4) {
-                statCards[0].textContent = stats.active_sessions || 0;
-                statCards[1].textContent = stats.instructors_online || 0;
-                statCards[2].textContent = stats.today_sessions || 0;
-                statCards[3].textContent = stats.completed_today || 0;
-            }
-        }
-
-        function renderSessions(sessions) {
-            const activeContainer = document.querySelector('.card[style*="margin-bottom: 32px;"] div[style*="display: grid;"]');
-            const scheduleTableBody = document.querySelector('table tbody');
-            
-            const active = sessions.filter(s => s.status === 'active' || s.status === 'live');
-            
-            // Render Active Grid
-            if (activeContainer) {
-                if (active.length === 0) {
-                    activeContainer.innerHTML = '<p style="padding: 20px; text-align: center; color: #64748b; grid-column: 1/-1;">No live sessions currently active.</p>';
-                } else {
-                    activeContainer.innerHTML = active.map(s => `
+        // Render Active Grid
+        if (activeContainer) {
+          if (active.length === 0) {
+            activeContainer.innerHTML =
+              '<p style="padding: 20px; text-align: center; color: #64748b; grid-column: 1/-1;">No live sessions currently active.</p>';
+          } else {
+            activeContainer.innerHTML = active
+              .map(
+                (s) => `
                         <div style="border: 2px solid #dcfce7; border-radius: 12px; padding: 20px; background: #f0fdf4;">
                             <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
                                 <div>
-                                    <div style="font-weight: 700; font-size: 16px; color: #1e293b; margin-bottom: 4px;">${s.session_type || 'Practical'} Session</div>
-                                    <div style="font-size: 13px; color: #64748b;">${s.program_name || 'Training'}</div>
+                                    <div style="font-weight: 700; font-size: 16px; color: #1e293b; margin-bottom: 4px;">${s.session_type || "Practical"} Session</div>
+                                    <div style="font-size: 13px; color: #64748b;">${s.program_name || "Training"}</div>
                                 </div>
                                 <span style="background: #15803D; color: white; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700;">LIVE</span>
                             </div>
@@ -484,34 +910,41 @@
                                 <div style="font-weight: 600; color: #1e293b;">${s.student_name}</div>
                             </div>
                             <div style="display: flex; justify-content: space-between; font-size: 12px; color: #64748b; margin-bottom: 12px;">
-                                <span>⏰ Start: ${s.start_time || 'N/A'}</span>
+                                <span>⏰ Start: ${s.start_time || "N/A"}</span>
                                 <span>⏱️ Duration: ${s.duration || 0} min</span>
                             </div>
                             <button class="btn-sm" style="width: 100%;" onclick="viewSessionDetails(${s.id})">View Details</button>
                         </div>
-                    `).join('');
-                }
-            }
+                    `,
+              )
+              .join("");
+          }
+        }
 
-            // Render Schedule Table
-            if (scheduleTableBody) {
-                if (sessions.length === 0) {
-                    scheduleTableBody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 40px;">No sessions scheduled for today.</td></tr>';
-                } else {
-                    scheduleTableBody.innerHTML = sessions.map(s => `
-                        <tr style="${s.status === 'active' ? 'background: #f0fdf4;' : ''}">
-                            <td style="font-weight: 600;">${s.start_time || 'N/A'}</td>
-                            <td><span class="badge ${s.session_type === 'theory' ? 'badge-blue' : 'badge-green'}">${s.session_type || 'practical'}</span></td>
+        // Render Schedule Table
+        if (scheduleTableBody) {
+          if (sessions.length === 0) {
+            scheduleTableBody.innerHTML =
+              '<tr><td colspan="7" style="text-align: center; padding: 40px;">No sessions scheduled for today.</td></tr>';
+          } else {
+            scheduleTableBody.innerHTML = sessions
+              .map(
+                (s) => `
+                        <tr style="${s.status === "active" ? "background: #f0fdf4;" : ""}">
+                            <td style="font-weight: 600;">${s.start_time || "N/A"}</td>
+                            <td><span class="badge ${s.session_type === "theory" ? "badge-blue" : "badge-green"}">${s.session_type || "practical"}</span></td>
                             <td>${s.instructor_name}</td>
                             <td>${s.student_name}</td>
-                            <td>${s.program_name || 'N/A'}</td>
-                            <td><span class="badge ${s.status === 'completed' ? 'badge-success' : 'badge-warning'}">${s.status}</span></td>
-                            <td><button class="btn-sm" onclick="${s.status === 'active' ? 'monitorLive(' + s.id + ')' : 'viewDetails(' + s.id + ')'}">${s.status === 'active' ? 'Monitor' : 'Details'}</button></td>
+                            <td>${s.program_name || "N/A"}</td>
+                            <td><span class="badge ${s.status === "completed" ? "badge-success" : "badge-warning"}">${s.status}</span></td>
+                            <td><button class="btn-sm" onclick="${s.status === "active" ? "monitorLive(" + s.id + ")" : "viewDetails(" + s.id + ")"}">${s.status === "active" ? "Monitor" : "Details"}</button></td>
                         </tr>
-                    `).join('');
-                }
-            }
+                    `,
+              )
+              .join("");
+          }
         }
+      }
     </script>
-</body>
+  </body>
 </html>

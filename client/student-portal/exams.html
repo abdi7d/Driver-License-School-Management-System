@@ -1,345 +1,565 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Exams - DLSM Ethiopia</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/responsive.css">
-    <link rel="stylesheet" href="../assets/css/dark-mode.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link rel="stylesheet" href="../assets/css/responsive.css" />
+    <link rel="stylesheet" href="../assets/css/dark-mode.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <script src="../assets/js/theme.js"></script>
     <script src="../assets/js/auth-guard.js"></script>
-</head>
-<body class="dashboard-body">
+  </head>
+  <body class="dashboard-body">
     <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
     <aside class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <div class="sidebar-logo">
-                <img src="../assets/images/logo-DLSM.jpg" alt="DLSM Logo" class="logo-icon" style="height: 32px; width: auto; border-radius: 6px;">
-                <span class="logo-text">DLSM</span>
-            </div>
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <img
+            src="../assets/images/logo-DLSM.jpg"
+            alt="DLSM Logo"
+            class="logo-icon"
+            style="height: 32px; width: auto; border-radius: 6px"
+          />
+          <span class="logo-text">DLSM</span>
         </div>
-        <nav class="sidebar-nav">
-            <a href="dashboard.html" class="nav-item" data-i18n="student.dashboard">
-                <span class="nav-icon">📊</span><span class="nav-text">Dashboard</span>
-            </a>
-            <a href="profile.html" class="nav-item" data-i18n="student.myProfile">
-                <span class="nav-icon">👤</span><span class="nav-text">My Profile</span>
-            </a>
-            <a href="schedule.html" class="nav-item" data-i18n="student.schedule">
-                <span class="nav-icon">📅</span><span class="nav-text">Schedule</span>
-            </a>
-            <a href="progress.html" class="nav-item" data-i18n="student.progress">
-                <span class="nav-icon">📈</span><span class="nav-text">My Progress</span>
-            </a>
-            <a href="exams.html" class="nav-item active" data-i18n="student.exams">
-                <span class="nav-icon">📝</span><span class="nav-text">Exams</span>
-            </a>
-            <a href="certificate.html" class="nav-item" data-i18n="student.certificate">
-                <span class="nav-icon">🎓</span><span class="nav-text">Certificate</span>
-            </a>
-        </nav>
-        <div class="sidebar-footer">
-            <button class="btn-logout" id="logoutBtn" data-i18n="common.logout">
-                <span class="nav-icon">🚪</span><span class="nav-text">Logout</span>
-            </button>
-        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-item" data-i18n="student.dashboard">
+          <span class="nav-icon">📊</span
+          ><span class="nav-text">Dashboard</span>
+        </a>
+        <a href="profile.html" class="nav-item" data-i18n="student.myProfile">
+          <span class="nav-icon">👤</span
+          ><span class="nav-text">My Profile</span>
+        </a>
+        <a href="schedule.html" class="nav-item" data-i18n="student.schedule">
+          <span class="nav-icon">📅</span><span class="nav-text">Schedule</span>
+        </a>
+        <a href="progress.html" class="nav-item" data-i18n="student.progress">
+          <span class="nav-icon">📈</span
+          ><span class="nav-text">My Progress</span>
+        </a>
+        <a href="exams.html" class="nav-item active" data-i18n="student.exams">
+          <span class="nav-icon">📝</span><span class="nav-text">Exams</span>
+        </a>
+        <a
+          href="certificate.html"
+          class="nav-item"
+          data-i18n="student.certificate"
+        >
+          <span class="nav-icon">🎓</span
+          ><span class="nav-text">Certificate</span>
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <button class="btn-logout" id="logoutBtn" data-i18n="common.logout">
+          <span class="nav-icon">🚪</span><span class="nav-text">Logout</span>
+        </button>
+      </div>
     </aside>
 
     <main class="main-content">
-        <header class="topbar">
-            <div class="topbar-left">
-                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
-                <div>
-                    <h1 class="page-title" data-i18n="student.exams">Exams</h1>
-                    <p class="page-subtitle" data-i18n="student.examsSubtitle">Register for available exams and view your results</p>
-                </div>
-            </div>
-            <div class="topbar-right">
-                <div class="language-switcher">
-                    <span class="language-icon">🌍</span>
-                    <select id="languageSelect" onchange="i18n.changeLanguage(this.value)">
-                        <option value="en">English</option>
-                        <option value="am">አማርኛ</option>
-                        <option value="or">Afaan Oromo</option>
-                    </select>
-                </div>
-                <div class="user-profile">
-                    <div class="user-avatar" id="topbarAvatar">👤</div>
-                    <div class="user-info">
-                        <span class="user-name" id="userName">Loading...</span>
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <div class="dashboard-container">
-            <div class="progress-page-card">
-                <div class="progress-tab-header">
-                    <span class="progress-tab-icon">📝</span>
-                    <span class="progress-tab-heading">Exam Management</span>
-                </div>
-
-                <div class="progress-tabs">
-                    <button class="progress-tab active" data-tab="available">Available Exams</button>
-                    <button class="progress-tab" data-tab="my-registrations">My Registrations</button>
-                    <button class="progress-tab" data-tab="results">My Results</button>
-                </div>
-
-                <div class="progress-tab-content">
-
-                    
-                    <div class="tab-panel active" id="tab-available">
-                        <p class="tab-instruction">* Exams scheduled by the school. Click "Register" to apply for an exam slot.</p>
-
-                        
-                        <div class="dashboard-card" style="margin-bottom:1.5rem;">
-                            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:1rem;">
-                                <div>
-                                    <h3 class="card-title">📝 Theory Exam — Level 2 (Private Car)</h3>
-                                    <p style="color:var(--text-secondary,#6b7280); margin:0.25rem 0 1rem;">
-                                        Written multiple-choice exam covering traffic rules, road signs, and vehicle safety.
-                                    </p>
-                                    <div class="session-details-grid">
-                                        <div class="detail-item">
-                                            <span class="detail-icon">📅</span>
-                                            <div><p class="detail-label">Date</p><p class="detail-value">July 10, 2024</p></div>
-                                        </div>
-                                        <div class="detail-item">
-                                            <span class="detail-icon">⏰</span>
-                                            <div><p class="detail-label">Time</p><p class="detail-value">9:00 AM – 10:30 AM</p></div>
-                                        </div>
-                                        <div class="detail-item">
-                                            <span class="detail-icon">📍</span>
-                                            <div><p class="detail-label">Location</p><p class="detail-value">Exam Hall A</p></div>
-                                        </div>
-                                        <div class="detail-item">
-                                            <span class="detail-icon">👥</span>
-                                            <div><p class="detail-label">Seats Left</p><p class="detail-value">8 / 20</p></div>
-                                        </div>
-                                        <div class="detail-item">
-                                            <span class="detail-icon">✅</span>
-                                            <div><p class="detail-label">Pass Mark</p><p class="detail-value">70 / 100</p></div>
-                                        </div>
-                                        <div class="detail-item">
-                                            <span class="detail-icon">❓</span>
-                                            <div><p class="detail-label">Questions</p><p class="detail-value">50 MCQ</p></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div style="display:flex; flex-direction:column; gap:0.5rem; align-items:flex-end;">
-                                    <span class="badge-passed" style="font-size:0.85rem;">Open</span>
-                                    <button class="btn-primary" onclick="openRegisterModal('theory', 'Theory Exam — Level 2', 'July 10, 2024', '9:00 AM')">
-                                        Register
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        
-                        <div class="dashboard-card" style="opacity:0.7;">
-                            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:1rem;">
-                                <div>
-                                    <h3 class="card-title">🚗 Practical Exam — Level 2 (Private Car)</h3>
-                                    <p style="color:var(--text-secondary,#6b7280); margin:0.25rem 0 1rem;">
-                                        On-road driving evaluation by a certified examiner.
-                                    </p>
-                                    <div class="session-details-grid">
-                                        <div class="detail-item">
-                                            <span class="detail-icon">📅</span>
-                                            <div><p class="detail-label">Date</p><p class="detail-value">August 5, 2024</p></div>
-                                        </div>
-                                        <div class="detail-item">
-                                            <span class="detail-icon">⏰</span>
-                                            <div><p class="detail-label">Time</p><p class="detail-value">8:00 AM – 9:00 AM</p></div>
-                                        </div>
-                                        <div class="detail-item">
-                                            <span class="detail-icon">🚗</span>
-                                            <div><p class="detail-label">Vehicle</p><p class="detail-value">Toyota Corolla</p></div>
-                                        </div>
-                                        <div class="detail-item">
-                                            <span class="detail-icon">👥</span>
-                                            <div><p class="detail-label">Seats Left</p><p class="detail-value">5 / 10</p></div>
-                                        </div>
-                                        <div class="detail-item">
-                                            <span class="detail-icon">✅</span>
-                                            <div><p class="detail-label">Pass Mark</p><p class="detail-value">70 / 100</p></div>
-                                        </div>
-                                        <div class="detail-item">
-                                            <span class="detail-icon">⏱️</span>
-                                            <div><p class="detail-label">Duration</p><p class="detail-value">45 Minutes</p></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div style="display:flex; flex-direction:column; gap:0.5rem; align-items:flex-end;">
-                                    <span class="badge-locked" style="font-size:0.85rem;">🔒 Locked</span>
-                                    <button class="btn-primary" disabled title="Complete all practical training hours first" style="opacity:0.5; cursor:not-allowed;">
-                                        Register
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="status-alert" style="margin-top:1rem;">
-                                <div class="alert-icon">ℹ️</div>
-                                <div class="alert-content">
-                                    <p class="alert-message">You must pass the theory exam and complete all 25 practical training hours to unlock this exam. You have 15 hours remaining.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    
-                    <div class="tab-panel" id="tab-my-registrations">
-                        <p class="tab-instruction">* Exams you have registered for</p>
-
-                        <div id="noRegistrations" style="text-align:center; padding:3rem 1rem; color:var(--text-secondary,#6b7280);">
-                            <div style="font-size:3rem; margin-bottom:1rem;">📋</div>
-                            <p style="font-size:1rem;">You have not registered for any exams yet.</p>
-                            <p style="font-size:0.9rem; margin-top:0.5rem;">Go to <strong>Available Exams</strong> to register.</p>
-                        </div>
-
-                        <table class="progress-table" id="registrationsTable" style="display:none;">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Exam</th>
-                                    <th>Type</th>
-                                    <th>Date</th>
-                                    <th>Time</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody id="registrationsBody"></tbody>
-                        </table>
-                    </div>
-
-                    
-                    <div class="tab-panel" id="tab-results">
-                        <p class="tab-instruction">* Your exam scores and results</p>
-
-                        <div class="summary-grid" style="margin-bottom:1.5rem;">
-                            <div class="summary-stat-card">
-                                <p class="summary-label">Theory Score</p>
-                                <p class="summary-value green">85 / 100</p>
-                            </div>
-                            <div class="summary-stat-card">
-                                <p class="summary-label">Theory Result</p>
-                                <p class="summary-value green">Passed</p>
-                            </div>
-                            <div class="summary-stat-card">
-                                <p class="summary-label">Practical Score</p>
-                                <p class="summary-value blue">— / 100</p>
-                            </div>
-                            <div class="summary-stat-card">
-                                <p class="summary-label">Practical Result</p>
-                                <p class="summary-value orange">Not Taken</p>
-                            </div>
-                        </div>
-
-                        <table class="progress-table">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Exam</th>
-                                    <th>Date Taken</th>
-                                    <th>Score</th>
-                                    <th>Pass Mark</th>
-                                    <th>Result</th>
-                                    <th>Remarks</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Theory Exam — Level 2</td>
-                                    <td>June 20, 2024</td>
-                                    <td>85 / 100</td>
-                                    <td>70 / 100</td>
-                                    <td><span class="badge-passed">Passed</span></td>
-                                    <td>Good performance</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Practical Exam — Level 2</td>
-                                    <td>—</td>
-                                    <td>—</td>
-                                    <td>70 / 100</td>
-                                    <td><span class="badge-locked">Not Taken</span></td>
-                                    <td>Complete training first</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                </div>
-            </div>
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+          <div>
+            <h1 class="page-title" data-i18n="student.exams">Exams</h1>
+            <p class="page-subtitle" data-i18n="student.examsSubtitle">
+              Register for available exams and view your results
+            </p>
+          </div>
         </div>
+        <div class="topbar-right">
+          <div class="language-switcher">
+            <span class="language-icon">🌍</span>
+            <select
+              id="languageSelect"
+              onchange="i18n.changeLanguage(this.value)"
+            >
+              <option value="en">English</option>
+              <option value="am">አማርኛ</option>
+              <option value="or">Afaan Oromo</option>
+            </select>
+          </div>
+          <div class="user-profile">
+            <div class="user-avatar" id="topbarAvatar">👤</div>
+            <div class="user-info">
+              <span class="user-name" id="userName">Loading...</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="dashboard-container">
+        <div class="progress-page-card">
+          <div class="progress-tab-header">
+            <span class="progress-tab-icon">📝</span>
+            <span class="progress-tab-heading">Exam Management</span>
+          </div>
+
+          <div class="progress-tabs">
+            <button class="progress-tab active" data-tab="available">
+              Available Exams
+            </button>
+            <button class="progress-tab" data-tab="my-registrations">
+              My Registrations
+            </button>
+            <button class="progress-tab" data-tab="results">My Results</button>
+          </div>
+
+          <div class="progress-tab-content">
+            <div class="tab-panel active" id="tab-available">
+              <p class="tab-instruction">
+                * Exams scheduled by the school. Click "Register" to apply for
+                an exam slot.
+              </p>
+
+              <div class="dashboard-card" style="margin-bottom: 1.5rem">
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: flex-start;
+                    flex-wrap: wrap;
+                    gap: 1rem;
+                  "
+                >
+                  <div>
+                    <h3 class="card-title">
+                      📝 Theory Exam — Level 2 (Private Car)
+                    </h3>
+                    <p
+                      style="
+                        color: var(--text-secondary, #6b7280);
+                        margin: 0.25rem 0 1rem;
+                      "
+                    >
+                      Written multiple-choice exam covering traffic rules, road
+                      signs, and vehicle safety.
+                    </p>
+                    <div class="session-details-grid">
+                      <div class="detail-item">
+                        <span class="detail-icon">📅</span>
+                        <div>
+                          <p class="detail-label">Date</p>
+                          <p class="detail-value">July 10, 2024</p>
+                        </div>
+                      </div>
+                      <div class="detail-item">
+                        <span class="detail-icon">⏰</span>
+                        <div>
+                          <p class="detail-label">Time</p>
+                          <p class="detail-value">9:00 AM – 10:30 AM</p>
+                        </div>
+                      </div>
+                      <div class="detail-item">
+                        <span class="detail-icon">📍</span>
+                        <div>
+                          <p class="detail-label">Location</p>
+                          <p class="detail-value">Exam Hall A</p>
+                        </div>
+                      </div>
+                      <div class="detail-item">
+                        <span class="detail-icon">👥</span>
+                        <div>
+                          <p class="detail-label">Seats Left</p>
+                          <p class="detail-value">8 / 20</p>
+                        </div>
+                      </div>
+                      <div class="detail-item">
+                        <span class="detail-icon">✅</span>
+                        <div>
+                          <p class="detail-label">Pass Mark</p>
+                          <p class="detail-value">70 / 100</p>
+                        </div>
+                      </div>
+                      <div class="detail-item">
+                        <span class="detail-icon">❓</span>
+                        <div>
+                          <p class="detail-label">Questions</p>
+                          <p class="detail-value">50 MCQ</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    style="
+                      display: flex;
+                      flex-direction: column;
+                      gap: 0.5rem;
+                      align-items: flex-end;
+                    "
+                  >
+                    <span class="badge-passed" style="font-size: 0.85rem"
+                      >Open</span
+                    >
+                    <button
+                      class="btn-primary"
+                      onclick="
+                        openRegisterModal(
+                          'theory',
+                          'Theory Exam — Level 2',
+                          'July 10, 2024',
+                          '9:00 AM',
+                        )
+                      "
+                    >
+                      Register
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="dashboard-card" style="opacity: 0.7">
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: flex-start;
+                    flex-wrap: wrap;
+                    gap: 1rem;
+                  "
+                >
+                  <div>
+                    <h3 class="card-title">
+                      🚗 Practical Exam — Level 2 (Private Car)
+                    </h3>
+                    <p
+                      style="
+                        color: var(--text-secondary, #6b7280);
+                        margin: 0.25rem 0 1rem;
+                      "
+                    >
+                      On-road driving evaluation by a certified examiner.
+                    </p>
+                    <div class="session-details-grid">
+                      <div class="detail-item">
+                        <span class="detail-icon">📅</span>
+                        <div>
+                          <p class="detail-label">Date</p>
+                          <p class="detail-value">August 5, 2024</p>
+                        </div>
+                      </div>
+                      <div class="detail-item">
+                        <span class="detail-icon">⏰</span>
+                        <div>
+                          <p class="detail-label">Time</p>
+                          <p class="detail-value">8:00 AM – 9:00 AM</p>
+                        </div>
+                      </div>
+                      <div class="detail-item">
+                        <span class="detail-icon">🚗</span>
+                        <div>
+                          <p class="detail-label">Vehicle</p>
+                          <p class="detail-value">Toyota Corolla</p>
+                        </div>
+                      </div>
+                      <div class="detail-item">
+                        <span class="detail-icon">👥</span>
+                        <div>
+                          <p class="detail-label">Seats Left</p>
+                          <p class="detail-value">5 / 10</p>
+                        </div>
+                      </div>
+                      <div class="detail-item">
+                        <span class="detail-icon">✅</span>
+                        <div>
+                          <p class="detail-label">Pass Mark</p>
+                          <p class="detail-value">70 / 100</p>
+                        </div>
+                      </div>
+                      <div class="detail-item">
+                        <span class="detail-icon">⏱️</span>
+                        <div>
+                          <p class="detail-label">Duration</p>
+                          <p class="detail-value">45 Minutes</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    style="
+                      display: flex;
+                      flex-direction: column;
+                      gap: 0.5rem;
+                      align-items: flex-end;
+                    "
+                  >
+                    <span class="badge-locked" style="font-size: 0.85rem"
+                      >🔒 Locked</span
+                    >
+                    <button
+                      class="btn-primary"
+                      disabled
+                      title="Complete all practical training hours first"
+                      style="opacity: 0.5; cursor: not-allowed"
+                    >
+                      Register
+                    </button>
+                  </div>
+                </div>
+                <div class="status-alert" style="margin-top: 1rem">
+                  <div class="alert-icon">ℹ️</div>
+                  <div class="alert-content">
+                    <p class="alert-message">
+                      You must pass the theory exam and complete all 25
+                      practical training hours to unlock this exam. You have 15
+                      hours remaining.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-panel" id="tab-my-registrations">
+              <p class="tab-instruction">* Exams you have registered for</p>
+
+              <div
+                id="noRegistrations"
+                style="
+                  text-align: center;
+                  padding: 3rem 1rem;
+                  color: var(--text-secondary, #6b7280);
+                "
+              >
+                <div style="font-size: 3rem; margin-bottom: 1rem">📋</div>
+                <p style="font-size: 1rem">
+                  You have not registered for any exams yet.
+                </p>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem">
+                  Go to <strong>Available Exams</strong> to register.
+                </p>
+              </div>
+
+              <table
+                class="progress-table"
+                id="registrationsTable"
+                style="display: none"
+              >
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Exam</th>
+                    <th>Type</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="registrationsBody"></tbody>
+              </table>
+            </div>
+
+            <div class="tab-panel" id="tab-results">
+              <p class="tab-instruction">* Your exam scores and results</p>
+
+              <div class="summary-grid" style="margin-bottom: 1.5rem">
+                <div class="summary-stat-card">
+                  <p class="summary-label">Theory Score</p>
+                  <p class="summary-value green">85 / 100</p>
+                </div>
+                <div class="summary-stat-card">
+                  <p class="summary-label">Theory Result</p>
+                  <p class="summary-value green">Passed</p>
+                </div>
+                <div class="summary-stat-card">
+                  <p class="summary-label">Practical Score</p>
+                  <p class="summary-value blue">— / 100</p>
+                </div>
+                <div class="summary-stat-card">
+                  <p class="summary-label">Practical Result</p>
+                  <p class="summary-value orange">Not Taken</p>
+                </div>
+              </div>
+
+              <table class="progress-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Exam</th>
+                    <th>Date Taken</th>
+                    <th>Score</th>
+                    <th>Pass Mark</th>
+                    <th>Result</th>
+                    <th>Remarks</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>Theory Exam — Level 2</td>
+                    <td>June 20, 2024</td>
+                    <td>85 / 100</td>
+                    <td>70 / 100</td>
+                    <td><span class="badge-passed">Passed</span></td>
+                    <td>Good performance</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Practical Exam — Level 2</td>
+                    <td>—</td>
+                    <td>—</td>
+                    <td>70 / 100</td>
+                    <td><span class="badge-locked">Not Taken</span></td>
+                    <td>Complete training first</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
 
-    
-    <div id="registerModal" class="modal-overlay" style="display:none;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Confirm Exam Registration</h3>
-                <button class="modal-close" onclick="closeModal('registerModal')">&times;</button>
-            </div>
-            <div class="modal-body">
-                <p style="color:#6b7280; margin-bottom:1.5rem;">Please review the exam details before confirming your registration.</p>
-
-                <div style="background:#f8fafc; border-radius:10px; padding:1rem; margin-bottom:1.5rem;">
-                    <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem;">
-                        <span style="color:#6b7280; font-size:0.9rem;">Exam</span>
-                        <span style="font-weight:600; font-size:0.9rem;" id="modalExamName">—</span>
-                    </div>
-                    <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem;">
-                        <span style="color:#6b7280; font-size:0.9rem;">Date</span>
-                        <span style="font-weight:600; font-size:0.9rem;" id="modalExamDate">—</span>
-                    </div>
-                    <div style="display:flex; justify-content:space-between;">
-                        <span style="color:#6b7280; font-size:0.9rem;">Time</span>
-                        <span style="font-weight:600; font-size:0.9rem;" id="modalExamTime">—</span>
-                    </div>
-                </div>
-
-                <div style="background:#fef3c7; border-left:4px solid #f59e0b; padding:12px; border-radius:8px; margin-bottom:1.5rem;">
-                    <p style="font-size:0.85rem; color:#92400e; margin:0;">
-                        ⚠️ Once registered, cancellation must be requested at least 48 hours before the exam.
-                    </p>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn-secondary" onclick="closeModal('registerModal')">Cancel</button>
-                <button class="btn-primary" id="confirmRegBtn" onclick="confirmRegistration()">Confirm Registration</button>
-            </div>
+    <div id="registerModal" class="modal-overlay" style="display: none">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">Confirm Exam Registration</h3>
+          <button class="modal-close" onclick="closeModal('registerModal')">
+            &times;
+          </button>
         </div>
+        <div class="modal-body">
+          <p style="color: #6b7280; margin-bottom: 1.5rem">
+            Please review the exam details before confirming your registration.
+          </p>
+
+          <div
+            style="
+              background: #f8fafc;
+              border-radius: 10px;
+              padding: 1rem;
+              margin-bottom: 1.5rem;
+            "
+          >
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 0.5rem;
+              "
+            >
+              <span style="color: #6b7280; font-size: 0.9rem">Exam</span>
+              <span
+                style="font-weight: 600; font-size: 0.9rem"
+                id="modalExamName"
+                >—</span
+              >
+            </div>
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 0.5rem;
+              "
+            >
+              <span style="color: #6b7280; font-size: 0.9rem">Date</span>
+              <span
+                style="font-weight: 600; font-size: 0.9rem"
+                id="modalExamDate"
+                >—</span
+              >
+            </div>
+            <div style="display: flex; justify-content: space-between">
+              <span style="color: #6b7280; font-size: 0.9rem">Time</span>
+              <span
+                style="font-weight: 600; font-size: 0.9rem"
+                id="modalExamTime"
+                >—</span
+              >
+            </div>
+          </div>
+
+          <div
+            style="
+              background: #fef3c7;
+              border-left: 4px solid #f59e0b;
+              padding: 12px;
+              border-radius: 8px;
+              margin-bottom: 1.5rem;
+            "
+          >
+            <p style="font-size: 0.85rem; color: #92400e; margin: 0">
+              ⚠️ Once registered, cancellation must be requested at least 48
+              hours before the exam.
+            </p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-secondary" onclick="closeModal('registerModal')">
+            Cancel
+          </button>
+          <button
+            class="btn-primary"
+            id="confirmRegBtn"
+            onclick="confirmRegistration()"
+          >
+            Confirm Registration
+          </button>
+        </div>
+      </div>
     </div>
 
-    
-    <div id="cancelModal" class="modal-overlay" style="display:none;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Cancel Exam Registration</h3>
-                <button class="modal-close" onclick="closeModal('cancelModal')">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div style="text-align:center; margin-bottom:1.5rem;">
-                    <div style="font-size:48px; margin-bottom:1rem;">⚠️</div>
-                    <p style="font-size:16px; font-weight:600; color:#1e293b; margin:0 0 8px 0;">Are you sure?</p>
-                    <p style="font-size:14px; color:#64748b; margin:0;">This action cannot be undone.</p>
-                </div>
-                <div style="background:#fef2f2; border-left:4px solid #dc2626; padding:12px; border-radius:8px;">
-                    <p style="font-size:0.85rem; color:#7f1d1d; margin:0;">
-                        You will lose your exam slot. You can register again later if needed.
-                    </p>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn-secondary" onclick="closeModal('cancelModal')">Keep Registration</button>
-                <button class="btn-primary" style="background:#dc2626;" id="confirmCancelBtn" onclick="confirmCancellation()">Yes, Cancel Registration</button>
-            </div>
+    <div id="cancelModal" class="modal-overlay" style="display: none">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">Cancel Exam Registration</h3>
+          <button class="modal-close" onclick="closeModal('cancelModal')">
+            &times;
+          </button>
         </div>
+        <div class="modal-body">
+          <div style="text-align: center; margin-bottom: 1.5rem">
+            <div style="font-size: 48px; margin-bottom: 1rem">⚠️</div>
+            <p
+              style="
+                font-size: 16px;
+                font-weight: 600;
+                color: #1e293b;
+                margin: 0 0 8px 0;
+              "
+            >
+              Are you sure?
+            </p>
+            <p style="font-size: 14px; color: #64748b; margin: 0">
+              This action cannot be undone.
+            </p>
+          </div>
+          <div
+            style="
+              background: #fef2f2;
+              border-left: 4px solid #dc2626;
+              padding: 12px;
+              border-radius: 8px;
+            "
+          >
+            <p style="font-size: 0.85rem; color: #7f1d1d; margin: 0">
+              You will lose your exam slot. You can register again later if
+              needed.
+            </p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-secondary" onclick="closeModal('cancelModal')">
+            Keep Registration
+          </button>
+          <button
+            class="btn-primary"
+            style="background: #dc2626"
+            id="confirmCancelBtn"
+            onclick="confirmCancellation()"
+          >
+            Yes, Cancel Registration
+          </button>
+        </div>
+      </div>
     </div>
 
     <div id="toast" class="toast"></div>
@@ -349,163 +569,199 @@
     <script src="../assets/js/auth.js"></script>
     <script src="../assets/js/dashboard.js"></script>
     <script>
-        let exams = [];
+      let exams = [];
 
-        async function loadExams() {
-            try {
-                const response = await api.request('/exams.php');
-                if (response.success && response.data) {
-                    exams = response.data;
-                    renderExams();
-                }
-            } catch (error) {
-                console.error('Error loading exams:', error);
-            }
+      async function loadExams() {
+        try {
+          const response = await api.request("/exams.php");
+          if (response.success && response.data) {
+            exams = response.data;
+            renderExams();
+          }
+        } catch (error) {
+          console.error("Error loading exams:", error);
         }
+      }
 
-        function renderExams() {
-            // My Registrations
-            const registrations = exams.filter(e => e.status === 'scheduled');
-            const noReg = document.getElementById('noRegistrations');
-            const table = document.getElementById('registrationsTable');
-            const tbody = document.getElementById('registrationsBody');
+      function renderExams() {
+        // My Registrations
+        const registrations = exams.filter((e) => e.status === "scheduled");
+        const noReg = document.getElementById("noRegistrations");
+        const table = document.getElementById("registrationsTable");
+        const tbody = document.getElementById("registrationsBody");
 
-            if (registrations.length === 0) {
-                noReg.style.display = 'block';
-                table.style.display = 'none';
-            } else {
-                noReg.style.display = 'none';
-                table.style.display = 'table';
-                tbody.innerHTML = registrations.map((r, i) => `
+        if (registrations.length === 0) {
+          noReg.style.display = "block";
+          table.style.display = "none";
+        } else {
+          noReg.style.display = "none";
+          table.style.display = "table";
+          tbody.innerHTML = registrations
+            .map(
+              (r, i) => `
                     <tr>
                         <td>${i + 1}</td>
                         <td>${capitalize(r.exam_type)} Exam</td>
                         <td>${capitalize(r.exam_type)}</td>
                         <td>${new Date(r.scheduled_date).toLocaleDateString()}</td>
-                        <td>${new Date(r.scheduled_date).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</td>
+                        <td>${new Date(r.scheduled_date).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</td>
                         <td><span class="badge-inprogress">Scheduled</span></td>
                         <td>
                             <button class="btn-primary btn-small" style="background:#ef4444;" onclick="cancelRegistration(${r.id})">Cancel</button>
                         </td>
                     </tr>
-                `).join('');
-            }
+                `,
+            )
+            .join("");
+        }
 
-            // Results
-            const results = exams.filter(e => e.status === 'passed' || e.status === 'failed');
-            const resultsBody = document.querySelector('#tab-results tbody');
-            const theoryResult = exams.find(e => e.exam_type === 'theory' && e.status !== 'scheduled');
-            const practicalResult = exams.find(e => e.exam_type === 'practical' && e.status !== 'scheduled');
+        // Results
+        const results = exams.filter(
+          (e) => e.status === "passed" || e.status === "failed",
+        );
+        const resultsBody = document.querySelector("#tab-results tbody");
+        const theoryResult = exams.find(
+          (e) => e.exam_type === "theory" && e.status !== "scheduled",
+        );
+        const practicalResult = exams.find(
+          (e) => e.exam_type === "practical" && e.status !== "scheduled",
+        );
 
-            // Update summary cards
-            const summaryValues = document.querySelectorAll('.summary-value');
-            if (theoryResult) {
-                summaryValues[0].textContent = `${Math.round(theoryResult.score)} / 100`;
-                summaryValues[1].textContent = capitalize(theoryResult.status);
-                summaryValues[1].className = `summary-value ${theoryResult.status === 'passed' ? 'green' : 'red'}`;
-            }
-            if (practicalResult) {
-                summaryValues[2].textContent = `${Math.round(practicalResult.score)} / 100`;
-                summaryValues[3].textContent = capitalize(practicalResult.status);
-                summaryValues[3].className = `summary-value ${practicalResult.status === 'passed' ? 'green' : 'red'}`;
-            }
+        // Update summary cards
+        const summaryValues = document.querySelectorAll(".summary-value");
+        if (theoryResult) {
+          summaryValues[0].textContent = `${Math.round(theoryResult.score)} / 100`;
+          summaryValues[1].textContent = capitalize(theoryResult.status);
+          summaryValues[1].className = `summary-value ${theoryResult.status === "passed" ? "green" : "red"}`;
+        }
+        if (practicalResult) {
+          summaryValues[2].textContent = `${Math.round(practicalResult.score)} / 100`;
+          summaryValues[3].textContent = capitalize(practicalResult.status);
+          summaryValues[3].className = `summary-value ${practicalResult.status === "passed" ? "green" : "red"}`;
+        }
 
-            if (resultsBody) {
-                resultsBody.innerHTML = results.map((e, i) => `
+        if (resultsBody) {
+          resultsBody.innerHTML = results
+            .map(
+              (e, i) => `
                     <tr>
                         <td>${i + 1}</td>
                         <td>${capitalize(e.exam_type)} Exam</td>
-                        <td>${e.result_date ? new Date(e.result_date).toLocaleDateString() : 'N/A'}</td>
+                        <td>${e.result_date ? new Date(e.result_date).toLocaleDateString() : "N/A"}</td>
                         <td>${Math.round(e.score)} / 100</td>
                         <td>70 / 100</td>
-                        <td><span class="badge-${e.status === 'passed' ? 'passed' : 'failed'}">${capitalize(e.status)}</span></td>
-                        <td>${e.status === 'passed' ? 'Good job!' : 'Try again.'}</td>
+                        <td><span class="badge-${e.status === "passed" ? "passed" : "failed"}">${capitalize(e.status)}</span></td>
+                        <td>${e.status === "passed" ? "Good job!" : "Try again."}</td>
                     </tr>
-                `).join('');
-            }
+                `,
+            )
+            .join("");
         }
+      }
 
-        async function confirmRegistration() {
-            if (!pendingReg) return;
-            const btn = document.getElementById('confirmRegBtn');
-            btn.disabled = true;
-            btn.textContent = 'Registering...';
+      async function confirmRegistration() {
+        if (!pendingReg) return;
+        const btn = document.getElementById("confirmRegBtn");
+        btn.disabled = true;
+        btn.textContent = "Registering...";
 
-            try {
-                // For student-side self-registration, we'll use a fixed date for now or handle it in backend
-                // In this UI, they pick from "Available", but for simplicity I'll just use a mockup date if not provided
-                const response = await api.request('/exams.php', {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        exam_type: pendingReg.type,
-                        scheduled_date: '2026-07-10 09:00:00' // Example date
-                    })
-                });
+        try {
+          // For student-side self-registration, we'll use a fixed date for now or handle it in backend
+          // In this UI, they pick from "Available", but for simplicity I'll just use a mockup date if not provided
+          const response = await api.request("/exams.php", {
+            method: "POST",
+            body: JSON.stringify({
+              exam_type: pendingReg.type,
+              scheduled_date: "2026-07-10 09:00:00", // Example date
+            }),
+          });
 
-                if (response.success) {
-                    utils.showNotification(response.message, 'success');
-                    closeModal('registerModal');
-                    await loadExams();
-                    // Switch tab
-                    document.querySelector('[data-tab="my-registrations"]').click();
-                } else {
-                    utils.showNotification(response.message, 'error');
-                }
-            } catch (error) {
-                utils.showNotification('Error registering for exam', 'error');
-            } finally {
-                btn.disabled = false;
-                btn.textContent = 'Confirm Registration';
-            }
-        }
-
-        async function cancelRegistration(id) {
-            if (!confirm('Are you sure you want to cancel this exam registration?')) return;
-            try {
-                const response = await api.request(`/exams.php?id=${id}`, { method: 'DELETE' });
-                if (response.success) {
-                    utils.showNotification('Registration cancelled', 'info');
-                    await loadExams();
-                } else {
-                    utils.showNotification(response.message, 'error');
-                }
-            } catch (error) {
-                utils.showNotification('Error cancelling registration', 'error');
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', async function() {
-            const user = auth.getCurrentUser();
-            if (!user) { window.location.href = '../login.html'; return; }
-            document.getElementById('userName').textContent = user.name || 'Student';
-            
+          if (response.success) {
+            utils.showNotification(response.message, "success");
+            closeModal("registerModal");
             await loadExams();
-
-            document.getElementById('logoutBtn').addEventListener('click', () => auth.logout());
-
-            // Tab switching
-            document.querySelectorAll('.progress-tab').forEach(tab => {
-                tab.addEventListener('click', function() {
-                    document.querySelectorAll('.progress-tab').forEach(t => t.classList.remove('active'));
-                    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-                    this.classList.add('active');
-                    document.getElementById('tab-' + this.dataset.tab).classList.add('active');
-                });
-            });
-        });
-
-        function openRegisterModal(type, name, date, time) {
-            pendingReg = { type, name, date, time };
-            document.getElementById('modalExamName').textContent = name;
-            document.getElementById('modalExamDate').textContent = date;
-            document.getElementById('modalExamTime').textContent = time;
-            openModal('registerModal');
+            // Switch tab
+            document.querySelector('[data-tab="my-registrations"]').click();
+          } else {
+            utils.showNotification(response.message, "error");
+          }
+        } catch (error) {
+          utils.showNotification("Error registering for exam", "error");
+        } finally {
+          btn.disabled = false;
+          btn.textContent = "Confirm Registration";
         }
+      }
 
-        function closeModal(modalId) { document.getElementById(modalId).style.display = 'none'; }
-        function openModal(modalId) { document.getElementById(modalId).style.display = 'flex'; }
-        function capitalize(s) { if(!s) return ''; return s.charAt(0).toUpperCase() + s.slice(1); }
-        document.addEventListener('click', (e) => { if (e.target.classList.contains('modal-overlay')) e.target.style.display = 'none'; });
+      async function cancelRegistration(id) {
+        if (!confirm("Are you sure you want to cancel this exam registration?"))
+          return;
+        try {
+          const response = await api.request(`/exams.php?id=${id}`, {
+            method: "DELETE",
+          });
+          if (response.success) {
+            utils.showNotification("Registration cancelled", "info");
+            await loadExams();
+          } else {
+            utils.showNotification(response.message, "error");
+          }
+        } catch (error) {
+          utils.showNotification("Error cancelling registration", "error");
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", async function () {
+        const user = dashboard.init({ requiredRole: "student" });
+        if (!user) return;
+        document.getElementById("userName").textContent =
+          user.name || "Student";
+
+        await loadExams();
+
+        document
+          .getElementById("logoutBtn")
+          .addEventListener("click", () => auth.logout());
+
+        // Tab switching
+        document.querySelectorAll(".progress-tab").forEach((tab) => {
+          tab.addEventListener("click", function () {
+            document
+              .querySelectorAll(".progress-tab")
+              .forEach((t) => t.classList.remove("active"));
+            document
+              .querySelectorAll(".tab-panel")
+              .forEach((p) => p.classList.remove("active"));
+            this.classList.add("active");
+            document
+              .getElementById("tab-" + this.dataset.tab)
+              .classList.add("active");
+          });
+        });
+      });
+
+      function openRegisterModal(type, name, date, time) {
+        pendingReg = { type, name, date, time };
+        document.getElementById("modalExamName").textContent = name;
+        document.getElementById("modalExamDate").textContent = date;
+        document.getElementById("modalExamTime").textContent = time;
+        openModal("registerModal");
+      }
+
+      function closeModal(modalId) {
+        document.getElementById(modalId).style.display = "none";
+      }
+      function openModal(modalId) {
+        document.getElementById(modalId).style.display = "flex";
+      }
+      function capitalize(s) {
+        if (!s) return "";
+        return s.charAt(0).toUpperCase() + s.slice(1);
+      }
+      document.addEventListener("click", (e) => {
+        if (e.target.classList.contains("modal-overlay"))
+          e.target.style.display = "none";
+      });
     </script>
-</body>
+  </body>
 </html>

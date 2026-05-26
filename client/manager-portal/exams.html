@@ -10,7 +10,30 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="../assets/js/theme.js"></script>
     <script src="../assets/js/auth-guard.js"></script>
-</head>
+    <style>
+      .modal-info-banner {
+        display: flex;
+        gap: 12px;
+        padding: 14px 16px;
+        background: #e3f2fd;
+        border-left: 4px solid #2196f3;
+        border-radius: 6px;
+        margin-bottom: 20px;
+        font-size: 13px;
+        color: #1565c0;
+        align-items: flex-start;
+      }
+      .modal-info-banner .info-icon {
+        font-size: 18px;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+      .modal-info-banner strong {
+        display: block;
+        margin-bottom: 4px;
+      }
+    </style>
+  </head>
 <body class="dashboard-body">
     <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
@@ -122,98 +145,7 @@
                                 <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody id="scheduleBody">
-                            <tr>
-                                <td><span class="badge badge-exam-theory">Theory</span></td>
-                                <td>Private Car (B)</td>
-                                <td>May 05, 2026</td>
-                                <td>09:00 AM</td>
-                                <td>Room 101</td>
-                                <td>Instructor Yonas</td>
-                                <td>12</td>
-                                <td>
-                                    <div class="action-btns">
-                                        <button class="btn-view" onclick="openEditExam(this)">Edit</button>
-                                        <button class="btn-reject" onclick="cancelExam(this)">Cancel</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><span class="badge badge-exam-practical">Practical</span></td>
-                                <td>Motorcycle (A)</td>
-                                <td>May 06, 2026</td>
-                                <td>10:00 AM</td>
-                                <td>Training Ground A</td>
-                                <td>Instructor Liya</td>
-                                <td>8</td>
-                                <td>
-                                    <div class="action-btns">
-                                        <button class="btn-view" onclick="openEditExam(this)">Edit</button>
-                                        <button class="btn-reject" onclick="cancelExam(this)">Cancel</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><span class="badge badge-exam-theory">Theory</span></td>
-                                <td>Heavy Truck (C)</td>
-                                <td>May 08, 2026</td>
-                                <td>08:30 AM</td>
-                                <td>Room 102</td>
-                                <td>Instructor Bekele</td>
-                                <td>10</td>
-                                <td>
-                                    <div class="action-btns">
-                                        <button class="btn-view" onclick="openEditExam(this)">Edit</button>
-                                        <button class="btn-reject" onclick="cancelExam(this)">Cancel</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><span class="badge badge-exam-practical">Practical</span></td>
-                                <td>Bus (D)</td>
-                                <td>May 10, 2026</td>
-                                <td>02:00 PM</td>
-                                <td>Training Ground B</td>
-                                <td>Instructor Marta</td>
-                                <td>7</td>
-                                <td>
-                                    <div class="action-btns">
-                                        <button class="btn-view" onclick="openEditExam(this)">Edit</button>
-                                        <button class="btn-reject" onclick="cancelExam(this)">Cancel</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><span class="badge badge-exam-theory">Theory</span></td>
-                                <td>Transport (E)</td>
-                                <td>May 12, 2026</td>
-                                <td>11:00 AM</td>
-                                <td>Room 103</td>
-                                <td>Instructor Tesfaye</td>
-                                <td>5</td>
-                                <td>
-                                    <div class="action-btns">
-                                        <button class="btn-view" onclick="openEditExam(this)">Edit</button>
-                                        <button class="btn-reject" onclick="cancelExam(this)">Cancel</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><span class="badge badge-exam-practical">Practical</span></td>
-                                <td>Private Car (B)</td>
-                                <td>May 14, 2026</td>
-                                <td>09:30 AM</td>
-                                <td>Training Ground A</td>
-                                <td>Instructor Yonas</td>
-                                <td>11</td>
-                                <td>
-                                    <div class="action-btns">
-                                        <button class="btn-view" onclick="openEditExam(this)">Edit</button>
-                                        <button class="btn-reject" onclick="cancelExam(this)">Cancel</button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
+                        <tbody id="scheduleBody"></tbody>
                     </table>
                 </div>
             </div>
@@ -237,64 +169,7 @@
                                 <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody id="pendingBody">
-                            <tr>
-                                <td><strong>Hana Bekele</strong><br><span class="td-sub">hana@email.com</span></td>
-                                <td><span class="badge badge-exam-theory">Theory</span></td>
-                                <td>Private Car (B)</td>
-                                <td><strong class="score-pass">90%</strong></td>
-                                <td>Apr 28, 2026</td>
-                                <td>Instructor Yonas</td>
-                                <td>
-                                    <div class="action-btns">
-                                        <button class="btn-approve" onclick="approveResult(this)">Approve</button>
-                                        <button class="btn-reject" onclick="rejectResult(this)">Reject</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>Samuel Girma</strong><br><span class="td-sub">samuel@email.com</span></td>
-                                <td><span class="badge badge-exam-practical">Practical</span></td>
-                                <td>Motorcycle (A)</td>
-                                <td><strong class="score-pass">78%</strong></td>
-                                <td>Apr 29, 2026</td>
-                                <td>Instructor Liya</td>
-                                <td>
-                                    <div class="action-btns">
-                                        <button class="btn-approve" onclick="approveResult(this)">Approve</button>
-                                        <button class="btn-reject" onclick="rejectResult(this)">Reject</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>Tigist Haile</strong><br><span class="td-sub">tigist@email.com</span></td>
-                                <td><span class="badge badge-exam-theory">Theory</span></td>
-                                <td>Motorcycle (A)</td>
-                                <td><strong class="score-fail">55%</strong></td>
-                                <td>Apr 29, 2026</td>
-                                <td>Instructor Liya</td>
-                                <td>
-                                    <div class="action-btns">
-                                        <button class="btn-approve" onclick="approveResult(this)">Approve</button>
-                                        <button class="btn-reject" onclick="rejectResult(this)">Reject</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>Dawit Tesfaye</strong><br><span class="td-sub">dawit@email.com</span></td>
-                                <td><span class="badge badge-exam-practical">Practical</span></td>
-                                <td>Heavy Truck (C)</td>
-                                <td><strong class="score-pass">82%</strong></td>
-                                <td>Apr 30, 2026</td>
-                                <td>Instructor Bekele</td>
-                                <td>
-                                    <div class="action-btns">
-                                        <button class="btn-approve" onclick="approveResult(this)">Approve</button>
-                                        <button class="btn-reject" onclick="rejectResult(this)">Reject</button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
+                        <tbody id="pendingBody"></tbody>
                     </table>
                 </div>
             </div>
@@ -318,53 +193,7 @@
                                 <th>Result</th>
                             </tr>
                         </thead>
-                        <tbody id="historyBody">
-                            <tr>
-                                <td><strong>Liya Tadesse</strong></td>
-                                <td><span class="badge badge-exam-theory">Theory</span></td>
-                                <td>Bus (D)</td>
-                                <td><strong class="score-pass">88%</strong></td>
-                                <td>Apr 10, 2026</td>
-                                <td>Instructor Bekele</td>
-                                <td><span class="badge badge-approved">Passed</span></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Meron Alemu</strong></td>
-                                <td><span class="badge badge-exam-practical">Practical</span></td>
-                                <td>Transport (E)</td>
-                                <td><strong class="score-pass">91%</strong></td>
-                                <td>Apr 12, 2026</td>
-                                <td>Instructor Yonas</td>
-                                <td><span class="badge badge-approved">Passed</span></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Biruk Tadesse</strong></td>
-                                <td><span class="badge badge-exam-theory">Theory</span></td>
-                                <td>Private Car (B)</td>
-                                <td><strong class="score-fail">48%</strong></td>
-                                <td>Apr 14, 2026</td>
-                                <td>Instructor Yonas</td>
-                                <td><span class="badge badge-rejected">Failed</span></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Selam Worku</strong></td>
-                                <td><span class="badge badge-exam-practical">Practical</span></td>
-                                <td>Motorcycle (A)</td>
-                                <td><strong class="score-pass">76%</strong></td>
-                                <td>Apr 15, 2026</td>
-                                <td>Instructor Liya</td>
-                                <td><span class="badge badge-approved">Passed</span></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Yonas Bekele</strong></td>
-                                <td><span class="badge badge-exam-theory">Theory</span></td>
-                                <td>Heavy Truck (C)</td>
-                                <td><strong class="score-fail">61%</strong></td>
-                                <td>Apr 16, 2026</td>
-                                <td>Instructor Bekele</td>
-                                <td><span class="badge badge-rejected">Failed</span></td>
-                            </tr>
-                        </tbody>
+                        <tbody id="historyBody"></tbody>
                     </table>
                 </div>
             </div>
@@ -376,6 +205,13 @@
     <div class="modal-overlay" id="examModal">
         <div class="modal modal-wide">
             <h3 id="examModalTitle">Schedule Exam</h3>
+            <div class="modal-info-banner">
+              <span class="info-icon">ℹ️</span>
+              <div>
+                <strong>Schedule New Exam Session</strong><br>
+                <small>Define exam parameters, select instructor and location, then set maximum student capacity.</small>
+              </div>
+            </div>
             <form id="examForm">
                 <div class="form-row-2">
                     <div class="form-group">
@@ -426,23 +262,61 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Max Students</label>
+                    <label class="form-label">Max Students <span style="color: #999;">(Capacity)</span></label>
                     <input type="number" class="form-input" id="eMaxStudents" min="1" max="50" placeholder="e.g. 15" required>
                 </div>
                 <div class="modal-actions">
                     <button type="button" class="btn-close-modal" id="closeExamModal">Cancel</button>
-                    <button type="submit" class="btn-approve">Schedule</button>
+                    <button type="submit" class="btn-approve">Schedule Exam</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <script src="../assets/js/utils.js"></script>
-    <script src="../assets/js/api.js"></script>
-    <script src="../assets/js/auth.js"></script>
-    <script src="../assets/js/modal.js"></script>
+    <script src="../assets/js/auth.js?v=2"></script>
+    <script src="../assets/js/api.js?v=5"></script>
+    <script src="../assets/js/utils.js?v=2"></script>
+    <script src="../assets/js/modal.js?v=2"></script>
+    <script src="../assets/js/dashboard.js?v=2"></script>
+    <!-- Fallback inline API if external file fails to load -->
+    <script>
+      if (!window.api) {
+        window.api = {
+          baseUrl: '/Driver-License-School/server/api',
+          async request(endpoint, options = {}) {
+            try {
+              const token = auth?.getToken?.();
+              const headers = { ...options.headers };
+              if (!(options.body instanceof FormData)) {
+                headers['Content-Type'] = 'application/json';
+              }
+              if (token) {
+                headers['Authorization'] = `Bearer ${token}`;
+              }
+              const response = await fetch(`${this.baseUrl}${endpoint}`, {
+                ...options,
+                headers
+              });
+              if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+              }
+              return await response.json();
+            } catch (error) {
+              console.error('API Error:', error);
+              return { success: false, message: error.message || 'Network error' };
+            }
+          },
+          async get(endpoint, options) { return this.request(endpoint, { ...options, method: 'GET' }); },
+          async post(endpoint, body, options) { return this.request(endpoint, { ...options, method: 'POST', body: body instanceof FormData ? body : JSON.stringify(body) }); },
+          async put(endpoint, body, options) { return this.request(endpoint, { ...options, method: 'PUT', body: body instanceof FormData ? body : JSON.stringify(body) }); },
+          async delete(endpoint, options) { return this.request(endpoint, { ...options, method: 'DELETE' }); }
+        };
+      }
+    </script>
     <script>
         let exams = [];
+        let dropdownData = { students: [], instructors: [], programs: [] };
+        let selectedExamId = null;
 
         async function loadExamsFromAPI() {
             try {
@@ -462,11 +336,8 @@
                 const response = await api.request('/manager/enrollment/getDropdownData.php');
                 if (response.success && response.data) {
                     const { students, instructors, programs } = response.data;
+                    dropdownData = { students, instructors, programs };
                     
-                    const studentSelect = document.createElement('div'); // Not in modal yet, but good for future
-                    
-                    // Actually, the user modal in exams.html uses hardcoded programs
-                    // I'll update the programs select in the modal
                     const pSelect = document.getElementById('eProgram');
                     pSelect.innerHTML = '<option value="">Select program...</option>' + 
                         programs.map(p => `<option value="${p.id}">${p.name}</option>`).join('');
@@ -474,15 +345,30 @@
                     const iSelect = document.getElementById('eInstructor');
                     iSelect.innerHTML = '<option value="">Select instructor...</option>' + 
                         instructors.map(i => `<option value="${i.id}">${i.name}</option>`).join('');
-
-                    // We need a student select in the modal too if it's per student
-                    // The current modal seems to schedule for "all students" or something?
-                    // Usually exams are scheduled for a group or individual. 
-                    // I'll add a Student select to the modal.
                 }
             } catch (error) {
                 console.error('Error loading dropdown data:', error);
             }
+        }
+
+        function openEditExam(id) {
+            selectedExamId = Number(id);
+            const exam = exams.find(item => Number(item.id) === selectedExamId);
+            if (!exam) return;
+            
+            document.getElementById('examModalTitle').textContent = 'Edit Exam';
+            document.getElementById('eType').value = capitalize(exam.exam_type);
+            document.getElementById('eDate').value = exam.scheduled_date ? new Date(exam.scheduled_date).toISOString().slice(0, 10) : '';
+            document.getElementById('eTime').value = exam.scheduled_date ? new Date(exam.scheduled_date).toLocaleTimeString('en-GB', { hour12: false, hour: '2-digit', minute: '2-digit' }) : '';
+            document.getElementById('eLocation').value = exam.location || '';
+            document.getElementById('eMaxStudents').value = exam.max_students || '';
+
+            const instructorSelect = document.getElementById('eInstructor');
+            if (instructorSelect) {
+                instructorSelect.value = exam.conducted_by || '';
+            }
+
+            document.getElementById('examModal').classList.add('open');
         }
 
         function updateStats() {
@@ -599,8 +485,10 @@
             }
         }
 
-        document.addEventListener('DOMContentLoaded', async function () {
-            const user = auth.getCurrentUser();
+        document.addEventListener('DOMContentLoaded', async function () {        // Wait for deferred scripts to load
+        while (!window.api || !window.auth || !window.utils || !window.dashboard) {
+          await new Promise(resolve => setTimeout(resolve, 50));
+        }            const user = auth.getCurrentUser();
             if (!user) { window.location.href = '../login.html'; return; }
             document.getElementById('userName').textContent = user.name || 'Manager';
 
@@ -608,6 +496,17 @@
             await loadDropdownData();
 
             document.getElementById('logoutBtn').addEventListener('click', () => auth.logout());
+
+            // Mobile menu toggle
+            document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+                document.getElementById('sidebar').classList.toggle('active');
+                document.getElementById('sidebarBackdrop').classList.toggle('active');
+            });
+
+            document.getElementById('sidebarBackdrop').addEventListener('click', () => {
+                document.getElementById('sidebar').classList.remove('active');
+                document.getElementById('sidebarBackdrop').classList.remove('active');
+            });
 
             // Tabs
             document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -621,63 +520,92 @@
 
             // Schedule Exam button
             document.getElementById('scheduleExamBtn').addEventListener('click', function () {
+                selectedExamId = null;
                 document.getElementById('examModalTitle').textContent = 'Schedule Exam';
                 document.getElementById('examForm').reset();
-                // Add student select to the form dynamically
-                if (!document.getElementById('eStudent')) {
-                    const row = document.createElement('div');
-                    row.className = 'form-group';
-                    row.style.marginBottom = '16px';
-                    row.innerHTML = `
-                        <label class="form-label">Student</label>
-                        <select class="form-input" id="eStudent" required>
-                            <option value="">Select student...</option>
-                        </select>
-                    `;
-                    document.getElementById('examForm').prepend(row);
-                    // Populate students
-                    api.request('/manager/enrollment/getDropdownData.php').then(res => {
-                        if (res.success) {
-                            document.getElementById('eStudent').innerHTML = '<option value="">Select student...</option>' + 
-                                res.data.students.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
-                        }
-                    });
-                }
+                document.getElementById('eType').value = '';
+                document.getElementById('eProgram').value = '';
+                document.getElementById('eInstructor').value = '';
+                document.getElementById('eLocation').value = '';
+                document.getElementById('eMaxStudents').value = '';
+                // Remove old student select if exists
+                const oldStudent = document.getElementById('eStudent');
+                if (oldStudent) oldStudent.parentElement.remove();
+                
+                // Add student select
+                const row = document.createElement('div');
+                row.className = 'form-group';
+                row.style.marginBottom = '16px';
+                row.innerHTML = `
+                    <label class="form-label">Student</label>
+                    <select class="form-input" id="eStudent" required>
+                        <option value="">Select student...</option>
+                    </select>
+                `;
+                document.getElementById('examForm').prepend(row);
+                
+                // Populate students
+                api.request('/manager/enrollment/getDropdownData.php').then(res => {
+                    if (res.success && res.data && res.data.students) {
+                        document.getElementById('eStudent').innerHTML = '<option value="">Select student...</option>' + 
+                            res.data.students.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+                    }
+                }).catch(err => console.error('Error loading students:', err));
+                
                 document.getElementById('examModal').classList.add('open');
             });
 
             document.getElementById('closeExamModal').addEventListener('click', () => {
+                selectedExamId = null;
                 document.getElementById('examModal').classList.remove('open');
             });
 
             document.getElementById('examForm').addEventListener('submit', async function (e) {
                 e.preventDefault();
-                const data = {
-                    student_id: document.getElementById('eStudent').value,
+                const isUpdating = selectedExamId !== null;
+                const requestData = {
                     exam_type: document.getElementById('eType').value.toLowerCase(),
                     scheduled_date: document.getElementById('eDate').value + ' ' + document.getElementById('eTime').value,
-                    instructor_id: document.getElementById('eInstructor').value
+                    conducted_by: document.getElementById('eInstructor').value ? Number(document.getElementById('eInstructor').value) : null,
+                    location: document.getElementById('eLocation').value,
+                    max_students: Number(document.getElementById('eMaxStudents').value) || 30
                 };
 
                 try {
-                    const response = await api.request('/manager/exams/schedule.php', {
-                        method: 'POST',
-                        body: JSON.stringify(data)
-                    });
+                    let response;
+                    if (isUpdating) {
+                        requestData.id = selectedExamId;
+                        response = await api.request('/manager/exams/update.php', {
+                            method: 'POST',
+                            body: JSON.stringify(requestData)
+                        });
+                    } else {
+                        requestData.student_id = Number(document.getElementById('eStudent').value);
+                        response = await api.request('/manager/exams/schedule.php', {
+                            method: 'POST',
+                            body: JSON.stringify(requestData)
+                        });
+                    }
+
                     if (response.success) {
                         utils.showNotification(response.message, 'success');
                         document.getElementById('examModal').classList.remove('open');
+                        selectedExamId = null;
                         await loadExamsFromAPI();
                     } else {
                         utils.showNotification(response.message, 'error');
                     }
                 } catch (error) {
-                    utils.showNotification('Error scheduling exam', 'error');
+                    console.error('Error saving exam:', error);
+                    utils.showNotification('Error saving exam', 'error');
                 }
             });
 
             document.getElementById('examModal').addEventListener('click', function (e) {
-                if (e.target === this) this.classList.remove('open');
+                if (e.target === this) {
+                    selectedExamId = null;
+                    this.classList.remove('open');
+                }
             });
         });
 

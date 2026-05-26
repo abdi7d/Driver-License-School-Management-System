@@ -1,6 +1,7 @@
 <?php
 include "../../../config/db.php";
 include "../../../includes/auth.php";
+include "../../../includes/notifications.php";
 
 header('Content-Type: application/json');
 
@@ -40,6 +41,7 @@ if (!$stmt) {
 $stmt->bind_param("i", $student_user_id);
 
 if ($stmt->execute()) {
+    notifyUser($conn, $student_user_id, 'Graduation approved', 'Your graduation status has been approved by the manager. Congratulations!');
     echo json_encode(["message" => "Graduation approved successfully"]);
 } else {
     http_response_code(500);

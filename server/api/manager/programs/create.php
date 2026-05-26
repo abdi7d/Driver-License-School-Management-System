@@ -5,30 +5,35 @@ include "../../../includes/auth.php";
 header('Content-Type: application/json');
 
 $user = auth();
-if ($user["role"] !== "manager") {
-    echo json_encode(["error" => "Access denied"]);
+if (!in_array($user["role"], ["manager", "admin"])) {
+    echo json_encode(["success" => false, "message" => "Access denied"]);
     exit;
 }
 
 $data = json_decode(file_get_contents("php://input"), true);
-$name = $data["name"] ?? null;
-$category = $data["category"] ?? null;
-$theory_hours = $data["theory_hours"] ?? 0;
-$practical_hours = $data["practical_hours"] ?? 0;
-$duration_hours = $data["duration_hours"] ?? 0;
-$min_age = $data["min_age"] ?? 18;
-$fee = $data["fee"] ?? 0;
-$description = $data["description"] ?? "";
+$name         = trim($data["name"] ?? "");
+$theory_hours   = intval($data["theory_hours"] ?? 0);
+$practical_hours = intval($data["practical_hours"] ?? 0);
+$fee          = floatval($data["fee"] ?? 0);
 
 if (!$name) {
     echo json_encode(["success" => false, "message" => "Program name is required"]);
     exit;
 }
 
+// Check for duplicate name
+$check = $conn->prepare("SELECT id FROM training_programs WHERE name = ?");
+$check->bind_param("s", $name);
+$check->execute();
+if ($check->get_result()->num_rows > 0) {
+    echo json_encode(["success" => false, "message" => "A program with this name already exists"]);
+    exit;
+}
+
 $created_by = $user["user_id"];
 
-$stmt = $conn->prepare("INSERT INTO training_programs (name, license_category, theory_hours, practical_hours, duration_hours, min_age, fee, description, created_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-$stmt->bind_param("ssiiiidsi", $name, $category, $theory_hours, $practical_hours, $duration_hours, $min_age, $fee, $description, $created_by);
+$stmt = $conn->prepare("INSERT INTO training_programs (name, theory_hours, practical_hours, fee, created_by) VALUES (?, ?, ?, ?, ?)");
+$stmt->bind_param("siidd", $name, $theory_hours, $practical_hours, $fee, $created_by);
 
 if ($stmt->execute()) {
     echo json_encode(["success" => true, "message" => "Program created successfully", "id" => $stmt->insert_id]);

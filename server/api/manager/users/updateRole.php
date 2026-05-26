@@ -1,6 +1,7 @@
 <?php
 include "../../../config/db.php";
 include "../../../includes/auth.php";
+include "../../../includes/notifications.php";
 
 header('Content-Type: application/json');
 
@@ -23,6 +24,7 @@ $stmt = $conn->prepare("UPDATE users SET role = ? WHERE id = ?");
 $stmt->bind_param("si", $role, $user_id);
 
 if ($stmt->execute()) {
+    notifyUser($conn, $user_id, 'Role updated', "Your role has been changed to {$role} by the manager.");
     echo json_encode(["success" => true, "message" => "Role updated successfully"]);
 } else {
     echo json_encode(["success" => false, "message" => "Failed to update role"]);

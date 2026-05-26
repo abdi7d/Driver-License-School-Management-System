@@ -143,91 +143,38 @@
     <script src="../assets/js/auth.js"></script>
     <script src="../assets/js/modal.js"></script>
     <script>
-      let notifications = [
-        {
-          id: 1,
-          type: "approval",
-          icon: "👤",
-          title: "New Student Registration",
-          message: "Abebe Kebede has registered and is awaiting approval.",
-          time: "10 min ago",
-          read: false,
-          link: "approvals.html",
-        },
-        {
-          id: 2,
-          type: "approval",
-          icon: "🎓",
-          title: "Certificate Request",
-          message:
-            "Hana Bekele has completed training and requests a certificate.",
-          time: "30 min ago",
-          read: false,
-          link: "certificates.html",
-        },
-        {
-          id: 3,
-          type: "exam",
-          icon: "📝",
-          title: "Exam Result Pending",
-          message: "Samuel Girma's practical exam result needs your approval.",
-          time: "1 hour ago",
-          read: false,
-          link: "exams.html",
-        },
-        {
-          id: 4,
-          type: "approval",
-          icon: "📋",
-          title: "Enrollment Request",
-          message: "Tigist Haile has applied for Motorcycle (A) program.",
-          time: "2 hours ago",
-          read: false,
-          link: "enrollments.html",
-        },
-        {
-          id: 5,
-          type: "system",
-          icon: "⚠️",
-          title: "System Alert",
-          message: "Instructor Marta's account has been inactive for 30 days.",
-          time: "3 hours ago",
-          read: false,
-          link: "users.html",
-        },
-        {
-          id: 6,
-          type: "exam",
-          icon: "📅",
-          title: "Exam Scheduled",
-          message: "Theory exam for Private Car (B) scheduled on May 05, 2026.",
-          time: "Yesterday",
-          read: true,
-          link: "exams.html",
-        },
-        {
-          id: 7,
-          type: "system",
-          icon: "⚠️",
-          title: "Low Pass Rate Alert",
-          message: "Transport (E) program has a 57% pass rate this month.",
-          time: "Yesterday",
-          read: true,
-          link: "reports.html",
-        },
-        {
-          id: 8,
-          type: "approval",
-          icon: "✅",
-          title: "Registration Approved",
-          message: "You approved Liya Tadesse's registration successfully.",
-          time: "2 days ago",
-          read: true,
-          link: "approvals.html",
-        },
-      ];
-
+      let notifications = [];
       let activeFilter = "all";
+
+      function formatRelativeTime(timestamp) {
+        if (!timestamp) return "Just now";
+        const date = new Date(timestamp);
+        const now = new Date();
+        const diffMs = now - date;
+        const diffMins = Math.floor(diffMs / 60000);
+        if (diffMins < 1) return "Just now";
+        if (diffMins < 60) return `${diffMins} min ago`;
+        const diffHours = Math.floor(diffMins / 60);
+        if (diffHours < 24)
+          return `${diffHours} hour${diffHours > 1 ? "s" : ""} ago`;
+        const diffDays = Math.floor(diffHours / 24);
+        return `${diffDays} day${diffDays > 1 ? "s" : ""} ago`;
+      }
+
+      function normalizeNotification(notification) {
+        return {
+          id: notification.id,
+          type: notification.type || "system",
+          icon: notification.icon || "🔔",
+          title: notification.title,
+          message: notification.message,
+          time: formatRelativeTime(
+            notification.created_at || notification.time,
+          ),
+          read: notification.is_read === 1 || notification.read === true,
+          link: notification.link || "#",
+        };
+      }
 
       function renderNotifications() {
         const list = document.getElementById("notifList");
@@ -268,12 +215,28 @@
         updateStats();
       }
 
-      function markRead(id) {
-        const n = notifications.find((x) => x.id === id);
-        if (n) {
-          n.read = true;
-          renderNotifications();
+      async function markRead(id) {
+        const notification = notifications.find((x) => x.id === id);
+        if (!notification || notification.read) return;
+
+        try {
+          const response = await api.put("/manager/notifications", { id });
+          if (response.success) {
+            notification.read = true;
+            renderNotifications();
+          }
+        } catch (error) {
+          console.error("Failed to mark notification read:", error);
         }
+      }
+
+      async function markAllRead() {
+        const unread = notifications.filter((n) => !n.read);
+        await Promise.all(
+          unread.map((n) => api.put("/manager/notifications", { id: n.id })),
+        );
+        notifications = notifications.map((n) => ({ ...n, read: true }));
+        renderNotifications();
       }
 
       function updateStats() {
@@ -298,9 +261,13 @@
         // Load notifications from API
         try {
           const response = await api.get("/manager/notifications");
-          if (response.success && response.data) {
-            notifications = response.data;
-            console.log("Notifications loaded from API:", notifications);
+          if (response.success && Array.isArray(response.data)) {
+            notifications = response.data.map(normalizeNotification);
+          } else {
+            console.error(
+              "Unable to load notifications:",
+              response.message || response,
+            );
           }
         } catch (error) {
           console.error("Error loading notifications:", error);
@@ -311,8 +278,6 @@
         document
           .getElementById("logoutBtn")
           .addEventListener("click", () => auth.logout());
-
-        // Mobile menu is auto-initialized by dashboard.js
 
         // Filter tabs
         document.querySelectorAll(".tab-btn").forEach((btn) => {
@@ -329,10 +294,7 @@
         // Mark all read
         document
           .getElementById("markAllBtn")
-          .addEventListener("click", function () {
-            notifications.forEach((n) => (n.read = true));
-            renderNotifications();
-          });
+          .addEventListener("click", markAllRead);
       });
     </script>
   </body>

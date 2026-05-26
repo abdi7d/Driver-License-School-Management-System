@@ -6,6 +6,12 @@ const Modal = {
             modal.style.display = 'flex';
             modal.classList.remove('hidden');
             modal.classList.add('open');
+            // Also show any .modal child elements
+            const modalChild = modal.querySelector('.modal');
+            if (modalChild) {
+                modalChild.style.display = 'flex';
+                modalChild.classList.add('active');
+            }
             document.body.style.overflow = 'hidden';
         }
     },
@@ -16,6 +22,12 @@ const Modal = {
             modal.style.display = 'none';
             modal.classList.add('hidden');
             modal.classList.remove('open');
+            // Also hide any .modal child elements
+            const modalChild = modal.querySelector('.modal');
+            if (modalChild) {
+                modalChild.style.display = 'none';
+                modalChild.classList.remove('active');
+            }
             document.body.style.overflow = '';
         }
     },
@@ -211,6 +223,8 @@ const Modal = {
         observer.observe(modal, { attributes: true, attributeFilter: ['style'] });
     }
 };
+
+window.Modal = Modal;
 
 
 document.addEventListener('click', function(e) {

@@ -9,7 +9,8 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'OPTIONS') {
     exit;
 }
 
-include_once __DIR__ . '/../../config/db.php';
+require_once __DIR__ . '/../../config/database.php'; // returns PDO instance as $pdo
+include_once __DIR__ . '/../../includes/audit.php';
 
 if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
     http_response_code(405);
@@ -18,7 +19,6 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
 }
 
 $data = json_decode(file_get_contents('php://input'), true);
-
 if (!is_array($data)) {
     http_response_code(400);
     echo json_encode(['success' => false, 'message' => 'No data provided']);
@@ -32,6 +32,7 @@ $phone = trim($data['phone'] ?? '');
 $password = (string)($data['password'] ?? '');
 $role = 'student';
 
+// Additional student specific fields (optional)
 $nationalId = trim($data['national_id'] ?? $data['nationalId'] ?? '');
 $dob = trim($data['date_of_birth'] ?? $data['dateOfBirth'] ?? '');
 $region = trim($data['region'] ?? '');
@@ -39,69 +40,67 @@ $city = trim($data['city'] ?? '');
 $licenseClass = trim($data['license_class'] ?? $data['licenseClass'] ?? '');
 $experience = trim($data['experience'] ?? '');
 
+// Basic validation
 if ($firstName === '' || $lastName === '' || $email === '' || $password === '') {
     http_response_code(422);
     echo json_encode(['success' => false, 'message' => 'Required fields missing']);
     exit;
 }
-
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     http_response_code(422);
     echo json_encode(['success' => false, 'message' => 'Invalid email address']);
     exit;
 }
-
 if (strlen($password) < 8) {
     http_response_code(422);
     echo json_encode(['success' => false, 'message' => 'Password must be at least 8 characters']);
     exit;
 }
 
-$checkStmt = $conn->prepare('SELECT id FROM users WHERE email = ? LIMIT 1');
-$checkStmt->bind_param('s', $email);
-$checkStmt->execute();
-
-if ($checkStmt->get_result()->num_rows > 0) {
+// Ensure email uniqueness
+$checkStmt = $pdo->prepare('SELECT id FROM users WHERE email = ? LIMIT 1');
+$checkStmt->execute([$email]);
+if ($checkStmt->rowCount() > 0) {
     http_response_code(409);
     echo json_encode(['success' => false, 'message' => 'Email already registered']);
     exit;
 }
 
 $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-$status = 'pending';
+$status = 'pending'; // user status pending approval
 
-$conn->begin_transaction();
-
+$pdo->beginTransaction();
 try {
-    $stmt = $conn->prepare('INSERT INTO users (first_name, last_name, email, phone, password_hash, role, status) VALUES (?, ?, ?, ?, ?, ?, ?)');
-    $stmt->bind_param('sssssss', $firstName, $lastName, $email, $phone, $passwordHash, $role, $status);
+    // Insert into users table
+    $stmt = $pdo->prepare('INSERT INTO users (first_name, last_name, email, phone, password_hash, role, status) VALUES (?, ?, ?, ?, ?, ?, ?)');
+    $stmt->execute([$firstName, $lastName, $email, $phone, $passwordHash, $role, $status]);
+    $userId = $pdo->lastInsertId();
 
-    if (!$stmt->execute()) {
-        throw new Exception('Failed to create user account');
-    }
+    // Insert into students table (pending enrollment status)
+    $studentStmt = $pdo->prepare('INSERT INTO students (user_id, program_id, enrollment_status, graduation_status) VALUES (?, NULL, ?, "in_progress")');
+    $studentStmt->execute([$userId, 'pending']);
+    $studentId = $pdo->lastInsertId();
 
-    $userId = $conn->insert_id;
-
-    $detailsStmt = $conn->prepare('INSERT INTO student_details (user_id, national_id, date_of_birth, region, city, license_class, experience_level) VALUES (?, ?, ?, ?, ?, ?, ?)');
-    $detailsStmt->bind_param('issssss', $userId, $nationalId, $dob, $region, $city, $licenseClass, $experience);
-
-    if (!$detailsStmt->execute()) {
-        throw new Exception('Failed to save student details');
-    }
-
-    $conn->commit();
+    // Optional: store additional details in a separate table if needed (not required for pending flow)
+    // Commit transaction
+    $pdo->commit();
 
     echo json_encode([
         'success' => true,
         'message' => 'Registration successful. Your account is pending approval.',
         'user_id' => $userId,
+        'student_id' => $studentId,
         'role' => $role,
-        'status' => $status,
-        'next_step' => 'registration-pending',
-        'redirect_to' => 'registration-pending.html'
+        'status' => $status
     ]);
+    // Audit log (PDO)
+    try {
+        log_audit($pdo, (int)$userId, 'register', 'New user registered: ' . $email);
+    } catch (Exception $e) {
+        // ignore audit failures
+    }
 } catch (Exception $e) {
-    $conn->rollback();
+    $pdo->rollBack();
     http_response_code(500);
     echo json_encode(['success' => false, 'message' => $e->getMessage()]);
 }

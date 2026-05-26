@@ -1,461 +1,650 @@
-﻿<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Notifications - DLSM Ethiopia Student Portal"
+    />
     <title>Notifications - DLSM Ethiopia</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/responsive.css">
-    <link rel="stylesheet" href="../assets/css/dark-mode.css">
-    <link rel="stylesheet" href="../assets/css/i18n.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link rel="stylesheet" href="../assets/css/responsive.css" />
+    <link rel="stylesheet" href="../assets/css/dark-mode.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <script src="../assets/js/theme.js"></script>
-    <script src="../assets/js/i18n.js"></script>
     <script src="../assets/js/auth-guard.js"></script>
-</head>
-<body class="dashboard-body">
-    
+    <script>
+      (function () {
+        if (!localStorage.getItem("token"))
+          window.location.href = "../login.html";
+      })();
+    </script>
+    <style>
+      .btn-filter {
+        padding: 8px 16px;
+        border: 2px solid #e2e8f0;
+        background: white;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .btn-filter:hover {
+        border-color: #1e40af;
+        color: #1e40af;
+      }
+      .btn-filter.active {
+        background: #1e40af;
+        color: white;
+        border-color: #1e40af;
+      }
+      .dark-mode .btn-filter {
+        background: #1e293b;
+        border-color: #334155;
+        color: #e2e8f0;
+      }
+      .dark-mode .btn-filter.active {
+        background: #1e40af;
+        border-color: #1e40af;
+      }
+
+      .notif-toolbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 20px;
+      }
+      .notif-filters {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .notif-actions {
+        display: flex;
+        gap: 8px;
+      }
+      .btn-mark-all {
+        padding: 8px 16px;
+        background: transparent;
+        border: 2px solid #1e40af;
+        color: #1e40af;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .btn-mark-all:hover {
+        background: #1e40af;
+        color: white;
+      }
+
+      .notifications-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .notif-card {
+        background: white;
+        border-radius: 12px;
+        padding: 16px 20px;
+        display: flex;
+        gap: 16px;
+        align-items: flex-start;
+        cursor: pointer;
+        transition: all 0.2s;
+        border: 2px solid transparent;
+        position: relative;
+      }
+      .notif-card:hover {
+        border-color: #1e40af;
+        transform: translateX(4px);
+      }
+      .notif-card.unread {
+        background: #f0f9ff;
+        border-color: #bfdbfe;
+      }
+      .dark-mode .notif-card {
+        background: #1e293b;
+      }
+      .dark-mode .notif-card.unread {
+        background: #1e3a5f;
+        border-color: #1e40af;
+      }
+
+      .notif-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        flex-shrink: 0;
+        background: #f1f5f9;
+      }
+      .notif-content {
+        flex: 1;
+        min-width: 0;
+      }
+      .notif-title {
+        font-size: 15px;
+        font-weight: 600;
+        color: #1e293b;
+        margin: 0 0 4px;
+      }
+      .dark-mode .notif-title {
+        color: #f1f5f9;
+      }
+      .notif-message {
+        font-size: 13px;
+        color: #64748b;
+        line-height: 1.5;
+        margin: 0 0 6px;
+      }
+      .dark-mode .notif-message {
+        color: #cbd5e1;
+      }
+      .notif-meta {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+      .notif-time {
+        font-size: 11px;
+        color: #94a3b8;
+      }
+      .new-badge {
+        background: #1e40af;
+        color: white;
+        padding: 2px 8px;
+        border-radius: 10px;
+        font-size: 10px;
+        font-weight: 700;
+      }
+
+      .notif-btn-group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        align-items: flex-end;
+        flex-shrink: 0;
+      }
+      .btn-notif-action {
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-size: 11px;
+        font-weight: 600;
+        cursor: pointer;
+        border: 1px solid;
+        transition: all 0.2s;
+        white-space: nowrap;
+      }
+      .btn-read-toggle {
+        background: transparent;
+        border-color: #1e40af;
+        color: #1e40af;
+      }
+      .btn-read-toggle:hover {
+        background: #1e40af;
+        color: white;
+      }
+      .btn-delete-notif {
+        background: transparent;
+        border-color: #ef4444;
+        color: #ef4444;
+      }
+      .btn-delete-notif:hover {
+        background: #ef4444;
+        color: white;
+      }
+
+      .notif-empty {
+        text-align: center;
+        padding: 60px 20px;
+        color: #64748b;
+      }
+      .notif-empty .empty-icon {
+        font-size: 4rem;
+        margin-bottom: 16px;
+      }
+      .notif-loading {
+        text-align: center;
+        padding: 40px;
+        color: #64748b;
+      }
+
+      .notif-date-header {
+        font-size: 12px;
+        font-weight: 700;
+        color: #64748b;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        padding: 8px 0 4px;
+      }
+    </style>
+  </head>
+  <body class="dashboard-body">
     <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
-    
-    
+
     <aside class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <div class="sidebar-logo">
-                <img src="../assets/images/logo-DLSM.jpg" alt="DLSM Logo" class="logo-icon" style="height: 32px; width: auto; border-radius: 6px;">
-                <span class="logo-text">DLSM</span>
-            </div>
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <img
+            src="../assets/images/logo-DLSM.jpg"
+            alt="DLSM Logo"
+            class="logo-icon"
+            style="height: 32px; width: auto; border-radius: 6px"
+          />
+          <span class="logo-text">DLSM</span>
         </div>
-
-        <nav class="sidebar-nav">
-            <a href="dashboard.html" class="nav-item" data-i18n="student.dashboard">
-                <span class="nav-icon">📊</span>
-                <span class="nav-text">Dashboard</span>
-            </a>
-            <a href="profile.html" class="nav-item" data-i18n="student.myProfile">
-                <span class="nav-icon">👤</span>
-                <span class="nav-text">My Profile</span>
-            </a>
-            <a href="schedule.html" class="nav-item" data-i18n="student.schedule">
-                <span class="nav-icon">📅</span>
-                <span class="nav-text">Schedule</span>
-            </a>
-            <a href="progress.html" class="nav-item" data-i18n="student.progress">
-                <span class="nav-icon">📈</span>
-                <span class="nav-text">My Progress</span>
-            </a>
-            <a href="exams.html" class="nav-item" data-i18n="student.exams">
-                <span class="nav-icon">📝</span>
-                <span class="nav-text">Exams</span>
-            </a>
-            <a href="certificate.html" class="nav-item" data-i18n="student.certificate">
-                <span class="nav-icon">🎓</span>
-                <span class="nav-text">Certificate</span>
-            </a>
-            <a href="notifications.html" class="nav-item active" data-i18n="common.notifications">
-                <span class="nav-icon">🔔</span>
-                <span class="nav-text">Notifications</span>
-            </a>
-        </nav>
-
-        <div class="sidebar-footer">
-            <button class="btn-logout" id="logoutBtn" data-i18n="common.logout">
-                <span class="nav-icon">🚪</span>
-                <span class="nav-text">Logout</span>
-            </button>
-        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-item"
+          ><span class="nav-icon">📊</span
+          ><span class="nav-text">Dashboard</span></a
+        >
+        <a href="profile.html" class="nav-item"
+          ><span class="nav-icon">👤</span
+          ><span class="nav-text">My Profile</span></a
+        >
+        <a href="schedule.html" class="nav-item"
+          ><span class="nav-icon">📅</span
+          ><span class="nav-text">Schedule</span></a
+        >
+        <a href="progress.html" class="nav-item"
+          ><span class="nav-icon">📈</span
+          ><span class="nav-text">My Progress</span></a
+        >
+        <a href="exams.html" class="nav-item"
+          ><span class="nav-icon">📝</span
+          ><span class="nav-text">Exams</span></a
+        >
+        <a href="certificate.html" class="nav-item"
+          ><span class="nav-icon">🎓</span
+          ><span class="nav-text">Certificate</span></a
+        >
+        <a href="notifications.html" class="nav-item active"
+          ><span class="nav-icon">🔔</span
+          ><span class="nav-text">Notifications</span></a
+        >
+      </nav>
+      <div class="sidebar-footer">
+        <button class="btn-logout" id="logoutBtn">
+          <span class="nav-icon">🚪</span><span class="nav-text">Logout</span>
+        </button>
+      </div>
     </aside>
 
-    
     <main class="main-content">
-        
-        <header class="topbar">
-            <div class="topbar-left">
-                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
-                <div>
-                    <h1 class="page-title" data-i18n="common.notifications">Notifications</h1>
-                    <p class="page-subtitle" data-i18n="student.notificationsSubtitle">Stay updated with your training activities</p>
-                </div>
-            </div>
-            <div class="topbar-right">
-                <div class="language-switcher">
-                    <span class="language-icon">🌍</span>
-                    <select id="languageSelect" onchange="i18n.changeLanguage(this.value)">
-                        <option value="en">English</option>
-                        <option value="am">አማርኛ</option>
-                        <option value="or">Afaan Oromo</option>
-                    </select>
-                </div>
-                <button class="btn-icon" id="themeToggle" title="Toggle Dark Mode">🌙</button>
-                <div class="user-info">
-                    <span class="user-name" id="userName">Loading...</span>
-                    <span class="user-role">Student</span>
-                </div>
-            </div>
-        </header>
-
-        
-        <div class="content-wrapper">
-            
-            <div class="card" style="margin-bottom: 24px;">
-                <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-                    <button class="btn-filter active" data-filter="all">All (12)</button>
-                    <button class="btn-filter" data-filter="schedule">Schedule (5)</button>
-                    <button class="btn-filter" data-filter="exam">Exams (3)</button>
-                    <button class="btn-filter" data-filter="result">Results (2)</button>
-                    <button class="btn-filter" data-filter="announcement">Announcements (2)</button>
-                </div>
-            </div>
-
-            
-            <div class="notifications-container">
-                
-                <div class="notification-group">
-                    <h3 class="notification-date">Today</h3>
-                    
-                    <div class="notification-card unread" data-type="schedule">
-                        <div class="notification-icon schedule-icon">📅</div>
-                        <div class="notification-content">
-                            <h4 class="notification-title">Practical Training Session Scheduled</h4>
-                            <p class="notification-message">Your practical driving session with Instructor Ahmed is scheduled for tomorrow at 9:00 AM.</p>
-                            <span class="notification-time">2 hours ago</span>
-                        </div>
-                        <div class="notification-badge">New</div>
-                    </div>
-
-                    <div class="notification-card unread" data-type="exam">
-                        <div class="notification-icon exam-icon">📝</div>
-                        <div class="notification-content">
-                            <h4 class="notification-title">Theory Exam Results Available</h4>
-                            <p class="notification-message">Your theory exam results have been published. Click to view your score.</p>
-                            <span class="notification-time">5 hours ago</span>
-                        </div>
-                        <div class="notification-badge">New</div>
-                    </div>
-                </div>
-
-                
-                <div class="notification-group">
-                    <h3 class="notification-date">Yesterday</h3>
-                    
-                    <div class="notification-card" data-type="schedule">
-                        <div class="notification-icon schedule-icon">📅</div>
-                        <div class="notification-content">
-                            <h4 class="notification-title">Training Session Completed</h4>
-                            <p class="notification-message">You have successfully completed your practical training session. Great job!</p>
-                            <span class="notification-time">Yesterday at 3:30 PM</span>
-                        </div>
-                    </div>
-
-                    <div class="notification-card" data-type="announcement">
-                        <div class="notification-icon announcement-icon">📢</div>
-                        <div class="notification-content">
-                            <h4 class="notification-title">Important: Exam Schedule Update</h4>
-                            <p class="notification-message">The practical exam dates have been updated. Please check your exam schedule.</p>
-                            <span class="notification-time">Yesterday at 10:00 AM</span>
-                        </div>
-                    </div>
-                </div>
-
-                
-                <div class="notification-group">
-                    <h3 class="notification-date">This Week</h3>
-                    
-                    <div class="notification-card" data-type="result">
-                        <div class="notification-icon result-icon">✅</div>
-                        <div class="notification-content">
-                            <h4 class="notification-title">Progress Milestone Achieved</h4>
-                            <p class="notification-message">Congratulations! You've completed 75% of your theoretical training.</p>
-                            <span class="notification-time">3 days ago</span>
-                        </div>
-                    </div>
-
-                    <div class="notification-card" data-type="schedule">
-                        <div class="notification-icon schedule-icon">📅</div>
-                        <div class="notification-content">
-                            <h4 class="notification-title">New Training Sessions Added</h4>
-                            <p class="notification-message">3 new practical training sessions have been added to your schedule.</p>
-                            <span class="notification-time">4 days ago</span>
-                        </div>
-                    </div>
-
-                    <div class="notification-card" data-type="exam">
-                        <div class="notification-icon exam-icon">📝</div>
-                        <div class="notification-content">
-                            <h4 class="notification-title">Exam Registration Open</h4>
-                            <p class="notification-message">Registration for the next theory exam is now open. Register before the deadline.</p>
-                            <span class="notification-time">5 days ago</span>
-                        </div>
-                    </div>
-                </div>
-
-                
-                <div class="notification-group">
-                    <h3 class="notification-date">Older</h3>
-                    
-                    <div class="notification-card" data-type="announcement">
-                        <div class="notification-icon announcement-icon">📢</div>
-                        <div class="notification-content">
-                            <h4 class="notification-title">Welcome to DLSM</h4>
-                            <p class="notification-message">Welcome to Driver License School Management System. We're excited to have you!</p>
-                            <span class="notification-time">2 weeks ago</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+          <div>
+            <h1 class="page-title">Notifications</h1>
+            <p class="page-subtitle">
+              Stay updated with your training activities
+            </p>
+          </div>
         </div>
+        <div class="topbar-right">
+          <div class="user-profile">
+            <div class="user-avatar" id="topbarAvatar">👤</div>
+            <div class="user-info">
+              <span class="user-name" id="userName">Loading...</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="dashboard-container">
+        <!-- Toolbar: filters + mark all read -->
+        <div class="notif-toolbar">
+          <div class="notif-filters" id="filterButtons">
+            <button class="btn-filter active" data-filter="all">
+              All <span id="filterCount-all"></span>
+            </button>
+            <button class="btn-filter" data-filter="unread">
+              Unread <span id="filterCount-unread"></span>
+            </button>
+            <button class="btn-filter" data-filter="read">Read</button>
+          </div>
+          <div class="notif-actions">
+            <button
+              class="btn-mark-all"
+              id="markAllReadBtn"
+              title="Mark all as read"
+            >
+              ✓ Mark All as Read
+            </button>
+          </div>
+        </div>
+
+        <!-- Loading state -->
+        <div class="notif-loading" id="notifLoading">
+          <div style="font-size: 2rem; margin-bottom: 8px">🔄</div>
+          <p>Loading notifications...</p>
+        </div>
+
+        <!-- Notifications list -->
+        <div
+          class="notifications-wrapper"
+          id="notificationsWrapper"
+          style="display: none"
+        ></div>
+
+        <!-- Empty state -->
+        <div class="notif-empty" id="notifEmpty" style="display: none">
+          <div class="empty-icon">🔔</div>
+          <h3 style="margin: 0 0 8px; color: #1e293b">No notifications</h3>
+          <p style="margin: 0; font-size: 14px">
+            You're all caught up! Check back later for updates.
+          </p>
+        </div>
+      </div>
     </main>
+
+    <div id="toast" class="toast"></div>
 
     <script src="../assets/js/utils.js"></script>
     <script src="../assets/js/api.js"></script>
     <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/dashboard.js"></script>
     <script>
-        // Initialize
-        document.addEventListener('DOMContentLoaded', async function() {
-            // Load user info
-            const user = auth.getCurrentUser();
-            if (user) {
-                document.getElementById('userName').textContent = user.name;
-            }
+      let allNotifications = [];
+      let currentFilter = "all";
 
-            // Load notifications from API
-            await loadNotifications();
+      document.addEventListener("DOMContentLoaded", async function () {
+        const user = dashboard.init({ requiredRole: "student" });
+        if (!user) return;
+        document.getElementById("userName").textContent =
+          user.name || "Student";
 
+        // Mobile menu
+        const menuBtn = document.getElementById("mobileMenuBtn");
+        const sidebar = document.getElementById("sidebar");
+        const backdrop = document.getElementById("sidebarBackdrop");
+        if (menuBtn)
+          menuBtn.addEventListener("click", () => {
+            sidebar.classList.toggle("open");
+            backdrop.classList.toggle("visible");
+          });
+        if (backdrop)
+          backdrop.addEventListener("click", () => {
+            sidebar.classList.remove("open");
+            backdrop.classList.remove("visible");
+          });
 
+        document
+          .getElementById("logoutBtn")
+          .addEventListener("click", () => auth.logout());
 
-            // Mobile menu is auto-initialized by dashboard.js
-
-            // Filter functionality
-            const filterBtns = document.querySelectorAll('.btn-filter');
-            const notificationCards = document.querySelectorAll('.notification-card');
-
-            filterBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    // Update active button
-                    filterBtns.forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-
-                    // Filter notifications
-                    const filter = this.dataset.filter;
-                    notificationCards.forEach(card => {
-                        if (filter === 'all' || card.dataset.type === filter) {
-                            card.style.display = 'flex';
-                        } else {
-                            card.style.display = 'none';
-                        }
-                    });
-                });
-            });
-
-            // Mark as read on click
-            notificationCards.forEach(card => {
-                card.addEventListener('click', function() {
-                    this.classList.remove('unread');
-                    const badge = this.querySelector('.notification-badge');
-                    if (badge) {
-                        badge.remove();
-                    }
-                });
-            });
+        // Filter buttons
+        document.querySelectorAll(".btn-filter").forEach((btn) => {
+          btn.addEventListener("click", function () {
+            document
+              .querySelectorAll(".btn-filter")
+              .forEach((b) => b.classList.remove("active"));
+            this.classList.add("active");
+            currentFilter = this.dataset.filter;
+            renderNotifications();
+          });
         });
 
-        // Load notifications from API
-        async function loadNotifications() {
-            try {
-                const response = await api.get('/notifications');
-                if (response.success && response.data) {
-                    console.log('Notifications loaded from API:', response.data);
-                    populateNotifications(response.data);
-                }
-            } catch (error) {
-                console.error('Error loading notifications:', error);
-            }
+        // Mark all as read
+        document
+          .getElementById("markAllReadBtn")
+          .addEventListener("click", markAllRead);
+
+        await loadNotifications();
+      });
+
+      async function loadNotifications() {
+        document.getElementById("notifLoading").style.display = "block";
+        document.getElementById("notificationsWrapper").style.display = "none";
+        document.getElementById("notifEmpty").style.display = "none";
+
+        try {
+          const res = await api.request("/notifications.php");
+          if (res && res.success) {
+            allNotifications = res.data || [];
+            updateFilterCounts();
+            renderNotifications();
+          } else {
+            console.error("Failed to load notifications:", res);
+            showError("Failed to load notifications.");
+          }
+        } catch (err) {
+          console.error("Notification load error:", err);
+          showError("Could not connect to server.");
+        } finally {
+          document.getElementById("notifLoading").style.display = "none";
+        }
+      }
+
+      function updateFilterCounts() {
+        const total = allNotifications.length;
+        const unread = allNotifications.filter((n) => !n.is_read).length;
+        const el = document.getElementById("filterCount-all");
+        if (el) el.textContent = total > 0 ? `(${total})` : "";
+        const uel = document.getElementById("filterCount-unread");
+        if (uel) uel.textContent = unread > 0 ? `(${unread})` : "";
+      }
+
+      function renderNotifications() {
+        const wrapper = document.getElementById("notificationsWrapper");
+        const empty = document.getElementById("notifEmpty");
+
+        let filtered = allNotifications;
+        if (currentFilter === "unread")
+          filtered = allNotifications.filter((n) => !n.is_read);
+        if (currentFilter === "read")
+          filtered = allNotifications.filter((n) => n.is_read);
+
+        if (filtered.length === 0) {
+          wrapper.style.display = "none";
+          empty.style.display = "block";
+          return;
         }
 
-        function populateNotifications(notifications) {
-            const container = document.querySelector('.notifications-list');
-            if (!container) return;
+        empty.style.display = "none";
+        wrapper.style.display = "flex";
 
-            if (notifications.length === 0) {
-                container.innerHTML = '<div style="text-align: center; padding: 40px; color: #64748b;">No notifications</div>';
-                return;
+        // Group by date
+        const groups = {};
+        filtered.forEach((n) => {
+          const label = getDateGroup(n.created_at);
+          if (!groups[label]) groups[label] = [];
+          groups[label].push(n);
+        });
+
+        wrapper.innerHTML = Object.entries(groups)
+          .map(
+            ([label, notifs]) => `
+            <div>
+                <div class="notif-date-header">${label}</div>
+                ${notifs.map((n) => renderNotifCard(n)).join("")}
+            </div>
+        `,
+          )
+          .join("");
+
+        // Bind events
+        wrapper.querySelectorAll(".notif-card").forEach((card) => {
+          card.addEventListener("click", function (e) {
+            // Don't trigger card click when action button clicked
+            if (e.target.closest(".btn-notif-action")) return;
+            const id = parseInt(this.dataset.id);
+            if (this.classList.contains("unread")) {
+              toggleRead(id, true);
             }
+          });
+        });
 
-            container.innerHTML = notifications.map(notif => `
-                <div class="notification-item ${notif.read ? 'read' : 'unread'}">
-                    <div class="notif-icon">${notif.icon || '📢'}</div>
-                    <div class="notif-content">
-                        <h4 class="notif-title">${notif.title}</h4>
-                        <p class="notif-message">${notif.message}</p>
-                        <span class="notif-time">${notif.time}</span>
-                    </div>
-                    <button class="btn-icon" onclick="markAsRead(${notif.id})" title="Mark as read">✓</button>
+        wrapper.querySelectorAll(".btn-read-toggle").forEach((btn) => {
+          btn.addEventListener("click", function (e) {
+            e.stopPropagation();
+            const id = parseInt(this.dataset.id);
+            const isRead = this.dataset.isRead === "1";
+            toggleRead(id, !isRead);
+          });
+        });
+
+        wrapper.querySelectorAll(".btn-delete-notif").forEach((btn) => {
+          btn.addEventListener("click", function (e) {
+            e.stopPropagation();
+            const id = parseInt(this.dataset.id);
+            deleteNotification(id);
+          });
+        });
+      }
+
+      function renderNotifCard(n) {
+        const icons = {
+          schedule: "📅",
+          exam: "📝",
+          result: "✅",
+          announcement: "📢",
+          payment: "💳",
+        };
+        const icon = icons[n.type] || "🔔";
+        const isUnread = !n.is_read;
+
+        return `
+        <div class="notif-card ${isUnread ? "unread" : ""}" data-id="${n.id}">
+            <div class="notif-icon">${icon}</div>
+            <div class="notif-content">
+                <p class="notif-title">${escapeHtml(n.title)}</p>
+                <p class="notif-message">${escapeHtml(n.message)}</p>
+                <div class="notif-meta">
+                    <span class="notif-time">${timeAgo(n.created_at)}</span>
+                    ${isUnread ? '<span class="new-badge">NEW</span>' : ""}
                 </div>
-            `).join('');
-        }
+            </div>
+            <div class="notif-btn-group">
+                <button class="btn-notif-action btn-read-toggle"
+                        data-id="${n.id}" data-is-read="${n.is_read ? "1" : "0"}"
+                        title="${isUnread ? "Mark as read" : "Mark as unread"}">
+                    ${isUnread ? "✓ Mark Read" : "↺ Mark Unread"}
+                </button>
+                <button class="btn-notif-action btn-delete-notif" data-id="${n.id}" title="Delete notification">
+                    🗑 Delete
+                </button>
+            </div>
+        </div>`;
+      }
 
-        function markAsRead(notifId) {
-            console.log('Marking notification as read:', notifId);
-            utils.showNotification('Notification marked as read', 'success');
+      async function toggleRead(id, markRead) {
+        try {
+          const res = await api.request("/notifications.php", {
+            method: "PUT",
+            body: JSON.stringify({ id, is_read: markRead ? 1 : 0 }),
+          });
+          if (res && res.success) {
+            const n = allNotifications.find((x) => x.id == id);
+            if (n) n.is_read = markRead ? 1 : 0;
+            updateFilterCounts();
+            renderNotifications();
+          } else {
+            utils.showNotification("Failed to update notification", "error");
+          }
+        } catch (err) {
+          utils.showNotification("Error updating notification", "error");
         }
+      }
+
+      async function markAllRead() {
+        try {
+          const res = await api.request("/notifications.php", {
+            method: "PUT",
+            body: JSON.stringify({ mark_all_read: true }),
+          });
+          if (res && res.success) {
+            allNotifications.forEach((n) => (n.is_read = 1));
+            updateFilterCounts();
+            renderNotifications();
+            utils.showNotification(
+              "All notifications marked as read",
+              "success",
+            );
+          } else {
+            utils.showNotification("Failed to mark all as read", "error");
+          }
+        } catch (err) {
+          utils.showNotification("Error updating notifications", "error");
+        }
+      }
+
+      async function deleteNotification(id) {
+        try {
+          const res = await api.request("/notifications.php?id=" + id, {
+            method: "DELETE",
+          });
+          if (res && res.success) {
+            allNotifications = allNotifications.filter((n) => n.id != id);
+            updateFilterCounts();
+            renderNotifications();
+            utils.showNotification("Notification deleted", "info");
+          } else {
+            utils.showNotification("Failed to delete notification", "error");
+          }
+        } catch (err) {
+          utils.showNotification("Error deleting notification", "error");
+        }
+      }
+
+      function getDateGroup(dateStr) {
+        const now = new Date();
+        const then = new Date(dateStr);
+        const diffDays = Math.floor((now - then) / 86400000);
+        if (diffDays === 0) return "Today";
+        if (diffDays === 1) return "Yesterday";
+        if (diffDays <= 7) return "This Week";
+        if (diffDays <= 30) return "This Month";
+        return "Older";
+      }
+
+      function timeAgo(dateStr) {
+        const now = new Date(),
+          then = new Date(dateStr);
+        const diff = Math.floor((now - then) / 1000);
+        if (diff < 60) return "Just now";
+        if (diff < 3600) return Math.floor(diff / 60) + " min ago";
+        if (diff < 86400) return Math.floor(diff / 3600) + " hr ago";
+        if (diff < 172800) return "Yesterday";
+        return then.toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        });
+      }
+
+      function escapeHtml(str) {
+        if (!str) return "";
+        return str
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+
+      function showError(msg) {
+        document.getElementById("notifLoading").style.display = "none";
+        document.getElementById("notifEmpty").style.display = "block";
+        document.getElementById("notifEmpty").innerHTML = `
+            <div class="empty-icon">⚠️</div>
+            <h3 style="margin:0 0 8px;">Could not load notifications</h3>
+            <p style="font-size:14px;">${msg}</p>
+            <button class="btn-primary" style="margin-top:16px;" onclick="loadNotifications()">Try Again</button>`;
+      }
     </script>
-
-    <style>
-        .btn-filter {
-            padding: 8px 16px;
-            border: 2px solid #e2e8f0;
-            background: white;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .btn-filter:hover {
-            border-color: #1E40AF;
-            color: #1E40AF;
-        }
-
-        .btn-filter.active {
-            background: #1E40AF;
-            color: white;
-            border-color: #1E40AF;
-        }
-
-        .notifications-container {
-            display: flex;
-            flex-direction: column;
-            gap: 32px;
-        }
-
-        .notification-group {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .notification-date {
-            font-size: 14px;
-            font-weight: 700;
-            color: #64748b;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 8px;
-        }
-
-        .notification-card {
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            display: flex;
-            gap: 16px;
-            align-items: flex-start;
-            cursor: pointer;
-            transition: all 0.2s;
-            border: 2px solid transparent;
-            position: relative;
-        }
-
-        .notification-card:hover {
-            border-color: #1E40AF;
-            transform: translateX(4px);
-        }
-
-        .notification-card.unread {
-            background: #f0f9ff;
-            border-color: #bfdbfe;
-        }
-
-        .notification-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            flex-shrink: 0;
-        }
-
-        .schedule-icon {
-            background: #dbeafe;
-        }
-
-        .exam-icon {
-            background: #fef3c7;
-        }
-
-        .result-icon {
-            background: #dcfce7;
-        }
-
-        .announcement-icon {
-            background: #e9d5ff;
-        }
-
-        .notification-content {
-            flex: 1;
-        }
-
-        .notification-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: #1e293b;
-            margin-bottom: 6px;
-        }
-
-        .notification-message {
-            font-size: 14px;
-            color: #64748b;
-            line-height: 1.5;
-            margin-bottom: 8px;
-        }
-
-        .notification-time {
-            font-size: 12px;
-            color: #94a3b8;
-        }
-
-        .notification-badge {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            background: #1E40AF;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: 700;
-        }
-
-        /* Dark mode */
-        .dark-mode .btn-filter {
-            background: #1e293b;
-            border-color: #334155;
-            color: #e2e8f0;
-        }
-
-        .dark-mode .btn-filter.active {
-            background: #1E40AF;
-            border-color: #1E40AF;
-        }
-
-        .dark-mode .notification-card {
-            background: #1e293b;
-        }
-
-        .dark-mode .notification-card.unread {
-            background: #1e3a5f;
-            border-color: #1E40AF;
-        }
-
-        .dark-mode .notification-title {
-            color: #f1f5f9;
-        }
-
-        .dark-mode .notification-message {
-            color: #cbd5e1;
-        }
-    </style>
-</body>
+  </body>
 </html>

@@ -1,381 +1,498 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Performance Reports - DLSM Ethiopia</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/dark-mode.css">
-    <link rel="stylesheet" href="../assets/css/responsive.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link rel="stylesheet" href="../assets/css/dark-mode.css" />
+    <link rel="stylesheet" href="../assets/css/responsive.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <script src="../assets/js/auth-guard.js"></script>
-</head>
-<body class="dashboard-body">
+  </head>
+  <body class="dashboard-body">
     <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
-    
     <aside class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <div class="sidebar-logo">
-                <img src="../assets/images/logo-DLSM.jpg" alt="DLSM Logo" class="logo-icon" style="height: 32px; width: auto; border-radius: 6px;">
-                <span class="logo-text">DLSM</span>
-            </div>
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <img
+            src="../assets/images/logo-DLSM.jpg"
+            alt="DLSM Logo"
+            class="logo-icon"
+            style="height: 32px; width: auto; border-radius: 6px"
+          />
+          <span class="logo-text">DLSM</span>
         </div>
-        <nav class="sidebar-nav">
-            <a href="dashboard.html" class="nav-item">
-                <span class="nav-icon">📊</span>
-                <span class="nav-text">Dashboard</span>
-            </a>
-            <a href="profile.html" class="nav-item">
-                <span class="nav-icon">👤</span>
-                <span class="nav-text">My Profile</span>
-            </a>
-            <a href="assignments.html" class="nav-item">
-                <span class="nav-icon">👥</span>
-                <span class="nav-text">Assignments</span>
-            </a>
-            <a href="monitor.html" class="nav-item">
-                <span class="nav-icon">👁️</span>
-                <span class="nav-text">Monitor</span>
-            </a>
-            <a href="exam-approvals.html" class="nav-item">
-                <span class="nav-icon">✅</span>
-                <span class="nav-text">Exam Approvals</span>
-            </a>
-            <a href="complaints.html" class="nav-item">
-                <span class="nav-icon">📢</span>
-                <span class="nav-text">Complaints</span>
-            </a>
-            <a href="reports.html" class="nav-item active">
-                <span class="nav-icon">📈</span>
-                <span class="nav-text">Reports</span>
-            </a>
-        </nav>
-        <div class="sidebar-footer">
-            <button class="btn-logout" id="logoutBtn">
-                <span class="nav-icon">🚪</span>
-                <span class="nav-text">Logout</span>
-            </button>
-        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-item">
+          <span class="nav-icon">📊</span>
+          <span class="nav-text">Dashboard</span>
+        </a>
+        <a href="profile.html" class="nav-item">
+          <span class="nav-icon">👤</span>
+          <span class="nav-text">My Profile</span>
+        </a>
+        <a href="assignments.html" class="nav-item">
+          <span class="nav-icon">👥</span>
+          <span class="nav-text">Assignments</span>
+        </a>
+        <a href="monitor.html" class="nav-item">
+          <span class="nav-icon">👁️</span>
+          <span class="nav-text">Monitor</span>
+        </a>
+        <a href="exam-approvals.html" class="nav-item">
+          <span class="nav-icon">✅</span>
+          <span class="nav-text">Exam Approvals</span>
+        </a>
+        <a href="complaints.html" class="nav-item">
+          <span class="nav-icon">📢</span>
+          <span class="nav-text">Complaints</span>
+        </a>
+        <a href="reports.html" class="nav-item active">
+          <span class="nav-icon">📈</span>
+          <span class="nav-text">Reports</span>
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <button class="btn-logout" id="logoutBtn">
+          <span class="nav-icon">🚪</span>
+          <span class="nav-text">Logout</span>
+        </button>
+      </div>
     </aside>
 
-    
     <main class="main-content">
-        <header class="topbar">
-            <div class="topbar-left">
-                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
-                <div>
-                    <h1 class="page-title">Performance Reports</h1>
-                    <p class="page-subtitle">View student performance and instructor effectiveness reports</p>
-                </div>
-            </div>
-            <div class="topbar-right">
-                <button class="btn-primary" style="padding: 10px 20px; font-size: 14px;">📥 Export Report</button>
-                <div class="user-profile">
-                    <div class="user-avatar">👤</div>
-                    <div class="user-info">
-                        <span class="user-name" id="userName">Supervisor</span>
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <div class="dashboard-container">
-
-            
-            <div class="card" style="margin-bottom: 24px;">
-                <div style="display: flex; gap: 16px; flex-wrap: wrap; align-items: end;">
-                    <div class="form-group" style="margin: 0; flex: 1; min-width: 200px;">
-                        <label class="form-label">Report Type</label>
-                        <select class="form-input" id="reportType">
-                            <option value="student">Student Performance</option>
-                            <option value="instructor">Instructor Effectiveness</option>
-                            <option value="program">Program Analysis</option>
-                            <option value="quality">Quality Control</option>
-                        </select>
-                    </div>
-                    <div class="form-group" style="margin: 0; flex: 1; min-width: 150px;">
-                        <label class="form-label">Time Period</label>
-                        <select class="form-input" id="timePeriod">
-                            <option value="week">This Week</option>
-                            <option value="month" selected>This Month</option>
-                            <option value="quarter">This Quarter</option>
-                            <option value="year">This Year</option>
-                        </select>
-                    </div>
-                    <div class="form-group" style="margin: 0; flex: 1; min-width: 150px;">
-                        <label class="form-label">Program</label>
-                        <select class="form-input" id="programFilter">
-                            <option value="all">All Programs</option>
-                            <option value="B">Private Car (B)</option>
-                            <option value="A">Motorcycle (A)</option>
-                            <option value="C">Heavy Truck (C)</option>
-                            <option value="D">Bus (D)</option>
-                        </select>
-                    </div>
-                    <button class="btn-primary" style="padding: 12px 24px;">Generate Report</button>
-                </div>
-            </div>
-
-            
-            <div class="stats-grid">
-                <div class="stat-card blue">
-                    <div class="stat-icon">📊</div>
-                    <div class="stat-info">
-                        <p class="stat-label">Overall Pass Rate</p>
-                        <h3 class="stat-value">89%</h3>
-                        <span class="stat-change positive">+3% from last month</span>
-                    </div>
-                </div>
-                <div class="stat-card green">
-                    <div class="stat-icon">⭐</div>
-                    <div class="stat-info">
-                        <p class="stat-label">Avg. Student Score</p>
-                        <h3 class="stat-value">85.4</h3>
-                        <span class="stat-change positive">+2.1 points</span>
-                    </div>
-                </div>
-                <div class="stat-card orange">
-                    <div class="stat-icon">👨‍🏫</div>
-                    <div class="stat-info">
-                        <p class="stat-label">Instructor Efficiency</p>
-                        <h3 class="stat-value">92%</h3>
-                        <span class="stat-change positive">Excellent</span>
-                    </div>
-                </div>
-                <div class="stat-card purple">
-                    <div class="stat-icon">⏱️</div>
-                    <div class="stat-info">
-                        <p class="stat-label">Avg. Training Time</p>
-                        <h3 class="stat-value">45 days</h3>
-                        <span class="stat-change">Within target</span>
-                    </div>
-                </div>
-            </div>
-
-            
-            <div class="card" style="margin-bottom: 24px;">
-                <div class="card-title">
-                    <span>📊 Student Performance Report</span>
-                    <span style="font-size: 14px; color: #64748b;">April 2026</span>
-                </div>
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Student</th>
-                            <th>Program</th>
-                            <th>Instructor</th>
-                            <th>Theory Score</th>
-                            <th>Practical Score</th>
-                            <th>Overall</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <div style="font-weight: 600;">Abebe Kebede</div>
-                                <div style="font-size: 12px; color: #64748b;">ID: STU-2024-001</div>
-                            </td>
-                            <td>Private Car (B)</td>
-                            <td>Dawit Tesfaye</td>
-                            <td><span style="color: #15803D; font-weight: 600;">92%</span></td>
-                            <td><span style="color: #15803D; font-weight: 600;">88%</span></td>
-                            <td><span style="color: #15803D; font-weight: 700; font-size: 16px;">90%</span></td>
-                            <td><span class="badge badge-success">Passed</span></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div style="font-weight: 600;">Tigist Haile</div>
-                                <div style="font-size: 12px; color: #64748b;">ID: STU-2024-002</div>
-                            </td>
-                            <td>Motorcycle (A)</td>
-                            <td>Meron Alemu</td>
-                            <td><span style="color: #15803D; font-weight: 600;">95%</span></td>
-                            <td><span style="color: #15803D; font-weight: 600;">91%</span></td>
-                            <td><span style="color: #15803D; font-weight: 700; font-size: 16px;">93%</span></td>
-                            <td><span class="badge badge-success">Passed</span></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div style="font-weight: 600;">Samuel Girma</div>
-                                <div style="font-size: 12px; color: #64748b;">ID: STU-2024-003</div>
-                            </td>
-                            <td>Heavy Truck (C)</td>
-                            <td>Yonas Bekele</td>
-                            <td><span style="color: #f59e0b; font-weight: 600;">78%</span></td>
-                            <td><span style="color: #15803D; font-weight: 600;">85%</span></td>
-                            <td><span style="color: #15803D; font-weight: 700; font-size: 16px;">81%</span></td>
-                            <td><span class="badge badge-success">Passed</span></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div style="font-weight: 600;">Meron Tadesse</div>
-                                <div style="font-size: 12px; color: #64748b;">ID: STU-2024-004</div>
-                            </td>
-                            <td>Private Car (B)</td>
-                            <td>Dawit Tesfaye</td>
-                            <td><span style="color: #dc2626; font-weight: 600;">65%</span></td>
-                            <td><span style="color: #f59e0b; font-weight: 600;">72%</span></td>
-                            <td><span style="color: #dc2626; font-weight: 700; font-size: 16px;">68%</span></td>
-                            <td><span class="badge badge-danger">Failed</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            
-            <div class="card" style="margin-bottom: 24px;">
-                <div class="card-title">
-                    <span>👨‍🏫 Instructor Effectiveness Report</span>
-                </div>
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Instructor</th>
-                            <th>Specialization</th>
-                            <th>Students Trained</th>
-                            <th>Pass Rate</th>
-                            <th>Avg. Score</th>
-                            <th>Completion Time</th>
-                            <th>Rating</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <div style="display: flex; align-items: center; gap: 8px;">
-                                    <span style="font-size: 24px;">👨‍🏫</span>
-                                    <div>
-                                        <div style="font-weight: 600;">Dawit Tesfaye</div>
-                                        <div style="font-size: 12px; color: #64748b;">5 years exp.</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>Private Car (B)</td>
-                            <td>18</td>
-                            <td><span style="color: #15803D; font-weight: 600;">95%</span></td>
-                            <td><span style="color: #15803D; font-weight: 600;">88.5</span></td>
-                            <td>42 days</td>
-                            <td>
-                                <div style="display: flex; gap: 2px;">
-                                    <span style="color: #f59e0b;">⭐</span>
-                                    <span style="color: #f59e0b;">⭐</span>
-                                    <span style="color: #f59e0b;">⭐</span>
-                                    <span style="color: #f59e0b;">⭐</span>
-                                    <span style="color: #f59e0b;">⭐</span>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div style="display: flex; align-items: center; gap: 8px;">
-                                    <span style="font-size: 24px;">👨‍🏫</span>
-                                    <div>
-                                        <div style="font-weight: 600;">Meron Alemu</div>
-                                        <div style="font-size: 12px; color: #64748b;">4 years exp.</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>Motorcycle (A)</td>
-                            <td>15</td>
-                            <td><span style="color: #15803D; font-weight: 600;">92%</span></td>
-                            <td><span style="color: #15803D; font-weight: 600;">86.2</span></td>
-                            <td>38 days</td>
-                            <td>
-                                <div style="display: flex; gap: 2px;">
-                                    <span style="color: #f59e0b;">⭐</span>
-                                    <span style="color: #f59e0b;">⭐</span>
-                                    <span style="color: #f59e0b;">⭐</span>
-                                    <span style="color: #f59e0b;">⭐</span>
-                                    <span style="color: #e2e8f0;">⭐</span>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div style="display: flex; align-items: center; gap: 8px;">
-                                    <span style="font-size: 24px;">👨‍🏫</span>
-                                    <div>
-                                        <div style="font-weight: 600;">Yonas Bekele</div>
-                                        <div style="font-size: 12px; color: #64748b;">6 years exp.</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>Heavy Truck (C)</td>
-                            <td>12</td>
-                            <td><span style="color: #15803D; font-weight: 600;">88%</span></td>
-                            <td><span style="color: #15803D; font-weight: 600;">83.7</span></td>
-                            <td>48 days</td>
-                            <td>
-                                <div style="display: flex; gap: 2px;">
-                                    <span style="color: #f59e0b;">⭐</span>
-                                    <span style="color: #f59e0b;">⭐</span>
-                                    <span style="color: #f59e0b;">⭐</span>
-                                    <span style="color: #f59e0b;">⭐</span>
-                                    <span style="color: #e2e8f0;">⭐</span>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            
-            <div class="dashboard-grid-3">
-                <div class="card">
-                    <div class="card-title"><span>📋 Training Standards</span></div>
-                    <div style="display: flex; flex-direction: column; gap: 16px;">
-                        <div>
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-                                <span style="font-size: 13px;">Theory Compliance</span>
-                                <span style="font-weight: 700; color: #15803D;">98%</span>
-                            </div>
-                            <div class="prog-bar">
-                                <div class="prog-fill fill-green" style="width: 98%"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-                                <span style="font-size: 13px;">Practical Compliance</span>
-                                <span style="font-weight: 700; color: #15803D;">95%</span>
-                            </div>
-                            <div class="prog-bar">
-                                <div class="prog-fill fill-blue" style="width: 95%"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-                                <span style="font-size: 13px;">Safety Standards</span>
-                                <span style="font-weight: 700; color: #15803D;">100%</span>
-                            </div>
-                            <div class="prog-bar">
-                                <div class="prog-fill fill-green" style="width: 100%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-title"><span>⚠️ Issues Identified</span></div>
-                    <div style="display: flex; flex-direction: column; gap: 12px;">
-                        <div style="padding: 12px; background: #fef3c7; border-radius: 8px;">
-                            <div style="font-weight: 600; margin-bottom: 4px;">3 Students Below Average</div>
-                            <div style="font-size: 12px; color: #92400e;">Require additional support</div>
-                        </div>
-                        <div style="padding: 12px; background: #dbeafe; border-radius: 8px;">
-                            <div style="font-weight: 600; margin-bottom: 4px;">2 Instructors Overloaded</div>
-                            <div style="font-size: 12px; color: #1e3a8a;">Consider redistribution</div>
-                        </div>
-                        <div style="padding: 12px; background: #dcfce7; border-radius: 8px;">
-                            <div style="font-weight: 600; margin-bottom: 4px;">Overall Quality: Excellent</div>
-                            <div style="font-size: 12px; color: #14532d;">Standards maintained</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+          <div>
+            <h1 class="page-title">Performance Reports</h1>
+            <p class="page-subtitle">
+              View student performance and instructor effectiveness reports
+            </p>
+          </div>
         </div>
+        <div class="topbar-right">
+          <button
+            class="btn-primary"
+            style="padding: 10px 20px; font-size: 14px"
+          >
+            📥 Export Report
+          </button>
+          <div class="user-profile">
+            <div class="user-avatar">👤</div>
+            <div class="user-info">
+              <span class="user-name" id="userName">Supervisor</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="dashboard-container">
+        <div class="card" style="margin-bottom: 24px">
+          <div
+            style="display: flex; gap: 16px; flex-wrap: wrap; align-items: end"
+          >
+            <div
+              class="form-group"
+              style="margin: 0; flex: 1; min-width: 200px"
+            >
+              <label class="form-label">Report Type</label>
+              <select class="form-input" id="reportType">
+                <option value="student">Student Performance</option>
+                <option value="instructor">Instructor Effectiveness</option>
+                <option value="program">Program Analysis</option>
+                <option value="quality">Quality Control</option>
+              </select>
+            </div>
+            <div
+              class="form-group"
+              style="margin: 0; flex: 1; min-width: 150px"
+            >
+              <label class="form-label">Time Period</label>
+              <select class="form-input" id="timePeriod">
+                <option value="week">This Week</option>
+                <option value="month" selected>This Month</option>
+                <option value="quarter">This Quarter</option>
+                <option value="year">This Year</option>
+              </select>
+            </div>
+            <div
+              class="form-group"
+              style="margin: 0; flex: 1; min-width: 150px"
+            >
+              <label class="form-label">Program</label>
+              <select class="form-input" id="programFilter">
+                <option value="all">All Programs</option>
+                <option value="B">Private Car (B)</option>
+                <option value="A">Motorcycle (A)</option>
+                <option value="C">Heavy Truck (C)</option>
+                <option value="D">Bus (D)</option>
+              </select>
+            </div>
+            <button class="btn-primary" style="padding: 12px 24px">
+              Generate Report
+            </button>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card blue">
+            <div class="stat-icon">📊</div>
+            <div class="stat-info">
+              <p class="stat-label">Overall Pass Rate</p>
+              <h3 class="stat-value">89%</h3>
+              <span class="stat-change positive">+3% from last month</span>
+            </div>
+          </div>
+          <div class="stat-card green">
+            <div class="stat-icon">⭐</div>
+            <div class="stat-info">
+              <p class="stat-label">Avg. Student Score</p>
+              <h3 class="stat-value">85.4</h3>
+              <span class="stat-change positive">+2.1 points</span>
+            </div>
+          </div>
+          <div class="stat-card orange">
+            <div class="stat-icon">👨‍🏫</div>
+            <div class="stat-info">
+              <p class="stat-label">Instructor Efficiency</p>
+              <h3 class="stat-value">92%</h3>
+              <span class="stat-change positive">Excellent</span>
+            </div>
+          </div>
+          <div class="stat-card purple">
+            <div class="stat-icon">⏱️</div>
+            <div class="stat-info">
+              <p class="stat-label">Avg. Training Time</p>
+              <h3 class="stat-value">45 days</h3>
+              <span class="stat-change">Within target</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-bottom: 24px">
+          <div class="card-title">
+            <span>📊 Student Performance Report</span>
+            <span style="font-size: 14px; color: #64748b">April 2026</span>
+          </div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Student</th>
+                <th>Program</th>
+                <th>Instructor</th>
+                <th>Theory Score</th>
+                <th>Practical Score</th>
+                <th>Overall</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div style="font-weight: 600">Abebe Kebede</div>
+                  <div style="font-size: 12px; color: #64748b">
+                    ID: STU-2024-001
+                  </div>
+                </td>
+                <td>Private Car (B)</td>
+                <td>Dawit Tesfaye</td>
+                <td>
+                  <span style="color: #15803d; font-weight: 600">92%</span>
+                </td>
+                <td>
+                  <span style="color: #15803d; font-weight: 600">88%</span>
+                </td>
+                <td>
+                  <span
+                    style="color: #15803d; font-weight: 700; font-size: 16px"
+                    >90%</span
+                  >
+                </td>
+                <td><span class="badge badge-success">Passed</span></td>
+              </tr>
+              <tr>
+                <td>
+                  <div style="font-weight: 600">Tigist Haile</div>
+                  <div style="font-size: 12px; color: #64748b">
+                    ID: STU-2024-002
+                  </div>
+                </td>
+                <td>Motorcycle (A)</td>
+                <td>Meron Alemu</td>
+                <td>
+                  <span style="color: #15803d; font-weight: 600">95%</span>
+                </td>
+                <td>
+                  <span style="color: #15803d; font-weight: 600">91%</span>
+                </td>
+                <td>
+                  <span
+                    style="color: #15803d; font-weight: 700; font-size: 16px"
+                    >93%</span
+                  >
+                </td>
+                <td><span class="badge badge-success">Passed</span></td>
+              </tr>
+              <tr>
+                <td>
+                  <div style="font-weight: 600">Samuel Girma</div>
+                  <div style="font-size: 12px; color: #64748b">
+                    ID: STU-2024-003
+                  </div>
+                </td>
+                <td>Heavy Truck (C)</td>
+                <td>Yonas Bekele</td>
+                <td>
+                  <span style="color: #f59e0b; font-weight: 600">78%</span>
+                </td>
+                <td>
+                  <span style="color: #15803d; font-weight: 600">85%</span>
+                </td>
+                <td>
+                  <span
+                    style="color: #15803d; font-weight: 700; font-size: 16px"
+                    >81%</span
+                  >
+                </td>
+                <td><span class="badge badge-success">Passed</span></td>
+              </tr>
+              <tr>
+                <td>
+                  <div style="font-weight: 600">Meron Tadesse</div>
+                  <div style="font-size: 12px; color: #64748b">
+                    ID: STU-2024-004
+                  </div>
+                </td>
+                <td>Private Car (B)</td>
+                <td>Dawit Tesfaye</td>
+                <td>
+                  <span style="color: #dc2626; font-weight: 600">65%</span>
+                </td>
+                <td>
+                  <span style="color: #f59e0b; font-weight: 600">72%</span>
+                </td>
+                <td>
+                  <span
+                    style="color: #dc2626; font-weight: 700; font-size: 16px"
+                    >68%</span
+                  >
+                </td>
+                <td><span class="badge badge-danger">Failed</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card" style="margin-bottom: 24px">
+          <div class="card-title">
+            <span>👨‍🏫 Instructor Effectiveness Report</span>
+          </div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Instructor</th>
+                <th>Specialization</th>
+                <th>Students Trained</th>
+                <th>Pass Rate</th>
+                <th>Avg. Score</th>
+                <th>Completion Time</th>
+                <th>Rating</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div style="display: flex; align-items: center; gap: 8px">
+                    <span style="font-size: 24px">👨‍🏫</span>
+                    <div>
+                      <div style="font-weight: 600">Dawit Tesfaye</div>
+                      <div style="font-size: 12px; color: #64748b">
+                        5 years exp.
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td>Private Car (B)</td>
+                <td>18</td>
+                <td>
+                  <span style="color: #15803d; font-weight: 600">95%</span>
+                </td>
+                <td>
+                  <span style="color: #15803d; font-weight: 600">88.5</span>
+                </td>
+                <td>42 days</td>
+                <td>
+                  <div style="display: flex; gap: 2px">
+                    <span style="color: #f59e0b">⭐</span>
+                    <span style="color: #f59e0b">⭐</span>
+                    <span style="color: #f59e0b">⭐</span>
+                    <span style="color: #f59e0b">⭐</span>
+                    <span style="color: #f59e0b">⭐</span>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div style="display: flex; align-items: center; gap: 8px">
+                    <span style="font-size: 24px">👨‍🏫</span>
+                    <div>
+                      <div style="font-weight: 600">Meron Alemu</div>
+                      <div style="font-size: 12px; color: #64748b">
+                        4 years exp.
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td>Motorcycle (A)</td>
+                <td>15</td>
+                <td>
+                  <span style="color: #15803d; font-weight: 600">92%</span>
+                </td>
+                <td>
+                  <span style="color: #15803d; font-weight: 600">86.2</span>
+                </td>
+                <td>38 days</td>
+                <td>
+                  <div style="display: flex; gap: 2px">
+                    <span style="color: #f59e0b">⭐</span>
+                    <span style="color: #f59e0b">⭐</span>
+                    <span style="color: #f59e0b">⭐</span>
+                    <span style="color: #f59e0b">⭐</span>
+                    <span style="color: #e2e8f0">⭐</span>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div style="display: flex; align-items: center; gap: 8px">
+                    <span style="font-size: 24px">👨‍🏫</span>
+                    <div>
+                      <div style="font-weight: 600">Yonas Bekele</div>
+                      <div style="font-size: 12px; color: #64748b">
+                        6 years exp.
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td>Heavy Truck (C)</td>
+                <td>12</td>
+                <td>
+                  <span style="color: #15803d; font-weight: 600">88%</span>
+                </td>
+                <td>
+                  <span style="color: #15803d; font-weight: 600">83.7</span>
+                </td>
+                <td>48 days</td>
+                <td>
+                  <div style="display: flex; gap: 2px">
+                    <span style="color: #f59e0b">⭐</span>
+                    <span style="color: #f59e0b">⭐</span>
+                    <span style="color: #f59e0b">⭐</span>
+                    <span style="color: #f59e0b">⭐</span>
+                    <span style="color: #e2e8f0">⭐</span>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="dashboard-grid-3">
+          <div class="card">
+            <div class="card-title"><span>📋 Training Standards</span></div>
+            <div style="display: flex; flex-direction: column; gap: 16px">
+              <div>
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    margin-bottom: 4px;
+                  "
+                >
+                  <span style="font-size: 13px">Theory Compliance</span>
+                  <span style="font-weight: 700; color: #15803d">98%</span>
+                </div>
+                <div class="prog-bar">
+                  <div class="prog-fill fill-green" style="width: 98%"></div>
+                </div>
+              </div>
+              <div>
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    margin-bottom: 4px;
+                  "
+                >
+                  <span style="font-size: 13px">Practical Compliance</span>
+                  <span style="font-weight: 700; color: #15803d">95%</span>
+                </div>
+                <div class="prog-bar">
+                  <div class="prog-fill fill-blue" style="width: 95%"></div>
+                </div>
+              </div>
+              <div>
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    margin-bottom: 4px;
+                  "
+                >
+                  <span style="font-size: 13px">Safety Standards</span>
+                  <span style="font-weight: 700; color: #15803d">100%</span>
+                </div>
+                <div class="prog-bar">
+                  <div class="prog-fill fill-green" style="width: 100%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title"><span>⚠️ Issues Identified</span></div>
+            <div style="display: flex; flex-direction: column; gap: 12px">
+              <div
+                style="padding: 12px; background: #fef3c7; border-radius: 8px"
+              >
+                <div style="font-weight: 600; margin-bottom: 4px">
+                  3 Students Below Average
+                </div>
+                <div style="font-size: 12px; color: #92400e">
+                  Require additional support
+                </div>
+              </div>
+              <div
+                style="padding: 12px; background: #dbeafe; border-radius: 8px"
+              >
+                <div style="font-weight: 600; margin-bottom: 4px">
+                  2 Instructors Overloaded
+                </div>
+                <div style="font-size: 12px; color: #1e3a8a">
+                  Consider redistribution
+                </div>
+              </div>
+              <div
+                style="padding: 12px; background: #dcfce7; border-radius: 8px"
+              >
+                <div style="font-weight: 600; margin-bottom: 4px">
+                  Overall Quality: Excellent
+                </div>
+                <div style="font-size: 12px; color: #14532d">
+                  Standards maintained
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
 
     <script src="../assets/js/utils.js"></script>
@@ -384,76 +501,80 @@
     <script src="../assets/js/theme.js"></script>
     <script src="../assets/js/dashboard.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', async function() {
-            // Force disable demo mode if the user wants real data
-            if (localStorage.getItem('DEMO_MODE') === 'true') {
-                console.log('🔄 Disabling Demo Mode to fetch real reports data...');
-                localStorage.setItem('DEMO_MODE', 'false');
-                window.location.reload();
-                return;
-            }
-
-            const user = auth.getCurrentUser();
-            if (!user) {
-                window.location.href = '../login.html';
-                return;
-            }
-
-            await loadReportsData();
-        });
-
-        // Load reports data from API
-        async function loadReportsData() {
-            try {
-                const response = await api.get('/supervisor/reports.php');
-                if (response.success && response.data) {
-                    renderReports(response.data);
-                }
-            } catch (error) {
-                console.error('Error loading reports:', error);
-            }
+      document.addEventListener("DOMContentLoaded", async function () {
+        const user = auth.getCurrentUser();
+        if (!user) {
+          window.location.href = "../login.html";
+          return;
         }
 
-        function renderReports(data) {
-            const studentTableBody = document.querySelector('.card:nth-of-type(3) table tbody');
-            const instructorTableBody = document.querySelector('.card:nth-of-type(4) table tbody');
-            const statsCards = document.querySelectorAll('.stat-card .stat-value');
+        await loadReportsData();
+      });
 
-            // Render Overall Stats
-            if (statsCards.length >= 4) {
-                statsCards[0].textContent = data.overall_stats.pass_rate;
-                statsCards[1].textContent = data.overall_stats.avg_score;
-                statsCards[2].textContent = data.overall_stats.efficiency;
-                statsCards[3].textContent = data.overall_stats.training_time;
-            }
+      // Load reports data from API
+      async function loadReportsData() {
+        try {
+          const response = await api.get("/supervisor/reports.php");
+          if (response.success && response.data) {
+            renderReports(response.data);
+          }
+        } catch (error) {
+          console.error("Error loading reports:", error);
+        }
+      }
 
-            // Render Student Performance
-            if (studentTableBody) {
-                if (data.student_performance.length === 0) {
-                    studentTableBody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 20px;">No student records found.</td></tr>';
-                } else {
-                    studentTableBody.innerHTML = data.student_performance.map(s => `
+      function renderReports(data) {
+        const studentTableBody = document.querySelector(
+          ".card:nth-of-type(3) table tbody",
+        );
+        const instructorTableBody = document.querySelector(
+          ".card:nth-of-type(4) table tbody",
+        );
+        const statsCards = document.querySelectorAll(".stat-card .stat-value");
+
+        // Render Overall Stats
+        if (statsCards.length >= 4) {
+          statsCards[0].textContent = data.overall_stats.pass_rate;
+          statsCards[1].textContent = data.overall_stats.avg_score;
+          statsCards[2].textContent = data.overall_stats.efficiency;
+          statsCards[3].textContent = data.overall_stats.training_time;
+        }
+
+        // Render Student Performance
+        if (studentTableBody) {
+          if (data.student_performance.length === 0) {
+            studentTableBody.innerHTML =
+              '<tr><td colspan="7" style="text-align: center; padding: 20px;">No student records found.</td></tr>';
+          } else {
+            studentTableBody.innerHTML = data.student_performance
+              .map(
+                (s) => `
                         <tr>
                             <td>
                                 <div style="font-weight: 600;">${s.student_name}</div>
                             </td>
                             <td>${s.program_name}</td>
-                            <td>${s.instructor_name || 'N/A'}</td>
-                            <td><span style="font-weight: 600;">${s.exam_type === 'theory' ? s.score + '%' : '-'}</span></td>
-                            <td><span style="font-weight: 600;">${s.exam_type === 'practical' ? s.score + '%' : '-'}</span></td>
+                            <td>${s.instructor_name || "N/A"}</td>
+                            <td><span style="font-weight: 600;">${s.exam_type === "theory" ? s.score + "%" : "-"}</span></td>
+                            <td><span style="font-weight: 600;">${s.exam_type === "practical" ? s.score + "%" : "-"}</span></td>
                             <td><span style="color: #15803D; font-weight: 700; font-size: 16px;">${s.score}%</span></td>
-                            <td><span class="badge ${s.score >= 70 ? 'badge-success' : 'badge-danger'}">${s.score >= 70 ? 'Passed' : 'Failed'}</span></td>
+                            <td><span class="badge ${s.score >= 70 ? "badge-success" : "badge-danger"}">${s.score >= 70 ? "Passed" : "Failed"}</span></td>
                         </tr>
-                    `).join('');
-                }
-            }
+                    `,
+              )
+              .join("");
+          }
+        }
 
-            // Render Instructor Effectiveness
-            if (instructorTableBody) {
-                if (data.instructor_stats.length === 0) {
-                    instructorTableBody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 20px;">No instructor data found.</td></tr>';
-                } else {
-                    instructorTableBody.innerHTML = data.instructor_stats.map(i => `
+        // Render Instructor Effectiveness
+        if (instructorTableBody) {
+          if (data.instructor_stats.length === 0) {
+            instructorTableBody.innerHTML =
+              '<tr><td colspan="7" style="text-align: center; padding: 20px;">No instructor data found.</td></tr>';
+          } else {
+            instructorTableBody.innerHTML = data.instructor_stats
+              .map(
+                (i) => `
                         <tr>
                             <td>
                                 <div style="display: flex; align-items: center; gap: 8px;">
@@ -479,10 +600,12 @@
                                 </div>
                             </td>
                         </tr>
-                    `).join('');
-                }
-            }
+                    `,
+              )
+              .join("");
+          }
         }
+      }
     </script>
-</body>
+  </body>
 </html>

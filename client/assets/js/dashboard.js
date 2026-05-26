@@ -162,6 +162,8 @@ const dashboard = {
     }
 };
 
+window.dashboard = dashboard;
+
 // Auto-initialize mobile menu on page load for all pages
 document.addEventListener('DOMContentLoaded', function() {
     // Only setup mobile menu if not already initialized
