@@ -223,16 +223,35 @@
               <tbody id="logsTableBody"></tbody>
             </table>
           </div>
-          <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 16px">
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              padding: 12px 16px;
+            "
+          >
             <div>
-              <button class="btn-secondary btn-small" onclick="prevPage()">◀ Prev</button>
+              <button class="btn-secondary btn-small" onclick="prevPage()">
+                ◀ Prev
+              </button>
               <span id="pageInfo">Page 1</span>
-              <button class="btn-secondary btn-small" onclick="nextPage()">Next ▶</button>
+              <button class="btn-secondary btn-small" onclick="nextPage()">
+                Next ▶
+              </button>
             </div>
-            <div style="display:flex; gap:8px; align-items:center">
-              <label style="margin-right:6px">Purge older than (days):</label>
-              <input id="purgeDays" type="number" min="1" value="90" style="width:80px" />
-              <button class="btn-danger btn-small" onclick="purgeOldLogs()">Purge</button>
+            <div style="display: flex; gap: 8px; align-items: center">
+              <label style="margin-right: 6px">Purge older than (days):</label>
+              <input
+                id="purgeDays"
+                type="number"
+                min="1"
+                value="90"
+                style="width: 80px"
+              />
+              <button class="btn-danger btn-small" onclick="purgeOldLogs()">
+                Purge
+              </button>
             </div>
           </div>
         </div>
@@ -328,7 +347,8 @@
         const pageItems = allLogs.slice(start, start + pageSize);
         renderLogs(pageItems);
         const totalPages = Math.max(1, Math.ceil(allLogs.length / pageSize));
-        document.getElementById('pageInfo').textContent = `Page ${currentPage} / ${totalPages}`;
+        document.getElementById("pageInfo").textContent =
+          `Page ${currentPage} / ${totalPages}`;
       }
 
       function prevPage() {
@@ -347,27 +367,46 @@
       }
 
       async function deleteLog(id) {
-        if (!confirm('Delete this log entry?')) return;
-        const resp = await api.delete('/manager/audit-logs?id=' + encodeURIComponent(id));
+        if (!confirm("Delete this log entry?")) return;
+        const resp = await api.delete(
+          "/manager/audit-logs?id=" + encodeURIComponent(id),
+        );
         if (resp.success) {
-          allLogs = allLogs.filter(l => l.id !== id);
+          allLogs = allLogs.filter((l) => l.id !== id);
           renderLogsPage();
-          utils.showNotification('Log deleted', 'success');
+          utils.showNotification("Log deleted", "success");
         } else {
-          utils.showNotification(resp.message || 'Failed to delete log', 'error');
+          utils.showNotification(
+            resp.message || "Failed to delete log",
+            "error",
+          );
         }
       }
 
       async function purgeOldLogs() {
-        const days = parseInt(document.getElementById('purgeDays').value || '90', 10);
-        if (!confirm(`Purge logs older than ${days} days? This cannot be undone.`)) return;
-        const before = new Date(Date.now() - days * 24 * 3600 * 1000).toISOString().split('T')[0];
-        const resp = await api.post('/manager/audit-logs', { action: 'purge', before });
+        const days = parseInt(
+          document.getElementById("purgeDays").value || "90",
+          10,
+        );
+        if (
+          !confirm(`Purge logs older than ${days} days? This cannot be undone.`)
+        )
+          return;
+        const before = new Date(Date.now() - days * 24 * 3600 * 1000)
+          .toISOString()
+          .split("T")[0];
+        const resp = await api.post("/manager/audit-logs", {
+          action: "purge",
+          before,
+        });
         if (resp.success) {
           await loadAuditLogs();
-          utils.showNotification(resp.message || 'Old logs purged', 'success');
+          utils.showNotification(resp.message || "Old logs purged", "success");
         } else {
-          utils.showNotification(resp.message || 'Failed to purge logs', 'error');
+          utils.showNotification(
+            resp.message || "Failed to purge logs",
+            "error",
+          );
         }
       }
 
